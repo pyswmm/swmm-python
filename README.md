@@ -6,10 +6,10 @@ Hints for building SWIG wrapper for SWMM Toolkit on Windows. This package
 is currently under active development. The build process is likely to change. 
 
 ### Dependencies
-Python 3.6.5 64 bit 
-Visual Studio 14 2015
-CMake
-SWIG
+- Python 3.6.5 64 bit 
+- Visual Studio 14 2015
+- CMake
+- SWIG
 
 ### Build Process
 The idea here is to build the SWMM library and the SWIG wrapper seperately
@@ -34,6 +34,6 @@ Execute the command python setup.py build
 Step 4 - Running SWMM Toolkit
 Install the pyd and the dll in the same directory. 
 
-###Common Problems
+#### Common Problems
 When I used the Developer Command Prompt for Visual Studio 2015 the build 
 fails with linking errors. Use a regular Command Prompt to build. 
