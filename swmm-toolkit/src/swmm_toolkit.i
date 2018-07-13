@@ -64,7 +64,36 @@ and return a (possibly) different pointer */
 }
 
 
-/* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
-int  DLLEXPORT   swmm_alloc_project(SWMM_ProjectHandle *ph_out);
-int  DLLEXPORT   swmm_free_project(SWMM_ProjectHandle *ph_out);
+/* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
+%exception
+{
+    char* err_msg;
+    swmm_clearError_project(arg1);
+    $function
+    if (swmm_checkError_project(arg1, &err_msg))
+    {
+        PyErr_SetString(PyExc_Exception, err_msg);
+        free(err_msg);
+        SWIG_fail;
+    }
+}
 
+int  DLLEXPORT  swmm_run_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
+int  DLLEXPORT  swmm_open_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
+int  DLLEXPORT  swmm_start_project(SWMM_ProjectHandle ph, int saveFlag);
+int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* elapsedTime);
+int  DLLEXPORT  swmm_end_project(SWMM_ProjectHandle ph);
+int  DLLEXPORT  swmm_report_project(SWMM_ProjectHandle ph);
+int  DLLEXPORT  swmm_getMassBalErr_project(SWMM_ProjectHandle ph, float* runoffErr, float* flowErr, float* qualErr);
+int  DLLEXPORT  swmm_close_project(SWMM_ProjectHandle ph);
+int  DLLEXPORT  swmm_getError_project(SWMM_ProjectHandle ph, char* errMsg, int msgLen);
+int  DLLEXPORT  swmm_getWarnings_project(SWMM_ProjectHandle ph);
+
+%exception;
+
+/* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
+int  DLLEXPORT  swmm_alloc_project(SWMM_ProjectHandle *ph_out);
+int  DLLEXPORT  swmm_free_project(SWMM_ProjectHandle *ph_out);
+
+void DLLEXPORT  swmm_clearError_project(SWMM_ProjectHandle ph);
+int  DLLEXPORT  swmm_checkError_project(SWMM_ProjectHandle ph, char** msg_buffer);
