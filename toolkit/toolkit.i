@@ -10,7 +10,7 @@
  *
 */ 
 
-%module swmm_toolkit
+%module toolkit
 %{
 #include "swmm5.h"
 #include "toolkitAPI.h"
