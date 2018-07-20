@@ -12,13 +12,13 @@
 #
 
 try:
-    from setuptools import setup, Extension
+    from setuptools import setup, Extension, find_packages
     from setuptools.command.build_ext import build_ext
 except ImportError:
     from distutils.core import setup, Extension
     from distutils.command.build_ext import build_ext
 
-toolkit_ext = Extension("_toolkit",
+toolkit_ext = Extension("toolkit.lib._toolkit",
             include_dirs = ['toolkit/include/'],           
             libraries = ['swmm5'],
             library_dirs = ['toolkit/lib/'],      
@@ -32,14 +32,14 @@ setup(
     version = "0.0.1",
     ext_modules = [toolkit_ext],
 
-    py_modules = ['toolkit'],
-    package_dir = {'':'toolkit'},
+    packages = ['toolkit'],
+ #   package_dir = {'toolkit':'toolkit'},
+#    py_modules = ['toolkit.toolkit'],
+    package_data = {'toolkit':['lib/swmm5.dll']},
+    exclude_package_data = {'toolkit':['toolkit.i']},
 
     include_package_data = True, 
     zip_safe = False, 
 
-    install_requires = [
-        'enum34'
-    ]
-
+    install_requires = ['enum34']
 )
