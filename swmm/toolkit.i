@@ -4,7 +4,8 @@
  *  Created:    7/2/2018
  *  Author:     Michael E. Tryby
  *              US EPA - ORD/NRMRL
- *  
+ *  Modified by: Bryant E. McDonnell (EmNet)
+ *
  *  Build command: 
  *    $ python setup.py build
  *
@@ -64,6 +65,14 @@ and return a (possibly) different pointer */
     Py_INCREF($result);
 }
 
+/* TYPEMAPS FOR DOUBLE ARGUMENT AS RETURN VALUE */
+%typemap(in, numinputs=0) double* double_out (double temp) {
+    $1 = &temp;
+}
+%typemap(argout) double* double_out {
+    %append_output(PyFloat_FromDouble(*$1));
+}
+
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
@@ -83,7 +92,7 @@ and return a (possibly) different pointer */
 int  DLLEXPORT  swmm_run_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_open_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_start_project(SWMM_ProjectHandle ph, int saveFlag);
-int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* elapsedTime);
+int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* double_out);
 int  DLLEXPORT  swmm_end_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_report_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_getMassBalErr_project(SWMM_ProjectHandle ph, float* runoffErr, float* flowErr, float* qualErr);
