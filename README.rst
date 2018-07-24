@@ -1,19 +1,27 @@
-# swmm-python
+swmm-python
+===========
 
-## Build Notes 
+This repository contains the low-level Python wrapper for OWA-SWMM5.  This interfacing layer is generated using SWIG. 
+
+Build Notes 
+-----------
 
 Hints for building SWIG wrapper for SWMM Toolkit on Windows. This package
 is currently under active development. The build process is likely to change. 
 
 
-### Dependencies
+Dependencies
+------------
+
 - Python 3.6.5 64 bit 
 - Visual Studio 14 2015
 - CMake
 - SWIG
 
 
-### Build Process
+Build Process
+-------------
+
 The idea here is to build the SWMM library seperately link it with the SWIG 
 wrapper. This approach uses implicit linking, therefore, an import library 
 must be created. CMake does this automatically using the Generate Export Header 
@@ -47,6 +55,8 @@ Install the pyd and the dll in the same directory and add the directory to
 the python path. 
 
 
-#### Common Problems
+Common Problems
+---------------
+
 When I used the Developer Command Prompt for Visual Studio 2015 the build 
 fails with linking errors. Use a regular Command Prompt to build. 
