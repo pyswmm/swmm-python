@@ -35,7 +35,7 @@ setup(
     ],
     packages=['swmm.toolkit'],
     py_modules = ['toolkit'],
-    package_data = {'swmm.toolkit':['libswmm5.so']},
+    package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},
      
     install_requires = [
         'enum34'
