@@ -21,6 +21,7 @@ except ImportError:
 setup(
     name = "swmm-output",
     version = "0.1.0-alpha",
+
     ext_modules = [
         Extension("swmm/output/_output", 
             include_dirs = ['swmm/output/'],
