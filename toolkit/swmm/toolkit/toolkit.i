@@ -1,5 +1,5 @@
 /*
- *  swmm_toolkit.i - SWIG interface description file for SWMM toolkit
+ *  toolkit.i - SWIG interface description file for SWMM toolkit
  * 
  *  Created:    7/2/2018
  *  Author:     Michael E. Tryby
@@ -10,7 +10,7 @@
  *
 */ 
 
-%module swmm_toolkit
+%module(package="swmm") toolkit
 %{
 #include "swmm5.h"
 #include "toolkitAPI.h"

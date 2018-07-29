@@ -18,24 +18,28 @@ except ImportError:
     from distutils.core import setup, Extension
     from distutils.command.build_ext import build_ext
 
+
 setup(
-    name = "swmm-toolkit", 
-    version = "0.0.1",
+    name = 'swmm_toolkit', 
+    version = '0.0.1',
+
     ext_modules = [
-        Extension("_swmm_toolkit",
-            include_dirs = ['include/'],           
+        Extension('swmm/toolkit/_toolkit',
+            include_dirs = ['swmm/toolkit/'],           
             libraries = ['swmm5'],
-            library_dirs = ['lib/'],      
-            sources = ['src/swmm_toolkit.i'],
+            library_dirs = ['swmm/toolkit/'],      
+            sources = ['swmm/toolkit/toolkit.i'],
             swig_opts=['-py3'],
             language = 'C'
         )
     ],
-    package_dir = {'':'src'},  
-    py_modules = ['swmm_toolkit'],
-      
+    packages=['swmm.toolkit'],
+#    package_dir = {'':'swmm'},  
+    py_modules = ['toolkit'],
+    package_data = {'swmm.toolkit':['libswmm5.so']},
+#    exclude_package_data = {'swmm':['toolkit.i']},
+     
     install_requires = [
         'enum34'
     ]
-
 )
