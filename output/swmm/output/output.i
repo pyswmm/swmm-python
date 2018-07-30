@@ -212,6 +212,9 @@ SMO_nodeAttribute, SMO_linkAttribute, SMO_systemAttribute};
 /* RENAME FUNCTIONS PYTHON STYLE */
 %rename("%(undercase)s") "";
 
+/* GENERATES DOCUMENTATION */
+%feature("autodoc", "2");
+
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
