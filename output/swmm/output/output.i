@@ -304,8 +304,8 @@ class SubcatchAttribute(enum.Enum):
     EVAP_LOSS = SMO_evap_loss
     INFIL_LOSS = SMO_infil_loss
     RUNOFF_RATE = SMO_runoff_rate
-    GWOUTFLOW_RATE = SMO_gwoutflow_rate
-    GETABLE_ELEV = SMO_gwtable_elev
+    GW_OUTFLOW_RATE = SMO_gwoutflow_rate
+    GW_TABLE_ELEV = SMO_gwtable_elev
     SOIL_MOISTURE = SMO_soil_moisture
     POLLUT_CONC = SMO_pollutant_conc_subcatch
 
