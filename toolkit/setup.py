@@ -24,7 +24,7 @@ setup(
     version = '0.0.1',
 
     ext_modules = [
-        Extension('swmm/toolkit/_toolkit',
+        Extension('swmm.toolkit._toolkit',
             include_dirs = ['swmm/toolkit/'],           
             libraries = ['swmm5'],
             library_dirs = ['swmm/toolkit/'],      
@@ -33,6 +33,7 @@ setup(
             language = 'C'
         )
     ],
+    
     packages=['swmm.toolkit'],
     py_modules = ['toolkit'],
     package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},

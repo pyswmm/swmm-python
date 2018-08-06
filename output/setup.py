@@ -23,10 +23,10 @@ setup(
     version = "0.1.0-alpha",
 
     ext_modules = [
-        Extension("swmm/output/_output", 
+        Extension("swmm.output._output", 
             include_dirs = ['swmm/output/'],
             libraries = ['swmm-output'],
-            library_dirs = ['swmm/output/']
+            library_dirs = ['swmm/output/'],
             sources = ['swmm/output/output.i'],
             swig_opts=['-py3'],
             language='C'

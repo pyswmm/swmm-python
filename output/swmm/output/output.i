@@ -9,8 +9,6 @@
 
 %module(package="swmm") output
 %{
-#include "errormanager.h"
-#include "messages.h"
 #include "swmm_output.h"
 
 #define SWIG_FILE_WITH_INIT
