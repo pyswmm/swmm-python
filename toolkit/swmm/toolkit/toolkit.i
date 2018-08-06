@@ -1,5 +1,5 @@
 /*
- *  swmm_toolkit.i - SWIG interface description file for SWMM toolkit
+ *  toolkit.i - SWIG interface description file for SWMM toolkit
  * 
  *  Created:    7/2/2018
  *  Author:     Michael E. Tryby
@@ -10,7 +10,7 @@
  *
 */ 
 
-%module swmm_toolkit
+%module(package="swmm") toolkit
 %{
 #include "swmm5.h"
 #include "toolkitAPI.h"
@@ -63,6 +63,12 @@ and return a (possibly) different pointer */
     $result = Py_None;
     Py_INCREF($result);
 }
+
+/* RENAME FUNCTIONS PYTHON STYLE */
+%rename("%(undercase)s") "";
+
+/* GENERATES DOCUMENTATION */
+%feature("autodoc", "2");
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
