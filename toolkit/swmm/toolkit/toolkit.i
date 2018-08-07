@@ -65,7 +65,8 @@ and return a (possibly) different pointer */
 }
 
 /* RENAME FUNCTIONS PYTHON STYLE */
-%rename("%(undercase)s") "";
+%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
+
 
 /* GENERATES DOCUMENTATION */
 %feature("autodoc", "2");
@@ -97,49 +98,49 @@ int  DLLEXPORT  swmm_close_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_getError_project(SWMM_ProjectHandle ph, char* errMsg, int msgLen);
 int  DLLEXPORT  swmm_getWarnings_project(SWMM_ProjectHandle ph);
 
-// NEW TOOLKIT API
-int  DLLEXPORT  swmm_getSimulationUnit_project(SWMM_ProjectHandle ph, int type, int *value);
-int  DLLEXPORT  swmm_getSimulationAnalysisSetting_project(SWMM_ProjectHandle ph, int type, int *value);
-int  DLLEXPORT  swmm_getSimulationParam_project(SWMM_ProjectHandle ph, int type, double *value);
-int  DLLEXPORT  swmm_countObjects_project(SWMM_ProjectHandle ph, int type, int *count);
-int  DLLEXPORT  swmm_getObjectId_project(SWMM_ProjectHandle ph, int type, int index, char *id);
-int  DLLEXPORT  swmm_getNodeType_project(SWMM_ProjectHandle ph, int index, int *Ntype);
-int  DLLEXPORT  swmm_getLinkType_project(SWMM_ProjectHandle ph, int index, int *Ltype);
-int  DLLEXPORT  swmm_getLinkConnections_project(SWMM_ProjectHandle ph, int index, int *Node1, int *Node2);
-int  DLLEXPORT  swmm_getLinkDirection_project(SWMM_ProjectHandle ph, int index, signed char *value);
-int  DLLEXPORT  swmm_getSubcatchOutConnection_project(SWMM_ProjectHandle ph, int index, int *type, int *ObjIndex );
-int  DLLEXPORT  swmm_getNodeParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
-int  DLLEXPORT  swmm_setNodeParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
-int  DLLEXPORT  swmm_getLinkParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
-int  DLLEXPORT  swmm_setLinkParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
-int  DLLEXPORT  swmm_getSubcatchParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
-int  DLLEXPORT  swmm_setSubcatchParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
-int  DLLEXPORT  swmm_getSimulationDateTime_project(SWMM_ProjectHandle ph, int timetype, int *year, int *month, int *day, int *hours, int *minutes, int *seconds);
-int  DLLEXPORT  swmm_setSimulationDateTime_project(SWMM_ProjectHandle ph, int timetype, char *dtimestr);
+//// NEW TOOLKIT API
+//int  DLLEXPORT  swmm_getSimulationUnit_project(SWMM_ProjectHandle ph, int type, int *value);
+//int  DLLEXPORT  swmm_getSimulationAnalysisSetting_project(SWMM_ProjectHandle ph, int type, int *value);
+//int  DLLEXPORT  swmm_getSimulationParam_project(SWMM_ProjectHandle ph, int type, double *value);
+//int  DLLEXPORT  swmm_countObjects_project(SWMM_ProjectHandle ph, int type, int *count);
+//int  DLLEXPORT  swmm_getObjectId_project(SWMM_ProjectHandle ph, int type, int index, char *id);
+//int  DLLEXPORT  swmm_getNodeType_project(SWMM_ProjectHandle ph, int index, int *Ntype);
+//int  DLLEXPORT  swmm_getLinkType_project(SWMM_ProjectHandle ph, int index, int *Ltype);
+//int  DLLEXPORT  swmm_getLinkConnections_project(SWMM_ProjectHandle ph, int index, int *Node1, int *Node2);
+//int  DLLEXPORT  swmm_getLinkDirection_project(SWMM_ProjectHandle ph, int index, signed char *value);
+//int  DLLEXPORT  swmm_getSubcatchOutConnection_project(SWMM_ProjectHandle ph, int index, int *type, int *ObjIndex );
+//int  DLLEXPORT  swmm_getNodeParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
+//int  DLLEXPORT  swmm_setNodeParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
+//int  DLLEXPORT  swmm_getLinkParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
+//int  DLLEXPORT  swmm_setLinkParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
+//int  DLLEXPORT  swmm_getSubcatchParam_project(SWMM_ProjectHandle ph, int index, int Param, double *value);
+//int  DLLEXPORT  swmm_setSubcatchParam_project(SWMM_ProjectHandle ph, int index, int Param, double value);
+//int  DLLEXPORT  swmm_getSimulationDateTime_project(SWMM_ProjectHandle ph, int timetype, int *year, int *month, int *day, int *hours, int *minutes, int *seconds);
+//int  DLLEXPORT  swmm_setSimulationDateTime_project(SWMM_ProjectHandle ph, int timetype, char *dtimestr);
 
-// Active Simulation Results API
-int  DLLEXPORT  swmm_getCurrentDateTimeStr_project(SWMM_ProjectHandle ph, char *dtimestr);
-int  DLLEXPORT  swmm_getNodeResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
-int  DLLEXPORT  swmm_getLinkResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
-int  DLLEXPORT  swmm_getSubcatchResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
-int  DLLEXPORT  swmm_getNodeStats_project(SWMM_ProjectHandle ph, int index, SM_NodeStats *nodeStats);
-int  DLLEXPORT  swmm_getNodeTotalInflow_project(SWMM_ProjectHandle ph, int index, double *value);
-int  DLLEXPORT  swmm_getStorageStats_project(SWMM_ProjectHandle ph, int index, SM_StorageStats *storageStats);\
-int  DLLEXPORT  swmm_getOutfallStats_project(SWMM_ProjectHandle ph, int index, SM_OutfallStats *outfallStats);
-//void DLLEXPORT swmm_freeOutfallStats(SM_OutfallStats *outfallStats);
-int  DLLEXPORT  swmm_getLinkStats_project(SWMM_ProjectHandle ph, int index, SM_LinkStats *linkStats);
-int  DLLEXPORT  swmm_getPumpStats_project(SWMM_ProjectHandle ph, int index, SM_PumpStats *pumpStats);
-int  DLLEXPORT  swmm_getGagePrecip_project(SWMM_ProjectHandle ph, int index, double *rainfall, double *snowfall, double *total);
-int  DLLEXPORT  swmm_getSubcatchStats_project(SWMM_ProjectHandle ph, int index, SM_SubcatchStats *subcatchStats);
-//void DLLEXPORT swmm_freeSubcatchStats(SM_SubcatchStats *subcatchStats);
-int  DLLEXPORT  swmm_getSystemRoutingStats_project(SWMM_ProjectHandle ph, SM_RoutingTotals *routingTot);
-int  DLLEXPORT  swmm_getSystemRunoffStats_project(SWMM_ProjectHandle ph, SM_RunoffTotals *runoffTot);
+//// Active Simulation Results API
+//int  DLLEXPORT  swmm_getCurrentDateTimeStr_project(SWMM_ProjectHandle ph, char *dtimestr);
+//int  DLLEXPORT  swmm_getNodeResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
+//int  DLLEXPORT  swmm_getLinkResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
+//int  DLLEXPORT  swmm_getSubcatchResult_project(SWMM_ProjectHandle ph, int index, int type, double *result);
+//int  DLLEXPORT  swmm_getNodeStats_project(SWMM_ProjectHandle ph, int index, SM_NodeStats *nodeStats);
+//int  DLLEXPORT  swmm_getNodeTotalInflow_project(SWMM_ProjectHandle ph, int index, double *value);
+//int  DLLEXPORT  swmm_getStorageStats_project(SWMM_ProjectHandle ph, int index, SM_StorageStats *storageStats);\
+//int  DLLEXPORT  swmm_getOutfallStats_project(SWMM_ProjectHandle ph, int index, SM_OutfallStats *outfallStats);
+////void DLLEXPORT swmm_freeOutfallStats(SM_OutfallStats *outfallStats);
+//int  DLLEXPORT  swmm_getLinkStats_project(SWMM_ProjectHandle ph, int index, SM_LinkStats *linkStats);
+//int  DLLEXPORT  swmm_getPumpStats_project(SWMM_ProjectHandle ph, int index, SM_PumpStats *pumpStats);
+//int  DLLEXPORT  swmm_getGagePrecip_project(SWMM_ProjectHandle ph, int index, double *rainfall, double *snowfall, double *total);
+//int  DLLEXPORT  swmm_getSubcatchStats_project(SWMM_ProjectHandle ph, int index, SM_SubcatchStats *subcatchStats);
+////void DLLEXPORT swmm_freeSubcatchStats(SM_SubcatchStats *subcatchStats);
+//int  DLLEXPORT  swmm_getSystemRoutingStats_project(SWMM_ProjectHandle ph, SM_RoutingTotals *routingTot);
+//int  DLLEXPORT  swmm_getSystemRunoffStats_project(SWMM_ProjectHandle ph, SM_RunoffTotals *runoffTot);
 
-// Setters API
-int  DLLEXPORT  swmm_setLinkSetting_project(SWMM_ProjectHandle ph, int index, double setting);
-int  DLLEXPORT  swmm_setNodeInflow_project(SWMM_ProjectHandle ph, int index, double flowrate);
-int  DLLEXPORT  swmm_setOutfallStage_project(SWMM_ProjectHandle ph, int index, double stage);
-int  DLLEXPORT  swmm_setGagePrecip_project(SWMM_ProjectHandle ph, int index, double value);
+//// Setters API
+//int  DLLEXPORT  swmm_setLinkSetting_project(SWMM_ProjectHandle ph, int index, double setting);
+//int  DLLEXPORT  swmm_setNodeInflow_project(SWMM_ProjectHandle ph, int index, double flowrate);
+//int  DLLEXPORT  swmm_setOutfallStage_project(SWMM_ProjectHandle ph, int index, double stage);
+//int  DLLEXPORT  swmm_setGagePrecip_project(SWMM_ProjectHandle ph, int index, double value);
 
 %exception;
 
