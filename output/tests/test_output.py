@@ -11,7 +11,7 @@
 import pytest
 import numpy as np
 
-import output as smo
+from swmm.output import output as smo
 
 from data import OUTPUT_FILE_EXAMPLE1
 
