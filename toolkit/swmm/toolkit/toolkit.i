@@ -58,18 +58,37 @@ and return a (possibly) different pointer */
 }
 /* No need for special IN typemap for opaque pointers, it works anyway */
 
+
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
 %typemap(out) int {
     $result = Py_None;
     Py_INCREF($result);
 }
 
-/* RENAME FUNCTIONS PYTHON STYLE */
-%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
+
+/* TYPEMAPS FOR DOUBLE ARGUMENT AS RETURN VALUE */
+%typemap(in, numinputs=0) double* double_out (double temp) {
+    $1 = &temp;
+}
+%typemap(argout) double* double_out {
+    %append_output(PyFloat_FromDouble(*$1));
+}
 
 
 /* GENERATES DOCUMENTATION */
 %feature("autodoc", "2");
+
+
+/* CUSTOM RENAME FOR THESE FUNCTIONS */
+%rename(alloc_project) swmm_alloc_project;
+int  DLLEXPORT  swmm_alloc_project(SWMM_ProjectHandle *ph_out);
+
+%rename(free_project) swmm_free_project;
+int  DLLEXPORT  swmm_free_project(SWMM_ProjectHandle *ph_inout);
+
+
+/* RENAME REMAINING FUNCTIONS PYTHON STYLE */
+%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
@@ -90,13 +109,15 @@ and return a (possibly) different pointer */
 int  DLLEXPORT  swmm_run_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_open_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_start_project(SWMM_ProjectHandle ph, int saveFlag);
-int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* elapsedTime);
+int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* double_out);
 int  DLLEXPORT  swmm_end_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_report_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_getMassBalErr_project(SWMM_ProjectHandle ph, float* runoffErr, float* flowErr, float* qualErr);
 int  DLLEXPORT  swmm_close_project(SWMM_ProjectHandle ph);
-int  DLLEXPORT  swmm_getError_project(SWMM_ProjectHandle ph, char* errMsg, int msgLen);
-int  DLLEXPORT  swmm_getWarnings_project(SWMM_ProjectHandle ph);
+
+/* DEPRECATING OLD ERROR HANDLING INTERFACE */
+//int  DLLEXPORT  swmm_getError_project(SWMM_ProjectHandle ph, char* errMsg, int msgLen);
+//int  DLLEXPORT  swmm_getWarnings_project(SWMM_ProjectHandle ph);
 
 //// NEW TOOLKIT API
 //int  DLLEXPORT  swmm_getSimulationUnit_project(SWMM_ProjectHandle ph, int type, int *value);
@@ -145,8 +166,5 @@ int  DLLEXPORT  swmm_getWarnings_project(SWMM_ProjectHandle ph);
 %exception;
 
 /* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
-int  DLLEXPORT  swmm_alloc_project(SWMM_ProjectHandle *ph_out);
-int  DLLEXPORT  swmm_free_project(SWMM_ProjectHandle *ph_out);
-
 void DLLEXPORT  swmm_clearError_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_checkError_project(SWMM_ProjectHandle ph, char** msg_buffer);
