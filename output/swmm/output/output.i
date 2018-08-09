@@ -68,7 +68,7 @@ typedef enum {
 } SMO_linkAttribute;
 
 typedef enum {
-    SMO_air_temp,               // (deg. F or deg. C),
+   SMO_air_temp,               // (deg. F or deg. C),
     SMO_rainfall_system,        // (in/hr or mm/hr),
     SMO_snow_depth_system,      // (in or mm),
     SMO_evap_infil_loss,        // (in/hr or mm/hr),
@@ -208,7 +208,7 @@ SMO_nodeAttribute, SMO_linkAttribute, SMO_systemAttribute};
 
 
 /* RENAME FUNCTIONS PYTHON STYLE */
-%rename("%(undercase)s") "";
+%rename("%(regex:/^\w+_([a-zA-Z]+)/\L\\1/)s") "";
 
 /* GENERATES DOCUMENTATION */
 %feature("autodoc", "2");
