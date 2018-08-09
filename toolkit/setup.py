@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 
 #
 # setup.py - Setup script for swmm_toolkit python extension
