@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
 #
-#  setup.py 
+# setup.py - Setup script for swmm_output python extension
+# 
+# Created:    7/2/2018
+# Author:     Michael E. Tryby
+#             US EPA - ORD/NRMRL
 #
-#  Author:     Michael E. Tryby
-#              US EPA - ORD/NRMRL
+# Requires:
+#   Platform C language compiler   
+#   SWIG
 #
-#
-
-'''Setup up script for SWMM Output API python extension'''
 
 try:
     from setuptools import setup, Extension
