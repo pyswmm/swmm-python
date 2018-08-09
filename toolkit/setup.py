@@ -21,7 +21,7 @@ except ImportError:
 
 setup(
     name = 'swmm_toolkit', 
-    version = '0.0.1',
+    version = '0.2.0-dev',
 
     ext_modules = [
         Extension('swmm.toolkit._toolkit',
@@ -37,8 +37,4 @@ setup(
     packages=['swmm.toolkit'],
     py_modules = ['toolkit'],
     package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},
-     
-    install_requires = [
-        'enum34'
-    ]
 )
