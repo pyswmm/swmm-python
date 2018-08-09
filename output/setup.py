@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
 #
-#  setup.py 
+# setup.py - Setup script for swmm_output python extension
 # 
-#  Author:     Michael E. Tryby
-#              US EPA - ORD/NRMRL
+# Created:    7/2/2018
+# Author:     Michael E. Tryby
+#             US EPA - ORD/NRMRL
 #
+# Requires:
+#   Platform C language compiler   
+#   SWIG
 #
-
-'''Setup up script for SWMM Output API python extension'''
 
 try:
     from setuptools import setup, Extension
@@ -20,7 +22,7 @@ except ImportError:
 
 setup(
     name = "swmm-output",
-    version = "0.1.0-alpha",
+    version = "0.2.0-dev",
 
     ext_modules = [
         Extension("swmm.output._output", 
@@ -35,8 +37,4 @@ setup(
     packages = ['swmm.output'],  
     py_modules = ['output'],
     package_data = {'swmm.output':['*swmm-output.dll', '*swmm-output.so']},
-  
-    install_requires = [
-        'enum34'
-    ]
 )

@@ -19,7 +19,7 @@ from data import OUTPUT_FILE_EXAMPLE1
 def test_openclose():
     _handle = smo.init()
     smo.open(_handle, OUTPUT_FILE_EXAMPLE1)
-    smo.close()
+    smo.close(_handle)
 
     
 @pytest.fixture()
@@ -28,7 +28,7 @@ def handle(request):
     smo.open(_handle, OUTPUT_FILE_EXAMPLE1)
     
     def close():
-        smo.close()
+        smo.close(_handle)
     
     request.addfinalizer(close)    
     return _handle    
