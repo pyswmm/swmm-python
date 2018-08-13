@@ -81,8 +81,25 @@ def test_getsubcatchseries(handle):
     
     assert len(test_array) == 10                             
     assert np.allclose(test_array, ref_array)
-    
 
+    
+def test_getsubcatchattribute(handle):
+    
+    ref_array = np.array([0.125,
+                          0.125,
+                          0.125,
+                          0.125,
+                          0.125,
+                          0.225,
+                          0.225, 
+                          0.225])
+    
+    test_array = smo.getsubcatchattribute(handle, 1, smo.SubcatchAttribute.INFIL_LOSS)
+
+    assert len(test_array) == 8
+    assert np.allclose(test_array, ref_array)
+
+        
 def test_getsubcatchresult(handle):
     
     ref_array = np.array([0.5, 
