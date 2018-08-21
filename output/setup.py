@@ -37,4 +37,8 @@ setup(
     packages = ['swmm.output'],  
     py_modules = ['output'],
     package_data = {'swmm.output':['*swmm-output.dll', '*swmm-output.so']},
+    
+    install_requires = [
+        'aenum'
+    ]
 )

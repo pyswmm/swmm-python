@@ -11,6 +11,7 @@
 import pytest
 import numpy as np
 
+from swmm.output import OutputMetadata
 from swmm.output import output as smo
 
 from data import OUTPUT_FILE_EXAMPLE1
@@ -34,6 +35,72 @@ def handle(request):
     return _handle    
 
 
+def test_outputmetadata(handle):
+    
+    om = OutputMetadata(handle)
+        
+    ref = {
+        smo.SubcatchAttribute.RAINFALL:           ("Rainfall",                "in/hr"),
+        smo.SubcatchAttribute.SNOW_DEPTH:         ("Snow Depth",              "in"),
+        smo.SubcatchAttribute.EVAP_LOSS:          ("Evaporation Loss",        "in/day"),
+        smo.SubcatchAttribute.INFIL_LOSS:         ("Infiltration Loss",       "in/hr"),
+        smo.SubcatchAttribute.RUNOFF_RATE:        ("Runoff Rate",             "cu ft/sec"),
+        smo.SubcatchAttribute.GW_OUTFLOW_RATE:    ("Groundwater Flow Rate",   "cu ft/sec"),
+        smo.SubcatchAttribute.GW_TABLE_ELEV:      ("Groundwater Elevation",   "ft"),
+        smo.SubcatchAttribute.SOIL_MOISTURE:      ("Soil Moisture",           "%"),
+        smo.SubcatchAttribute.POLLUT_CONC_0:      ("TSS",                     "mg/L"),
+        smo.SubcatchAttribute.POLLUT_CONC_1:      ("Lead",                    "ug/L"),
+        
+        smo.NodeAttribute.INVERT_DEPTH:           ("Invert Depth",            "ft"),
+        smo.NodeAttribute.HYDRAULIC_HEAD:         ("Hydraulic Head",          "ft"),
+        smo.NodeAttribute.PONDED_VOLUME:          ("Ponded Volume",           "cu ft"),
+        smo.NodeAttribute.LATERAL_INFLOW:         ("Lateral Inflow",          "cu ft/sec"),
+        smo.NodeAttribute.TOTAL_INFLOW:           ("Total Inflow",            "cu ft/sec"),
+        smo.NodeAttribute.FLOODING_LOSSES:        ("Flooding Loss",           "cu ft/sec"),
+        smo.NodeAttribute.POLLUT_CONC_0:          ("TSS",                     "mg/L"),
+        smo.NodeAttribute.POLLUT_CONC_1:          ("Lead",                    "ug/L"),
+        
+        smo.LinkAttribute.FLOW_RATE:              ("Flow Rate",               "cu ft/sec"),
+        smo.LinkAttribute.FLOW_DEPTH:             ("Flow Depth",              "ft"),
+        smo.LinkAttribute.FLOW_VELOCITY:          ("Flow Velocity",           "ft/sec"),
+        smo.LinkAttribute.FLOW_VOLUME:            ("Flow Volume",             "cu ft"),
+        smo.LinkAttribute.CAPACITY:               ("Capacity",                "%"),
+        smo.LinkAttribute.POLLUT_CONC_0:          ("TSS",                     "mg/L"),
+        smo.LinkAttribute.POLLUT_CONC_1:          ("Lead",                    "ug/L"),
+        
+        smo.SystemAttribute.AIR_TEMP:             ("Temperature",             "deg F"),
+        smo.SystemAttribute.RAINFALL:             ("Rainfall",                "in/hr"),
+        smo.SystemAttribute.SNOW_DEPTH:           ("Snow Depth",              "in"),
+        smo.SystemAttribute.EVAP_INFIL_LOSS:      ("Evap and Infil Losses",   "in/hr"),
+        smo.SystemAttribute.RUNOFF_FLOW:          ("Runoff Flow Rate",        "cu ft/sec"),
+        smo.SystemAttribute.DRY_WEATHER_INFLOW:   ("Dry Weather Inflow",      "cu ft/sec"),
+        smo.SystemAttribute.GW_INFLOW:            ("Groundwater Inflow",      "cu ft/sec"),
+        smo.SystemAttribute.RDII_INFLOW:          ("RDII Inflow",             "cu ft/sec"),
+        smo.SystemAttribute.DIRECT_INFLOW:        ("Direct Inflow",           "cu ft/sec"),
+        smo.SystemAttribute.TOTAL_LATERAL_INFLOW: ("Total Lateral Inflow",    "cu ft/sec"),
+        smo.SystemAttribute.FLOOD_LOSSES:         ("Flood Losses",            "cu ft/sec"),
+        smo.SystemAttribute.OUTFALL_FLOWS:        ("Outfall Flow",            "cu ft/sec"),
+        smo.SystemAttribute.VOLUME_STORED:        ("Volume Stored",           "cu ft"),
+        smo.SystemAttribute.EVAP_RATE:            ("Evaporation Rate",        "in/day")    
+    }
+     
+    for attr in smo.SubcatchAttribute:
+        temp = om.get_attribute_metadata(attr)
+        assert temp == ref[attr] 
+         
+    for attr in smo.NodeAttribute:
+        temp = om.get_attribute_metadata(attr)
+        assert temp == ref[attr] 
+        
+    for attr in smo.LinkAttribute:
+        temp = om.get_attribute_metadata(attr)
+        assert temp == ref[attr] 
+        
+    for attr in smo.SystemAttribute:
+        temp = om.get_attribute_metadata(attr)
+        assert temp == ref[attr] 
+        
+            
 def test_getversion(handle):
   
   assert smo.getversion(handle) == 51000
@@ -46,7 +113,7 @@ def test_getprojectsize(handle):
 
 def test_getpollutantunits(handle):
     
-    assert smo.getpollutantunits(handle) == [0, 1]
+    assert smo.getunits(handle)[2:] == [0, 1]
     
 
 def test_getstartdate(handle):
