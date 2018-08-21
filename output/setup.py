@@ -22,7 +22,7 @@ except ImportError:
 
 setup(
     name = "swmm-output",
-    version = "0.2.0-dev",
+    version = "0.3.0-dev",
 
     ext_modules = [
         Extension("swmm.output._output", 
@@ -37,4 +37,8 @@ setup(
     packages = ['swmm.output'],  
     py_modules = ['output'],
     package_data = {'swmm.output':['*swmm-output.dll', '*swmm-output.so']},
+    
+    install_requires = [
+        'aenum'
+    ]
 )

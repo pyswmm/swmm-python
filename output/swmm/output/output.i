@@ -20,15 +20,31 @@
 typedef void* SMO_Handle;
 
 typedef enum {
-    SMO_flow_rate,
-    SMO_concentration
-} SMO_unit;
+    SMO_US,
+    SMO_SI
+} SMO_unitSystem;
+
+typedef enum {
+    SMO_CFS,
+    SMO_GPM,
+    SMO_MGD,
+    SMO_CMS,
+    SMO_LPS,
+    SMO_MLD
+} SMO_flowUnits;
+
+typedef enum {
+    SMO_MG,
+    SMO_UG,
+    SMO_COUNT,
+    SMO_NONE
+} SMO_concUnits;
 
 typedef enum {
     SMO_subcatch,
     SMO_node,
     SMO_link,
-    SMO_sys
+    SMO_pollut
 } SMO_elementType;
 
 typedef enum {
@@ -239,8 +255,9 @@ int DLLEXPORT SMO_open(SMO_Handle p_handle, const char* path);
 
 int DLLEXPORT SMO_getVersion(SMO_Handle p_handle, int* int_out);
 int DLLEXPORT SMO_getProjectSize(SMO_Handle p_handle, int** int_out, int* int_dim);
-int DLLEXPORT SMO_getFlowUnits(SMO_Handle p_handle, int* int_out);
-int DLLEXPORT SMO_getPollutantUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+int DLLEXPORT SMO_getUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+//int DLLEXPORT SMO_getFlowUnits(SMO_Handle p_handle, int* int_out);
+//int DLLEXPORT SMO_getPollutantUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
 int DLLEXPORT SMO_getStartDate(SMO_Handle p_handle, double* double_out);
 int DLLEXPORT SMO_getTimes(SMO_Handle p_handle, SMO_time code, int* int_out);
 int DLLEXPORT SMO_getElementName(SMO_Handle p_handle, SMO_elementType type, 
@@ -288,21 +305,37 @@ int DLLEXPORT SMO_checkError(SMO_Handle p_handle, char** msg_buffer);
 %pythoncode%{
 import enum
 
-class Unit(enum.Enum):
-    FLOW_UNIT = SMO_flow_rate
-    CONC_UNIT = SMO_concentration
+import aenum
 
-class ElementType(enum.Enum):
+class UnitSystem(enum.Enum):
+    US = SMO_US
+    SI = SMO_SI
+
+class FlowUnits(enum.Enum):
+    CFS = SMO_CFS
+    GPM = SMO_GPM
+    MGD = SMO_MGD
+    CMS = SMO_CMS
+    LPS = SMO_LPS
+    MLD = SMO_MLD
+
+class ConcUnits(enum.Enum):  
+    MG = SMO_MG
+    UG = SMO_UG
+    COUNT = SMO_COUNT
+    NONE = SMO_NONE
+
+class ElementType(enum.IntEnum):
     SUBCATCH = SMO_subcatch
     NODE = SMO_node
     LINK = SMO_link
-    SYSTEM = SMO_sys
+    POLLUT = SMO_pollut
 
 class Time(enum.Enum):
     REPORT_STEP = SMO_reportStep
     NUM_PERIODS = SMO_numPeriods
 
-class SubcatchAttribute(enum.Enum):
+class SubcatchAttribute(aenum.Enum):
     RAINFALL = SMO_rainfall_subcatch
     SNOW_DEPTH = SMO_snow_depth_subcatch
     EVAP_LOSS = SMO_evap_loss
@@ -311,24 +344,24 @@ class SubcatchAttribute(enum.Enum):
     GW_OUTFLOW_RATE = SMO_gwoutflow_rate
     GW_TABLE_ELEV = SMO_gwtable_elev
     SOIL_MOISTURE = SMO_soil_moisture
-    POLLUT_CONC = SMO_pollutant_conc_subcatch
+    POLLUT_CONC_0 = SMO_pollutant_conc_subcatch
 
-class NodeAttribute(enum.Enum):
+class NodeAttribute(aenum.Enum):
     INVERT_DEPTH = SMO_invert_depth
     HYDRAULIC_HEAD = SMO_hydraulic_head
     PONDED_VOLUME = SMO_stored_ponded_volume
     LATERAL_INFLOW = SMO_lateral_inflow
     TOTAL_INFLOW = SMO_total_inflow
     FLOODING_LOSSES = SMO_flooding_losses
-    POLLUT_CONC = SMO_pollutant_conc_node
+    POLLUT_CONC_0 = SMO_pollutant_conc_node
     
-class LinkAttribute(enum.Enum):
+class LinkAttribute(aenum.Enum):
     FLOW_RATE = SMO_flow_rate_link
     FLOW_DEPTH = SMO_flow_depth
     FLOW_VELOCITY = SMO_flow_velocity
     FLOW_VOLUME = SMO_flow_volume
     CAPACITY = SMO_capacity
-    POLLUT_CONC = SMO_pollutant_conc_link
+    POLLUT_CONC_0 = SMO_pollutant_conc_link
 
 class SystemAttribute(enum.Enum):
     AIR_TEMP = SMO_air_temp
