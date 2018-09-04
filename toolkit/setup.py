@@ -26,11 +26,12 @@ setup(
 
     ext_modules = [
         Extension('swmm.toolkit._toolkit',
-            include_dirs = ['swmm/toolkit/'],           
-            libraries = ['swmm5'],
-            library_dirs = ['swmm/toolkit/'],      
             sources = ['swmm/toolkit/toolkit.i'],
             swig_opts=['-py3'],
+            include_dirs = ['swmm/toolkit/'],           
+            library_dirs = ['swmm/toolkit/'],      
+            libraries = ['swmm5'],
+            extra_compile_args = ["/D WITH_GENX"],
             language = 'C'
         )
     ],
