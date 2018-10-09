@@ -31,9 +31,9 @@ export header" section of the SWMM Project CMakeLists.txt is not commented out.
 
 Step 2 - Copy SWMM Library
 
-In the swmm\toolkit directory copy swmm5.h and toolkitAPI.h, swmm5.dll, 
-swmm5.lib, and swmm5.exp all together in the same folder. The setup.py file
-is configured to find them there. 
+In the swmm\toolkit directory copy swmm5.h, swmm5_export.h, toolkitAPI.h, 
+swmm5.dll, swmm5.lib, and swmm5.exp all together in the same folder. The 
+setup.py file is configured to find them there. 
 
 
 Step 3 - Build SWMM Toolkit
