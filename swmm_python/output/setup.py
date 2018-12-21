@@ -2,13 +2,13 @@
 
 #
 # setup.py - Setup script for swmm_output python extension
-# 
+#
 # Created:    7/2/2018
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
 #
 # Requires:
-#   Platform C language compiler   
+#   Platform C language compiler
 #   SWIG
 #
 
@@ -20,12 +20,14 @@ except ImportError:
     from distutils.command.build_ext import build_ext
 
 
+microlib_name = 'swmm.output'
+
 setup(
-    name = "swmm-output",
+    name = microlib_name,
     version = "0.3.0-dev",
 
     ext_modules = [
-        Extension("swmm.output._output", 
+        Extension("swmm.output._output",
             include_dirs = ['swmm/output/'],
             libraries = ['swmm-output'],
             library_dirs = ['swmm/output/'],
@@ -34,10 +36,11 @@ setup(
             language='C'
         )
     ],
-    packages = ['swmm.output'],  
+    namespace_packages=['swmm'],
+    packages = [microlib_name],
     py_modules = ['output'],
-    package_data = {'swmm.output':['*swmm-output.dll', '*swmm-output.so']},
-    
+    package_data = {microlib_name:['*swmm-output.dll', '*swmm-output.so']},
+
     install_requires = [
         'aenum'
     ]

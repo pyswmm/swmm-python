@@ -12,6 +12,7 @@
 *.exp
 *.so
 *.h
+buildlib/
 
 build/
 dist/
@@ -23,3 +24,5 @@ output_wrap.c
 
 toolkit.py
 toolkit_wrap.c
+
+swmm_python/toolkit/tests/data/test.*
