@@ -2,6 +2,8 @@
 
 ## Build Notes 
 
+[![Build status](https://ci.appveyor.com/api/projects/status/f1cgtg65sdmpt25n?svg=true)](https://ci.appveyor.com/project/OpenWaterAnalytics/swmm-python)
+
 Hints for building SWIG wrapper for SWMM Toolkit on Windows. This package
 is currently under active development. The build process is likely to change. 
 
