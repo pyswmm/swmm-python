@@ -6,7 +6,7 @@ environment:
   CIBW_SKIP: cp27-* cp34-* cp35-* *-win32
   CIBW_BUILD_VERBOSITY: 3
   CIBW_BEFORE_BUILD: pip install six
-  CIBW_TEST_COMMAND: {project}\\tests
+  CIBW_TEST_COMMAND: pytest {project}\\tests
   CIBW_TEST_REQUIRES: pytest
 
   matrix:
