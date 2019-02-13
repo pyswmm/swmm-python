@@ -68,6 +68,8 @@ setup(
         'install': InstallCmd,
         'develop': DevelopCmd
     },
-    setup_requires=["pytest-runner"],
+    setup_requires=['six',
+                    'pytest-runner'
+    ],
     tests_require=["pytest"]
 )
