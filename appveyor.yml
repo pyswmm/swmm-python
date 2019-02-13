@@ -22,6 +22,8 @@ before_build:
 
 build_script:
     - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse"
+    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\output"
+    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\toolkit"
 
 #test_script:
 #    - "%PYTHON%\\python.exe -m tox -v"
