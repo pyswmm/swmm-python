@@ -4,7 +4,7 @@ environment:
   passphrase:
     secure: En1qcj1/l2B3Nov+vOHlfRrFZk00bg1HPRouD64Gzfw=
   CIBW_SKIP: cp27-* *-win32
-  CIBW_BUILD_VERBOSITY: -vvv
+  CIBW_BUILD_VERBOSITY: 3
   matrix:
     - PYTHON: "C:\\Python35"
 
