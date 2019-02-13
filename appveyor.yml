@@ -23,3 +23,4 @@ test_script:
 cache:
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
   - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - C:\projects\swmm-python\.tox -> tox.ini
