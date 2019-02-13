@@ -38,8 +38,9 @@ setup(
     ],
     namespace_packages=['swmm'],
     packages = [microlib_name],
+    package_dir={'microlib_name': 'swmm/output'},
     py_modules = ['output'],
-    package_data = {microlib_name:['*swmm-output.dll', '*swmm-output.so', 'output.py']},
+    package_data = {microlib_name:['./*swmm-output.dll', './*swmm-output.so', './output.py']},
 
     install_requires = [
         'aenum'
