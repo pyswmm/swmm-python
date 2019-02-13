@@ -12,18 +12,13 @@
 #   SWIG
 #
 
-try:
-    from setuptools import setup, Extension
-    from setuptools.command.build_ext import build_ext
-except ImportError:
-    from distutils.core import setup, Extension
-    from distutils.command.build_ext import build_ext
 
+from setuptools import setup, Extension, find_packages
+from setuptools.command.build_ext import build_ext
 
-microlib_name = 'swmm.output'
 
 setup(
-    name = microlib_name,
+    name = 'swmm_output',
     version = "0.3.0-dev",
 
     ext_modules = [
@@ -37,9 +32,8 @@ setup(
         )
     ],
     py_modules = ['output'],
-    namespace_packages=['swmm'],
-#    packages = [microlib_name],
-#    package_data = {microlib_name:['./*swmm-output.dll', './*swmm-output.so']},
+    packages = ['swmm.output'],
+    package_data = {'swmm.output':['./*swmm-output.dll', './*swmm-output.so']},
 
     install_requires = [
         'aenum'
