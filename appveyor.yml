@@ -3,8 +3,9 @@
 environment:
   passphrase:
     secure: En1qcj1/l2B3Nov+vOHlfRrFZk00bg1HPRouD64Gzfw=
-  matrix:
-    - PYTHON: "C:\\Python35\\python.exe"
+  CIBW_SKIP: cp27-* *-win32
+#  matrix:
+#    - PYTHON: "C:\\Python35\\python.exe"
 
 install:
     - choco install swig
