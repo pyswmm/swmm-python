@@ -3,7 +3,7 @@
 environment:
   passphrase:
     secure: En1qcj1/l2B3Nov+vOHlfRrFZk00bg1HPRouD64Gzfw=
-  CIBW_SKIP: cp27-* cp34-* cp35-* -win32
+  CIBW_SKIP: cp27-* cp34-* cp35-* *-win32
   CIBW_BUILD_VERBOSITY: 3
   CIBW_BEFORE_BUILD: pip install six
   matrix:
