@@ -15,11 +15,19 @@
 
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
+from setuptools.command.build_py import build_py
+
+
+class BuildCmd(build_py):
+    def run(self):
+        self.run_command("build_ext")
+        return super().run()
 
 
 setup(
     name = 'swmm_output',
     version = "0.3.0-dev",
+    cmdclass = {'build_py': BuildCmd},
 
     ext_modules = [
         Extension("swmm.output._output",
