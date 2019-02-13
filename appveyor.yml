@@ -10,7 +10,7 @@ install:
     - choco install swig
     - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
     - appveyor-tools\secure-file -decrypt .coveralls.yml.enc -secret %passphrase%
-    - python -v
+    - python --version
     - pip install wheel tox cibuildwheel==0.10.1
 
 
