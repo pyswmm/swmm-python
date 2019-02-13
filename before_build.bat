@@ -16,7 +16,7 @@ set OUTPUT_PATH=\swmm_python\output\swmm\output
 mkdir buildlib
 cd buildlib
 git clone --branch=feature-wrapper https://github.com/michaeltryby/Stormwater-Management-Model.git swmm
-cd swmm 
+cd swmm
 
 
 mkdir buildprod
@@ -32,3 +32,5 @@ copy /Y ..\include\*.h  %PROJECT_PATH%\%TOOLKIT_PATH%
 copy /Y .\bin\Release\swmm-output.dll  %PROJECT_PATH%\%OUTPUT_PATH%
 copy /Y .\lib\Release\swmm-output.lib  %PROJECT_PATH%\%OUTPUT_PATH%
 copy /Y ..\tools\swmm-output\include\*.h  %PROJECT_PATH%\%OUTPUT_PATH%
+
+cd %PROJECT_PATH%
