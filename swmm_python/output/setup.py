@@ -28,19 +28,18 @@ setup(
 
     ext_modules = [
         Extension("swmm.output._output",
+            ['swmm/output/output.i'],
             include_dirs = ['swmm/output/'],
             libraries = ['swmm-output'],
             library_dirs = ['swmm/output/'],
-            sources = ['swmm/output/output.i'],
             swig_opts=['-py3'],
             language='C'
         )
     ],
-    namespace_packages=['swmm'],
-    packages = [microlib_name],
-    package_dir={'microlib_name': 'swmm/output'},
     py_modules = ['output'],
-    package_data = {microlib_name:['./*swmm-output.dll', './*swmm-output.so', './output.py']},
+    namespace_packages=['swmm'],
+#    packages = [microlib_name],
+#    package_data = {microlib_name:['./*swmm-output.dll', './*swmm-output.so']},
 
     install_requires = [
         'aenum'
