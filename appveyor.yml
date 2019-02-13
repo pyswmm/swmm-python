@@ -10,15 +10,21 @@ install:
     - choco install swig
     - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
     - appveyor-tools\secure-file -decrypt .coveralls.yml.enc -secret %passphrase%
-    - "%PYTHON%\\python.exe -m pip install wheel tox"
+    - "%PYTHON%\\python.exe -m pip install wheel tox cibuildwheel==0.10.1"
 
 
-build: off
-
-
-test_script:
+before_build:
     - before_build.bat %APPVEYOR_BUILD_FOLDER%
-    - "%PYTHON%\\python.exe -m tox -v"
+
+build_script:
+    - cibuildwheel --output-dir wheelhouse
+
+#test_script:
+#    - "%PYTHON%\\python.exe -m tox -v"
+
+artifacts:
+    - path: "wheelhouse\\*.whl"
+      name: Wheels
 
 cache:
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
