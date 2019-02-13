@@ -4,22 +4,23 @@ environment:
   passphrase:
     secure: En1qcj1/l2B3Nov+vOHlfRrFZk00bg1HPRouD64Gzfw=
   CIBW_SKIP: cp27-* *-win32
+  CIBW_BUILD_VERBOSITY: -vvv
   matrix:
-    - PYTHON: "C:\\Python35\\python.exe"
+    - PYTHON: "C:\\Python35"
 
 install:
     - choco install swig
     - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
     - appveyor-tools\secure-file -decrypt .coveralls.yml.enc -secret %passphrase%
-    - "%PYTHON% --version"
-    - "%PYTHON% -m pip install wheel tox cibuildwheel==0.10.1"
+    - "%PYTHON%\\python.exe --version"
+    - "%PYTHON%\\python.exe -m pip install wheel tox cibuildwheel==0.10.1"
 
 
 before_build:
     - before_build.bat %APPVEYOR_BUILD_FOLDER%
 
 build_script:
-    - "%PYTHON% -m cibuildwheel --output-dir wheelhouse"
+    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse"
 
 #test_script:
 #    - "%PYTHON%\\python.exe -m tox -v"
