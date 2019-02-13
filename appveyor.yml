@@ -24,7 +24,7 @@ before_build:
     - before_build.bat %APPVEYOR_BUILD_FOLDER%
 
 build_script:
-    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse"
+#    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse"
     - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\output"
     - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\toolkit"
 
