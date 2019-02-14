@@ -63,9 +63,6 @@ setup(
         'develop': DevelopCmd
     },
 
-    namespace_packages=['swmm'],
-
-
     author="Michael Tryby",
     author_email="Michael Tryby@epa.gov",
     description="swmm_python - SWIG generated python wrappers for swmm libraries",
