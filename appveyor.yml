@@ -27,7 +27,7 @@ build: off
 test_script:
     - "%PYTHON%\\python.exe -m tox -v"
 
-build_success:
+after_test:
     - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\output"
     - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\toolkit"
 
