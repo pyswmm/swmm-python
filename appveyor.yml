@@ -3,10 +3,10 @@
 environment:
   passphrase:
     secure: En1qcj1/l2B3Nov+vOHlfRrFZk00bg1HPRouD64Gzfw=
-#  CIBW_SKIP: cp27-* cp34-* cp35-* *-win32
-#  CIBW_BEFORE_BUILD: pip install six
-#  CIBW_TEST_COMMAND: pytest {project}\\tests
-#  CIBW_TEST_REQUIRES: pytest numpy
+  CIBW_SKIP: cp27-* cp34-* cp35-* *-win32
+  CIBW_BEFORE_BUILD: pip install six
+  CIBW_TEST_COMMAND: pytest {project}\\tests
+  CIBW_TEST_REQUIRES: pytest numpy
 
   matrix:
     - PYTHON: "C:\\Python36"
@@ -15,22 +15,25 @@ install:
     - choco install swig
     - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
     - appveyor-tools\secure-file -decrypt .coveralls.yml.enc -secret %passphrase%
-    - "%PYTHON%\\python.exe -m pip install tox"     # wheel cibuildwheel==0.10.1
+    - "%PYTHON%\\python.exe -m pip install tox wheel cibuildwheel==0.10.1"
 
 
 before_build:
     - before_build.bat
 
-build_script: off
-#    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\output"
-#    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\toolkit"
+build: off
+
 
 test_script:
     - "%PYTHON%\\python.exe -m tox -v"
 
-#artifacts:
-#    - path: "wheelhouse\\*.whl"
-#      name: Wheels
+build_success:
+    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\output"
+    - "%PYTHON%\\python.exe -m cibuildwheel --output-dir wheelhouse .\\swmm_python\\toolkit"
+
+artifacts:
+    - path: "wheelhouse\\*.whl"
+      name: Wheels
 
 cache:
   - C:\ProgramData\chocolatey\bin -> appveyor.yml

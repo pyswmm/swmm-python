@@ -18,7 +18,7 @@ from setuptools.command.build_ext import build_ext
 
 setup(
     name = 'swmm.toolkit',
-    version = '0.2.0.dev0',
+    version = '0.3.0.dev0',
 
     ext_modules = [
         Extension('swmm.toolkit._toolkit',
