@@ -13,35 +13,29 @@
 #
 
 
-from setuptools import setup, Extension, find_packages
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
-from setuptools.command.build_py import build_py
-
-
-class BuildCmd(build_py):
-    def run(self):
-        self.run_command("build_ext")
-        return super().run()
 
 
 setup(
-    name = 'swmm_output',
-    version = "0.3.0-dev",
-    cmdclass = {'build_py': BuildCmd},
+    name = 'swmm.output',
+    version = "0.3.0.dev0",
 
     ext_modules = [
         Extension("swmm.output._output",
-            ['swmm/output/output.i'],
+            sources = ['swmm/output/output_wrap.c'],
             include_dirs = ['swmm/output/'],
             libraries = ['swmm-output'],
             library_dirs = ['swmm/output/'],
-            swig_opts=['-py3'],
             language='C'
         )
     ],
     py_modules = ['output'],
+
     packages = ['swmm.output'],
     package_data = {'swmm.output':['./*swmm-output.dll', './*swmm-output.so']},
+
+    zip_safe=False,
 
     install_requires = [
         'aenum'

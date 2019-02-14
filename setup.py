@@ -14,7 +14,7 @@ import sys
 import subprocess
 
 
-PACKAGE_NAME = 'swmm'
+PACKAGE_NAME = 'swmm_python'
 SOURCES = {
   'swmm.toolkit': 'swmm_python/toolkit',
   'swmm.output': 'swmm_python/output'
@@ -56,7 +56,15 @@ class InstallCmd(install):
 
 setup(
     name=PACKAGE_NAME,
-    version="0.2.0a",
+    version="0.2.0a0",
+
+    cmdclass={
+        'develop': DevelopCmd
+    },
+
+    namespace_packages=['swmm'],
+
+
     author="Michael Tryby",
     author_email="Michael Tryby@epa.gov",
     description="swmm_python - SWIG generated python wrappers for swmm libraries",
@@ -64,12 +72,8 @@ setup(
     classifiers=[
         'Private :: Do Not Upload to pypi server',
     ],
-    cmdclass={
-        'install': InstallCmd,
-        'develop': DevelopCmd
-    },
+
     setup_requires=[
-        'six',
         'pytest-runner'
     ],
     tests_require=[
