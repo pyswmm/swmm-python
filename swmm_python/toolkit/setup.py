@@ -9,7 +9,6 @@
 #
 # Requires:
 #   Platform C language compiler
-#   SWIG
 #
 
 

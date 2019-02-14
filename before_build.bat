@@ -6,9 +6,16 @@
 ::  Author: Michael E. Tryby
 ::          US EPA - ORD/NRMRL
 ::
-:: Note: This script must be located at the root of the project folder
-::       in order to work correctly.
+:: Requires:
+::     CMake
+::     Visual Studio 2015
+::     SWIG
 ::
+:: Note:
+::     This script must be located at the root of the project folder
+:      in order to work correctly.
+::
+
 
 :: Determine project path and strip trailing \ from path
 set "PROJECT_PATH=%~dp0"
