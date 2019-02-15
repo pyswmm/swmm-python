@@ -2,7 +2,7 @@
 
 #
 #  __init__.py - SWMM output package
-# 
+#
 #  Date Created: August 9, 2018
 #
 #  Author:     Michael E. Tryby
@@ -27,7 +27,7 @@ __email__ = "tryby.michael@epa.gov"
 __status  = "Development"
 
 
-from enum import Enum, auto
+from enum import Enum
 from aenum import extend_enum
 from itertools import islice
 
@@ -35,20 +35,20 @@ from swmm.output import output as oapi
 
 
 class Units(Enum):
-    RAIN_INT   = auto()
-    SNOW_DEPTH = auto()
-    EVAP_RATE  = auto()
-    INFIL_RATE = auto()
-    FLOW_RATE  = auto()
-    ELEV       = auto()
-    PERCENT    = auto()
-    CONCEN     = auto()
-    HEAD       = auto()
-    VOLUME     = auto()
-    VELOCITY   = auto()
-    TEMP       = auto()
-    UNITLESS   = auto()
-    NONE       = auto()
+    RAIN_INT   = 1
+    SNOW_DEPTH = 2
+    EVAP_RATE  = 3
+    INFIL_RATE = 4
+    FLOW_RATE  = 5
+    ELEV       = 6
+    PERCENT    = 7
+    CONCEN     = 8
+    HEAD       = 9
+    VOLUME     = 10
+    VELOCITY   = 11
+    TEMP       = 12
+    UNITLESS   = 13
+    NONE       = 14
 
 
 class OutputMetadata:
@@ -91,11 +91,11 @@ class OutputMetadata:
         Units.VELOCITY:       "m/sec",
         Units.TEMP:           "deg C",
         Units.UNITLESS:       "unitless",
-        Units.NONE:           "", 
+        Units.NONE:           "",
 
         oapi.FlowUnits.CMS:   "cu m/sec",
         oapi.FlowUnits.LPS:   "L/sec",
-        oapi.FlowUnits.MLD:   "M L/day", 
+        oapi.FlowUnits.MLD:   "M L/day",
 
         oapi.ConcUnits.MG:    "mg/L",
         oapi.ConcUnits.UG:    "ug/L",
@@ -106,21 +106,21 @@ class OutputMetadata:
 
     def _build_pollut_metadata(self, output_handle):
         '''
-        Builds metadata for pollutant attributes at runtime. 
-        '''            
+        Builds metadata for pollutant attributes at runtime.
+        '''
         # Get number of pollutants
         n = oapi.getprojectsize(output_handle)[oapi.ElementType.POLLUT]
 
         if n > 0:
-            
+
             pollut_name = []
             pollut_units = []
-            
+
             # Get pollutant names
             for i in range(0, n):
-                pollut_name.append(oapi.getelementname(output_handle, 
+                pollut_name.append(oapi.getelementname(output_handle,
                                                        oapi.ElementType.POLLUT, i))
-            # Get pollutant units            
+            # Get pollutant units
             for u in oapi.getunits(output_handle)[2:]:
                 pollut_units.append(oapi.ConcUnits(u))
 
@@ -130,32 +130,32 @@ class OutputMetadata:
                 extend_enum(oapi.SubcatchAttribute, symbolic_name, 8 + i)
                 extend_enum(oapi.NodeAttribute, symbolic_name, 6 + i)
                 extend_enum(oapi.LinkAttribute, symbolic_name, 5 + i)
-               
+
             # Update metadata dictionary with pollutant metadata
             for i, attr in enumerate(islice(oapi.SubcatchAttribute, 8, None)):
-                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]]) 
-        
+                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
+
             for i, attr in enumerate(islice(oapi.NodeAttribute, 6, None)):
-                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]]) 
-        
+                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
+
             for i, attr in enumerate(islice(oapi.LinkAttribute, 5, None)):
-                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]]) 
-        
+                self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
+
 
     def __init__(self, output_handle):
         # Get units from binary output file
         self.units = oapi.getunits(output_handle)
-        
+
         # Determine prevailing unit system
         self._unit_system = oapi.UnitSystem(self.units[0])
         if self._unit_system == oapi.UnitSystem.US:
             self._unit_labels = type(self)._unit_labels_us_
         else:
             self._unit_labels = type(self)._unit_labels_si_
-        
-        # Set user flow units        
+
+        # Set user flow units
         self._flow = oapi.FlowUnits(self.units[1])
-        
+
         self._metadata = {
             oapi.SubcatchAttribute.RAINFALL:           ("Rainfall",                self._unit_labels[Units.RAIN_INT]),
             oapi.SubcatchAttribute.SNOW_DEPTH:         ("Snow Depth",              self._unit_labels[Units.SNOW_DEPTH]),
@@ -197,7 +197,7 @@ class OutputMetadata:
             oapi.SystemAttribute.VOLUME_STORED:        ("Volume Stored",           self._unit_labels[Units.VOLUME]),
             oapi.SystemAttribute.EVAP_RATE:            ("Evaporation Rate",        self._unit_labels[Units.EVAP_RATE])
         }
-        
+
         self._build_pollut_metadata(output_handle)
 
 
@@ -206,20 +206,20 @@ class OutputMetadata:
         Takes an attribute enum and returns the name and units in a tuple.
         '''
         return self._metadata[attribute]
-        
-        
+
+
 # Units of Measurement
 #
-# Units                  US Customary                           SI Metric    
+# Units                  US Customary                           SI Metric
 #    AREA_SUBCATCH          acres                 ac               hectares            ha
 #    AREA_STOR              square feet           sq ft            square meters       sq m
 #    AREA_POND              square feet           sq ft            square meters       sq m
 #    CAP_SUC                inches                in               millimeters         mm
-#    CONC                   milligrams/liter      mg/L             milligrams/liter    mg/L             
+#    CONC                   milligrams/liter      mg/L             milligrams/liter    mg/L
 #                           micrograms/liter      ug/L             micrograms/liter    ug/L
 #                           counts/liter          Count/L          counts/liter        Count/L
 #    INFIL_DECAY            1/hours               1/hrs            1/hours             1/hrs
-#    POLLUT_DECAY           1/days                1/days           1/days              1/days 
+#    POLLUT_DECAY           1/days                1/days           1/days              1/days
 #    DEPRES_STOR            inches                in               millimeters         mm
 #    DEPTH                  feet                  ft               meters              m
 #    DIAM                   feet                  ft               meters              m
@@ -244,5 +244,3 @@ class OutputMetadata:
 #    STREET_CLEAN_INT       days                  days             days                days
 #    VOLUME                 cubic feet            cu ft            cubic meters        cu m
 #    WIDTH                  feet                  ft               meters              m
-
-

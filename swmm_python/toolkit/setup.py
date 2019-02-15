@@ -9,27 +9,20 @@
 #
 # Requires:
 #   Platform C language compiler
-#   SWIG
 #
 
-try:
-    from setuptools import setup, Extension
-    from setuptools.command.build_ext import build_ext
-except ImportError:
-    from distutils.core import setup, Extension
-    from distutils.command.build_ext import build_ext
 
+from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
 
-microlib_name = 'swmm.toolkit'
 
 setup(
-    name = microlib_name,
-    version = '0.2.0-dev',
+    name = 'swmm.toolkit',
+    version = '0.3.0.dev0',
 
     ext_modules = [
         Extension('swmm.toolkit._toolkit',
-            sources = ['swmm/toolkit/toolkit.i'],
-            swig_opts=['-py3'],
+            sources = ['swmm/toolkit/toolkit_wrap.c'],
             include_dirs = ['swmm/toolkit/'],
             library_dirs = ['swmm/toolkit/'],
             libraries = ['swmm5'],
@@ -37,8 +30,12 @@ setup(
             language = 'C'
         )
     ],
+    # tox can't find swmm module at test time unless namespace is declared
     namespace_packages=['swmm'],
-    packages=[microlib_name],
+
+    packages=['swmm.toolkit'],
     py_modules = ['toolkit'],
-    package_data = {microlib_name:['*swmm5.dll', '*swmm5.so']},
+    package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},
+
+    zip_safe=False
 )

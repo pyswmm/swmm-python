@@ -23,8 +23,7 @@ SOURCES = {
 
 def install_microlibs(sources, develop=False):
     """ Use pip to install all microlibraries.  """
-    print("installing all microlibs in {} mode".format(
-              "development" if develop else "normal"))
+    print("installing all microlibs in {} mode".format("development" if develop else "normal"))
     wd = pathlib.Path.cwd()
     for k, v in iteritems(sources):
         try:
@@ -56,7 +55,13 @@ class InstallCmd(install):
 
 setup(
     name=PACKAGE_NAME,
-    version="0.2.0a",
+    version="0.3.0.dev0",
+
+    cmdclass={
+        'install': InstallCmd,
+        'develop': DevelopCmd
+    },
+
     author="Michael Tryby",
     author_email="Michael Tryby@epa.gov",
     description="swmm_python - SWIG generated python wrappers for swmm libraries",
@@ -64,10 +69,12 @@ setup(
     classifiers=[
         'Private :: Do Not Upload to pypi server',
     ],
-    cmdclass={
-        'install': InstallCmd,
-        'develop': DevelopCmd
-    },
-    setup_requires=["pytest-runner"],
-    tests_require=["pytest"]
+
+    setup_requires=[
+        'pytest-runner'
+    ],
+    tests_require=[
+        'pytest==4.2.0',
+        'numpy'
+    ]
 )
