@@ -29,9 +29,11 @@ setup(
             language='C'
         )
     ],
-    py_modules = ['output'],
-
+    # tox can't find swmm module at test time unless namespace is declared
+    namespace_packages = ['swmm'],
+    
     packages = ['swmm.output'],
+    py_modules = ['output'],
     package_data = {'swmm.output':['./*swmm-output.dll', './*swmm-output.so']},
 
     zip_safe=False,
