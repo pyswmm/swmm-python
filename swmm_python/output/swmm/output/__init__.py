@@ -19,8 +19,8 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.3.0"
-__date__ = "August 9, 2018"
+__version__ = "0.4.0"
+__date__ = "February 15, 2019"
 
 __maintainer__ = "Michael Tryby"
 __email__ = "tryby.michael@epa.gov"
