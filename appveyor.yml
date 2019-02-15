@@ -9,7 +9,7 @@ environment:
   CIBW_TEST_REQUIRES: pytest numpy
 
   matrix:
-    - PYTHON: "C:\\Python36"
+    - PYTHON: "C:\\Python36-x64"
 
 install:
     - choco install swig
