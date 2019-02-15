@@ -30,7 +30,9 @@ setup(
             language = 'C'
         )
     ],
+    # tox can't find swmm module at test time unless namespace is declared
     namespace_packages=['swmm'],
+
     packages=['swmm.toolkit'],
     py_modules = ['toolkit'],
     package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},

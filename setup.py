@@ -74,7 +74,7 @@ setup(
         'pytest-runner'
     ],
     tests_require=[
-        'pytest==4.0.2',
+        'pytest',
         'numpy'
     ]
 )
