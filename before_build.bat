@@ -35,7 +35,7 @@ cd swmm
 :: Build the project
 mkdir buildprod
 cd buildprod
-cmake -G"Visual Studio 14 2015 Win64" -DBUILD_TESTS=0 ..
+cmake -G"Visual Studio 14 2015 Win64" -DBUILD_TESTS=OFF ..
 cmake --build . --config Release
 
 

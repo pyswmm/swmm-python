@@ -161,54 +161,54 @@ SMO_nodeAttribute, SMO_linkAttribute, SMO_systemAttribute};
 
 /* INSERT EXCEPTION HANDLING FOR THESE FUNCTIONS */
 
-int DLLEXPORT SMO_open(SMO_Handle p_handle, const char* path);
+int SMO_open(SMO_Handle p_handle, const char* path);
 
-int DLLEXPORT SMO_getVersion(SMO_Handle p_handle, int* int_out);
-int DLLEXPORT SMO_getProjectSize(SMO_Handle p_handle, int** int_out, int* int_dim);
-int DLLEXPORT SMO_getUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
-//int DLLEXPORT SMO_getFlowUnits(SMO_Handle p_handle, int* int_out);
-//int DLLEXPORT SMO_getPollutantUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
-int DLLEXPORT SMO_getStartDate(SMO_Handle p_handle, double* double_out);
-int DLLEXPORT SMO_getTimes(SMO_Handle p_handle, SMO_time code, int* int_out);
-int DLLEXPORT SMO_getElementName(SMO_Handle p_handle, SMO_elementType type,
+int SMO_getVersion(SMO_Handle p_handle, int* int_out);
+int SMO_getProjectSize(SMO_Handle p_handle, int** int_out, int* int_dim);
+int SMO_getUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+//int SMO_getFlowUnits(SMO_Handle p_handle, int* int_out);
+//int SMO_getPollutantUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+int SMO_getStartDate(SMO_Handle p_handle, double* double_out);
+int SMO_getTimes(SMO_Handle p_handle, SMO_time code, int* int_out);
+int SMO_getElementName(SMO_Handle p_handle, SMO_elementType type,
     int elementIndex, char** string_out, int* slen);
 
-int DLLEXPORT SMO_getSubcatchSeries(SMO_Handle p_handle, int subcatchIndex,
+int SMO_getSubcatchSeries(SMO_Handle p_handle, int subcatchIndex,
     SMO_subcatchAttribute attr, int startPeriod, int endPeriod, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getNodeSeries(SMO_Handle p_handle, int nodeIndex, SMO_nodeAttribute attr,
+int SMO_getNodeSeries(SMO_Handle p_handle, int nodeIndex, SMO_nodeAttribute attr,
     int startPeriod, int endPeriod, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getLinkSeries(SMO_Handle p_handle, int linkIndex, SMO_linkAttribute attr,
+int SMO_getLinkSeries(SMO_Handle p_handle, int linkIndex, SMO_linkAttribute attr,
     int startPeriod, int endPeriod, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getSystemSeries(SMO_Handle p_handle, SMO_systemAttribute attr,
+int SMO_getSystemSeries(SMO_Handle p_handle, SMO_systemAttribute attr,
     int startPeriod, int endPeriod, float** float_out, int* int_dim);
 
-int DLLEXPORT SMO_getSubcatchAttribute(SMO_Handle p_handle, int timeIndex,
+int SMO_getSubcatchAttribute(SMO_Handle p_handle, int timeIndex,
     SMO_subcatchAttribute attr, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getNodeAttribute(SMO_Handle p_handle, int timeIndex,
+int SMO_getNodeAttribute(SMO_Handle p_handle, int timeIndex,
     SMO_nodeAttribute attr, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getLinkAttribute(SMO_Handle p_handle, int timeIndex,
+int SMO_getLinkAttribute(SMO_Handle p_handle, int timeIndex,
     SMO_linkAttribute attr, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getSystemAttribute(SMO_Handle p_handle, int timeIndex,
+int SMO_getSystemAttribute(SMO_Handle p_handle, int timeIndex,
     SMO_systemAttribute attr, float** float_out, int* int_dim);
 
-int DLLEXPORT SMO_getSubcatchResult(SMO_Handle p_handle, int timeIndex,
+int SMO_getSubcatchResult(SMO_Handle p_handle, int timeIndex,
     int subcatchIndex, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getNodeResult(SMO_Handle p_handle, int timeIndex,
+int SMO_getNodeResult(SMO_Handle p_handle, int timeIndex,
     int nodeIndex, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getLinkResult(SMO_Handle p_handle, int timeIndex,
+int SMO_getLinkResult(SMO_Handle p_handle, int timeIndex,
     int linkIndex, float** float_out, int* int_dim);
-int DLLEXPORT SMO_getSystemResult(SMO_Handle p_handle, int timeIndex,
+int SMO_getSystemResult(SMO_Handle p_handle, int timeIndex,
     int dummyIndex, float** float_out, int* int_dim);
 
 %exception;
 
 /* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
-int DLLEXPORT SMO_init(SMO_Handle* p_handle_out);
-int DLLEXPORT SMO_close(SMO_Handle* p_handle_inout);
-void DLLEXPORT SMO_free(void** array);
+int SMO_init(SMO_Handle* p_handle_out);
+int SMO_close(SMO_Handle* p_handle_inout);
+void SMO_free(void** array);
 
-void DLLEXPORT SMO_clearError(SMO_Handle p_handle);
-int DLLEXPORT SMO_checkError(SMO_Handle p_handle, char** msg_buffer);
+void SMO_clearError(SMO_Handle p_handle);
+int SMO_checkError(SMO_Handle p_handle, char** msg_buffer);
 
 
 /* CODE ADDED DIRECTLY TO SWIGGED INTERFACE MODULE */
