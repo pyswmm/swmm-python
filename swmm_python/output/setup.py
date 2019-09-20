@@ -18,7 +18,7 @@ from setuptools.command.build_ext import build_ext
 
 setup(
     name = 'swmm.output',
-    version = "0.4.0.dev1",
+    version = "0.4.0.dev2",
 
     ext_modules = [
         Extension("swmm.output._output",
