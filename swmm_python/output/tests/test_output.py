@@ -110,17 +110,17 @@ def test_getversion(handle):
 
 def test_getprojectsize(handle):
 
-    assert smo.getprojectsize(handle) == [8, 14, 13, 2]
+   assert smo.getprojectsize(handle) == [8, 14, 13, 2]
 
 
 def test_getflowunits(handle):
 
-    assert smo.getunits(handle)[0] == smo.FlowUnits.CFS.value
+   assert smo.getunits(handle)[0] == smo.FlowUnits.CFS.value
 
 
 def test_getpollutantunits(handle):
 
-    assert smo.getunits(handle)[2:] == [smo.ConcUnits.MG.value, smo.ConcUnits.UG.value]
+   assert smo.getunits(handle)[2:] == [smo.ConcUnits.MG.value, smo.ConcUnits.UG.value]
 
 
 def test_getstartdate(handle):

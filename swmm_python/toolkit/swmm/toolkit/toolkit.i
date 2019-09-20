@@ -1,14 +1,14 @@
 /*
  *  toolkit.i - SWIG interface description file for SWMM toolkit
- * 
+ *
  *  Created:    7/2/2018
  *  Author:     Michael E. Tryby
  *              US EPA - ORD/NRMRL
- *  
- *  Build command: 
+ *
+ *  Build command:
  *    $ python setup.py build
  *
-*/ 
+*/
 
 %module(package="swmm") toolkit
 %{
@@ -45,11 +45,11 @@ typedef void* SWMM_ProjectHandle;
 }
 /* used for functions that take in an opaque pointer (or NULL)
 and return a (possibly) different pointer */
-%typemap(argout) SWMM_ProjectHandle* ph_out, SWMM_ProjectHandle* ph_inout 
+%typemap(argout) SWMM_ProjectHandle* ph_out, SWMM_ProjectHandle* ph_inout
 {
  /* OUTPUT argout */
     %append_output(SWIG_NewPointerObj(SWIG_as_voidptr(retval$argnum), $1_descriptor, 0));
-} 
+}
 %typemap(in) SWMM_ProjectHandle* ph_inout (SWMM_ProjectHandle retval)
 {
    /* INOUT in */
@@ -63,15 +63,6 @@ and return a (possibly) different pointer */
 %typemap(out) int {
     $result = Py_None;
     Py_INCREF($result);
-}
-
-
-/* TYPEMAPS FOR DOUBLE ARGUMENT AS RETURN VALUE */
-%typemap(in, numinputs=0) double* double_out (double temp) {
-    $1 = &temp;
-}
-%typemap(argout) double* double_out {
-    %append_output(PyFloat_FromDouble(*$1));
 }
 
 
@@ -109,10 +100,10 @@ int  DLLEXPORT  swmm_free_project(SWMM_ProjectHandle *ph_inout);
 int  DLLEXPORT  swmm_run_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_open_project(SWMM_ProjectHandle ph, const char* f1, const char* f2, const char* f3);
 int  DLLEXPORT  swmm_start_project(SWMM_ProjectHandle ph, int saveFlag);
-int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double* double_out);
+int  DLLEXPORT  swmm_step_project(SWMM_ProjectHandle ph, double *OUTPUT);
 int  DLLEXPORT  swmm_end_project(SWMM_ProjectHandle ph);
 int  DLLEXPORT  swmm_report_project(SWMM_ProjectHandle ph);
-int  DLLEXPORT  swmm_getMassBalErr_project(SWMM_ProjectHandle ph, float* runoffErr, float* flowErr, float* qualErr);
+int  DLLEXPORT  swmm_getMassBalErr_project(SWMM_ProjectHandle ph, float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  DLLEXPORT  swmm_close_project(SWMM_ProjectHandle ph);
 
 /* DEPRECATING OLD ERROR HANDLING INTERFACE */

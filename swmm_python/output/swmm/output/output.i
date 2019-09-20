@@ -82,7 +82,7 @@ and return a (possibly) different pointer */
         o = PyUnicode_FromStringAndSize(*$1, *$2);
 
         $result = SWIG_Python_AppendOutput($result, o);
-        free(*$1);
+        SMO_free($1);
     }
 }
 
@@ -99,25 +99,25 @@ and return a (possibly) different pointer */
         PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
-      free(*$1);
+      SMO_free($1);
     }
 }
 
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF INT ARRAYS */
-%typemap(in, numinputs=0)int** int_out (long* temp), int* int_dim (int temp){
+%typemap(in, numinputs=0)int** int_out (int* temp), int* int_dim (int temp){
    $1 = &temp;
 }
 %typemap(argout) (int** int_out, int* int_dim) {
     if (*$1) {
       PyObject *o = PyList_New(*$2);
       int i;
-      long* temp = (long*)*$1;
+      int* temp = *$1;
       for(i=0; i<*$2; i++) {
-        PyList_SetItem(o, i, PyInt_FromLong(temp[i]));
+        PyList_SetItem(o, i, PyInt_FromLong((long)temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
-      free(*$1);
+      SMO_free($1);
     }
 }
 
@@ -155,6 +155,7 @@ SMO_nodeAttribute, SMO_linkAttribute, SMO_systemAttribute};
     if (SMO_checkError(arg1, &err_msg))
     {
         PyErr_SetString(PyExc_Exception, err_msg);
+        SMO_free((void **)&err_msg);
         SWIG_fail;
     }
 }
@@ -205,7 +206,7 @@ int SMO_getSystemResult(SMO_Handle p_handle, int timeIndex,
 /* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
 int SMO_init(SMO_Handle* p_handle_out);
 int SMO_close(SMO_Handle* p_handle_inout);
-void SMO_free(void** array);
+void SMO_free(void **memory);
 
 void SMO_clearError(SMO_Handle p_handle);
 int SMO_checkError(SMO_Handle p_handle, char** msg_buffer);
