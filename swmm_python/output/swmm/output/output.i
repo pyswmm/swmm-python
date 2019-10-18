@@ -240,8 +240,8 @@ class ElementType(enum.IntEnum):
     SUBCATCH = SMO_subcatch
     NODE = SMO_node
     LINK = SMO_link
-    POLLUT = SMO_pollut
     SYSTEM = SMO_sys
+    POLLUT = SMO_pollut
 
 class Time(enum.Enum):
     REPORT_STEP = SMO_reportStep
