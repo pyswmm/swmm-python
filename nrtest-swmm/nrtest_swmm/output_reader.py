@@ -37,7 +37,7 @@ def output_generator(path_ref):
     with OutputReader(path_ref) as sor:
 
         for period_index in range(0, sor.report_periods()):
-            for element_type in oapi.ElementType:
+            for element_type in range(0, oapi.ElementType.SYSTEM):
                 for element_index in range(0, sor.element_count(element_type)):
 
                     yield (sor.element_result(element_type, period_index, element_index),

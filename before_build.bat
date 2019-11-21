@@ -21,14 +21,14 @@
 set "PROJECT_PATH=%~dp0"
 IF %PROJECT_PATH:~-1%==\ set "PROJECT_PATH=%PROJECT_PATH:~0,-1%"
 
-set "TOOLKIT_PATH=swmm_python\toolkit\swmm\toolkit"
-set "OUTPUT_PATH=swmm_python\output\swmm\output"
+set "TOOLKIT_PATH=swmm-toolkit\swmm\toolkit"
+set "OUTPUT_PATH=swmm-output\swmm\output"
 
 
 :: Clone the project
 mkdir buildlib
 cd buildlib
-git clone --branch=feature-wrapper https://github.com/michaeltryby/Stormwater-Management-Model.git swmm
+git clone --branch=upstream-dev https://github.com/michaeltryby/Stormwater-Management-Model.git swmm
 cd swmm
 
 

@@ -18,7 +18,7 @@ from setuptools.command.build_ext import build_ext
 
 setup(
     name = 'swmm.output',
-    version = "0.4.0.dev2",
+    version = "0.4.0.dev3",
 
     ext_modules = [
         Extension("swmm.output._output",
@@ -34,7 +34,15 @@ setup(
 
     packages = ['swmm.output'],
     py_modules = ['output'],
-    package_data = {'swmm.output':['./*swmm-output.dll', './*swmm-output.so']},
+    package_data = {
+        'swmm.output': [
+            './*swmm-output.dll',
+            './*swmm-output.so',
+            'concrt140.dll',
+            'msvcp140.dll',
+            'vcruntime140.dll'
+        ]
+    },
 
     zip_safe=False,
 
