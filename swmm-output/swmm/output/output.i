@@ -167,8 +167,10 @@ int SMO_open(SMO_Handle p_handle, const char* path);
 int SMO_getVersion(SMO_Handle p_handle, int* int_out);
 int SMO_getProjectSize(SMO_Handle p_handle, int** int_out, int* int_dim);
 int SMO_getUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+
 //int SMO_getFlowUnits(SMO_Handle p_handle, int* int_out);
 //int SMO_getPollutantUnits(SMO_Handle p_handle, int** int_out, int* int_dim);
+
 int SMO_getStartDate(SMO_Handle p_handle, double* double_out);
 int SMO_getTimes(SMO_Handle p_handle, SMO_time code, int* int_out);
 int SMO_getElementName(SMO_Handle p_handle, SMO_elementType type,

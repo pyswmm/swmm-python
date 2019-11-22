@@ -26,6 +26,7 @@ set "OUTPUT_PATH=swmm-output\swmm\output"
 set "INSTALL_PATH=.\build\install"
 
 
+:: Build swmm-solver
 cd swmm-solver
 call tools\make.cmd /g "Visual Studio 14 2015 Win64"
 

@@ -110,7 +110,7 @@ def test_getversion(handle):
 
 def test_getprojectsize(handle):
 
-   assert smo.getprojectsize(handle) == [8, 14, 13, 2]
+   assert smo.getprojectsize(handle) == [8, 14, 13, 1, 2]
 
 
 def test_getflowunits(handle):
