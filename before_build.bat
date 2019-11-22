@@ -23,30 +23,21 @@ IF %PROJECT_PATH:~-1%==\ set "PROJECT_PATH=%PROJECT_PATH:~0,-1%"
 
 set "TOOLKIT_PATH=swmm-toolkit\swmm\toolkit"
 set "OUTPUT_PATH=swmm-output\swmm\output"
+set "INSTALL_PATH=.\build\install"
 
 
-:: Clone the project
-mkdir buildlib
-cd buildlib
-git clone --branch=upstream-dev https://github.com/michaeltryby/Stormwater-Management-Model.git swmm
-cd swmm
-
-
-:: Build the project
-mkdir buildprod
-cd buildprod
-cmake -G"Visual Studio 14 2015 Win64" -DBUILD_TESTS=OFF ..
-cmake --build . --config Release
+cd swmm-solver
+call tools\make.cmd /g "Visual Studio 14 2015 Win64"
 
 
 :: Copy files required for python package build
-copy /Y .\bin\Release\swmm5.dll  %PROJECT_PATH%\%TOOLKIT_PATH%
-copy /Y .\lib\Release\swmm5.lib  %PROJECT_PATH%\%TOOLKIT_PATH%
-copy /Y ..\include\*.h  %PROJECT_PATH%\%TOOLKIT_PATH%
+copy /Y %INSTALL_PATH%\bin\swmm5.dll  %PROJECT_PATH%\%TOOLKIT_PATH%
+copy /Y %INSTALL_PATH%\lib\swmm5.lib  %PROJECT_PATH%\%TOOLKIT_PATH%
+copy /Y %INSTALL_PATH%\include\swmm5.h  %PROJECT_PATH%\%TOOLKIT_PATH%
 
-copy /Y .\bin\Release\swmm-output.dll  %PROJECT_PATH%\%OUTPUT_PATH%
-copy /Y .\lib\Release\swmm-output.lib  %PROJECT_PATH%\%OUTPUT_PATH%
-copy /Y ..\tools\swmm-output\include\*.h  %PROJECT_PATH%\%OUTPUT_PATH%
+copy /Y %INSTALL_PATH%\bin\swmm-output.dll  %PROJECT_PATH%\%OUTPUT_PATH%
+copy /Y %INSTALL_PATH%\lib\swmm-output.lib  %PROJECT_PATH%\%OUTPUT_PATH%
+copy /Y %INSTALL_PATH%\include\swmm_output*.h  %PROJECT_PATH%\%OUTPUT_PATH%
 
 
 :: Generate swig wrappers

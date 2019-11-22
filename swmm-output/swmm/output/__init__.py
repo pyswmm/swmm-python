@@ -118,8 +118,7 @@ class OutputMetadata:
 
             # Get pollutant names
             for i in range(0, n):
-                pollut_name.append(oapi.getelementname(output_handle,
-                                                       oapi.ElementType.POLLUT, i))
+                pollut_name.append(oapi.getelementname(output_handle, oapi.ElementType.POLLUT, i))
             # Get pollutant units
             for u in oapi.getunits(output_handle)[2:]:
                 pollut_units.append(oapi.ConcUnits(u))
