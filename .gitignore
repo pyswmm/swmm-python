@@ -12,7 +12,9 @@
 *.lib
 *.exp
 *.so
-*.h
+swmm-output/swmm/output/*.h
+swmm-toolkit/swmm/toolkit/*.h
+
 buildlib/
 
 build/
