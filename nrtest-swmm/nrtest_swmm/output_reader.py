@@ -14,6 +14,9 @@ The module output_reader provides the class used to implement the output
 generator.
 '''
 
+# system import
+from itertools import islice
+
 # project import
 from swmm.output import output as oapi
 
@@ -24,7 +27,7 @@ def output_generator(path_ref):
     yield element results. It is useful for comparing contents of binary files
     for numerical regression testing.
 
-    The generator yields a numpy array containing the SWMM element result.
+    The generator yields a list containing the SWMM element result.
 
     Arguments:
         path_ref - path to result file
@@ -37,11 +40,11 @@ def output_generator(path_ref):
     with OutputReader(path_ref) as sor:
 
         for period_index in range(0, sor.report_periods()):
-            for element_type in range(0, oapi.ElementType.SYSTEM):
+            for element_type in islice(oapi.ElementType, 4):
                 for element_index in range(0, sor.element_count(element_type)):
 
                     yield (sor.element_result(element_type, period_index, element_index),
-                            (element_type, period_index, element_index))
+                        (element_type, period_index, element_index))
 
 
 class OutputReader():
@@ -73,7 +76,7 @@ class OutputReader():
         return oapi.gettimes(self.handle, oapi.Time.NUM_PERIODS)
 
     def element_count(self, element_type):
-        return self.count[element_type.value]
+        return self.count[element_type]
 
     def element_result(self, element_type, time_index, element_index):
         return self.get_element_result[element_type](self.handle, time_index, element_index)
