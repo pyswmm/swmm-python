@@ -1,4 +1,4 @@
 [submodule "swmm-solver"]
 	path = swmm-solver
-	url = https://github.com/michaeltryby/Stormwater-Management-Model.git
+	url = https://github.com/SWMM-Project/swmm-solver.git
 	branch = upstream-dev
