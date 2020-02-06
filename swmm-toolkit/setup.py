@@ -9,6 +9,9 @@
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
 #
+# Usage:
+#   python setup.py build -- -G"Visual Studio 15 2017 Win64" ..
+#
 
 
 from skbuild import setup
