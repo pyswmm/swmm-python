@@ -2,9 +2,6 @@
 
 
 ## Contents
-* swmm-python - SWIG based wrappers for the SWMM Toolkit and Output libraries.
+* nrtest-swmm  - Plugin for performing numerical regression testing on swmm-solver.
+* swmm-toolkit - SWIG based wrappers for the swmm-solver and swmm-output libraries.
 * ...
-
-
-## Build Notes
-Note that swmm-python wraps the feature-wrapper branch of SWMM v5.1.12.  
