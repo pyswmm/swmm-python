@@ -1,41 +1,29 @@
 # -*- coding: utf-8 -*-
 
 #
-# setup.py - Setup script for swmm_toolkit python extension
+# setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    7/2/2018
+# Modified:   2/6/2020
+#
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
 #
-# Requires:
-#   Platform C language compiler
-#
 
 
-from setuptools import setup, Extension
-from setuptools.command.build_ext import build_ext
+from skbuild import setup
 
 
 setup(
-    name = 'swmm.toolkit',
-    version = '0.3.0.dev0',
+    name = 'swmm-toolkit',
+    version = '0.4.0',
 
-    ext_modules = [
-        Extension('swmm.toolkit._toolkit',
-            sources = ['swmm/toolkit/toolkit_wrap.c'],
-            include_dirs = ['swmm/toolkit/'],
-            library_dirs = ['swmm/toolkit/'],
-            libraries = ['swmm5'],
-            extra_compile_args = ["/D WITH_GENX"],
-            language = 'C'
-        )
-    ],
-    # tox can't find swmm module at test time unless namespace is declared
-    namespace_packages=['swmm'],
+    package_dir={"":"swmm"},
+    packages=['swmm.solver', 'swmm.output'],
+    py_modules = ['solver', 'output'],
 
-    packages=['swmm.toolkit'],
-    py_modules = ['toolkit'],
-    package_data = {'swmm.toolkit':['*swmm5.dll', '*swmm5.so']},
+    package_data = {'swmm.solver':['*solver.*', '*.dylib', '*.dll', '*.so'],
+                    'swmm.output':['*output.*', '*.dylib', '*.dll', '*.so']},
 
     zip_safe=False
 )

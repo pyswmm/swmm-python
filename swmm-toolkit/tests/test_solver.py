@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from swmm.toolkit import toolkit as smtk
+from swmm.solver import solver as smtk
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'Example1.inp')

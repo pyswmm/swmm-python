@@ -8,24 +8,10 @@
 
 *.py[ocd]
 
-*.dll
-*.lib
-*.exp
-*.so
-swmm-output/swmm/output/*.h
-swmm-toolkit/swmm/toolkit/*.h
-
-buildlib/
-
-build/
+_skbuild/
 dist/
 .pytest_cache/
 *.egg-info/
 
-output.py
-output_wrap.c
 
-toolkit.py
-toolkit_wrap.c
-
-swmm_python/toolkit/tests/data/test.*
+swmm-toolkit/tests/data/*
