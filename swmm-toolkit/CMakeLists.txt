@@ -28,6 +28,4 @@ include(${SWIG_USE_FILE})
 add_subdirectory(swmm-solver)
 
 
-add_subdirectory(swmm/output)
-
-add_subdirectory(swmm/solver)
+add_subdirectory(src/swmm/toolkit)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-#  __init__.py - SWMM solver package
+#  __init__.py - SWMM output package
 #
 #  Date Created: August 9, 2018
 #
@@ -10,13 +10,13 @@
 #
 
 '''
-A low level pythonic API for the swmm5 dll using SWIG.
+A low level pythonic API for the swmm-output dll using SWIG.
 '''
 
 
 __author__ = "Michael Tryby"
 __copyright__ = "None"
-__credits__ = "Bryant McDonnell"
+__credits__ = "Colleen Barr"
 __license__ = "CC0 1.0 Universal"
 
 __version__ = "0.4.0"

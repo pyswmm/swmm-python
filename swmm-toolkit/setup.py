@@ -4,7 +4,7 @@
 # setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    7/2/2018
-# Modified:   2/6/2020
+# Modified:   2/21/2020
 #
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
@@ -21,12 +21,14 @@ setup(
     name = 'swmm-toolkit',
     version = '0.4.0',
 
-    package_dir={"":"swmm"},
-    packages=['swmm.solver', 'swmm.output'],
-    py_modules = ['solver', 'output'],
+    cmake_args = ['-GVisual Studio 14 2015 Win64'],
 
-    package_data = {'swmm.solver':['*solver.*', '*.dylib', '*.dll', '*.so'],
-                    'swmm.output':['*output.*', '*.dylib', '*.dll', '*.so']},
+    package_dir={'': 'src'},
+    packages=['swmm.toolkit'],
+
+    package_data = {
+        'swmm.toolkit':['*solver*','*output*', '*.dylib', '*.dll', '*.so'],
+    },
 
     zip_safe=False
 )

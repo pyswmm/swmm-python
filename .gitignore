@@ -9,6 +9,8 @@
 *.py[ocd]
 
 _skbuild/
+_cmake_test_compile/
+
 dist/
 .pytest_cache/
 *.egg-info/
