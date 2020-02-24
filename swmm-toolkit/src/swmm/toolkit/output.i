@@ -68,7 +68,7 @@ and return a (possibly) different pointer */
     int *time
 }
 
-%cstring_output_allocate_size(char **elementName, int *size, SMO_free(*$1));
+%cstring_output_allocate_size(char **elementName, int *size, SMO_freeMemory($1));
 
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF FLOAT ARRAYS */
@@ -83,7 +83,7 @@ and return a (possibly) different pointer */
         PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
-      SMO_free($1);
+      SMO_freeMemory($1);
     }
 }
 
@@ -100,7 +100,7 @@ and return a (possibly) different pointer */
             PyList_SetItem(o, i, PyInt_FromLong((long)temp[i]));
         }
         $result = SWIG_Python_AppendOutput($result, o);
-        SMO_free($1);
+        SMO_freeMemory($1);
     }
 }
 
@@ -144,7 +144,7 @@ and return a (possibly) different pointer */
     if (SMO_checkError(arg1, &err_msg))
     {
         PyErr_SetString(PyExc_Exception, err_msg);
-        SMO_free((void **)&err_msg);
+        SMO_freeMemory((void *)err_msg);
         SWIG_fail;
     }
 }
@@ -153,11 +153,11 @@ and return a (possibly) different pointer */
 
 %ignore SMO_getFlowUnits;
 %ignore SMO_getPollutantUnits;
-
 %ignore SMO_free;
+
+%ignore SMO_freeMemory;
 %ignore SMO_clearError;
 %ignore SMO_checkError;
-
 
 %include "swmm_output.h"
 
