@@ -151,9 +151,9 @@ and return a (possibly) different pointer */
 
 /* INSERT EXCEPTION HANDLING FOR THESE FUNCTIONS */
 
-%ignore SMO_getFlowUnits;
-%ignore SMO_getPollutantUnits;
-%ignore SMO_free;
+//%ignore SMO_getFlowUnits;
+//%ignore SMO_getPollutantUnits;
+//%ignore SMO_free;
 
 %ignore SMO_freeMemory;
 %ignore SMO_clearError;
