@@ -19,7 +19,8 @@
 #define SWIG_FILE_WITH_INIT
 
 #include "swmm_output_enums.h"
-#include "swmm_output.h"
+#include "swmm_output_wtf.h"
+
 %}
 
 
@@ -29,7 +30,7 @@
 
 /* TYPEMAPS FOR VOID POINTER */
 /* Used for functions that output a new opaque pointer */
-%typemap(in, numinputs=0) SMO_Handle *p_handle_out (void *retval)
+%typemap(in, numinputs=0) SMO_Handle *p_handle (void *retval)
 {
  /* OUTPUT in */
     retval = NULL;
@@ -37,7 +38,7 @@
 }
 /* used for functions that take in an opaque pointer (or NULL)
 and return a (possibly) different pointer */
-%typemap(argout) SMO_Handle *p_handle_out
+%typemap(argout) SMO_Handle *p_handle
 {
  /* OUTPUT argout */
     %append_output(SWIG_NewPointerObj(SWIG_as_voidptr(retval$argnum), $1_descriptor, 0));
@@ -151,14 +152,10 @@ and return a (possibly) different pointer */
 
 /* INSERT EXCEPTION HANDLING FOR THESE FUNCTIONS */
 
-//%ignore SMO_getFlowUnits;
-//%ignore SMO_getPollutantUnits;
-//%ignore SMO_free;
-
 %ignore SMO_freeMemory;
 %ignore SMO_clearError;
 %ignore SMO_checkError;
 
-%include "swmm_output.h"
+%include "swmm_output_wtf.h"
 
 %exception;
