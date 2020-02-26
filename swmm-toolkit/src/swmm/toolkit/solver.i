@@ -14,6 +14,7 @@
 
 
 %include "typemaps.i"
+%include "cstring.i"
 
 
 %module(package="swmm.toolkit") solver
@@ -61,7 +62,7 @@ int  swmm_start(int saveFlag);
 int  swmm_step(double *OUTPUT);
 int  swmm_end(void);
 int  swmm_report(void);
-int  swmm_getMassBalErr(float *runoffErr, float *flowErr, float *qualErr);
+int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  swmm_close(void);
 int  swmm_getVersion(void);
 
