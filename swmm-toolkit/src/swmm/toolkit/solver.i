@@ -14,7 +14,6 @@
 
 
 %include "typemaps.i"
-%include "cstring.i"
 
 
 %module(package="swmm.toolkit") solver
@@ -36,24 +35,21 @@
 %feature("autodoc", "2");
 
 
-/* RENAME REMAINING FUNCTIONS PYTHON STYLE */
-//%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
+/* RENAME FUNCTIONS PYTHON STYLE */
 %include "solver_rename.i"
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
-//%exception
-//{
-//    char* err_msg;
-//    swmm_clearError_project(arg1);
-//    $function
-//    if (swmm_checkError_project(arg1, &err_msg))
-//    {
-//        PyErr_SetString(PyExc_Exception, err_msg);
-//        free(err_msg);
-//        SWIG_fail;
-//    }
-//}
+%exception
+{
+    $function
+    if (result > 0) {
+        char errmsg[90];
+        swmm_getError(errmsg, 90);
+        PyErr_SetString(PyExc_Exception, errmsg);
+        SWIG_fail;
+    }
+}
 
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
@@ -66,9 +62,4 @@ int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  swmm_close(void);
 int  swmm_getVersion(void);
 
-
-//%exception;
-
-/* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
-int  swmm_getError(char *errMsg, int msgLen);
-int  swmm_getWarnings(void);
+%exception;

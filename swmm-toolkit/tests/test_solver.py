@@ -15,6 +15,7 @@ DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'Example1.inp')
 REPORT_FILE_TEST = os.path.join(DATA_PATH, 'test.rpt')
 OUTPUT_FILE_TEST = os.path.join(DATA_PATH, 'test.out')
+INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'nodata.inp')
 
 
 # def test_allocfree():
@@ -35,6 +36,11 @@ def test_openclose():
     solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
     solver.close()
     # solver.free_project(_handle)
+
+
+def test_errorhandling():
+    with pytest.raises(Exception):
+        solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
 
 
 @pytest.fixture()

@@ -25,10 +25,9 @@
 
 
 /* MARK FUNCTIONS FOR ALLOCATING AND DEALLOCATING HANDLES */
-/*
 %newobject SMO_init;
 %delobject SMO_close;
- */
+
 
 /* TYPEMAPS FOR VOID POINTER */
 /* Used for functions that output a new opaque pointer */
