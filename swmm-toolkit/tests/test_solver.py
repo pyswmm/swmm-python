@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from swmm.solver import solver as smtk
+from swmm.toolkit import solver
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'Example1.inp')
@@ -17,49 +17,48 @@ REPORT_FILE_TEST = os.path.join(DATA_PATH, 'test.rpt')
 OUTPUT_FILE_TEST = os.path.join(DATA_PATH, 'test.out')
 
 
-def test_allocfree():
-    _handle = smtk.alloc_project()
-    assert(_handle != None)
-    _handle = smtk.free_project(_handle)
-    assert(_handle == None)
+# def test_allocfree():
+#     _handle = solver.alloc_project()
+#     assert(_handle != None)
+#     _handle = solver.free_project(_handle)
+#     assert(_handle == None)
 
 
 def test_run():
-    _handle = smtk.alloc_project()
-    smtk.run(_handle, INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
-    smtk.free_project(_handle)
+    # _handle = solver.alloc_project()
+    solver.run(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    # solver.free_project(_handle)
 
 
 def test_openclose():
-    _handle = smtk.alloc_project()
-    smtk.open(_handle, INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
-    smtk.close(_handle)
-    smtk.free_project(_handle)
+    # _handle = solver.alloc_project()
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    solver.close()
+    # solver.free_project(_handle)
 
 
 @pytest.fixture()
 def handle(request):
-    _handle = smtk.alloc_project()
-    smtk.open(_handle, INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    # _handle = solver.alloc_project()
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
 
     def close():
-        smtk.close(_handle)
-        smtk.free_project(_handle)
+        solver.close()
+        # solver.free_project(_handle)
 
     request.addfinalizer(close)
-    return _handle
+    # return _handle
 
 
 def test_step(handle):
+    solver.start(0)
 
-     smtk.start(handle, 0)
+    while True:
+        time = solver.step()
 
-     while True:
-         time = smtk.step(handle)
+        if time == 0.:
+            break
 
-         if time == 0.:
-             break
+    solver.end()
 
-     smtk.end(handle)
-
-     smtk.report(handle)
+    solver.report()

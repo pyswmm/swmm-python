@@ -12,14 +12,16 @@
  *
 */
 
-%module(package="swmm") solver
-%{
-#include "swmm5.h"
-
-#define SWIG_FILE_WITH_INIT
-%}
 
 %include "typemaps.i"
+
+
+%module(package="swmm.toolkit") solver
+%{
+#define SWIG_FILE_WITH_INIT
+
+#include "swmm5.h"
+%}
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
@@ -34,7 +36,8 @@
 
 
 /* RENAME REMAINING FUNCTIONS PYTHON STYLE */
-%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
+//%rename("%(regex:/^\w+_([a-zA-Z]+)_\w+$/\L\\1/)s") "";
+%include "solver_rename.i"
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
@@ -52,21 +55,19 @@
 //}
 
 // CANONICAL API
-int  swmm_run(char* f1, char* f2, char* f3);
-int  swmm_open(char* f1, char* f2, char* f3);
+int  swmm_run(char *f1, char *f2, char *f3);
+int  swmm_open(char *f1, char *f2, char *f3);
 int  swmm_start(int saveFlag);
-int  swmm_step(double* elapsedTime);
+int  swmm_step(double *OUTPUT);
 int  swmm_end(void);
 int  swmm_report(void);
-int  swmm_getMassBalErr(float* runoffErr, float* flowErr, float* qualErr);
+int  swmm_getMassBalErr(float *runoffErr, float *flowErr, float *qualErr);
 int  swmm_close(void);
 int  swmm_getVersion(void);
-
-
 
 
 //%exception;
 
 /* NO EXCEPTION HANDLING FOR THESE FUNCTIONS */
-int  swmm_getError(char* errMsg, int msgLen);
+int  swmm_getError(char *errMsg, int msgLen);
 int  swmm_getWarnings(void);
