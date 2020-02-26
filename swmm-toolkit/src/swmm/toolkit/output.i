@@ -19,14 +19,16 @@
 #define SWIG_FILE_WITH_INIT
 
 #include "swmm_output_enums.h"
-#include "swmm_output_wtf.h"
+#include "swmm_output.h"
 
 %}
 
 
 /* MARK FUNCTIONS FOR ALLOCATING AND DEALLOCATING HANDLES */
+/*
 %newobject SMO_init;
 %delobject SMO_close;
+ */
 
 /* TYPEMAPS FOR VOID POINTER */
 /* Used for functions that output a new opaque pointer */
@@ -69,7 +71,7 @@ and return a (possibly) different pointer */
     int *time
 }
 
-%cstring_output_allocate_size(char **elementName, int *size, SMO_freeMemory($1));
+%cstring_output_allocate_size(char **elementName, int *size, SMO_freeMemory(*$1));
 
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF FLOAT ARRAYS */
@@ -84,24 +86,24 @@ and return a (possibly) different pointer */
         PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
-      SMO_freeMemory($1);
+      SMO_freeMemory(*$1);
     }
 }
 
 
-/* TYPEMAPS FOR MEMORY MANAGEMNET OF INT ARRAYS */
-%typemap(in, numinputs=0) (int **int_out (int *temp), int *int_dim (int temp)) {
-   $1 = &temp;
+/* TYPEMAPS FOR MEMORY MANAGEMENT OF INT ARRAYS */
+%typemap(in, numinputs=0)int **int_out (long *temp), int *int_dim (int temp){
+    $1 = &temp;
 }
-%typemap(argout) (int** int_out, int* int_dim) {
+%typemap(argout) (int **int_out, int *int_dim) {
     if (*$1) {
-        int* temp = *$1;
+        long *temp = *$1;
         PyObject *o = PyList_New(*$2);
         for(int i=0; i<*$2; i++) {
-            PyList_SetItem(o, i, PyInt_FromLong((long)temp[i]));
+            PyList_SetItem(o, i, PyInt_FromLong(temp[i]));
         }
         $result = SWIG_Python_AppendOutput($result, o);
-        SMO_freeMemory($1);
+        SMO_freeMemory(*$1);
     }
 }
 
@@ -137,6 +139,11 @@ and return a (possibly) different pointer */
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
+%exception SMO_init
+{
+    $function
+}
+
 %exception
 {
     char *err_msg;
@@ -156,6 +163,6 @@ and return a (possibly) different pointer */
 %ignore SMO_clearError;
 %ignore SMO_checkError;
 
-%include "swmm_output_wtf.h"
+%include "swmm_output.h"
 
 %exception;

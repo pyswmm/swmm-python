@@ -71,7 +71,7 @@ class OutputMetadata:
         Builds metadata for pollutant attributes at runtime.
         '''
         # Get number of pollutants
-        n = output.getprojectsize(output_handle)[output_enum.ElementType.POLLUT]
+        n = output.get_proj_size(output_handle)[output_enum.ElementType.POLLUT]
 
         if n > 0:
 
@@ -80,11 +80,11 @@ class OutputMetadata:
 
             # Get pollutant names
             for i in range(0, n):
-                pollut_name.append(output.getelementname(
+                pollut_name.append(output.get_elem_name(
                     output_handle, output_enum.ElementType.POLLUT, i))
             # Get pollutant units
-            for u in output.getunits(output_handle)[2:]:
-                pollut_units.append(output.ConcUnits(u))
+            for u in output.get_units(output_handle)[2:]:
+                pollut_units.append(output_enum.ConcUnits(u))
 
             # Create dictionary keys
             for i in range(1, n):
@@ -106,7 +106,7 @@ class OutputMetadata:
 
     def __init__(self, output_handle):
         # Get units from binary output file
-        self.units = output.getunits(output_handle)
+        self.units = output.get_units(output_handle)
 
         # Determine prevailing unit system
         self._unit_system = output_enum.UnitSystem(self.units[0])
