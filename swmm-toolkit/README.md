@@ -17,7 +17,7 @@
 
 ## Basic Usage
 
-Run an SWMM simulation. 
+Run a SWMM simulation. 
 ```
 from swmm.toolkit import solver
 
