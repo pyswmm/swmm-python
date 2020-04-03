@@ -17,8 +17,11 @@ cmake_minimum_required (VERSION 3.13)
 project(swmm-toolkit)
 
 
-set(Python_ROOT_DIR "C:/Users/mtryby/dev/Continuum/anaconda3")
-find_package(Python 3.6 COMPONENTS Interpreter Development)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+
+set(Python_ROOT_DIR "/usr/local/anaconda3")
+find_package(Python 3.7 COMPONENTS Interpreter Development)
 message(STATUS "Python_VERSION: ${Python_VERSION}")
 
 find_package(SWIG REQUIRED)

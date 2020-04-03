@@ -1,13 +1,15 @@
 #
-# CMakeLists.txt - CMake configuration file for swmm.output python package
+# CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Modified:
+# Modified:  Apr 3, 2020
 #
 # Author: Michael E. Tryby
 #         US EPA ORD/CESER
 #
 
+
+set(CMAKE_SWIG_FLAGS -py3)
 
 
 #######   OUTPUT TARGET   #######
@@ -18,6 +20,8 @@ set_property(SOURCE output.i
     )
 
 SWIG_ADD_LIBRARY(output
+    TYPE
+        SHARED
     LANGUAGE
         python
     SOURCES
@@ -43,14 +47,14 @@ install(
         "$<TARGET_FILE:output>"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"
     DESTINATION
-        "swmm/toolkit"
+        "src/swmm/toolkit"
 )
 
 install(
     TARGETS
-        swmm-output RUNTIME
+        swmm-output LIBRARY
     DESTINATION
-        "swmm/toolkit"
+        "src/swmm/toolkit"
 )
 
 
@@ -80,17 +84,17 @@ install(
         "$<TARGET_FILE:solver>"
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"
     DESTINATION
-        "swmm/toolkit"
+        "src/swmm/toolkit"
 )
 
 install(
     TARGETS
-        swmm5 RUNTIME
+        swmm5 LIBRARY
     DESTINATION
-        "swmm/toolkit"
+        "src/swmm/toolkit"
 )
 
 
-set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION "swmm/toolkit")
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION "src/swmm/toolkit")
 set(CMAKE_INSTALL_OPENMP_LIBRARIES TRUE)
 include(InstallRequiredSystemLibraries)
