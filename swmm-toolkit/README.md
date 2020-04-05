@@ -8,7 +8,7 @@
 `swmm-toolkit` makes SWMM a fully fledged Python extension with:  
 
  - Python integration at the speed of C
- - full access to library APIs
+ - Full access to library APIs
  - Pythonic naming, enums, exceptions, and return value handling 
 
 
