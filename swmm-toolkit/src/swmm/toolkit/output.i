@@ -143,6 +143,11 @@ and return a (possibly) different pointer */
     $function
 }
 
+%exception SMO_close
+{
+    $function
+}
+
 %exception
 {
     char *err_msg;
