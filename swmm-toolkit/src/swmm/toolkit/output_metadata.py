@@ -13,7 +13,7 @@ from itertools import islice
 
 from aenum import extend_enum
 
-from swmm.toolkit import output_enum, output
+from swmm.toolkit import output, output_enum
 
 
 class OutputMetadata:
