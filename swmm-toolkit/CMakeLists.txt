@@ -17,7 +17,8 @@ cmake_minimum_required (VERSION 3.13)
 project(swmm-toolkit)
 
 
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+# Sets the position independent code property for all targets
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
 set(Python_FIND_VIRTUALENV FIRST)
@@ -27,6 +28,8 @@ message(STATUS "Python_VERSION: ${Python_VERSION}")
 
 
 find_package(SWIG REQUIRED)
+cmake_policy(SET CMP0078 NEW)
+cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
 
