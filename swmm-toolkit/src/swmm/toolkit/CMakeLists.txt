@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Modified:  Apr 3, 2020
+# Modified:  Apr 17, 2020
 #
 # Author: Michael E. Tryby
 #         US EPA ORD/CESER
@@ -43,7 +43,7 @@ target_link_libraries(output
 # /usr/local/anaconda3/lib/python3.7/site-packages/swmm/toolkit
 # Location of package libraries at runtime
 # /usr/local/anaconda3/lib
-# Rpath from .so to .dylib
+# Rpath from _output.so to libswmm-output.dylib
 # @loader_path/../../../..
 
 set_target_properties(output

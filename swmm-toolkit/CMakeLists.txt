@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm-toolkit python package
 #
 # Created:   Feb 6, 2020
-# Modified:
+# Modified   Apr 16, 2020
 #
 # Author: Michael E. Tryby
 #         US EPA ORD/CESER

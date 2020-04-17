@@ -5,8 +5,8 @@ from string import Template
 
 import pytest
 
-from swmm.toolkit import toolkit as smtk
-from swmm.output import output as smo
+from swmm.toolkit import solver as smtk
+from swmm.toolkit import output as smo
 
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
@@ -22,20 +22,20 @@ def test_integrated():
         example = template.substitute(N = i)
         example_n = os.path.join(DATA_PATH, example)
 
-        handle = smtk.alloc_project()
+        #handle = smtk.alloc_project()
         #smtk.open(handle, INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
 
-        smtk.run(handle, example_n, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+        smtk.run(example_n, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
 
         #smtk.report(handle)
-        massbal = smtk.getmassbalerr(handle)
+        massbal = smtk.get_mass_bal_err()
 
         #smtk.close(handle)
-        smtk.free_project(handle)
+        #smtk.free_project(handle)
 
 
         _handle = smo.init()
         smo.open(_handle, OUTPUT_FILE_TEST)
-        size = smo.getprojectsize(_handle)
-        units = smo.getunits(_handle)
+        size = smo.get_proj_size(_handle)
+        units = smo.get_units(_handle)
         smo.close(_handle)

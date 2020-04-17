@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
-
 #
 # setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    7/2/2018
-# Modified:   4/3/2020
+# Modified:   4/17/2020
 #
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
 #
-# Usage:
-#   python setup.py build -- -G"Visual Studio 15 2017 Win64" ..
+# Suggested Usage:
+#   python setup.py build
+#   python setup.py bdist_wheel
 #
 
 import platform
@@ -27,7 +26,7 @@ if platform_system == "Windows":
     cmake_args = ["-GVisual Studio 14 2015 Win64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"]
+    cmake_args = ["-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"] #python v3.7
 
 else:
     cmake_args = ["-GNinja"]
@@ -37,12 +36,16 @@ setup(
     name = "swmm-toolkit",
     version = "0.4.0",
 
-    cmake_args=cmake_args,
+    cmake_args = cmake_args,
 
-    package_dir={"": "src"},
-    packages=["swmm.toolkit"],
+    package_dir = {"": "src"},
+    packages = ["swmm.toolkit"],
 
-    include_package_data=True,
+    include_package_data = True,
 
-    zip_safe=False
+    zip_safe = False,
+
+    install_requires = [
+        "aenum"
+    ]
 )
