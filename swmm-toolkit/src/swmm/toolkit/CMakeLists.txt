@@ -39,6 +39,13 @@ target_link_libraries(output
         swmm-output
 )
 
+# Location of package at runtime
+# /usr/local/anaconda3/lib/python3.7/site-packages/swmm/toolkit
+# Location of package libraries at runtime
+# /usr/local/anaconda3/lib
+# Rpath from .so to .dylib
+# @loader_path/../../../..
+
 set_target_properties(output
     PROPERTIES
         SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
@@ -65,14 +72,6 @@ install(
     DESTINATION
         "src/swmm/toolkit"
 )
-
-install(
-    TARGETS
-        swmm-output LIBRARY
-    DESTINATION
-        "src/swmm/toolkit"
-)
-
 
 
 #######   SOLVER TARGET   #######
@@ -122,13 +121,6 @@ install(
 install(
     TARGETS
         solver
-    DESTINATION
-        "src/swmm/toolkit"
-)
-
-install(
-    TARGETS
-        swmm5 LIBRARY
     DESTINATION
         "src/swmm/toolkit"
 )
