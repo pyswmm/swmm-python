@@ -6,10 +6,6 @@
  *
  *  Author:     Michael E. Tryby
  *              US EPA - ORD/NRMRL
- *
- *  Build command:
- *    $ python setup.py build
- *
 */
 
 
@@ -50,6 +46,7 @@
         SWIG_fail;
     }
 }
+
 
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);

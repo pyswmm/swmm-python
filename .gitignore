@@ -6,14 +6,17 @@
 !.gitignore
 !.gitmodules
 
-*.py[ocd]
+*.pyc
 
 _skbuild/
-_cmake_test_compile/
+_cmake_test_compile
 
 dist/
+MANIFEST
 .pytest_cache/
+__pycache__/
 *.egg-info/
 
 
 swmm-toolkit/tests/data/*
+!test_*.*

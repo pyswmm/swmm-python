@@ -103,7 +103,6 @@ target_link_libraries(solver
 
 set_target_properties(solver
     PROPERTIES
-        SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
