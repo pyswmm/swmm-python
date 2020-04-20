@@ -9,6 +9,8 @@
 #
 #   Unit testing for SWMM output metadata using pytest.
 #
+
+
 import os
 
 import pytest
@@ -17,7 +19,7 @@ from swmm.toolkit import output, output_enum, output_metadata
 
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-OUTPUT_FILE_EXAMPLE1 = os.path.join(DATA_PATH, 'Example1.out')
+OUTPUT_FILE_EXAMPLE1 = os.path.join(DATA_PATH, 'test_Example1.out')
 
 
 @pytest.fixture()

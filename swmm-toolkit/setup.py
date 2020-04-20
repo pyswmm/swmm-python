@@ -13,6 +13,7 @@
 #   python setup.py clean
 #
 
+
 import platform
 import subprocess
 
@@ -25,7 +26,7 @@ platform_system = platform.system()
 
 
 class CleanCommand(Command):
-    ''' Custom command tidies up project tree '''
+    ''' Cleans project tree '''
     user_options = []
     def initialize_options(self):
         pass
