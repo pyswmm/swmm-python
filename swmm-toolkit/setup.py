@@ -59,8 +59,6 @@ setup(
     package_dir = {"": "src"},
     packages = ["swmm.toolkit"],
 
-    include_package_data = True,
-
     zip_safe = False,
 
     install_requires = ["aenum"],

@@ -1,6 +1,0 @@
-graft src
-graft swmm-solver
-graft tests
-include CMakeLists.txt
-include README.md
-include setup.py
