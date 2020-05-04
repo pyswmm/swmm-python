@@ -15,9 +15,9 @@ from swmm.toolkit import solver
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'test_Example1.inp')
-REPORT_FILE_TEST = os.path.join(DATA_PATH, 'Example1.rpt')
-OUTPUT_FILE_TEST = os.path.join(DATA_PATH, 'Example1.out')
-INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'nodata.inp')
+REPORT_FILE_TEST = os.path.join(DATA_PATH, 'temp_Example1.rpt')
+OUTPUT_FILE_TEST = os.path.join(DATA_PATH, 'temp_Example1.out')
+INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'temp_nodata.inp')
 
 
 # def test_allocfree():
