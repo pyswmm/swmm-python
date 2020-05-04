@@ -38,12 +38,12 @@ class CleanCommand(Command):
             'src\\swmm\\toolkit\\swmm_toolkit.egg-info', 'tests\\__pycache__']
             exe = "C:\\Windows\\System32\\cmd.exe"
 
-        else if platform_system == "Linux":
+        elif platform_system == "Linux":
             cmd = ["rm -vrf _skbuild/ dist/ **/build .pytest_cache/ **/__pycache__  \
             **/*.egg-info **/data/temp_*.* **/data/en* **/.DS_Store MANIFEST"]
             exe = "/bin/bash"
 
-        else if platform_system == "Darwin":
+        elif platform_system == "Darwin":
             cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist **/build .pytest_cache \
             **/__pycache__ **/*.egg-info **/data/(^test_*).* **/data/en* **/.DS_Store MANIFEST']
             exe = '/bin/zsh'
