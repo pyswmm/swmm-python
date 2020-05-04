@@ -13,7 +13,6 @@
 #   python setup.py clean
 #
 
-
 import platform
 import subprocess
 
@@ -33,10 +32,24 @@ class CleanCommand(Command):
     def finalize_options(self):
         pass
     def run(self):
-        if platform_system == "Darwin":
-            cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist .pytest_cache \
-            **/__pycache__ **/*.egg-info **/data/(^test_*).* .DS_Store MANIFEST']
-            subprocess.Popen(cmd, shell=True, executable='/bin/zsh')
+        if platform_system == "Windows":
+            cmd = ['del' '/Q', 'tests\\data\\temp_*.*' '&&' \
+            'rd' '/s/q', '_cmake_test_compile', '_skbuild', 'dist', '.pytest_cache', \
+            'src\\swmm\\toolkit\\swmm_toolkit.egg-info', 'tests\\__pycache__']
+            exe = "C:\\Windows\\System32\\cmd.exe"
+
+        else if platform_system == "Linux":
+            cmd = ["rm -vrf _skbuild/ dist/ **/build .pytest_cache/ **/__pycache__  \
+            **/*.egg-info **/data/temp_*.* **/data/en* **/.DS_Store MANIFEST"]
+            exe = "/bin/bash"
+
+        else if platform_system == "Darwin":
+            cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist **/build .pytest_cache \
+            **/__pycache__ **/*.egg-info **/data/(^test_*).* **/data/en* **/.DS_Store MANIFEST']
+            exe = '/bin/zsh'
+
+        p = subprocess.Popen(cmd, shell=True, executable=exe)
+        p.wait()
 
 
 # Set Platform specific cmake args here
@@ -44,10 +57,10 @@ if platform_system == "Windows":
     cmake_args = ["-GVisual Studio 14 2015 Win64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"] #python v3.7
+    cmake_args = ["-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"]
 
 else:
-    cmake_args = ["-GNinja"]
+    cmake_args = ["-GUnix Makefiles"]
 
 
 setup(

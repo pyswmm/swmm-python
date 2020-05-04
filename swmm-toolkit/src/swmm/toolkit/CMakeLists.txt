@@ -11,6 +11,21 @@
 
 set(CMAKE_SWIG_FLAGS -py3)
 
+# Determine filename suffix for python extension
+if(WIN32)
+    set(Python_EXTENSION ".${Python_SOABI}.pyd")
+else()
+    set(Python_EXTENSION ".${Python_SOABI}.so")
+endif()
+
+
+# Location of package at runtime on Linux/MacOS
+if(APPLE)
+    set(PACKAGE_RPATH "@loader_path/../../../..")
+else()
+    set(PACKAGE_RPATH "$ORIGIN/../../../..")
+endif()
+
 
 #######   OUTPUT TARGET   #######
 
@@ -30,7 +45,7 @@ swig_add_library(output
 
 target_link_options(output
     PUBLIC
-        $<$<BOOL:APPLE>:-undefineddynamic_lookup>
+        $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
 )
 
 target_link_libraries(output
@@ -39,20 +54,14 @@ target_link_libraries(output
         swmm-output
 )
 
-# Location of package at runtime
-# /usr/local/anaconda3/lib/python3.7/site-packages/swmm/toolkit
-# Location of package libraries at runtime
-# /usr/local/anaconda3/lib
-# Rpath from _output.so to libswmm-output.dylib
-# @loader_path/../../../..
-
 set_target_properties(output
     PROPERTIES
+        SUFFIX ${Python_EXTENSION}
         SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "@loader_path/../../../.."
+        INSTALL_RPATH ${PACKAGE_RPATH}
         INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
@@ -92,7 +101,7 @@ swig_add_library(solver
 
 target_link_options(solver
     PUBLIC
-        $<$<BOOL:APPLE>:-undefineddynamic_lookup>
+        $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
 )
 
 target_link_libraries(solver
@@ -103,10 +112,11 @@ target_link_libraries(solver
 
 set_target_properties(solver
     PROPERTIES
+        SUFFIX ${Python_EXTENSION}
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "@loader_path/../../../.."
+        INSTALL_RPATH ${PACKAGE_RPATH}
         INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 

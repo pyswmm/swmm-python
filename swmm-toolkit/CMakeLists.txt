@@ -9,7 +9,7 @@
 #
 
 
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.17)
 
 project(swmm-toolkit)
 
@@ -17,7 +17,6 @@ project(swmm-toolkit)
 set(Python_FIND_VIRTUALENV FIRST)
 set(Python_ROOT_DIR "/usr/local/anaconda3")
 find_package(Python 3.7 COMPONENTS Development Interpreter)
-message(STATUS "Python_VERSION: ${Python_VERSION}")
 
 
 find_package(SWIG REQUIRED)
