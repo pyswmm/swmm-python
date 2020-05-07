@@ -69,8 +69,9 @@ setup(
 
     cmake_args = cmake_args,
 
-    package_dir = {"": "src"},
     packages = ["swmm.toolkit"],
+    package_dir = {"": "src"},
+    package_data = {"extern": ["libomp.*"]},
 
     zip_safe = False,
 

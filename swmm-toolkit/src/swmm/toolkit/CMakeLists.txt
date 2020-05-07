@@ -21,9 +21,9 @@ endif()
 
 # Location of package at runtime on Linux/MacOS
 if(APPLE)
-    set(PACKAGE_RPATH "@loader_path/../../../..")
+    set(PACKAGE_RPATH "@loader_path/../../../..;@loader_path/../../../../extern")
 else()
-    set(PACKAGE_RPATH "$ORIGIN/../../../..")
+    set(PACKAGE_RPATH "$ORIGIN/../../../..;$ORIGIN/../../../../extern")
 endif()
 
 
@@ -61,7 +61,7 @@ set_target_properties(output
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH ${PACKAGE_RPATH}
+        INSTALL_RPATH "${PACKAGE_RPATH}"
         INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
@@ -116,10 +116,12 @@ set_target_properties(solver
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH ${PACKAGE_RPATH}
+        INSTALL_RPATH "${PACKAGE_RPATH}"
         INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
+
+# Stages extension module for package build
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"
@@ -127,14 +129,11 @@ install(
         "src/swmm/toolkit"
 )
 
+
+# Stages extension library for package build
 install(
     TARGETS
         solver
     DESTINATION
         "src/swmm/toolkit"
 )
-
-
-set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION "src/swmm/toolkit")
-set(CMAKE_INSTALL_OPENMP_LIBRARIES TRUE)
-include(InstallRequiredSystemLibraries)
