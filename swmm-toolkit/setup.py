@@ -63,6 +63,12 @@ else:
     cmake_args = ["-GUnix Makefiles"]
 
 
+def exclude_files(cmake_manifest):
+    print("INFO: processing cmake manifest")
+    exclude_pats = ('runswmm', '.cmake', '.h')
+    return list(filter(lambda name: not (name.endswith(exclude_pats)), cmake_manifest))
+
+
 setup(
     name = "swmm-toolkit",
     version = "0.4.0",
@@ -71,11 +77,12 @@ setup(
 
     packages = ["swmm.toolkit"],
     package_dir = {"": "src"},
-    package_data = {"extern": ["libomp.*"]},
 
     zip_safe = False,
 
     install_requires = ["aenum"],
 
-    cmdclass = {"clean": CleanCommand}
+    cmdclass = {"clean": CleanCommand},
+
+    cmake_process_manifest_hook = exclude_files
 )

@@ -19,7 +19,7 @@ else()
 endif()
 
 
-# Location of package at runtime on Linux/MacOS
+# Location of package at runtime on MacOS/Linux
 if(APPLE)
     set(PACKAGE_RPATH "@loader_path/../../../..;@loader_path/../../../../extern")
 else()
