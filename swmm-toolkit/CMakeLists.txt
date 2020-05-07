@@ -32,7 +32,7 @@ add_subdirectory(src/swmm/toolkit)
 
 
 # Relocate external libs into install package
-if(NOT WIN32)
+if(APPLE)
     install(CODE "execute_process(
         COMMAND
             ${PROJECT_SOURCE_DIR}/swmm-solver/tools/relocate.zsh ${EXTERN_LIB_PATH}
