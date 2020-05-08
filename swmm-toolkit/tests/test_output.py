@@ -1,7 +1,9 @@
 #
 #   test_output.py
 #
-#   Created: 8/7/2018
+#   Created: Aug 7, 2018
+#   Updated: Apr 20, 2020
+#
 #   Author: Michael E. Tryby
 #           US EPA - ORD/NRMRL
 #

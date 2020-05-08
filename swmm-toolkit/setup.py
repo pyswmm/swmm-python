@@ -1,8 +1,8 @@
 #
 # setup.py - Setup script for swmm-toolkit python package
 #
-# Created:    7/2/2018
-# Modified:   4/17/2020
+# Created:    Jul 2, 2018
+# Updated:    May 7, 2020
 #
 # Author:     Michael E. Tryby
 #             US EPA - ORD/NRMRL
@@ -10,6 +10,7 @@
 # Suggested Usage:
 #   python setup.py build
 #   python setup.py bdist_wheel
+#   python setup.py sdist
 #   python setup.py clean
 #
 
@@ -27,10 +28,13 @@ platform_system = platform.system()
 class CleanCommand(Command):
     ''' Cleans project tree '''
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         if platform_system == "Windows":
             cmd = ['del' '/Q', 'tests\\data\\temp_*.*' '&&' \
@@ -63,6 +67,7 @@ else:
     cmake_args = ["-GUnix Makefiles"]
 
 
+# Filters cmake manifest for wheel build
 def exclude_files(cmake_manifest):
     print("INFO: processing cmake manifest")
     exclude_pats = ('runswmm', '.cmake', '.h')
@@ -71,7 +76,7 @@ def exclude_files(cmake_manifest):
 
 setup(
     name = "swmm-toolkit",
-    version = "0.4.0",
+    version = "0.5.0",
 
     cmake_args = cmake_args,
 
