@@ -25,8 +25,8 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Maurizio Cingi, Mark Gray, David Hall, Bryant McDonnell"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.5.0"
-__date__ = "October 17, 2019"
+__version__ = "0.6.0"
+__date__ = "May 8, 2020"
 
 __maintainer__ = "Michael E. Tryby"
 __email__ = "tryby.michael@epa.gov"

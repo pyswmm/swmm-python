@@ -27,7 +27,7 @@ entry_points = {
 
 setup(
     name='nrtest-swmm',
-    version='0.5.0',
+    version='0.6.0',
     description="SWMM extension for nrtest",
 
     author="Michael E. Tryby",
