@@ -42,7 +42,7 @@ setup(
         'header_detail_footer>=2.3',
         'nrtest>=0.2.0',
         'numpy>=1.7.0',
-        'swmm.output',
+        'swmm-toolkit',
     ],
 
     keywords='nrtest_swmm',

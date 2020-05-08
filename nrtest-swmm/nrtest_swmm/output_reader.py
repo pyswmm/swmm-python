@@ -18,7 +18,7 @@ generator.
 from itertools import islice
 
 # project import
-from swmm.output import output as oapi
+from swmm.toolkit import output, output_enum
 
 
 def output_generator(path_ref):
@@ -37,13 +37,13 @@ def output_generator(path_ref):
         ...
     '''
 
-    with OutputReader(path_ref) as sor:
+    with OutputReader(path_ref) as reader:
 
-        for period_index in range(0, sor.report_periods()):
-            for element_type in islice(oapi.ElementType, 4):
-                for element_index in range(0, sor.element_count(element_type)):
+        for period_index in range(0, reader.report_periods()):
+            for element_type in islice(output_enum.ElementType, 4):
+                for element_index in range(0, reader.element_count(element_type)):
 
-                    yield (sor.element_result(element_type, period_index, element_index),
+                    yield (reader.element_result(element_type, period_index, element_index),
                         (element_type, period_index, element_index))
 
 
@@ -57,23 +57,23 @@ class OutputReader():
         self.handle = None
         self.count = None
         self.get_element_result = {
-            oapi.ElementType.SUBCATCH: oapi.getsubcatchresult,
-            oapi.ElementType.NODE: oapi.getnoderesult,
-            oapi.ElementType.LINK: oapi.getlinkresult,
-            oapi.ElementType.SYSTEM: oapi.getsystemresult
+            output_enum.ElementType.SUBCATCH: output.get_subcatch_result,
+            output_enum.ElementType.NODE: output.get_node_result,
+            output_enum.ElementType.LINK: output.get_link_result,
+            output_enum.ElementType.SYSTEM: output.get_system_result
         }
 
     def __enter__(self):
-        self.handle = oapi.init()
-        oapi.open(self.handle, self.filepath)
-        self.count = oapi.getprojectsize(self.handle)
+        self.handle = output.init()
+        output.open(self.handle, self.filepath)
+        self.count = output.get_proj_size(self.handle)
         return self
 
     def __exit__(self, type, value, traceback):
-        oapi.close(self.handle)
+        output.close(self.handle)
 
     def report_periods(self):
-        return oapi.gettimes(self.handle, oapi.Time.NUM_PERIODS)
+        return output.get_times(self.handle, output_enum.Time.NUM_PERIODS)
 
     def element_count(self, element_type):
         return self.count[element_type]
