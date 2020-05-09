@@ -70,7 +70,7 @@ else:
 # Filters cmake manifest for wheel build
 def exclude_files(cmake_manifest):
     print("INFO: processing cmake manifest")
-    exclude_pats = ('runswmm', '.cmake', '.h')
+    exclude_pats = ('runswmm', '.exe', '.cmake', '.h', '.lib')
     return list(filter(lambda name: not (name.endswith(exclude_pats)), cmake_manifest))
 
 
