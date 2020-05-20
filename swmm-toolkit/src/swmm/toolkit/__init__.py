@@ -11,7 +11,7 @@
 #
 
 '''
-A low level pythonic API for the swmm-output and swmm-output dlls using SWIG.
+A low level pythonic API for the swmm-output and swmm-solver dlls using SWIG.
 '''
 
 
