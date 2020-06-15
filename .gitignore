@@ -2,10 +2,11 @@
 #  .gitignore for swmm-python repo
 #
 
-.DS_Store
+
 .*
 !.gitignore
 !.gitmodules
+.DS_Store
 
 *.pyc
 
