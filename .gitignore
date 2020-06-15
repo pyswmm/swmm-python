@@ -18,7 +18,7 @@ MANIFEST
 __pycache__/
 *.egg-info/
 
-docs/_build
+swmm-toolkit/docs/_build
 
 swmm-toolkit/tests/data/*
 !test_*.*
