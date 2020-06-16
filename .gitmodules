@@ -1,0 +1,3 @@
+[submodule "swmm-toolkit/swmm-solver"]
+	path = swmm-toolkit/swmm-solver
+	url = https://github.com/SWMM-Project/swmm-solver.git

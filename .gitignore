@@ -2,27 +2,24 @@
 #  .gitignore for swmm-python repo
 #
 
+
 .*
 !.gitignore
+!.gitmodules
+.DS_Store
 
-*.py[ocd]
+*.pyc
 
-*.dll
-*.lib
-*.exp
-*.so
-*.h
-buildlib/
+_skbuild/
+_cmake_test_compile
 
-build/
 dist/
+MANIFEST
 .pytest_cache/
+__pycache__/
 *.egg-info/
 
-output.py
-output_wrap.c
+swmm-toolkit/docs/_build
 
-toolkit.py
-toolkit_wrap.c
-
-swmm_python/toolkit/tests/data/test.*
+swmm-toolkit/tests/data/*
+!test_*.*
