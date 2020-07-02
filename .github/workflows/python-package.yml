@@ -4,15 +4,17 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
-    CIBW_BEFORE_BUILD_LINUX: pip install six scikit-build cmake && yum install -y swig
-    CIBW_BEFORE_BUILD_MACOS: pip install six scikit-build cmake && brew install swig
-    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install swig
+    CIBW_BEFORE_ALL: pip install six scikit-build cmake
+    CIBW_BEFORE_ALL_LINUX: $CIBW_BEFORE_ALL && yum install -y swig
+    CIBW_BEFORE_ALL_MACOS: $CIBW_BEFORE_ALL && brew install swig
+    CIBW_BEFORE_ALL_WINDOWS: $CIBW_BEFORE_ALL && choco install swig
     CIBW_TEST_COMMAND: pytest {project}\\tests
     CIBW_TEST_REQUIRES: pytest numpy
     CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
     CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
-    PYTHON_INCLUDE_DIR: python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())"
-    PYTHON_LIBRARY: python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR')"
+    CIBW_ENVIRONMENT: "PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
+                       PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")"
+
 
 jobs:
   build_wheels:
