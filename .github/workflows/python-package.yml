@@ -37,6 +37,11 @@ jobs:
         run: |
           python -m pip install cibuildwheel==1.5.1
 
+      - name: Install Visual Studio 2017
+        if: runner.os == 'Windows'
+        run: |
+          choco install visualstudio2017community -f -y
+
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
