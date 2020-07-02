@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: cp27-* cp34-* cp35-* *-win32 *_i686 *_ppc64le *_s390x
-    CIBW_BEFORE_BUILD: pip install six sk-build
+    CIBW_BEFORE_BUILD: pip install six scikit-build
     CIBW_TEST_COMMAND: pytest {project}\\tests
     CIBW_TEST_REQUIRES: pytest numpy
 
