@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         name: Install Python
+        run: pip install cibuildwheel
         with:
           python-version: '3.7'
 
