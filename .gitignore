@@ -5,6 +5,7 @@
 
 .*
 !.gitignore
+!.github
 !.gitmodules
 .DS_Store
 
