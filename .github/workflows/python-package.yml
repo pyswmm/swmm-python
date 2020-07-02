@@ -14,7 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, windows-latest, macos-latest]
+        # os: [ubuntu-18.04, windows-latest, macos-latest]
+        os: [ubuntu-18.04]
 
     steps:
       - uses: actions/checkout@v2
@@ -28,10 +29,11 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install swig
-      - name: Install swig on Linux
+      - name: Install swig and cmake on Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install swig
+          sudo snap install cmake --classic
       - name: Install swig on Windows
         if: runner.os == 'Windows'
         run: |
