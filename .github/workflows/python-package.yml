@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* *-win32 *_i686 *_ppc64le *_s390x"
-    CIBW_BEFORE_BUILD: pip install six scikit-build
+    CIBW_BEFORE_BUILD: pip install six scikit-build cmake
     CIBW_TEST_COMMAND: pytest {project}\\tests
     CIBW_TEST_REQUIRES: pytest numpy
 
@@ -29,11 +29,10 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install swig
-      - name: Install swig and cmake on Linux
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install swig
-          sudo snap install cmake --classic
+      # - name: Install swig on Linux
+      #   if: runner.os == 'Linux'
+      #   run: |
+      #     sudo apt-get install swig
       - name: Install swig on Windows
         if: runner.os == 'Windows'
         run: |
