@@ -31,7 +31,7 @@ jobs:
       - name: Install swig on Linux
         if: runner.os == 'Linux'
         run: |
-          apt install swig
+          sudo apt-get install swig
       - name: Install swig on Windows
         if: runner.os == 'Windows'
         run: |
