@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.image }}
+    name: Build wheels on ${{ matrix.plat }}
     runs-on: ubuntu-18.04
     strategy:
       matrix:
