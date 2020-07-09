@@ -6,6 +6,7 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.image }}
     runs-on: ubuntu-18.04
+    env: ${{ matrix.env }}
     strategy:
       matrix:
         include:
