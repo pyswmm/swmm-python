@@ -6,6 +6,8 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.image }}
     runs-on: ubuntu-18.04
+    env:
+      image: ${{ matrix.image }}
     strategy:
       matrix:
         image: [manylinux2014_x86_64]
@@ -21,7 +23,7 @@ jobs:
           python-version: '3.7'
 
       - name: Build manylinux Python wheels
-        uses: RalfG/python-wheels-manylinux-build@v0.2.2-${{ jobs.build_wheels.stategy.matrix.image }}
+        uses: RalfG/python-wheels-manylinux-build@v0.2.2-${{ env.image }}
         with:
           python-versions: 'cp37-cp37m cp38-cp38m'
           build-requirements: 'six scikit-build cmake'
