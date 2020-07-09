@@ -26,8 +26,9 @@ jobs:
         with:
           python-version: '3.7'
       - name: Pull docker image
-        run: echo ${{ env.DOCKER_IMAGE }}
-        run: docker pull ${{ env.DOCKER_IMAGE }}
+        run: |
+          echo ${{ env.DOCKER_IMAGE }}
+          docker pull ${{ env.DOCKER_IMAGE }}
       - name: Build manylinux Python wheels
         run: docker run --rm -e PLAT=${{ env.PLAT }} -v `pwd`:/io ${{ env.DOCKER_IMAGE }} /io/.github/build-wheels.sh
       - uses: actions/upload-artifact@v2
