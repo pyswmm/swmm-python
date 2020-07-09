@@ -2,19 +2,6 @@ name: Build wheels on linux
 
 on: [push, pull_request]
 
-# env:
-#     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
-#     CIBW_BEFORE_BUILD_LINUX: pip install six scikit-build cmake && yum install -y swig
-#     CIBW_BEFORE_BUILD_MACOS: pip install six scikit-build cmake && brew install swig
-#     CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install swig
-#     CIBW_TEST_COMMAND: pytest {project}\\tests
-#     CIBW_TEST_REQUIRES: pytest numpy
-#     CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
-#     CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
-    # CIBW_ENVIRONMENT: >
-    #   PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
-    #   PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
-
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.image }}
@@ -34,15 +21,14 @@ jobs:
           python-version: '3.7'
 
       - name: Build manylinux Python wheels
-        uses: RalfG/python-wheels-manylinux-build@v0.2.2-${{ matrix.image }}
+        uses: RalfG/python-wheels-manylinux-build@v0.2.2-"${{ matrix.image }}"
         with:
           python-versions: 'cp37-cp37m cp38-cp38m'
           build-requirements: 'six scikit-build cmake'
           system-packages: 'swig'
-          package-path: ''
+          package-path: 'swmm-toolkit'
           pip-wheel-args: '--no-deps'
 
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
-
