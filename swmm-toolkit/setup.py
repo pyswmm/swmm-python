@@ -87,7 +87,7 @@ setup(
 
     install_requires = ["aenum"],
 
-    cmdclass = {"clean": CleanCommand},
+    # cmdclass = {"clean": CleanCommand},
 
     cmake_process_manifest_hook = exclude_files
 )
