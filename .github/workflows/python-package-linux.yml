@@ -3,7 +3,7 @@ name: Build wheels on linux
 on: [push, pull_request]
 
 env:
-  image: ${{ matrix.image }}
+  image: ${{secrets[matrix.image]}}
 
 jobs:
   build_wheels:
