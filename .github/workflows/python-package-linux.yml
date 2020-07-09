@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        image: [dockcross:manylinux2014-x64, dockcross:manylinux2014-aarch64]
         include:
         - env: DOCKER_IMAGE=quay.io/pypa/manylinux2014_x86_64
                PLAT=manylinux2014_x86_64
