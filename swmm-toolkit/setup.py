@@ -18,7 +18,7 @@ import platform
 import subprocess
 
 from skbuild import setup
-from setuptools import Command
+# from setuptools import Command
 
 
 # Determine platform
