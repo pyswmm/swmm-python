@@ -25,35 +25,35 @@ from skbuild import setup
 platform_system = platform.system()
 
 
-class CleanCommand(Command):
-    ''' Cleans project tree '''
-    user_options = []
+# class CleanCommand(Command):
+#     ''' Cleans project tree '''
+#     user_options = []
 
-    def initialize_options(self):
-        pass
+#     def initialize_options(self):
+#         pass
 
-    def finalize_options(self):
-        pass
+#     def finalize_options(self):
+#         pass
 
-    def run(self):
-        if platform_system == "Windows":
-            cmd = ['del' '/Q', 'tests\\data\\temp_*.*' '&&' \
-            'rd' '/s/q', '_cmake_test_compile', '_skbuild', 'dist', '.pytest_cache', \
-            'src\\swmm\\toolkit\\swmm_toolkit.egg-info', 'tests\\__pycache__']
-            exe = "C:\\Windows\\System32\\cmd.exe"
+#     def run(self):
+#         if platform_system == "Windows":
+#             cmd = ['del' '/Q', 'tests\\data\\temp_*.*' '&&' \
+#             'rd' '/s/q', '_cmake_test_compile', '_skbuild', 'dist', '.pytest_cache', \
+#             'src\\swmm\\toolkit\\swmm_toolkit.egg-info', 'tests\\__pycache__']
+#             exe = "C:\\Windows\\System32\\cmd.exe"
 
-        elif platform_system == "Linux":
-            cmd = ["rm -vrf _skbuild/ dist/ **/build .pytest_cache/ **/__pycache__  \
-            **/*.egg-info **/data/temp_*.* **/data/en* **/.DS_Store MANIFEST"]
-            exe = "/bin/bash"
+#         elif platform_system == "Linux":
+#             cmd = ["rm -vrf _skbuild/ dist/ **/build .pytest_cache/ **/__pycache__  \
+#             **/*.egg-info **/data/temp_*.* **/data/en* **/.DS_Store MANIFEST"]
+#             exe = "/bin/bash"
 
-        elif platform_system == "Darwin":
-            cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist **/build .pytest_cache \
-            **/__pycache__ **/*.egg-info **/data/(^test_*).* **/data/en* **/.DS_Store MANIFEST']
-            exe = '/bin/zsh'
+#         elif platform_system == "Darwin":
+#             cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist **/build .pytest_cache \
+#             **/__pycache__ **/*.egg-info **/data/(^test_*).* **/data/en* **/.DS_Store MANIFEST']
+#             exe = '/bin/zsh'
 
-        p = subprocess.Popen(cmd, shell=True, executable=exe)
-        p.wait()
+#         p = subprocess.Popen(cmd, shell=True, executable=exe)
+#         p.wait()
 
 
 # Set Platform specific cmake args here
