@@ -6,7 +6,7 @@ function repair_wheel {
     if ! auditwheel show "$wheel"; then
         echo "Skipping non-platform wheel $wheel"
     else
-        auditwheel repair "$wheel" --plat "$PLAT" -w /io/wheelhouse/
+        auditwheel repair "$wheel" --plat "$PLAT" -w /io/dist/
     fi
 }
 
@@ -17,7 +17,8 @@ yum install -y swig
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install six scikit-build cmake
-    "${PYBIN}/pip" wheel /io/swmm-toolkit/ --no-deps -w wheelhouse/
+    cd /io/swmm-toolkit/
+    "${PYBIN}/python" setup.py bdist_wheel
 done
 
 # Bundle external shared libraries into the wheels

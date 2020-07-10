@@ -2,6 +2,9 @@ name: Build wheels on linux
 
 on: [push, pull_request]
 
+notifications:
+  email: false
+
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.plat }}
