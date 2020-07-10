@@ -12,12 +12,12 @@ function repair_wheel {
 
 
 # Install a system package required by our library
-yum install -y swig cmake
+yum install -y swig
 
 # Compile wheels
 cd /io/swmm-toolkit/
 for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install six scikit-build
+    "${PYBIN}/pip" install six scikit-build cmake
     "${PYBIN}/python" setup.py bdist_wheel
 done
 
