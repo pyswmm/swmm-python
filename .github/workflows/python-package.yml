@@ -6,7 +6,7 @@ env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD_LINUX: pip install six scikit-build cmake && yum install -y swig
     CIBW_BEFORE_BUILD_MACOS: pip install six scikit-build cmake && brew install swig
-    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install swig
+    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install swig ninja
     CIBW_TEST_COMMAND: pytest {project}\\tests
     CIBW_TEST_REQUIRES: pytest numpy
     CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
