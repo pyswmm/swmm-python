@@ -17,7 +17,7 @@ yum install -y swig
 # Compile wheels
 cd /io/swmm-toolkit/
 for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install six scikit-build cmake
+    "${PYBIN}/pip" install six
     "${PYBIN}/python" setup.py bdist_wheel
 done
 
