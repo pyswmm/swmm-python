@@ -1,5 +1,5 @@
-notifications:
-  email: false
+# notifications:
+#   email: false
 
 name: Build wheels on linux
 
