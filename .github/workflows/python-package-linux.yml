@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         include:
-        - docker_image: dockcross/manylinux2014_x86_64
+        - docker_image: dockcross/manylinux2014-x64
           plat: manylinux2014_x86_64
         - docker_image: dockcross/manylinux2014-aarch64
           plat: manylinux2014_aarch64
