@@ -15,14 +15,14 @@ function repair_wheel {
 yum install -y swig
 
 # Compile wheels
+cd /io/swmm-toolkit/
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install six scikit-build cmake
-    cd /io/swmm-toolkit/
     "${PYBIN}/python" setup.py bdist_wheel
 done
 
 # Bundle external shared libraries into the wheels
-for whl in wheelhouse/*.whl; do
+for whl in dist/*.whl; do
     repair_wheel "$whl"
 done
 
