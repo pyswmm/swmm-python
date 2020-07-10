@@ -6,14 +6,11 @@ env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD_LINUX: pip install six scikit-build cmake && yum install -y swig
     CIBW_BEFORE_BUILD_MACOS: pip install six scikit-build cmake && brew install swig
-    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install swig ninja
-    CIBW_TEST_COMMAND: pytest {project}\\tests
-    CIBW_TEST_REQUIRES: pytest numpy
-    CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
-    CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
-    # CIBW_ENVIRONMENT: >
-    #   PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
-    #   PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install -f -y swig 
+    # CIBW_TEST_COMMAND: pytest {project}\\tests
+    # CIBW_TEST_REQUIRES: pytest numpy
+    # CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+    # CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
 
 jobs:
   build_wheels:
@@ -40,7 +37,7 @@ jobs:
       - name: Install Visual Studio 2017
         if: runner.os == 'Windows'
         run: |
-          choco install visualstudio2017community -f -y
+          choco install visualstudio2017community ninja -f -y
 
       - name: Build wheels
         run: |

@@ -16,8 +16,8 @@ yum install -y swig
 # Compile wheels
 cd /io/swmm-toolkit/
 for PYBIN in /opt/python/*/bin; do
-    export PYTHON_INCLUDE_DIR=$(${PYBIN}/python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
-    export PYTHON_LIBRARY=$(${PYBIN}/python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+    # export PYTHON_INCLUDE_DIR=$(${PYBIN}/python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
+    # export PYTHON_LIBRARY=$(${PYBIN}/python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
     "${PYBIN}/pip" install six
     "${PYBIN}/python" setup.py bdist_wheel
 done
