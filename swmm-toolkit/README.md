@@ -14,6 +14,17 @@
 
 ## Installation
 
+
+## Build 
+1. Initialize submodule
+```cmd
+git submodule init
+git submodule update 
+```
+2. Create virtual environment
+3. `pip install` from requirements.txt
+4. `python setup.py build`
+ 
 ## Troubleshoot
 
 Steps to try if `python setup.py build` fails 
