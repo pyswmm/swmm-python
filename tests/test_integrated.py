@@ -36,6 +36,18 @@ def test_integrated():
 
         _handle = smo.init()
         smo.open(_handle, OUTPUT_FILE_TEST)
+        ver = smo.get_version(_handle)
         size = smo.get_proj_size(_handle)
         units = smo.get_units(_handle)
         smo.close(_handle)
+
+
+def test_opencloseopenclose():
+    smtk.run(INPUT_FILE_EXAMPLE_N, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+
+    handle_1 = smo.init()
+    smo.open(handle_1, OUTPUT_FILE_TEST)
+    smo.close(handle_1)
+    handle_2 = smo.init()
+    smo.open(handle_2, OUTPUT_FILE_TEST)
+    smo.close(handle_2)

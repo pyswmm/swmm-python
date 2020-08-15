@@ -29,6 +29,15 @@ def test_openclose():
     output.close(_handle)
 
 
+def test_opencloseopenclose():
+    _handle = output.init()
+    output.open(_handle, OUTPUT_FILE_EXAMPLE1)
+    output.close(_handle)
+    _handle2 = output.init()
+    output.open(_handle2, OUTPUT_FILE_EXAMPLE1)
+    output.close(_handle2)
+
+
 @pytest.fixture()
 def handle(request):
     _handle = output.init()
