@@ -72,3 +72,9 @@ def test_step(handle):
     solver.end()
 
     solver.report()
+
+
+def test_open_api_funcs():
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    simulation_unit_option = solver.swmm_getSimulationUnit(0)
+    solver.close()

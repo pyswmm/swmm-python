@@ -17,6 +17,8 @@
 #define SWIG_FILE_WITH_INIT
 
 #include "swmm5.h"
+#include "toolkitAPI.h"
+#include "toolkitAPI_enums.h"
 %}
 
 
@@ -47,6 +49,9 @@
     }
 }
 
+%apply int *OUTPUT {
+    int *value
+}
 
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
@@ -59,4 +64,5 @@ int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  swmm_close(void);
 int  swmm_getVersion(void);
 
+// TOOLKIT API 
 %exception;
