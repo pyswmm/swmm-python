@@ -2,14 +2,21 @@
  *  solver.i - SWIG interface description file for swmm-solver
  *
  *  Created:    7/2/2018
- *  Updated:    2/4/2020
+ *  Updated:    8/17/2020
  *
  *  Author:     Michael E. Tryby
  *              US EPA - ORD/NRMRL
+ *
+ *              Jennifer Wu
+ *              Xylem Inc.
+ *
+ *              Caleb Buahin
+ *              Xylem Inc. 
 */
 
 
 %include "typemaps.i"
+%include "cstring.i"
 
 
 %module(package="swmm.toolkit") solver
@@ -35,7 +42,7 @@
 
 /* RENAME FUNCTIONS PYTHON STYLE */
 %include "solver_rename.i"
-
+%include "solver_toolkitapi_rename.i"
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
@@ -50,8 +57,21 @@
 }
 
 %apply int *OUTPUT {
-    int *value
-}
+    int *year,
+    int *month,
+    int *day,
+    int *hour,
+    int *minute,
+    int *second
+};
+
+%apply double *OUTPUT {
+    double *value
+};
+
+
+%cstring_bounded_output(char *OUTCHAR, 256);
+
 
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
@@ -64,5 +84,13 @@ int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  swmm_close(void);
 int  swmm_getVersion(void);
 
+
 // TOOLKIT API 
+int  swmm_getSimulationUnit(int type, int *OUTPUT);
+int  swmm_project_findObject(int type, char *id, int *OUTPUT);
+int  swmm_countObjects(int type, int *OUTPUT);
+int  swmm_getSimulationDateTime(int timetype, int *year, int *month, int *day, int *hour, int *minute, int *second);
+int  swmm_setSimulationDateTime(int timetype, int year, int month, int day, int hour, int minute, int second);
+int  swmm_getSimulationAnalysisSetting(int type, int *OUTPUT);
+int  swmm_getSimulationParam(int type, double *OUTPUT);
 %exception;
