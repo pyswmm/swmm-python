@@ -69,9 +69,41 @@
     double *value
 };
 
-
 %cstring_bounded_output(char *OUTCHAR, 256);
 
+/* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
+%typemap(in) EnumTypeIn {
+    int value = 0;
+    if (PyObject_HasAttrString($input, "value")) {
+        PyObject *o = PyObject_GetAttrString($input, "value");
+        SWIG_AsVal_int(o, &value);
+    }
+    $1 = ($1_basetype)(value);
+}
+%apply EnumTypeIn {
+    SM_ObjectType,
+    SM_NodeType,
+    SM_LinkType,
+    SM_TimePropety,
+    SM_Units,
+    SM_SimOption,
+    SM_SimSetting,
+    SM_NodeProperty,
+    SM_LinkProperty,
+    SM_SubcProperty,
+    SM_NodeResult,
+    SM_NodePollut,
+    SM_LinkResult,
+    SM_LinkPollut,
+    SM_SubcResult,
+    SM_SubcPollut,
+    SM_GagePrecip,
+    SM_LidLayer,
+    SM_LidLayerProperty,
+    SM_LidUProperty,
+    SM_LidUOptions,
+    SM_LidResult
+}
 
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
