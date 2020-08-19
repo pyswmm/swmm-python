@@ -10,9 +10,11 @@
 
 
 // RENAME FUNCTIONS ACCORDING TO PEP8
+%rename(get_error_message)                          swmm_getAPIError;
 %rename(get_simulation_unit)                        swmm_getSimulationUnit;
 %rename(find_object)                                swmm_project_findObject;
 %rename(count_object)                               swmm_countObjects;
+%rename(get_object_index)                           swmm_getObjectId;
 %rename(get_simulation_datetime)                    swmm_getSimulationDateTime;
 %rename(set_simulation_datetime)                    swmm_setSimulationDateTime;
 %rename(get_simulation_analysis_setting)            swmm_getSimulationAnalysisSetting;

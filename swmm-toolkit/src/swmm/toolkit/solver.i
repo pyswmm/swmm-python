@@ -69,7 +69,18 @@
     double *value
 };
 
-%cstring_bounded_output(char *OUTCHAR, 256);
+%typemap(in, numinputs=0)char *ERRMSG {
+    $1 = (char *) malloc(sizeof(char)*256);
+}
+%typemap(argout) (char *ERRMSG) {
+    if ($1) {
+      PyObject *o = PyUnicode_FromString($1);
+      $result = SWIG_Python_AppendOutput($result, o);
+    }
+}
+%typemap(freearg) char *ERRMSG {
+    freeMemory($1);
+}
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -118,11 +129,13 @@ int  swmm_getVersion(void);
 
 
 // TOOLKIT API 
+int  swmm_getAPIError(int ErrorCodeAPI, char *ERRMSG);
 int  swmm_getSimulationUnit(int type, int *OUTPUT);
 int  swmm_project_findObject(int type, char *id, int *OUTPUT);
 int  swmm_countObjects(int type, int *OUTPUT);
-int  swmm_getSimulationDateTime(int timetype, int *year, int *month, int *day, int *hour, int *minute, int *second);
-int  swmm_setSimulationDateTime(int timetype, int year, int month, int day, int hour, int minute, int second);
+int  swmm_getSimulationDateTime(SM_TimePropety type, int *year, int *month, int *day, int *hour, int *minute, int *second);
+int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, int day, int hour, int minute, int second);
 int  swmm_getSimulationAnalysisSetting(int type, int *OUTPUT);
 int  swmm_getSimulationParam(int type, double *OUTPUT);
+int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 %exception;

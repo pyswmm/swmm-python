@@ -13,7 +13,7 @@ import os
 
 import pytest
 
-from swmm.toolkit import solver, swmm_enum
+from swmm.toolkit import solver, swmm_enum, toolkit_enum
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'test_Example1.inp')
@@ -102,22 +102,22 @@ def test_find_object(handle):
 
 
 def test_api_error_message(handle):
-    error_message_0 = solver.get_api_error_message(501)
-    print(error_message_0)
+    error_message_501 = solver.get_error_message(501)
+    assert error_message_501 == '\n API Key Error: Object Type Outside Bonds'
 
 
 def test_simulation_datetime(handle):
     from datetime import datetime
-    
-    year, month, day, hour, minute, second = solver.get_simulation_datetime(0)
+
+    year, month, day, hour, minute, second = solver.get_simulation_datetime(toolkit_enum.TimeProperty.START_DATE)
     assert datetime(1998, 1, 1) == datetime(year, month, day, hour, minute, second)
-    year, month, day, hour, minute, second = solver.get_simulation_datetime(1)
+    year, month, day, hour, minute, second = solver.get_simulation_datetime(toolkit_enum.TimeProperty.END_DATE)
     assert datetime(1998, 1, 2, 12) == datetime(year, month, day, hour, minute, second)
-    year, month, day, hour, minute, second = solver.get_simulation_datetime(2)
+    year, month, day, hour, minute, second = solver.get_simulation_datetime(toolkit_enum.TimeProperty.REPORT_DATE)
     assert datetime(1998, 1, 1) == datetime(year, month, day, hour, minute, second)
 
-    solver.set_simulation_datetime(0, 2020, 1, 1, 12, 59, 59)
-    year, month, day, hour, minute, second = solver.get_simulation_datetime(0)
+    solver.set_simulation_datetime(toolkit_enum.TimeProperty.START_DATE, 2020, 1, 1, 12, 59, 59)
+    year, month, day, hour, minute, second = solver.get_simulation_datetime(toolkit_enum.TimeProperty.START_DATE)
     assert datetime(2020, 1, 1, 12, 59, 59) == datetime(year, month, day, hour, minute, second)
 
 
@@ -141,3 +141,8 @@ def test_simulation_parameter(handle):
     assert min_route_step == 0.5
     assert min_slope == 0
     assert head_tolerance ==  0
+
+
+def test_get_object_index(handle):
+    node_index = solver.get_object_index(toolkit_enum.ObjectType.NODE, '6')
+    sub_index = solver.get_object_index(toolkit_enum.ObjectType.SUBCATCH, '20')
