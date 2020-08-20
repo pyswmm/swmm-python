@@ -75,18 +75,18 @@ def test_step(handle):
 
 
 def test_simulation_unit(handle):
-    simulation_system_unit_option = solver.get_simulation_unit(0)
-    simulation_flow_unit_option = solver.get_simulation_unit(1)
+    simulation_system_unit_option = solver.get_simulation_unit(toolkit_enum.UnitProperty.SYSTEM_UNIT)
+    simulation_flow_unit_option = solver.get_simulation_unit(toolkit_enum.UnitProperty.FLOW_UNIT)
     assert simulation_system_unit_option == swmm_enum.UnitSystem.US.value
     assert simulation_flow_unit_option == swmm_enum.FlowUnits.CFS.value
 
 
 def test_find_object(handle):
-    rg_index = solver.find_object(0, 'RG1')
-    sub_index_0 = solver.find_object(1, '2')
-    sub_index_1 = solver.find_object(1, '3')
-    node_index = solver.find_object(2, '24')
-    link_index = solver.find_object(3, '16')
+    rg_index = solver.find_object(toolkit_enum.ObjectProperty.GAGE, 'RG1')
+    sub_index_0 = solver.find_object(toolkit_enum.ObjectProperty.SUBCATCH, '2')
+    sub_index_1 = solver.find_object(toolkit_enum.ObjectProperty.SUBCATCH, '3')
+    node_index = solver.find_object(toolkit_enum.ObjectProperty.NODE, '24')
+    link_index = solver.find_object(toolkit_enum.ObjectProperty.LINK, '16')
     assert rg_index == 0
     assert sub_index_0 == 0
     assert sub_index_1 == 1
@@ -94,9 +94,9 @@ def test_find_object(handle):
     assert link_index == 12
 
 
-def test_find_object(handle):
-    rg_count = solver.count_object(0)
-    sub_count = solver.count_object(1)
+def test_count_object(handle):
+    rg_count = solver.count_object(toolkit_enum.ObjectProperty.GAGE)
+    sub_count = solver.count_object(toolkit_enum.ObjectProperty.SUBCATCH)
     assert rg_count == 1
     assert sub_count == 8
 
@@ -133,10 +133,10 @@ def test_simulation_analysis_setting(handle):
 
 
 def test_simulation_parameter(handle):
-    route_step = solver.set_simulation_parameter(0)
-    min_route_step = solver.set_simulation_parameter(1)
-    min_slope = solver.set_simulation_parameter(6)
-    head_tolerance = solver.set_simulation_parameter(11)
+    route_step = solver.get_simulation_parameter(0)
+    min_route_step = solver.get_simulation_parameter(1)
+    min_slope = solver.get_simulation_parameter(6)
+    head_tolerance = solver.get_simulation_parameter(11)
     assert route_step == 60
     assert min_route_step == 0.5
     assert min_slope == 0
@@ -144,5 +144,18 @@ def test_simulation_parameter(handle):
 
 
 def test_get_object_index(handle):
-    node_index = solver.get_object_index(toolkit_enum.ObjectType.NODE, '6')
-    sub_index = solver.get_object_index(toolkit_enum.ObjectType.SUBCATCH, '20')
+    node_index = solver.get_object_index(toolkit_enum.ObjectProperty.NODE, '6')
+    sub_index = solver.get_object_index(toolkit_enum.ObjectProperty.SUBCATCH, '20')
+
+    assert node_index == -1
+    assert sub_index == -1
+    
+    node_index = solver.get_object_index(toolkit_enum.ObjectProperty.NODE, '20')
+    sub_index = solver.get_object_index(toolkit_enum.ObjectProperty.SUBCATCH, '6')
+
+    assert node_index == 8
+    assert sub_index == 5
+
+
+def test_get_object_id(handle):
+    pass

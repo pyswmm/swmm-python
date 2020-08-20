@@ -12,27 +12,6 @@
 from aenum import Enum, IntEnum
 
 
-##class UnitSystem(Enum, start = 0):
-##    US
-##    SI
-##
-##
-##class FlowUnits(Enum, start = 0):
-##    CFS
-##    GPM
-##    MGD
-##    CMS
-##    LPS
-##    MLD
-##
-##
-##class ConcUnits(Enum, start = 0):
-##    MG
-##    UG
-##    COUNT
-##    NONE
-
-
 class ElementType(IntEnum, start = 0):
     SUBCATCH
     NODE

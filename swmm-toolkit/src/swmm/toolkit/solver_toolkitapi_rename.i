@@ -14,8 +14,9 @@
 %rename(get_simulation_unit)                        swmm_getSimulationUnit;
 %rename(find_object)                                swmm_project_findObject;
 %rename(count_object)                               swmm_countObjects;
-%rename(get_object_index)                           swmm_getObjectId;
+%rename(get_object_index)                           swmm_getObjectIndex;
+%rename(get_object_id)                              swmm_getObjectId;
 %rename(get_simulation_datetime)                    swmm_getSimulationDateTime;
 %rename(set_simulation_datetime)                    swmm_setSimulationDateTime;
 %rename(get_simulation_analysis_setting)            swmm_getSimulationAnalysisSetting;
-%rename(set_simulation_parameter)                   swmm_getSimulationParam;
+%rename(get_simulation_parameter)                   swmm_getSimulationParam;

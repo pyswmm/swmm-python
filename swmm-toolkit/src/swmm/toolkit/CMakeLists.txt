@@ -69,6 +69,7 @@ install(
     FILES
         "__init__.py"
         "swmm_enum.py" 
+        "toolkit_enum.py"
         "output_enum.py"
         "output_metadata.py"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"

@@ -89,6 +89,9 @@
         PyObject *o = PyObject_GetAttrString($input, "value");
         SWIG_AsVal_int(o, &value);
     }
+    else if (PyLong_Check($input)) {
+        SWIG_AsVal_int($input, &value);
+    }
     $1 = ($1_basetype)(value);
 }
 %apply EnumTypeIn {
@@ -130,12 +133,12 @@ int  swmm_getVersion(void);
 
 // TOOLKIT API 
 int  swmm_getAPIError(int ErrorCodeAPI, char *ERRMSG);
-int  swmm_getSimulationUnit(int type, int *OUTPUT);
-int  swmm_project_findObject(int type, char *id, int *OUTPUT);
-int  swmm_countObjects(int type, int *OUTPUT);
+int  swmm_getSimulationUnit(SM_Units type, int *OUTPUT);
+int  swmm_project_findObject(SM_ObjectType type, char *id, int *OUTPUT);
+int  swmm_countObjects(SM_ObjectType type, int *OUTPUT);
 int  swmm_getSimulationDateTime(SM_TimePropety type, int *year, int *month, int *day, int *hour, int *minute, int *second);
 int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, int day, int hour, int minute, int second);
-int  swmm_getSimulationAnalysisSetting(int type, int *OUTPUT);
-int  swmm_getSimulationParam(int type, double *OUTPUT);
+int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
+int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 %exception;
