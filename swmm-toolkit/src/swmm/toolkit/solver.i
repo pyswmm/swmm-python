@@ -53,8 +53,10 @@
         int errorCode;
         errorMsg = (char *) malloc(sizeof(char)*256);
         errorCode = swmm_getAPIError(result, errorMsg);
-        PyErr_SetString(PyExc_Exception, errorMsg);
-        freeMemory(errorMsg);
+        if (errorCode == 0) {
+            PyErr_SetString(PyExc_Exception, errorMsg);
+            freeMemory(errorMsg);
+        }
         SWIG_fail;
     }
 }
@@ -162,11 +164,21 @@ int  swmm_getSimulationDateTime(SM_TimePropety type, int *year, int *month, int 
 int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, int day, int hour, int minute, int second);
 int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
 int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
+
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_getObjectId(SM_ObjectType type, int index, char *OBJECTID);
+
 int  swmm_getNodeType(int index, int *OUTPUT);
+int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);
+int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
+
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getLinkDirection(int index, signed char *value);
+int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
+int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
+
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
+int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
+int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
 %exception;

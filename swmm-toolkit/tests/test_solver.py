@@ -188,28 +188,130 @@ def test_get_link_connections(handle):
     assert ds_node == 1
 
 
-def test_get_subcatch_connection(handle):
-    pass
-
-
 def test_get_link_direction(handle):
     for index in range(0, 13):
         link_direction = solver.get_link_direction(index)
-        print(type(link_direction))
-        # solver_enum.LinkDirection.UPSTREAM_TO_DOWNSTREAM
-
-
-def test_node_param(handle):
-    pass
+        assert link_direction == solver_enum.LinkDirection.UPSTREAM_TO_DOWNSTREAM.value
 
 
 def test_link_param(handle):
-    pass
+    offset_1 = solver.get_link_parameter(0, solver_enum.LinkProperty.OFFSET_1)
+    offset_2 = solver.get_link_parameter(0, solver_enum.LinkProperty.OFFSET_2)
+    initial_flow = solver.get_link_parameter(0, solver_enum.LinkProperty.INITIAL_FLOW)
+    flow_limit = solver.get_link_parameter(0, solver_enum.LinkProperty.FLOW_LIMIT)
+    inlet_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.INLET_LOSS)
+    outlet_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.OUTLET_LOSS)
+    average_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.AVERAGE_LOSS)
 
+    assert offset_1 == 0
+    assert offset_2 == 0
+    assert initial_flow == 0
+    assert flow_limit == 0
+    assert inlet_loss == 0
+    assert outlet_loss == 0
+    assert average_loss == 0
+    
+    solver.set_link_parameter(0, solver_enum.LinkProperty.OFFSET_1, 0.2)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.OFFSET_2, 0.1)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.INITIAL_FLOW, 0.1)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.FLOW_LIMIT, 1)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.INLET_LOSS, 0.5)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.OUTLET_LOSS, 1.0)
+    solver.set_link_parameter(0, solver_enum.LinkProperty.AVERAGE_LOSS, 0.2)
+
+    offset_1 = solver.get_link_parameter(0, solver_enum.LinkProperty.OFFSET_1)
+    offset_2 = solver.get_link_parameter(0, solver_enum.LinkProperty.OFFSET_2)
+    initial_flow = solver.get_link_parameter(0, solver_enum.LinkProperty.INITIAL_FLOW)
+    flow_limit = solver.get_link_parameter(0, solver_enum.LinkProperty.FLOW_LIMIT)
+    inlet_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.INLET_LOSS)
+    outlet_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.OUTLET_LOSS)
+    average_loss = solver.get_link_parameter(0, solver_enum.LinkProperty.AVERAGE_LOSS)
+    
+    assert offset_1 == 0.2
+    assert offset_2 == 0.1
+    assert initial_flow == 0.1
+    assert flow_limit == 1
+    assert inlet_loss == 0.5
+    assert outlet_loss == 1.0
+    assert average_loss == 0.2
+
+    
+def test_node_param(handle):
+    invert_elevation = solver.get_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION)
+    full_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.FULL_DEPTH)
+    surcharge_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.SURCHARGE_DEPTH)
+    pond_area = solver.get_node_parameter(0, solver_enum.NodeProperty.POND_AREA)
+    initial_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.INITIAL_DEPTH)
+
+    assert invert_elevation == 1000
+    assert full_depth == 3
+    assert surcharge_depth == 0
+    assert pond_area == 0
+    assert initial_depth == 0
+
+    solver.set_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION, 90)
+    solver.set_node_parameter(0, solver_enum.NodeProperty.FULL_DEPTH, 10)
+    solver.set_node_parameter(0, solver_enum.NodeProperty.SURCHARGE_DEPTH, 100)
+    solver.set_node_parameter(0, solver_enum.NodeProperty.POND_AREA, 100)
+    solver.set_node_parameter(0, solver_enum.NodeProperty.INITIAL_DEPTH, 1)
+
+    invert_elevation = solver.get_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION)
+    full_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.FULL_DEPTH)
+    surcharge_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.SURCHARGE_DEPTH)
+    pond_area = solver.get_node_parameter(0, solver_enum.NodeProperty.POND_AREA)
+    initial_depth = solver.get_node_parameter(0, solver_enum.NodeProperty.INITIAL_DEPTH)
+    
+    assert invert_elevation == 90
+    assert full_depth == 10
+    assert surcharge_depth == 100
+    assert pond_area == 100
+    assert initial_depth == 1
+    
 
 def test_sub_param(handle):
-    pass
+    width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)
+    area = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.AREA)
+    impervious_fraction = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.IMPERVIOUS_FRACTION)
+    slope = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.SLOPE)
+    curb_length = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.CURB_LENGTH)
+
+    assert width == 500
+    assert area == 10
+    assert impervious_fraction == 50/100
+    assert slope == 0.01/100
+    assert curb_length == 0
+
+    solver.set_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH, 100)
+    solver.set_subcatch_parameter(0, solver_enum.SubcatchProperty.AREA, 50)
+    #solver.set_subcatch_parameter(0, solver_enum.SubcatchProperty.IMPERVIOUS_FRACTION, 100)
+    solver.set_subcatch_parameter(0, solver_enum.SubcatchProperty.SLOPE, 0.1)
+    solver.set_subcatch_parameter(0, solver_enum.SubcatchProperty.CURB_LENGTH, 10)
+
+    width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)
+    area = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.AREA)
+    #impervious_fraction = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.IMPERVIOUS_FRACTION)
+    slope = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.SLOPE)
+    curb_length = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.CURB_LENGTH)
+    
+    assert width == 100
+    assert area == 50
+    #assert impervious_fraction == 100/100
+    assert slope == 0.1
+    assert curb_length == 10
 
 
+def test_get_subcatch_connection(handle):
+    object_type, object_index = solver.get_subcatch_connection(0)
+    assert object_type == solver_enum.ObjectProperty.NODE.value
+    assert object_index == 1
+    object_type, object_index = solver.get_subcatch_connection(1)
+    assert object_type == solver_enum.ObjectProperty.NODE.value
+    assert object_index == 2
+    object_type, object_index = solver.get_subcatch_connection(2)
+    assert object_type == solver_enum.ObjectProperty.NODE.value
+    assert object_index == 0
+    object_type, object_index = solver.get_subcatch_connection(3)
+    assert object_type == solver_enum.ObjectProperty.NODE.value
+    assert object_index == 10
 
 

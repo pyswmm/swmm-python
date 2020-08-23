@@ -52,7 +52,7 @@ class LinkType(Enum, start=0):
     OUTLET
 
 
-class LinkDirect(Enum):
+class LinkDirection(Enum):
     UPSTREAM_TO_DOWNSTREAM = 1
     DOWNSTREAM_TO_UPSTREAM = -1
     
@@ -117,4 +117,31 @@ class SimSetting(Enum, start=0):
     HEAD_TOLERANCE
     SYSTEM_FLOW_TOLERANCE
     LATERAL_FLOW_TOLERANCE
+
+
+class NodeProperty(Enum, start=0):
+    INVERT_ELEVATION
+    FULL_DEPTH
+    SURCHARGE_DEPTH
+    POND_AREA
+    INITIAL_DEPTH
+
+
+class LinkProperty(Enum, start=0):
+    OFFSET_1
+    OFFSET_2
+    INITIAL_FLOW
+    FLOW_LIMIT
+    INLET_LOSS
+    OUTLET_LOSS
+    AVERAGE_LOSS
+
+
+class SubcatchProperty(Enum, start=0):
+    WIDTH
+    AREA
+    IMPERVIOUS_FRACTION
+    SLOPE
+    CURB_LENGTH
+    
     
