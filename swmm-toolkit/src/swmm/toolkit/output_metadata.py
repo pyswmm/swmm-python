@@ -13,7 +13,7 @@ from itertools import islice
 
 from aenum import extend_enum
 
-from swmm.toolkit import output, output_enum, swmm_enum
+from swmm.toolkit import output, output_enum, solver_enum
 
 
 class OutputMetadata:
@@ -34,9 +34,9 @@ class OutputMetadata:
         output_enum.BaseUnits.UNITLESS:   "unitless",
         output_enum.BaseUnits.NONE:       "",
 
-        swmm_enum.FlowUnits.CFS:          "cu ft/sec",
-        swmm_enum.FlowUnits.GPM:          "gal/min",
-        swmm_enum.FlowUnits.MGD:          "M gal/day",
+        solver_enum.FlowUnits.CFS:          "cu ft/sec",
+        solver_enum.FlowUnits.GPM:          "gal/min",
+        solver_enum.FlowUnits.MGD:          "M gal/day",
     }
 
     _unit_labels_si_ = {
@@ -53,16 +53,16 @@ class OutputMetadata:
         output_enum.BaseUnits.UNITLESS:   "unitless",
         output_enum.BaseUnits.NONE:       "",
 
-        swmm_enum.FlowUnits.CMS:          "cu m/sec",
-        swmm_enum.FlowUnits.LPS:          "L/sec",
-        swmm_enum.FlowUnits.MLD:          "M L/day",
+        solver_enum.FlowUnits.CMS:          "cu m/sec",
+        solver_enum.FlowUnits.LPS:          "L/sec",
+        solver_enum.FlowUnits.MLD:          "M L/day",
     }
 
     _unit_labels_quality_ = {
-        swmm_enum.ConcUnits.MG:           "mg/L",
-        swmm_enum.ConcUnits.UG:           "ug/L",
-        swmm_enum.ConcUnits.COUNT:        "Count/L",
-        swmm_enum.ConcUnits.NONE:         ""
+        solver_enum.ConcUnits.MG:           "mg/L",
+        solver_enum.ConcUnits.UG:           "ug/L",
+        solver_enum.ConcUnits.COUNT:        "Count/L",
+        solver_enum.ConcUnits.NONE:         ""
     }
 
 
@@ -84,7 +84,7 @@ class OutputMetadata:
                     output_handle, output_enum.ElementType.POLLUT, i))
             # Get pollutant units
             for u in output.get_units(output_handle)[2:]:
-                pollut_units.append(swmm_enum.ConcUnits(u))
+                pollut_units.append(solver_enum.ConcUnits(u))
 
             # Create dictionary keys
             for i in range(1, n):
@@ -109,8 +109,8 @@ class OutputMetadata:
         self.units = output.get_units(output_handle)
 
         # Determine prevailing unit system
-        self._unit_system = swmm_enum.UnitSystem(self.units[0])
-        if self._unit_system == swmm_enum.UnitSystem.US:
+        self._unit_system = solver_enum.UnitSystem(self.units[0])
+        if self._unit_system == solver_enum.UnitSystem.US:
             self._unit_labels = type(self)._unit_labels_us_
         else:
             self._unit_labels = type(self)._unit_labels_si_
@@ -118,7 +118,7 @@ class OutputMetadata:
         self._unit_labels.update(type(self)._unit_labels_quality_)
 
         # Set user flow units
-        self._flow = swmm_enum.FlowUnits(self.units[1])
+        self._flow = solver_enum.FlowUnits(self.units[1])
 
         self._metadata = {
             output_enum.SubcatchAttribute.RAINFALL:

@@ -20,3 +20,8 @@
 %rename(set_simulation_datetime)                    swmm_setSimulationDateTime;
 %rename(get_simulation_analysis_setting)            swmm_getSimulationAnalysisSetting;
 %rename(get_simulation_parameter)                   swmm_getSimulationParam;
+%rename(get_node_type)                              swmm_getNodeType;
+%rename(get_link_type)                              swmm_getLinkType;
+%rename(get_link_connections)                       swmm_getLinkConnections;
+%rename(get_link_direction)                         swmm_getLinkDirection;
+%rename(get_subcatch_connection)                    swmm_getSubcatchOutConnection;

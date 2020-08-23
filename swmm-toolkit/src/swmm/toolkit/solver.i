@@ -49,9 +49,12 @@
 {
     $function
     if (result > 0) {
-        char errmsg[90];
-        swmm_getError(errmsg, 90);
-        PyErr_SetString(PyExc_Exception, errmsg);
+        char* errorMsg;
+        int errorCode;
+        errorMsg = (char *) malloc(sizeof(char)*256);
+        errorCode = swmm_getAPIError(result, errorMsg);
+        PyErr_SetString(PyExc_Exception, errorMsg);
+        freeMemory(errorMsg);
         SWIG_fail;
     }
 }
@@ -69,7 +72,12 @@
     double *value
 };
 
-%typemap(in, numinputs=0)char *ERRMSG {
+%apply signed char *OUTPUT {
+    signed char *value
+};
+
+
+%typemap(in, numinputs=0) char *ERRMSG {
     $1 = (char *) malloc(sizeof(char)*256);
 }
 %typemap(argout) (char *ERRMSG) {
@@ -79,6 +87,19 @@
     }
 }
 %typemap(freearg) char *ERRMSG {
+    freeMemory($1);
+}
+
+%typemap(in, numinputs=0)char *OBJECTID {
+    $1 = (char *) malloc(sizeof(char)*61);
+}
+%typemap(argout) (char *OBJECTID) {
+    if ($1) {
+      PyObject *o = PyUnicode_FromString($1);
+      $result = SWIG_Python_AppendOutput($result, o);
+    }
+}
+%typemap(freearg) char *OBJECTID {
     freeMemory($1);
 }
 
@@ -119,6 +140,7 @@
     SM_LidResult
 }
 
+
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
 int  swmm_open(char *f1, char *f2, char *f3);
@@ -141,4 +163,10 @@ int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, in
 int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
 int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
+int  swmm_getObjectId(SM_ObjectType type, int index, char *OBJECTID);
+int  swmm_getNodeType(int index, int *OUTPUT);
+int  swmm_getLinkType(int index, int *OUTPUT);
+int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
+int  swmm_getLinkDirection(int index, signed char *value);
+int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 %exception;
