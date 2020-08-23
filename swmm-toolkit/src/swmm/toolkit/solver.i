@@ -78,6 +78,9 @@
     signed char *value
 };
 
+%apply char *OUTPUT {
+    char *condition
+};
 
 %typemap(in, numinputs=0) char *ERRMSG {
     $1 = (char *) malloc(sizeof(char)*256);
@@ -181,4 +184,14 @@ int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
 int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
+
+int  swmm_getLidUCount(int index, int *OUTPUT);
+int  swmm_getLidUParam(int index, int lidIndex, SM_LidUProperty param, double *OUTPUT);
+int  swmm_setLidUParam(int index, int lidIndex, SM_LidUProperty param, double value);
+int  swmm_getLidUOption(int index, int lidIndex, SM_LidUOptions param, int *OUTPUT);
+int  swmm_setLidUOption(int index, int lidIndex, SM_LidUOptions param, int value);
+
+int  swmm_getLidCOverflow(int lidControlIndex, int *OUTPUT);
+int  swmm_getLidCParam(int lidControlIndex, SM_LidLayer layerIndex, SM_LidUProperty param, double *OUTPUT);
+int  swmm_setLidCParam(int lidControlIndex, SM_LidLayer layerIndex, SM_LidUProperty param, double value);
 %exception;

@@ -143,5 +143,59 @@ class SubcatchProperty(Enum, start=0):
     IMPERVIOUS_FRACTION
     SLOPE
     CURB_LENGTH
+
+
+class LidUsageProperty(Enum, start=0):
+    UNIT_AREA
+    TOP_WIDTH
+    BOTTOM_WIDTH
+    INITIAL_SATURATION
+    FROM_IMPERVIOUS
+    FROM_PERVIOUS
+
+
+class LidUsageOption(Enum, start=0):
+    INDEX
+    NUMBER
+    TO_PERV
+    DRAIN_SUBCATCH
+    DRAIN_NODE
+
+
+class LidLayer(Enum, start=0):
+    SURFACE
+    SOIL
+    STORAGE
+    PAVEMENT
+    DRAIN
+    DRAIN_MAT
+
+    
+class LidLayerProperty(Enum, start=0):
+    THICKNESS
+    VOID_FRACTION
+    ROUGHNESS
+    SURFACE_SLOPE
+    SIDE_SLOP
+    ALPHA
+    POROSITY
+    FIELD_CAPACITY
+    WILTING_POINT
+    SUCTION_HEAD
+    K_SATURATION
+    K_SLOPE
+    CLOG_FACTOR
+    IMPERVIOUS_FRACTION
+    DRAIN_COEFFICIENT
+    DRAIN_EXPONENT
+    DRAIN_OFFSET
+    DRAIN_DELAY
+    DRAIN_HEAD_OPEN
+    DRAIN_HEAD_CLOSE
+    DRAIN_CURVE
+    DRAIN_REGEN_DAYS
+    DRAIN_REGEN_DEGREE
+    
+    
     
     

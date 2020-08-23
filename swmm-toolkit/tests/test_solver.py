@@ -18,48 +18,47 @@ from swmm.toolkit import solver, solver_enum
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'test_Example1.inp')
-REPORT_FILE_TEST = os.path.join(DATA_PATH, 'temp_Example1.rpt')
-OUTPUT_FILE_TEST = os.path.join(DATA_PATH, 'temp_Example1.out')
+REPORT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.rpt')
+OUTPUT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.out')
+INPUT_FILE_EXAMPLE_2 = os.path.join(DATA_PATH, 'test_Example2.inp')
+REPORT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.rpt')
+OUTPUT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.out')
 INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'temp_nodata.inp')
 
 
-# def test_allocfree():
-#     _handle = solver.alloc_project()
-#     assert(_handle != None)
-#     _handle = solver.free_project(_handle)
-#     assert(_handle == None)
-
-
 def test_run():
-    # _handle = solver.alloc_project()
-    solver.run(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
-    # solver.free_project(_handle)
+    solver.run(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
 
 
 def test_openclose():
-    # _handle = solver.alloc_project()
-    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
     solver.close()
-    # solver.free_project(_handle)
 
 
 def test_errorhandling():
     with pytest.raises(Exception):
-        solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+        solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
 
 
 @pytest.fixture()
 def handle(request):
-    # _handle = solver.alloc_project()
-    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST, OUTPUT_FILE_TEST)
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
 
     def close():
         solver.close()
-        # solver.free_project(_handle)
 
     request.addfinalizer(close)
-    # return _handle
 
+
+@pytest.fixture()
+def lid_handle(request):
+    solver.open(INPUT_FILE_EXAMPLE_2, REPORT_FILE_TEST_2, OUTPUT_FILE_TEST_2)
+
+    def close():
+        solver.close()
+
+    request.addfinalizer(close)
+    
 
 def test_step(handle):
     solver.start(0)
@@ -315,3 +314,87 @@ def test_get_subcatch_connection(handle):
     assert object_index == 10
 
 
+def test_get_lid_usage_count(lid_handle):
+    subcatch_usage_1 = solver.get_lid_usage_count(0)
+    subcatch_usage_2 = solver.get_lid_usage_count(1)
+
+    assert subcatch_usage_1 == 1
+    assert subcatch_usage_2 == 0
+
+
+def test_lid_usage_parameter(lid_handle):
+    unit_area = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.UNIT_AREA)
+    top_width = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.TOP_WIDTH)
+    #bottom_width = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.BOTTOM_WIDTH)
+    initial_saturation = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.INITIAL_SATURATION)
+    from_impervious = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_IMPERVIOUS)
+    from_pervious = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_PERVIOUS)
+
+    assert unit_area == 50
+    assert top_width == 10
+    #assert bottom_width == pytest.approx(0)
+    assert initial_saturation == 0
+    assert from_impervious == 25
+    assert from_pervious == 0
+
+    solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.UNIT_AREA, 100)
+    solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.TOP_WIDTH, 20)
+    #solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.BOTTOM_WIDTH, 20)
+    solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.INITIAL_SATURATION, 10)
+    solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_IMPERVIOUS, 50)
+    solver.set_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_PERVIOUS, 10)
+    
+    unit_area = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.UNIT_AREA)
+    top_width = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.TOP_WIDTH)
+    #bottom_width = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.BOTTOM_WIDTH)
+    initial_saturation = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.INITIAL_SATURATION)
+    from_impervious = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_IMPERVIOUS)
+    from_pervious = solver.get_lid_usage_parameter(0, 0, solver_enum.LidUsageProperty.FROM_PERVIOUS)
+
+    assert unit_area == 100
+    assert top_width == 20
+    #assert bottom_width == 0
+    assert initial_saturation == 10
+    assert from_impervious == 50
+    assert from_pervious == 10
+
+
+def test_lid_usage_option(lid_handle):
+    index = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.INDEX) 
+    number = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.NUMBER) 
+    to_perv = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.TO_PERV) 
+    drain_subcatch = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.DRAIN_SUBCATCH) 
+    drain_node = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.DRAIN_NODE) 
+
+    assert index == 0
+    assert number == 100
+    assert to_perv == 1
+    assert drain_subcatch == -1
+    assert drain_node == 0
+ 
+    solver.set_lid_usage_option(0, 0, solver_enum.LidUsageOption.NUMBER, 200) 
+
+    number = solver.get_lid_usage_option(0, 0, solver_enum.LidUsageOption.NUMBER) 
+    assert number == 200
+
+
+def test_get_lid_control_overflow(lid_handle):
+    overflow_option = solver.get_lid_control_overflow(0)
+    # BC surface is greater than zero
+    assert overflow_option == 0
+
+
+def test_lid_control_parameter(lid_handle):
+    alpha = solver.get_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.ALPHA)
+    surface_thickness = solver.get_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.THICKNESS)
+    soil_thickness = solver.get_lid_control_parameter(0, solver_enum.LidLayer.SOIL, solver_enum.LidLayerProperty.THICKNESS)    
+    storage_thickness = solver.get_lid_control_parameter(0, solver_enum.LidLayer.STORAGE, solver_enum.LidLayerProperty.THICKNESS)       
+
+    assert alpha == 1.49
+    assert surface_thickness == 6
+    assert soil_thickness == 12
+    assert storage_thickness == 12
+
+    solver.set_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.THICKNESS, 12)
+    surface_thickness = solver.get_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.THICKNESS)
+    assert surface_thickness == 12

@@ -31,3 +31,11 @@
 %rename(get_subcatch_connection)                    swmm_getSubcatchOutConnection;
 %rename(get_subcatch_parameter)                     swmm_getSubcatchParam;
 %rename(set_subcatch_parameter)                     swmm_setSubcatchParam;
+%rename(get_lid_usage_count)                        swmm_getLidUCount;
+%rename(get_lid_usage_parameter)                    swmm_getLidUParam;
+%rename(set_lid_usage_parameter)                    swmm_setLidUParam;
+%rename(get_lid_usage_option)                       swmm_getLidUOption;
+%rename(set_lid_usage_option)                       swmm_setLidUOption;
+%rename(get_lid_control_overflow)                   swmm_getLidCOverflow;
+%rename(get_lid_control_parameter)                  swmm_getLidCParam;
+%rename(set_lid_control_parameter)                  swmm_setLidCParam;
