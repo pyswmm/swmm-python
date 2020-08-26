@@ -7,10 +7,10 @@
  *  Author:     Michael E. Tryby
  *              US EPA - ORD/NRMRL
  *
- *              Jennifer Wu
+ *  Author:     Jennifer Wu
  *              Xylem Inc.
  *
- *              Caleb Buahin
+ *  Author:     Caleb Buahin
  *              Xylem Inc. 
 */
 
@@ -39,24 +39,21 @@
 /* GENERATES DOCUMENTATION */
 %feature("autodoc", "2");
 
-
 /* RENAME FUNCTIONS PYTHON STYLE */
 %include "solver_rename.i"
-%include "solver_toolkitapi_rename.i"
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
 {
     $function
     if (result > 0) {
-        char* errorMsg;
-        int errorCode;
-        errorMsg = (char *) malloc(sizeof(char)*256);
+        char** errorMsg = NULL;
+        int errorCode = 0;
         errorCode = swmm_getAPIError(result, errorMsg);
         if (errorCode == 0) {
-            PyErr_SetString(PyExc_Exception, errorMsg);
-            freeMemory(errorMsg);
+            PyErr_SetString(PyExc_Exception, *errorMsg);
         }
+        freeMemory(*errorMsg);
         SWIG_fail;
     }
 }
@@ -82,31 +79,7 @@
     char *condition
 };
 
-%typemap(in, numinputs=0) char *ERRMSG {
-    $1 = (char *) malloc(sizeof(char)*256);
-}
-%typemap(argout) (char *ERRMSG) {
-    if ($1) {
-      PyObject *o = PyUnicode_FromString($1);
-      $result = SWIG_Python_AppendOutput($result, o);
-    }
-}
-%typemap(freearg) char *ERRMSG {
-    freeMemory($1);
-}
-
-%typemap(in, numinputs=0)char *OBJECTID {
-    $1 = (char *) malloc(sizeof(char)*61);
-}
-%typemap(argout) (char *OBJECTID) {
-    if ($1) {
-      PyObject *o = PyUnicode_FromString($1);
-      $result = SWIG_Python_AppendOutput($result, o);
-    }
-}
-%typemap(freearg) char *OBJECTID {
-    freeMemory($1);
-}
+%cstring_output_allocate(char **OUTCHAR, freeMemory(*$1));
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -159,7 +132,7 @@ int  swmm_getVersion(void);
 
 
 // TOOLKIT API 
-int  swmm_getAPIError(int ErrorCodeAPI, char *ERRMSG);
+int  swmm_getAPIError(int ErrorCodeAPI, char **OUTCHAR);
 int  swmm_getSimulationUnit(SM_Units type, int *OUTPUT);
 int  swmm_project_findObject(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_countObjects(SM_ObjectType type, int *OUTPUT);
@@ -167,13 +140,15 @@ int  swmm_getSimulationDateTime(SM_TimePropety type, int *year, int *month, int 
 int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, int day, int hour, int minute, int second);
 int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
 int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
+int  swmm_getCurrentDateTime(int *year, int *month, int *day, int *hour, int *minute, int *second);
 
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
-int  swmm_getObjectId(SM_ObjectType type, int index, char *OBJECTID);
+int  swmm_getObjectId(SM_ObjectType type, int index, char **OUTCHAR);
 
 int  swmm_getNodeType(int index, int *OUTPUT);
 int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);
 int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
+int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
