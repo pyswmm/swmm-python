@@ -38,7 +38,7 @@ def test_openclose():
 def test_errorhandling():
     with pytest.raises(Exception):
         solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
-
+        
 
 @pytest.fixture()
 def handle(request):
@@ -51,9 +51,21 @@ def handle(request):
 
 
 @pytest.fixture()
+def run_sim(request):
+    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
+    solver.start(0)
+    
+    def close():
+        solver.end()
+        solver.close()
+
+    request.addfinalizer(close)
+    
+@pytest.fixture()
 def lid_handle(request):
     solver.open(INPUT_FILE_EXAMPLE_2, REPORT_FILE_TEST_2, OUTPUT_FILE_TEST_2)
 
+        
     def close():
         solver.close()
 
@@ -65,12 +77,10 @@ def test_step(handle):
 
     while True:
         time = solver.step()
-
-        if time == 0.:
+        if time == 0:
             break
 
     solver.end()
-
     solver.report()
 
 
@@ -398,3 +408,14 @@ def test_lid_control_parameter(lid_handle):
     solver.set_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.THICKNESS, 12)
     surface_thickness = solver.get_lid_control_parameter(0, solver_enum.LidLayer.SURFACE, solver_enum.LidLayerProperty.THICKNESS)
     assert surface_thickness == 12
+
+
+def test_get_current_datetime(run_sim):
+    from datetime import datetime
+    current_datetime = datetime(*solver.get_current_datetime())
+    assert current_datetime == datetime(1998, 1, 1)
+
+
+def test_get_node_result(run_sim):
+    pass
+    

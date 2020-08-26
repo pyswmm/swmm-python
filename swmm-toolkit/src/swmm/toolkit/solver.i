@@ -47,13 +47,13 @@
 {
     $function
     if (result > 0) {
-        char** errorMsg = NULL;
+        char* errorMsg = NULL;
         int errorCode = 0;
-        errorCode = swmm_getAPIError(result, errorMsg);
+        errorCode = swmm_getAPIError(result, &errorMsg);
         if (errorCode == 0) {
-            PyErr_SetString(PyExc_Exception, *errorMsg);
+            PyErr_SetString(PyExc_Exception, errorMsg);
         }
-        freeMemory(*errorMsg);
+        freeMemory(errorMsg);
         SWIG_fail;
     }
 }
@@ -80,6 +80,12 @@
 };
 
 %cstring_output_allocate(char **OUTCHAR, freeMemory(*$1));
+
+%apply char **OUTCHAR {
+    char **errorMsg,
+    char **id
+};
+
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -132,7 +138,7 @@ int  swmm_getVersion(void);
 
 
 // TOOLKIT API 
-int  swmm_getAPIError(int ErrorCodeAPI, char **OUTCHAR);
+int  swmm_getAPIError(int ErrorCodeAPI, char **errorMsg);
 int  swmm_getSimulationUnit(SM_Units type, int *OUTPUT);
 int  swmm_project_findObject(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_countObjects(SM_ObjectType type, int *OUTPUT);
@@ -143,7 +149,7 @@ int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
 int  swmm_getCurrentDateTime(int *year, int *month, int *day, int *hour, int *minute, int *second);
 
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
-int  swmm_getObjectId(SM_ObjectType type, int index, char **OUTCHAR);
+int  swmm_getObjectId(SM_ObjectType type, int index, char **id);
 
 int  swmm_getNodeType(int index, int *OUTPUT);
 int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);

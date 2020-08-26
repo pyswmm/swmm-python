@@ -60,7 +60,6 @@ class LinkDirection(Enum):
 # Solver Toolkit API Enums
 #
 
-
 class ObjectProperty(Enum, start=0):
     GAGE
     SUBCATCH 
@@ -127,6 +126,17 @@ class NodeProperty(Enum, start=0):
     INITIAL_DEPTH
 
 
+class NodeResult(Enum, start=0):
+    TOTAL_INFLOW
+    TOTAL_OUTFLOW
+    LOSSES
+    VOLUME
+    FLOOD
+    DEPTH
+    HEAD
+    LATERAL_INFLOW
+
+    
 class LinkProperty(Enum, start=0):
     OFFSET_1
     OFFSET_2
@@ -137,6 +147,17 @@ class LinkProperty(Enum, start=0):
     AVERAGE_LOSS
 
 
+class LinkResult(Enum, start=0):
+    FLOW
+    DEPTH
+    VOLUME
+    US_SURFACE_AREA
+    DS_SURFACE_AREA
+    SETTING
+    TARGET_SETTING
+    FROUDE
+
+    
 class SubcatchProperty(Enum, start=0):
     WIDTH
     AREA
@@ -145,6 +166,15 @@ class SubcatchProperty(Enum, start=0):
     CURB_LENGTH
 
 
+class SubcatchResult(Enum, start=0):
+    RAIN
+    EVAPORATION
+    INFILTRATION
+    RUNON
+    RUNOFF
+    SNOW
+
+    
 class LidUsageProperty(Enum, start=0):
     UNIT_AREA
     TOP_WIDTH
