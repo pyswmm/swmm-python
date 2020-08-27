@@ -86,6 +86,23 @@
     char **id
 };
 
+/* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
+%typemap(in, numinputs=0)double** DOUBLEPOINTER (double* doubleArray){
+   $1 = &doubleArray;
+}
+%typemap(argout) (double** DOUBLEPOINTER) {
+    if (*$1) {
+      int length = sizeof(*$1)/sizeof(double) + 1;
+      PyObject *o = PyList_New(length);
+      double* doubleArray = *$1;
+      for(int i=0; i<length; i++) {
+        PyList_SetItem(o, i, PyFloat_FromDouble(doubleArray[i]));
+      }
+      $result = SWIG_Python_AppendOutput($result, o);
+      freeMemory(*$1);
+    }
+}
+
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -151,20 +168,29 @@ int  swmm_getCurrentDateTime(int *year, int *month, int *day, int *hour, int *mi
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_getObjectId(SM_ObjectType type, int index, char **id);
 
+int  swmm_getGagePrecip(int index, SM_GagePrecip type, double *OUTPUT);
+int  swmm_setGagePrecip(int index, double total_precip);
+
 int  swmm_getNodeType(int index, int *OUTPUT);
 int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);
 int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
 int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
+int  swmm_getNodePollut(int index, SM_NodePollut type, double** DOUBLEPOINTER);
+int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getLinkDirection(int index, signed char *value);
 int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
 int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
+int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
+int  swmm_getLinkPollut(int index, SM_LinkPollut type, double** DOUBLEPOINTER);
 
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
 int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
+int  swmm_getSubcatchResult(int index, SM_SubcResult type, double *OUTPUT);
+int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double** DOUBLEPOINTER);
 
 int  swmm_getLidUCount(int index, int *OUTPUT);
 int  swmm_getLidUParam(int index, int lidIndex, SM_LidUProperty param, double *OUTPUT);

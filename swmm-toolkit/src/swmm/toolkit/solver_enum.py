@@ -136,7 +136,11 @@ class NodeResult(Enum, start=0):
     HEAD
     LATERAL_INFLOW
 
-    
+
+class NodePollutant(Enum, start=0):
+    QUALITY
+
+
 class LinkProperty(Enum, start=0):
     OFFSET_1
     OFFSET_2
@@ -157,6 +161,11 @@ class LinkResult(Enum, start=0):
     TARGET_SETTING
     FROUDE
 
+
+class LinkPollutant(Enum, start=0):
+    QUALITY
+    TOTAL_LOAD
+
     
 class SubcatchProperty(Enum, start=0):
     WIDTH
@@ -173,6 +182,13 @@ class SubcatchResult(Enum, start=0):
     RUNON
     RUNOFF
     SNOW
+
+
+class SubcatchPollutant(Enum, start=0):
+    BUILD_UP
+    CONCENTRATION
+    QUALITY
+    TOTAL_LOAD
 
     
 class LidUsageProperty(Enum, start=0):
@@ -227,5 +243,9 @@ class LidLayerProperty(Enum, start=0):
     DRAIN_REGEN_DEGREE
     
     
+class RainResult(Enum, start=0):
+    TOTAL
+    RAINFALL
+    SNOWFALL
     
     

@@ -35,14 +35,21 @@
 %rename(get_node_type)                              swmm_getNodeType;
 %rename(get_node_parameter)                         swmm_getNodeParam;
 %rename(set_node_parameter)                         swmm_setNodeParam;
+%rename(get_node_result)                            swmm_getNodeResult;
+%rename(get_node_pollutant)                         swmm_getNodePollut;
+%rename(get_node_total_inflow)                      swmm_getNodeTotalInflow;
 %rename(get_link_type)                              swmm_getLinkType;
 %rename(get_link_connections)                       swmm_getLinkConnections;
 %rename(get_link_direction)                         swmm_getLinkDirection;
 %rename(get_link_parameter)                         swmm_getLinkParam;
 %rename(set_link_parameter)                         swmm_setLinkParam;
+%rename(get_link_result)                            swmm_getLinkResult;
+%rename(get_link_pollutant)                         swmm_getLinkPollut;
 %rename(get_subcatch_connection)                    swmm_getSubcatchOutConnection;
 %rename(get_subcatch_parameter)                     swmm_getSubcatchParam;
 %rename(set_subcatch_parameter)                     swmm_setSubcatchParam;
+%rename(get_subcatch_result)                        swmm_getSubcatchResult;
+%rename(get_subcatch_pollutant)                     swmm_getSubcatchPollut;
 %rename(get_lid_usage_count)                        swmm_getLidUCount;
 %rename(get_lid_usage_parameter)                    swmm_getLidUParam;
 %rename(set_lid_usage_parameter)                    swmm_setLidUParam;
@@ -51,3 +58,5 @@
 %rename(get_lid_control_overflow)                   swmm_getLidCOverflow;
 %rename(get_lid_control_parameter)                  swmm_getLidCParam;
 %rename(set_lid_control_parameter)                  swmm_setLidCParam;
+%rename(get_rain_precipitation)                     swmm_getGagePrecip;
+%rename(set_rain_precipitation)                      swmm_setGagePrecip;

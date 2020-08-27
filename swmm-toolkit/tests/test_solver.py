@@ -131,6 +131,12 @@ def test_simulation_datetime(handle):
     assert datetime(2020, 1, 1, 12, 59, 59) == datetime(year, month, day, hour, minute, second)
 
 
+def test_get_current_datetime(run_sim):
+    from datetime import datetime
+    current_datetime = datetime(*solver.get_current_datetime())
+    assert current_datetime == datetime(1998, 1, 1)
+
+    
 def test_simulation_analysis_setting(handle):
     allow_ponding = solver.get_simulation_analysis_setting(0)
     skip_steady = solver.get_simulation_analysis_setting(1)
@@ -244,6 +250,35 @@ def test_link_param(handle):
     assert outlet_loss == 1.0
     assert average_loss == 0.2
 
+
+def test_get_link_result(run_sim):
+    flow = solver.get_link_result(0, solver_enum.LinkResult.FLOW)
+    depth = solver.get_link_result(0, solver_enum.LinkResult.DEPTH)
+    assert flow == 0.0
+    assert depth == 0.0
+    for i in range(0, 100):
+        solver.step()
+    flow = solver.get_link_result(0, solver_enum.LinkResult.FLOW)
+    depth = solver.get_link_result(0, solver_enum.LinkResult.DEPTH)
+    assert flow == pytest.approx(1.054, 0.1)
+    assert depth == pytest.approx(0.268, 0.1)
+
+
+def test_get_link_pollutant(run_sim):
+    pollut = solver.get_link_pollutant(0, solver_enum.NodePollutant.QUALITY)
+    tss, lead = tuple(pollut)
+    assert tss == 0.0
+    assert lead == 0.0
+
+    for i in range(0, 250):
+        solver.step()
+    pollut = solver.get_link_pollutant(0, solver_enum.NodePollutant.QUALITY)
+
+    tss, lead = tuple(pollut)
+
+    assert tss == pytest.approx(14.7179, 0.1)
+    assert lead == pytest.approx(2.9435, 0.1)
+
     
 def test_node_param(handle):
     invert_elevation = solver.get_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION)
@@ -277,6 +312,43 @@ def test_node_param(handle):
     assert initial_depth == 1
     
 
+def test_get_node_result(run_sim):
+    total_inflow = solver.get_node_result(0, solver_enum.NodeResult.TOTAL_INFLOW)
+    total_outflow = solver.get_node_result(0, solver_enum.NodeResult.TOTAL_OUTFLOW)
+    assert total_inflow == 0.0
+    assert total_outflow == 0.0
+    for i in range(0, 100):
+        solver.step()
+    total_inflow = solver.get_node_result(0, solver_enum.NodeResult.TOTAL_INFLOW)
+    total_outflow = solver.get_node_result(0, solver_enum.NodeResult.TOTAL_OUTFLOW)
+    assert total_inflow == pytest.approx(1.07, 0.1)
+    assert total_outflow == pytest.approx(1.07, 0.1)
+
+
+def test_get_node_pollutant(run_sim):
+    pollut = solver.get_node_pollutant(0, solver_enum.NodePollutant.QUALITY)
+    tss, lead = tuple(pollut)
+    assert tss == 0.0
+    assert lead == 0.0
+
+    for i in range(0, 250):
+        solver.step()
+    pollut = solver.get_node_pollutant(0, solver_enum.NodePollutant.QUALITY)
+
+    tss, lead = tuple(pollut)
+    assert tss == pytest.approx(14.7179, 0.1)
+    assert lead == pytest.approx(2.9435, 0.1)
+
+
+def test_get_total_inflow(run_sim):
+    total_inflow = solver.get_node_total_inflow(0)
+    assert total_inflow == 0.0
+    for i in range(0, 550):
+        solver.step()
+    total_inflow = solver.get_node_total_inflow(0)
+    assert total_inflow == pytest.approx(42639.814, 0.1)
+
+    
 def test_sub_param(handle):
     width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)
     area = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.AREA)
@@ -323,6 +395,34 @@ def test_get_subcatch_connection(handle):
     assert object_type == solver_enum.ObjectProperty.NODE.value
     assert object_index == 10
 
+
+def test_get_subcatch_result(run_sim):
+    rain = solver.get_subcatch_result(0, solver_enum.SubcatchResult.RAIN)
+    evaporation = solver.get_subcatch_result(0, solver_enum.SubcatchResult.EVAPORATION)
+    assert rain == 0.0
+    assert evaporation == 0.0
+    for i in range(0, 100):
+        solver.step()
+    rain = solver.get_subcatch_result(0, solver_enum.SubcatchResult.RAIN)
+    evaporation = solver.get_subcatch_result(0, solver_enum.SubcatchResult.EVAPORATION)
+    assert rain == pytest.approx(0.25, 0.1)
+    assert evaporation == pytest.approx(0.0, 0.1)
+
+
+def test_get_subcatch_pollutant(run_sim):
+    pollut = solver.get_subcatch_pollutant(0, solver_enum.SubcatchPollutant.BUILD_UP)
+    tss, lead = tuple(pollut)
+    assert tss == 0.0
+    assert lead == 0.0
+
+    for i in range(0, 250):
+        solver.step()
+    pollut = solver.get_subcatch_pollutant(0, solver_enum.SubcatchPollutant.BUILD_UP)
+
+    tss, lead = tuple(pollut)
+    assert tss == pytest.approx(44.246, 0.1)
+    assert lead == 0.0
+    
 
 def test_get_lid_usage_count(lid_handle):
     subcatch_usage_1 = solver.get_lid_usage_count(0)
@@ -410,12 +510,32 @@ def test_lid_control_parameter(lid_handle):
     assert surface_thickness == 12
 
 
-def test_get_current_datetime(run_sim):
-    from datetime import datetime
-    current_datetime = datetime(*solver.get_current_datetime())
-    assert current_datetime == datetime(1998, 1, 1)
+def test_gage_precipitation(run_sim):
+    total = solver.get_rain_precipitation(0, solver_enum.RainResult.TOTAL)
+    snowfall = solver.get_rain_precipitation(0, solver_enum.RainResult.SNOWFALL)
+    rainfall = solver.get_rain_precipitation(0, solver_enum.RainResult.RAINFALL)
+    assert total == 0.0
+    assert snowfall == 0.0
+    assert rainfall == 0.0
 
+    for i in range(0, 250):
+        solver.step()
 
-def test_get_node_result(run_sim):
-    pass
+    total = solver.get_rain_precipitation(0, solver_enum.RainResult.TOTAL)
+    snowfall = solver.get_rain_precipitation(0, solver_enum.RainResult.SNOWFALL)
+    rainfall = solver.get_rain_precipitation(0, solver_enum.RainResult.RAINFALL)
+    assert total == 0.4
+    assert snowfall == 0.0
+    assert rainfall == 0.4
     
+    solver.set_rain_precipitation(0, 1.0)
+    
+    for i in range(0, 250):
+        solver.step()
+
+    total = solver.get_rain_precipitation(0, solver_enum.RainResult.TOTAL)
+    snowfall = solver.get_rain_precipitation(0, solver_enum.RainResult.SNOWFALL)
+    rainfall = solver.get_rain_precipitation(0, solver_enum.RainResult.RAINFALL)
+    assert total == 1.0
+    assert snowfall == 0.0
+    assert rainfall == 1.0
