@@ -395,7 +395,7 @@ def test_get_node_stats(run_sim):
             break
 
     node_stats = solver.get_node_stats(5)
-    print(node_stats)
+    node_stats['Maximum Depth'] == pytest.approx(1.15, 0.1)
 
     
 def test_sub_param(handle):
