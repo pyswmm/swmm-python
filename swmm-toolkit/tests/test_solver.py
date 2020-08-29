@@ -394,7 +394,7 @@ def test_get_node_stats(run_sim):
         if time == 0:
             break
 
-    node_stats = solver.get_node_stats(1)
+    node_stats = solver.get_node_stats(5)
     print(node_stats)
 
     

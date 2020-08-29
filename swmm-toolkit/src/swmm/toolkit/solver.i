@@ -127,14 +127,7 @@
     PyMapping_SetItemString(o, "Maximum Overflow Timestamp", PyFloat_FromDouble($1->maxOverflowDate));
     $result = SWIG_Python_AppendOutput($result, o);
 }
-/*
-%typemap(freearg) SM_NodeStats *OUTNODE {
-    if ($1)
-    {
-        swmm_freeMemory($1);
-    }
-}
-*/
+
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
