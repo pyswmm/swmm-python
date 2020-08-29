@@ -38,6 +38,9 @@
 %rename(get_node_result)                            swmm_getNodeResult;
 %rename(get_node_pollutant)                         swmm_getNodePollut;
 %rename(get_node_total_inflow)                      swmm_getNodeTotalInflow;
+%rename(set_node_total_inflow)                      swmm_setNodeInflow;
+%rename(set_outfall_stage)                          swmm_setOutfallStage;
+%rename(get_node_stats)                             swmm_getNodeStats;
 %rename(get_link_type)                              swmm_getLinkType;
 %rename(get_link_connections)                       swmm_getLinkConnections;
 %rename(get_link_direction)                         swmm_getLinkDirection;
@@ -45,6 +48,7 @@
 %rename(set_link_parameter)                         swmm_setLinkParam;
 %rename(get_link_result)                            swmm_getLinkResult;
 %rename(get_link_pollutant)                         swmm_getLinkPollut;
+%rename(set_link_target_setting)                    swmm_setLinkSetting;
 %rename(get_subcatch_connection)                    swmm_getSubcatchOutConnection;
 %rename(get_subcatch_parameter)                     swmm_getSubcatchParam;
 %rename(set_subcatch_parameter)                     swmm_setSubcatchParam;

@@ -60,6 +60,7 @@ def run_sim(request):
         solver.close()
 
     request.addfinalizer(close)
+
     
 @pytest.fixture()
 def lid_handle(request):
@@ -279,6 +280,20 @@ def test_get_link_pollutant(run_sim):
     assert tss == pytest.approx(14.7179, 0.1)
     assert lead == pytest.approx(2.9435, 0.1)
 
+
+def test_set_link_target_setting(run_sim):
+    target_setting = solver.get_link_result(0, solver_enum.LinkResult.TARGET_SETTING)
+    assert target_setting == 1.0
+    solver.set_link_target_setting(0, 0.5)
+    target_setting = solver.get_link_result(0, solver_enum.LinkResult.TARGET_SETTING)
+    assert target_setting == 0.5
+
+    for i in range(0, 250):
+        solver.step()
+        
+    target_setting = solver.get_link_result(0, solver_enum.LinkResult.TARGET_SETTING)
+    target_setting == 0.5
+
     
 def test_node_param(handle):
     invert_elevation = solver.get_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION)
@@ -340,13 +355,47 @@ def test_get_node_pollutant(run_sim):
     assert lead == pytest.approx(2.9435, 0.1)
 
 
-def test_get_total_inflow(run_sim):
+def test_node_total_inflow(run_sim):
     total_inflow = solver.get_node_total_inflow(0)
     assert total_inflow == 0.0
+
     for i in range(0, 550):
         solver.step()
+
     total_inflow = solver.get_node_total_inflow(0)
     assert total_inflow == pytest.approx(42639.814, 0.1)
+
+    solver.set_node_total_inflow(0, 1.0)
+
+    for i in range(0, 550):
+        solver.step()
+
+    total_inflow = solver.get_node_total_inflow(0)
+    assert total_inflow == pytest.approx(75644.471, 0.1)
+    
+
+def test_set_outfall_stage(run_sim):
+    head = solver.get_node_result(13, solver_enum.NodeResult.HEAD)
+    head == 975
+    
+    for i in range(0, 100):
+        solver.step()
+
+    head = solver.get_node_result(13, solver_enum.NodeResult.HEAD)
+    assert head == pytest.approx(975.519, 0.1)
+
+    solver.set_outfall_stage(13, 1000)    
+    solver.step()
+
+
+def test_get_node_stats(run_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    node_stats = solver.get_node_stats(1)
+    print(node_stats)
 
     
 def test_sub_param(handle):

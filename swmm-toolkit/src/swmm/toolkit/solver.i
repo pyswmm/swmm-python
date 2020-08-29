@@ -53,7 +53,7 @@
         if (errorCode == 0) {
             PyErr_SetString(PyExc_Exception, errorMsg);
         }
-        freeMemory(errorMsg);
+        swmm_freeMemory(errorMsg);
         SWIG_fail;
     }
 }
@@ -79,7 +79,7 @@
     char *condition
 };
 
-%cstring_output_allocate(char **OUTCHAR, freeMemory(*$1));
+%cstring_output_allocate(char **OUTCHAR, swmm_freeMemory(*$1));
 
 %apply char **OUTCHAR {
     char **errorMsg,
@@ -91,7 +91,8 @@
    $1 = &doubleArray;
 }
 %typemap(argout) (double** DOUBLEPOINTER) {
-    if (*$1) {
+    if (*$1) 
+    {
       int length = sizeof(*$1)/sizeof(double) + 1;
       PyObject *o = PyList_New(length);
       double* doubleArray = *$1;
@@ -99,10 +100,41 @@
         PyList_SetItem(o, i, PyFloat_FromDouble(doubleArray[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
-      freeMemory(*$1);
+      swmm_freeMemory(*$1);
     }
 }
 
+
+%typemap(in, numinputs=0) SM_NodeStats *OUTNODE (SM_NodeStats temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_NodeStats *OUTNODE {
+    PyObject *o = PyDict_New();
+    PyMapping_SetItemString(o, "Average Depth", PyFloat_FromDouble($1->avgDepth));
+    PyMapping_SetItemString(o, "Maximum Depth", PyFloat_FromDouble($1->maxDepth));
+    PyMapping_SetItemString(o, "Maximum Depth Timestamp", PyFloat_FromDouble($1->maxDepthDate));
+    PyMapping_SetItemString(o, "Maximum Report Depth", PyFloat_FromDouble($1->maxRptDepth));
+    PyMapping_SetItemString(o, "Voluime Flooded", PyFloat_FromDouble($1->volFlooded));
+    PyMapping_SetItemString(o, "Time Flooded", PyFloat_FromDouble($1->timeFlooded));
+    PyMapping_SetItemString(o, "Time Surcharged", PyFloat_FromDouble($1->timeSurcharged));
+    PyMapping_SetItemString(o, "Time Courant Critical", PyFloat_FromDouble($1->timeCourantCritical));
+    PyMapping_SetItemString(o, "Total Lateral Flow", PyFloat_FromDouble($1->totLatFlow));
+    PyMapping_SetItemString(o, "Maximum Lateral Flow", PyFloat_FromDouble($1->maxLatFlow));
+    PyMapping_SetItemString(o, "Maximum Inflow", PyFloat_FromDouble($1->maxInflow));
+    PyMapping_SetItemString(o, "Maximum Overflow", PyFloat_FromDouble($1->maxOverflow));
+    PyMapping_SetItemString(o, "Maximum Ponded Volume", PyFloat_FromDouble($1->maxPondedVol));
+    PyMapping_SetItemString(o, "Maximum Inflow Timestamp", PyFloat_FromDouble($1->maxInflowDate));
+    PyMapping_SetItemString(o, "Maximum Overflow Timestamp", PyFloat_FromDouble($1->maxOverflowDate));
+    $result = SWIG_Python_AppendOutput($result, o);
+}
+/*
+%typemap(freearg) SM_NodeStats *OUTNODE {
+    if ($1)
+    {
+        swmm_freeMemory($1);
+    }
+}
+*/
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -141,7 +173,6 @@
     SM_LidResult
 }
 
-
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
 int  swmm_open(char *f1, char *f2, char *f3);
@@ -177,6 +208,9 @@ int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
 int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
 int  swmm_getNodePollut(int index, SM_NodePollut type, double** DOUBLEPOINTER);
 int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
+int  swmm_setNodeInflow(int index, double flowrate);
+int  swmm_setOutfallStage(int index, double stage); 
+int  swmm_getNodeStats(int index, SM_NodeStats *OUTNODE);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
@@ -185,6 +219,7 @@ int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
 int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
 int  swmm_getLinkPollut(int index, SM_LinkPollut type, double** DOUBLEPOINTER);
+int  swmm_setLinkSetting(int index, double setting);
 
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
