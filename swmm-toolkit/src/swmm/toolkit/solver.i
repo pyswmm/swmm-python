@@ -105,8 +105,8 @@
 }
 
 
-%typemap(in, numinputs=0) SM_NodeStats *OUTNODE{
-    $1 = (SM_NodeStats *)malloc(sizeof(SM_NodeStats));
+%typemap(in, numinputs=0) SM_NodeStats *OUTNODE (SM_NodeStats temp){
+    $1 = &temp;
 }
 %typemap(argout) SM_NodeStats *OUTNODE {
     PyObject *o = PyDict_New();
