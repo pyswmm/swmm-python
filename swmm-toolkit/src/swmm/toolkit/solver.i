@@ -129,6 +129,23 @@
     swmm_freeMemory(*$1);
 }
 
+%typemap(in, numinputs=0) SM_StorageStats **OUTSTOR (SM_StorageStats *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_StorageStats **OUTSTOR {
+    PyObject *o = PyDict_New(); 
+    PyMapping_SetItemString(o, "Initial Volume", PyFloat_FromDouble((*$1)->initVol));
+    PyMapping_SetItemString(o, "Average Volume", PyFloat_FromDouble((*$1)->avgVol));
+    PyMapping_SetItemString(o, "Maximum Volume", PyFloat_FromDouble((*$1)->maxVol));
+    PyMapping_SetItemString(o, "Maximum Flow", PyFloat_FromDouble((*$1)->maxFlow));
+    PyMapping_SetItemString(o, "Evaporation Losses", PyFloat_FromDouble((*$1)->evapLosses));
+    PyMapping_SetItemString(o, "Exfiltration Losses", PyFloat_FromDouble((*$1)->exfilLosses));
+    PyMapping_SetItemString(o, "Maximum Volume Timestamp", PyFloat_FromDouble((*$1)->maxVolDate));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
+}
+
+
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
     int value = 0;
@@ -204,6 +221,7 @@ int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 int  swmm_setNodeInflow(int index, double flowrate);
 int  swmm_setOutfallStage(int index, double stage); 
 int  swmm_getNodeStats(int index, SM_NodeStats **OUTNODE);
+int  swmm_getStorageStats(int index, SM_StorageStats **OUTSTOR);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);

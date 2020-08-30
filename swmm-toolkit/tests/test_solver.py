@@ -397,6 +397,17 @@ def test_get_node_stats(run_sim):
     node_stats = solver.get_node_stats(5)
     node_stats['Maximum Depth'] == pytest.approx(1.15, 0.1)
 
+
+def test_get_storage_stats(run_sim):
+    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, '19')
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stor_stats = solver.get_storage_stats(node_index)
+    stor_stats['Average Volume'] == pytest.approx(29.2, 0.1)
+
     
 def test_sub_param(handle):
     width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)

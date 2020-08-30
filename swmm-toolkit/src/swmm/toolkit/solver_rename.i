@@ -41,6 +41,7 @@
 %rename(set_node_total_inflow)                      swmm_setNodeInflow;
 %rename(set_outfall_stage)                          swmm_setOutfallStage;
 %rename(get_node_stats)                             swmm_getNodeStats;
+%rename(get_storage_stats)                          swmm_getStorageStats;
 %rename(get_link_type)                              swmm_getLinkType;
 %rename(get_link_connections)                       swmm_getLinkConnections;
 %rename(get_link_direction)                         swmm_getLinkDirection;
