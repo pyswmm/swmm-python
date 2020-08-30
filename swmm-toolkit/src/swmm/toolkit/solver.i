@@ -212,6 +212,66 @@
     PyMapping_SetItemString(o, "Hysteresis High", PyFloat_FromDouble((*$1)->offCurveHigh));
     PyMapping_SetItemString(o, "Start Up Number", PyLong_FromLong((*$1)->startUps));
     PyMapping_SetItemString(o, "Total Simulation Steps", PyLong_FromLong((*$1)->totalPeriods));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
+}
+
+%typemap(in, numinputs=0) SM_SubcatchStats **DOUBLEPOINTER (SM_SubcatchStats *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_SubcatchStats **DOUBLEPOINTER {
+    PyObject *o = PyDict_New(); 
+    PyMapping_SetItemString(o, "Total Precipication", PyFloat_FromDouble((*$1)->precip));
+    PyMapping_SetItemString(o, "Total Runon", PyFloat_FromDouble((*$1)->runon));
+    PyMapping_SetItemString(o, "Total Evaporation", PyFloat_FromDouble((*$1)->evap));
+    PyMapping_SetItemString(o, "Total Infiltration", PyFloat_FromDouble((*$1)->infil));
+    PyMapping_SetItemString(o, "Total Runoff", PyFloat_FromDouble((*$1)->runoff));
+    PyMapping_SetItemString(o, "Maximum Runoff Rate", PyFloat_FromDouble((*$1)->maxFlow));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
+}
+
+%typemap(in, numinputs=0) SM_RoutingTotals **DOUBLEPOINTER (SM_RoutingTotals *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_RoutingTotals **DOUBLEPOINTER {
+    PyObject *o = PyDict_New(); 
+    PyMapping_SetItemString(o, "Dry Weather Inflow", PyFloat_FromDouble((*$1)->dwInflow));
+    PyMapping_SetItemString(o, "Wet Weather Inflow", PyFloat_FromDouble((*$1)->wwInflow));
+    PyMapping_SetItemString(o, "Groundwater Inflow", PyFloat_FromDouble((*$1)->gwInflow));
+    PyMapping_SetItemString(o, "RDII Inflow", PyFloat_FromDouble((*$1)->iiInflow));
+    PyMapping_SetItemString(o, "Direct Inflow", PyFloat_FromDouble((*$1)->exInflow));
+    PyMapping_SetItemString(o, "Internal Flooding", PyFloat_FromDouble((*$1)->flooding));
+    PyMapping_SetItemString(o, "External Outflow", PyFloat_FromDouble((*$1)->outflow));
+    PyMapping_SetItemString(o, "Evaporation Loss", PyFloat_FromDouble((*$1)->evapLoss));
+    PyMapping_SetItemString(o, "Seepage Loss", PyFloat_FromDouble((*$1)->seepLoss));
+    PyMapping_SetItemString(o, "Reaction Loss", PyFloat_FromDouble((*$1)->reacted));
+    PyMapping_SetItemString(o, "Initial Storage Volume", PyFloat_FromDouble((*$1)->initStorage));
+    PyMapping_SetItemString(o, "Final Storage Volume", PyFloat_FromDouble((*$1)->finalStorage));
+    PyMapping_SetItemString(o, "Continuity Error", PyFloat_FromDouble((*$1)->pctError));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
+}
+ 
+%typemap(in, numinputs=0) SM_RunoffTotals **DOUBLEPOINTER (SM_RunoffTotals *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_RunoffTotals **DOUBLEPOINTER {
+    PyObject *o = PyDict_New(); 
+    PyMapping_SetItemString(o, "Rainfall Total", PyFloat_FromDouble((*$1)->rainfall));
+    PyMapping_SetItemString(o, "Evaporation Loss", PyFloat_FromDouble((*$1)->evap));
+    PyMapping_SetItemString(o, "Infiltration Loss", PyFloat_FromDouble((*$1)->infil));
+    PyMapping_SetItemString(o, "Runoff Volume", PyFloat_FromDouble((*$1)->runoff));
+    PyMapping_SetItemString(o, "LID Drains", PyFloat_FromDouble((*$1)->drains));
+    PyMapping_SetItemString(o, "Runon From Outfalls", PyFloat_FromDouble((*$1)->runon));
+    PyMapping_SetItemString(o, "Initial Surface Storage", PyFloat_FromDouble((*$1)->initStorage));
+    PyMapping_SetItemString(o, "Final Surface Storage", PyFloat_FromDouble((*$1)->finalStorage));
+    PyMapping_SetItemString(o, "Inital Snow Cover", PyFloat_FromDouble((*$1)->initSnowCover));
+    PyMapping_SetItemString(o, "Final Snow Cover", PyFloat_FromDouble((*$1)->finalSnowCover));
+    PyMapping_SetItemString(o, "Snow Removal", PyFloat_FromDouble((*$1)->snowRemoved));
+    PyMapping_SetItemString(o, "Continuity Error", PyFloat_FromDouble((*$1)->pctError));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
 }
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
@@ -273,6 +333,8 @@ int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, in
 int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
 int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
 int  swmm_getCurrentDateTime(int *year, int *month, int *day, int *hour, int *minute, int *second);
+int  swmm_getSystemRoutingStats(SM_RoutingTotals** DOUBLEPOINTER);
+int  swmm_getSystemRunoffStats(SM_RunoffTotals** DOUBLEPOINTER);
 
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_getObjectId(SM_ObjectType type, int index, char **id);
@@ -298,7 +360,7 @@ int  swmm_getLinkDirection(int index, signed char *value);
 int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
 int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
-int  swmm_getLinkPollut(int index, SM_LinkPollut type, double** DOUBLEPOINTER);
+int  swmm_getLinkPollut(int index, SM_LinkPollut type, double **DOUBLEPOINTER);
 int  swmm_setLinkSetting(int index, double setting);
 int  swmm_getLinkStats(int index, SM_LinkStats **DOUBLEPOINTER);
 int  swmm_getPumpStats(int index, SM_PumpStats **DOUBLEPOINTER);
@@ -307,15 +369,22 @@ int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
 int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
 int  swmm_getSubcatchResult(int index, SM_SubcResult type, double *OUTPUT);
-int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double** DOUBLEPOINTER);
+int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double **DOUBLEPOINTER);
+int  swmm_getSubcatchStats(int index, SM_SubcatchStats **DOUBLEPOINTER);
 
 int  swmm_getLidUCount(int index, int *OUTPUT);
 int  swmm_getLidUParam(int index, int lidIndex, SM_LidUProperty param, double *OUTPUT);
 int  swmm_setLidUParam(int index, int lidIndex, SM_LidUProperty param, double value);
 int  swmm_getLidUOption(int index, int lidIndex, SM_LidUOptions param, int *OUTPUT);
 int  swmm_setLidUOption(int index, int lidIndex, SM_LidUOptions param, int value);
+int  swmm_getLidUFluxRates(int index, int lidIndex, SM_LidLayer layerIndex, double *OUTPUT);
+int  swmm_getLidUResult(int index, int lidIndex, SM_LidResult type, double *OUTPUT);
 
 int  swmm_getLidCOverflow(int lidControlIndex, int *OUTPUT);
 int  swmm_getLidCParam(int lidControlIndex, SM_LidLayer layerIndex, SM_LidUProperty param, double *OUTPUT);
 int  swmm_setLidCParam(int lidControlIndex, SM_LidLayer layerIndex, SM_LidUProperty param, double value);
+
+int  swmm_getLidGResult(int index, SM_LidResult type, double *OUTPUT);
+
+
 %exception;

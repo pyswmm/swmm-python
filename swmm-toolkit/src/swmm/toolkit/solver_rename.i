@@ -23,6 +23,8 @@
 %rename(get_version)                                swmm_getVersion;
 %rename(get_error_message)                          swmm_getAPIError;
 %rename(get_simulation_unit)                        swmm_getSimulationUnit;
+%rename(get_system_routing_stats)                   swmm_getSystemRoutingStats;
+%rename(get_system_runoff_stats)                    swmm_getSystemRunoffStats;
 %rename(find_object)                                swmm_project_findObject;
 %rename(count_object)                               swmm_countObjects;
 %rename(get_object_index)                           swmm_getObjectIndex;
@@ -58,13 +60,17 @@
 %rename(set_subcatch_parameter)                     swmm_setSubcatchParam;
 %rename(get_subcatch_result)                        swmm_getSubcatchResult;
 %rename(get_subcatch_pollutant)                     swmm_getSubcatchPollut;
+%rename(get_subcatch_stats)                         swmm_getSubcatchStats;
 %rename(get_lid_usage_count)                        swmm_getLidUCount;
 %rename(get_lid_usage_parameter)                    swmm_getLidUParam;
 %rename(set_lid_usage_parameter)                    swmm_setLidUParam;
 %rename(get_lid_usage_option)                       swmm_getLidUOption;
 %rename(set_lid_usage_option)                       swmm_setLidUOption;
+%rename(get_lid_usage_flux_rate)                    swmm_getLidUFluxRates;
+%rename(get_lid_usage_result)                       swmm_getLidUResult;
 %rename(get_lid_control_overflow)                   swmm_getLidCOverflow;
 %rename(get_lid_control_parameter)                  swmm_getLidCParam;
 %rename(set_lid_control_parameter)                  swmm_setLidCParam;
+%rename(get_lid_group_result)                       swmm_getLidGResult;
 %rename(get_rain_precipitation)                     swmm_getGagePrecip;
 %rename(set_rain_precipitation)                      swmm_setGagePrecip;

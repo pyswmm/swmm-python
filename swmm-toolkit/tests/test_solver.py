@@ -71,6 +71,18 @@ def lid_handle(request):
         solver.close()
 
     request.addfinalizer(close)
+
+
+@pytest.fixture()
+def run_lid_sim(request):
+    solver.open(INPUT_FILE_EXAMPLE_2, REPORT_FILE_TEST_2, OUTPUT_FILE_TEST_2)
+    solver.start(0)
+
+    def close():
+        solver.end()
+        solver.close()
+
+    request.addfinalizer(close)
     
 
 def test_step(handle):
@@ -179,6 +191,24 @@ def test_get_object_id(handle):
     sub_name = solver.get_object_id(solver_enum.ObjectProperty.SUBCATCH, 5)
     assert node_name == '20'
     assert sub_name == '6'
+
+
+def test_get_routing_stats(run_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stats = solver.get_system_routing_stats()
+
+
+def test_get_runoff_stats(run_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stats = solver.get_system_runoff_stats()
 
     
 def test_get_link_type(handle):
@@ -296,13 +326,14 @@ def test_get_link_stats(run_sim):
     link_stats = solver.get_link_stats(0)
 
     
-##def test_get_pump_stats(run_sim):
-##    while True:
-##        time = solver.step()
-##        if time == 0:
-##            break
-##
-##    link_stats = solver.get_link_stats(0)
+def test_get_pump_stats(run_sim):
+    index = solver.get_object_index(solver_enum.ObjectProperty.LINK, 'P1')
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stats = solver.get_pump_stats(index)
     
 
 def test_get_node_type(handle):
@@ -438,7 +469,7 @@ def test_get_outfall_stats(run_sim):
     assert isinstance(stats['Total Pollutant Load'], list)
  
     
-def test_sub_param(handle):
+def test_subcatch_param(handle):
     width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)
     area = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.AREA)
     impervious_fraction = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.IMPERVIOUS_FRACTION)
@@ -513,6 +544,15 @@ def test_get_subcatch_pollutant(run_sim):
     assert lead == 0.0
     
 
+def test_get_subcatch_stats(run_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stats = solver.get_subcatch_stats(0)
+
+    
 def test_get_lid_usage_count(lid_handle):
     subcatch_usage_1 = solver.get_lid_usage_count(0)
     subcatch_usage_2 = solver.get_lid_usage_count(1)
@@ -577,6 +617,34 @@ def test_lid_usage_option(lid_handle):
     assert number == 200
 
 
+def test_get_lid_usage_flux_rate(run_lid_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    rate = solver.get_lid_usage_flux_rate(0, 0, solver_enum.LidLayer.SURFACE)
+
+    
+def test_get_lid_usage_result(run_lid_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    result = solver.get_lid_usage_result(0, 0, solver_enum.LidResult.SURFACE_OUTFLOW)
+
+    
+def test_get_lid_group_result(run_lid_sim):
+    index = solver.get_object_index(solver_enum.ObjectProperty.SUBCATCH, 'wBC')
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    result = solver.get_lid_group_result(index, solver_enum.LidResult.OLD_DRAIN_FLOW)
+
+    
 def test_get_lid_control_overflow(lid_handle):
     overflow_option = solver.get_lid_control_overflow(0)
     # BC surface is greater than zero
