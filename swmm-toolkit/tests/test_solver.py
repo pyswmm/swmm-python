@@ -180,14 +180,6 @@ def test_get_object_id(handle):
     assert node_name == '20'
     assert sub_name == '6'
 
-
-def test_get_node_type(handle):
-    node_type = solver.get_node_type(8)
-    assert node_type == solver_enum.NodeType.JUNCTION.value
-    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, '18')
-    node_type = solver.get_node_type(node_index)
-    assert node_type == solver_enum.NodeType.OUTFALL.value
-
     
 def test_get_link_type(handle):
     link_type = solver.get_link_type(2)
@@ -294,6 +286,32 @@ def test_set_link_target_setting(run_sim):
     target_setting = solver.get_link_result(0, solver_enum.LinkResult.TARGET_SETTING)
     target_setting == 0.5
 
+
+def test_get_link_stats(run_sim):
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    link_stats = solver.get_link_stats(0)
+
+    
+##def test_get_pump_stats(run_sim):
+##    while True:
+##        time = solver.step()
+##        if time == 0:
+##            break
+##
+##    link_stats = solver.get_link_stats(0)
+    
+
+def test_get_node_type(handle):
+    node_type = solver.get_node_type(8)
+    assert node_type == solver_enum.NodeType.JUNCTION.value
+    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, '18')
+    node_type = solver.get_node_type(node_index)
+    assert node_type == solver_enum.NodeType.OUTFALL.value
+
     
 def test_node_param(handle):
     invert_elevation = solver.get_node_parameter(0, solver_enum.NodeProperty.INVERT_ELEVATION)
@@ -399,15 +417,26 @@ def test_get_node_stats(run_sim):
 
 
 def test_get_storage_stats(run_sim):
-    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, '19')
+    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, 'SU1')
     while True:
         time = solver.step()
         if time == 0:
             break
 
     stor_stats = solver.get_storage_stats(node_index)
-    stor_stats['Average Volume'] == pytest.approx(29.2, 0.1)
+    stor_stats['Average Volume'] == pytest.approx(0, 0.1)
 
+
+def test_get_outfall_stats(run_sim):
+    node_index = solver.get_object_index(solver_enum.ObjectProperty.NODE, '18')
+    while True:
+        time = solver.step()
+        if time == 0:
+            break
+
+    stats = solver.get_outfall_stats(node_index)
+    assert isinstance(stats['Total Pollutant Load'], list)
+ 
     
 def test_sub_param(handle):
     width = solver.get_subcatch_parameter(0, solver_enum.SubcatchProperty.WIDTH)

@@ -105,10 +105,10 @@
 }
 
 
-%typemap(in, numinputs=0) SM_NodeStats **OUTNODE (SM_NodeStats *temp){
+%typemap(in, numinputs=0) SM_NodeStats **DOUBLEPOINTER (SM_NodeStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_NodeStats **OUTNODE {
+%typemap(argout) SM_NodeStats **DOUBLEPOINTER {
     PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "Average Depth", PyFloat_FromDouble((*$1)->avgDepth));
     PyMapping_SetItemString(o, "Maximum Depth", PyFloat_FromDouble((*$1)->maxDepth));
@@ -129,10 +129,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_StorageStats **OUTSTOR (SM_StorageStats *temp){
+%typemap(in, numinputs=0) SM_StorageStats **DOUBLEPOINTER (SM_StorageStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_StorageStats **OUTSTOR {
+%typemap(argout) SM_StorageStats **DOUBLEPOINTER {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Initial Volume", PyFloat_FromDouble((*$1)->initVol));
     PyMapping_SetItemString(o, "Average Volume", PyFloat_FromDouble((*$1)->avgVol));
@@ -145,6 +145,74 @@
     swmm_freeMemory(*$1);
 }
 
+%typemap(in, numinputs=0) SM_OutfallStats **DOUBLEPOINTER (SM_OutfallStats *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_OutfallStats **DOUBLEPOINTER {
+    int length = sizeof((*$1)->totalLoad)/sizeof(double) + 1;
+    PyObject *loads = PyList_New(length);
+    PyObject *o = PyDict_New(); 
+    for(int i=0; i<length; i++) {
+      PyList_SetItem(loads, i, PyFloat_FromDouble(((*$1)->totalLoad)[i]));
+    }
+    PyMapping_SetItemString(o, "Average Flow", PyFloat_FromDouble((*$1)->avgFlow));
+    PyMapping_SetItemString(o, "Maximum Flow", PyFloat_FromDouble((*$1)->maxFlow));
+    PyMapping_SetItemString(o, "Total Pollutant Load", loads);
+    PyMapping_SetItemString(o, "Total Simulation Steps", PyLong_FromLong((*$1)->totalPeriods));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeOutfallStats(*$1);
+    swmm_freeMemory(*$1);
+}
+
+%typemap(in, numinputs=0) SM_LinkStats **DOUBLEPOINTER (SM_LinkStats *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_LinkStats **DOUBLEPOINTER {
+    PyObject *o = PyDict_New(); 
+    PyObject *flowTime = PyDict_New();
+
+    PyMapping_SetItemString(flowTime, "DRY", PyFloat_FromDouble(((*$1)->timeInFlowClass)[0]));
+    PyMapping_SetItemString(flowTime, "UP_DRY", PyFloat_FromDouble(((*$1)->timeInFlowClass)[1]));
+    PyMapping_SetItemString(flowTime, "DN_DRY", PyFloat_FromDouble(((*$1)->timeInFlowClass)[2]));
+    PyMapping_SetItemString(flowTime, "SUBCRITICAL", PyFloat_FromDouble(((*$1)->timeInFlowClass)[3]));
+    PyMapping_SetItemString(flowTime, "SUPCRITICAL", PyFloat_FromDouble(((*$1)->timeInFlowClass)[4]));
+    PyMapping_SetItemString(flowTime, "UP_CRITICAL", PyFloat_FromDouble(((*$1)->timeInFlowClass)[5]));
+    PyMapping_SetItemString(flowTime, "DN_CRITICAL", PyFloat_FromDouble(((*$1)->timeInFlowClass)[6]));
+    PyMapping_SetItemString(o, "Maximum Flow", PyFloat_FromDouble((*$1)->maxFlow));
+    PyMapping_SetItemString(o, "Maximum Flow Timestamp", PyFloat_FromDouble((*$1)->maxFlowDate));
+    PyMapping_SetItemString(o, "Maximum Velocity", PyFloat_FromDouble((*$1)->maxVeloc));
+    PyMapping_SetItemString(o, "Maximum Depth", PyFloat_FromDouble((*$1)->maxDepth));
+    PyMapping_SetItemString(o, "Normal Flow Time", PyFloat_FromDouble((*$1)->timeNormalFlow));
+    PyMapping_SetItemString(o, "Inlet Control Time", PyFloat_FromDouble((*$1)->timeInletControl));
+    PyMapping_SetItemString(o, "Surcharged Time", PyFloat_FromDouble((*$1)->timeSurcharged));
+    PyMapping_SetItemString(o, "Full Upstream Time", PyFloat_FromDouble((*$1)->timeFullUpstream));
+    PyMapping_SetItemString(o, "Full Downstream Time", PyFloat_FromDouble((*$1)->timeFullDnstream));
+    PyMapping_SetItemString(o, "Full Flow Time", PyFloat_FromDouble((*$1)->timeFullFlow));
+    PyMapping_SetItemString(o, "Capacity Limited Time", PyFloat_FromDouble((*$1)->timeCapacityLimited));
+    PyMapping_SetItemString(o, "Courant Critical Time", PyFloat_FromDouble((*$1)->timeCourantCritical));
+    PyMapping_SetItemString(o, "Flow Class Time", flowTime);
+    PyMapping_SetItemString(o, "Flow Turns", PyLong_FromLong((*$1)->flowTurns));
+    PyMapping_SetItemString(o, "Flow Turns Sign", PyLong_FromLong((*$1)->flowTurnSign));
+    $result = SWIG_Python_AppendOutput($result, o);
+    swmm_freeMemory(*$1);
+}
+
+%typemap(in, numinputs=0) SM_PumpStats **DOUBLEPOINTER (SM_PumpStats *temp){
+    $1 = &temp;
+}
+%typemap(argout) SM_PumpStats **DOUBLEPOINTER {
+    PyObject *o = PyDict_New(); 
+    PyMapping_SetItemString(o, "Utilized", PyFloat_FromDouble((*$1)->utilized));
+    PyMapping_SetItemString(o, "Minimum Flow", PyFloat_FromDouble((*$1)->minFlow));
+    PyMapping_SetItemString(o, "Average Flow", PyFloat_FromDouble((*$1)->avgFlow));
+    PyMapping_SetItemString(o, "Maximum Flow", PyFloat_FromDouble((*$1)->maxFlow));
+    PyMapping_SetItemString(o, "Total Pump Volume", PyFloat_FromDouble((*$1)->volume));
+    PyMapping_SetItemString(o, "Total Energy Demand", PyFloat_FromDouble((*$1)->energy));
+    PyMapping_SetItemString(o, "Hysteresis Low", PyFloat_FromDouble((*$1)->offCurveLow));
+    PyMapping_SetItemString(o, "Hysteresis High", PyFloat_FromDouble((*$1)->offCurveHigh));
+    PyMapping_SetItemString(o, "Start Up Number", PyLong_FromLong((*$1)->startUps));
+    PyMapping_SetItemString(o, "Total Simulation Steps", PyLong_FromLong((*$1)->totalPeriods));
+}
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
 %typemap(in) EnumTypeIn {
@@ -220,8 +288,9 @@ int  swmm_getNodePollut(int index, SM_NodePollut type, double** DOUBLEPOINTER);
 int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 int  swmm_setNodeInflow(int index, double flowrate);
 int  swmm_setOutfallStage(int index, double stage); 
-int  swmm_getNodeStats(int index, SM_NodeStats **OUTNODE);
-int  swmm_getStorageStats(int index, SM_StorageStats **OUTSTOR);
+int  swmm_getNodeStats(int index, SM_NodeStats **DOUBLEPOINTER);
+int  swmm_getStorageStats(int index, SM_StorageStats **DOUBLEPOINTER);
+int  swmm_getOutfallStats(int index, SM_OutfallStats **DOUBLEPOINTER);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
@@ -231,6 +300,8 @@ int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
 int  swmm_getLinkPollut(int index, SM_LinkPollut type, double** DOUBLEPOINTER);
 int  swmm_setLinkSetting(int index, double setting);
+int  swmm_getLinkStats(int index, SM_LinkStats **DOUBLEPOINTER);
+int  swmm_getPumpStats(int index, SM_PumpStats **DOUBLEPOINTER);
 
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);

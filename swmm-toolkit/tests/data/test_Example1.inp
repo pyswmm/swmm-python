@@ -108,6 +108,13 @@ RG1              INTENSITY 1:00     1.0      TIMESERIES TS1
 ;;-------------- ---------- ---------- ---------------- -------- ----------------
 18               975        FREE                        NO                       
 
+[STORAGE]
+;;               Invert   Max.     Init.    Storage    Curve                               Evap.   
+;;Name           Elev.    Depth    Depth    Curve      Params                              Frac.    Infiltration parameters
+;;-------------- -------- -------- -------- ---------- -------- -------- -------- -------- -------- -----------------------
+SU1              0        5        0        FUNCTIONAL 1000     0        0        0        0       
+
+
 [CONDUITS]
 ;;Name           From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   
 ;;-------------- ---------------- ---------------- ---------- ---------- ---------- ---------- ---------- ----------
@@ -236,6 +243,7 @@ Units      None
 23               6484.210           3978.950          
 24               5389.470           3031.580          
 18               6631.580           505.260           
+SU1              6876.91            50.471          
 
 [VERTICES]
 ;;Link           X-Coord            Y-Coord           
