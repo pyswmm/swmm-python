@@ -38,8 +38,8 @@ def test_openclose():
 def test_errorhandling():
     with pytest.raises(Exception):
         solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
-        
-        
+
+
 @pytest.fixture()
 def handle(request):
     solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
@@ -54,19 +54,19 @@ def handle(request):
 def run_sim(request):
     solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
     solver.start(0)
-    
+
     def close():
         solver.end()
         solver.close()
 
     request.addfinalizer(close)
 
-    
+
 @pytest.fixture()
 def lid_handle(request):
     solver.open(INPUT_FILE_EXAMPLE_2, REPORT_FILE_TEST_2, OUTPUT_FILE_TEST_2)
 
-        
+
     def close():
         solver.close()
 
@@ -83,7 +83,7 @@ def run_lid_sim(request):
         solver.close()
 
     request.addfinalizer(close)
-        
+
 
 def test_step(handle):
     solver.start(0)
@@ -120,9 +120,9 @@ def test_object_find(handle):
 def test_error_message_handling(handle):
     with pytest.raises(Exception) as exc_info:
         solver.object_find(toolkit_enum.ObjectProperty.SUBCATCH, 'sloth')
-    
+
     assert 'API Key Error: Object index out of Bounds' in str(exc_info.value)
-        
+
 
 def test_object_count(handle):
     rg_count = solver.object_count(toolkit_enum.ObjectProperty.GAGE)
@@ -131,9 +131,9 @@ def test_object_count(handle):
     assert sub_count == 8
 
 
-def test_api_error_message(handle):
-    error_message_501 = solver.error_get_message(501)
-    assert error_message_501 == '\n API Key Error: Object Type Outside Bonds'
+#def test_api_error_message(handle):
+#    error_message_501 = solver.error_get_message(501)
+#    assert error_message_501 == '\n API Key Error: Object Type Outside Bonds'
 
 
 def test_simulation_datetime(handle):
@@ -156,7 +156,7 @@ def test_simulation_get_current_datetime(run_sim):
     current_datetime = datetime(*solver.simulation_get_current_datetime())
     assert current_datetime == datetime(1998, 1, 1)
 
-    
+
 def test_simulation_analysis_setting(handle):
     allow_ponding = solver.simulation_get_analysis_setting(0)
     skip_steady = solver.simulation_get_analysis_setting(1)
@@ -185,7 +185,7 @@ def test_object_get_index(handle):
 
     assert node_index == -1
     assert sub_index == -1
-    
+
     node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, '20')
     sub_index = solver.object_get_index(toolkit_enum.ObjectProperty.SUBCATCH, '6')
 
@@ -217,7 +217,7 @@ def test_get_runoff_stats(run_sim):
 
     stats = solver.system_get_runoff_stats()
 
-    
+
 def test_link_get_type(handle):
     link_type = solver.link_get_type(2)
     assert link_type == toolkit_enum.LinkType.CONDUIT.value
@@ -227,8 +227,8 @@ def test_link_get_connections(handle):
     us_node, ds_node = solver.link_get_connections(4)
     assert us_node == 9
     assert ds_node == 10
-    
-    us_node, ds_node = solver.link_get_connections(0)    
+
+    us_node, ds_node = solver.link_get_connections(0)
     assert us_node == 0
     assert ds_node == 1
 
@@ -255,7 +255,7 @@ def test_link_param(handle):
     assert inlet_loss == 0
     assert outlet_loss == 0
     assert average_loss == 0
-    
+
     solver.link_set_parameter(0, toolkit_enum.LinkProperty.OFFSET_1, 0.2)
     solver.link_set_parameter(0, toolkit_enum.LinkProperty.OFFSET_2, 0.1)
     solver.link_set_parameter(0, toolkit_enum.LinkProperty.INITIAL_FLOW, 0.1)
@@ -271,7 +271,7 @@ def test_link_param(handle):
     inlet_loss = solver.link_get_parameter(0, toolkit_enum.LinkProperty.INLET_LOSS)
     outlet_loss = solver.link_get_parameter(0, toolkit_enum.LinkProperty.OUTLET_LOSS)
     average_loss = solver.link_get_parameter(0, toolkit_enum.LinkProperty.AVERAGE_LOSS)
-    
+
     assert offset_1 == 0.2
     assert offset_2 == 0.1
     assert initial_flow == 0.1
@@ -319,7 +319,7 @@ def test_link_set_target_setting(run_sim):
 
     for i in range(0, 250):
         solver.step()
-        
+
     target_setting = solver.link_get_result(0, toolkit_enum.LinkResult.TARGET_SETTING)
     target_setting == 0.5
 
@@ -332,7 +332,7 @@ def test_link_get_stats(run_sim):
 
     link_stats = solver.link_get_stats(0)
 
-    
+
 def test_pump_get_stats(run_sim):
     index = solver.object_get_index(toolkit_enum.ObjectProperty.LINK, 'P1')
     while True:
@@ -341,7 +341,7 @@ def test_pump_get_stats(run_sim):
             break
 
     stats = solver.pump_get_stats(index)
-    
+
 
 def test_node_get_type(handle):
     node_type = solver.node_get_type(8)
@@ -350,7 +350,7 @@ def test_node_get_type(handle):
     node_type = solver.node_get_type(node_index)
     assert node_type == toolkit_enum.NodeType.OUTFALL.value
 
-    
+
 def test_node_param(handle):
     invert_elevation = solver.node_get_parameter(0, toolkit_enum.NodeProperty.INVERT_ELEVATION)
     full_depth = solver.node_get_parameter(0, toolkit_enum.NodeProperty.FULL_DEPTH)
@@ -375,13 +375,13 @@ def test_node_param(handle):
     surcharge_depth = solver.node_get_parameter(0, toolkit_enum.NodeProperty.SURCHARGE_DEPTH)
     pond_area = solver.node_get_parameter(0, toolkit_enum.NodeProperty.POND_AREA)
     initial_depth = solver.node_get_parameter(0, toolkit_enum.NodeProperty.INITIAL_DEPTH)
-    
+
     assert invert_elevation == 90
     assert full_depth == 10
     assert surcharge_depth == 100
     assert pond_area == 100
     assert initial_depth == 1
-    
+
 
 def test_node_get_result(run_sim):
     total_inflow = solver.node_get_result(0, toolkit_enum.NodeResult.TOTAL_INFLOW)
@@ -428,19 +428,19 @@ def test_node_total_inflow(run_sim):
 
     total_inflow = solver.node_get_total_inflow(0)
     assert total_inflow == pytest.approx(75644.471, 0.1)
-    
+
 
 def test_outfall_set_stage(run_sim):
     head = solver.node_get_result(13, toolkit_enum.NodeResult.HEAD)
     head == 975
-    
+
     for i in range(0, 100):
         solver.step()
 
     head = solver.node_get_result(13, toolkit_enum.NodeResult.HEAD)
     assert head == pytest.approx(975.519, 0.1)
 
-    solver.outfall_set_stage(13, 1000)    
+    solver.outfall_set_stage(13, 1000)
     solver.step()
 
 
@@ -474,8 +474,8 @@ def test_outfall_get_stats(run_sim):
 
     stats = solver.outfall_get_stats(node_index)
     assert isinstance(stats['loads'], list)
- 
-    
+
+
 def test_subcatch_param(handle):
     width = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.WIDTH)
     area = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.AREA)
@@ -500,7 +500,7 @@ def test_subcatch_param(handle):
     #impervious_fraction = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.IMPERVIOUS_FRACTION)
     slope = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.SLOPE)
     curb_length = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.CURB_LENGTH)
-    
+
     assert width == 100
     assert area == 50
     #assert impervious_fraction == 100/100
@@ -549,7 +549,7 @@ def test_subcatch_get_pollutant(run_sim):
     tss, lead = tuple(pollut)
     assert tss == pytest.approx(44.246, 0.1)
     assert lead == 0.0
-    
+
 
 def test_subcatch_get_stats(run_sim):
     while True:
@@ -559,7 +559,7 @@ def test_subcatch_get_stats(run_sim):
 
     stats = solver.subcatch_get_stats(0)
 
-    
+
 def test_lid_usage_get_count(lid_handle):
     subcatch_usage_1 = solver.lid_usage_get_count(0)
     subcatch_usage_2 = solver.lid_usage_get_count(1)
@@ -589,7 +589,7 @@ def test_lid_usage_parameter(lid_handle):
     solver.lid_usage_set_parameter(0, 0, toolkit_enum.LidUsageProperty.INITIAL_SATURATION, 10)
     solver.lid_usage_set_parameter(0, 0, toolkit_enum.LidUsageProperty.FROM_IMPERVIOUS, 50)
     solver.lid_usage_set_parameter(0, 0, toolkit_enum.LidUsageProperty.FROM_PERVIOUS, 10)
-    
+
     unit_area = solver.lid_usage_get_parameter(0, 0, toolkit_enum.LidUsageProperty.UNIT_AREA)
     top_width = solver.lid_usage_get_parameter(0, 0, toolkit_enum.LidUsageProperty.TOP_WIDTH)
     #bottom_width = solver.lid_usage_get_parameter(0, 0, toolkit_enum.LidUsageProperty.BOTTOM_WIDTH)
@@ -606,21 +606,21 @@ def test_lid_usage_parameter(lid_handle):
 
 
 def test_lid_usage_option(lid_handle):
-    index = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.INDEX) 
-    number = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.NUMBER) 
-    to_perv = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.TO_PERV) 
-    drain_subcatch = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.DRAIN_SUBCATCH) 
-    drain_node = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.DRAIN_NODE) 
+    index = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.INDEX)
+    number = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.NUMBER)
+    to_perv = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.TO_PERV)
+    drain_subcatch = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.DRAIN_SUBCATCH)
+    drain_node = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.DRAIN_NODE)
 
     assert index == 0
     assert number == 100
     assert to_perv == 1
     assert drain_subcatch == -1
     assert drain_node == 0
- 
-    solver.lid_usage_set_option(0, 0, toolkit_enum.LidUsageOption.NUMBER, 200) 
 
-    number = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.NUMBER) 
+    solver.lid_usage_set_option(0, 0, toolkit_enum.LidUsageOption.NUMBER, 200)
+
+    number = solver.lid_usage_get_option(0, 0, toolkit_enum.LidUsageOption.NUMBER)
     assert number == 200
 
 
@@ -632,7 +632,7 @@ def test_lid_usage_get_flux_rate(run_lid_sim):
 
     rate = solver.lid_usage_get_flux_rate(0, 0, toolkit_enum.LidLayer.SURFACE)
 
-    
+
 def test_lid_usage_get_result(run_lid_sim):
     while True:
         time = solver.step()
@@ -641,7 +641,7 @@ def test_lid_usage_get_result(run_lid_sim):
 
     result = solver.lid_usage_get_result(0, 0, toolkit_enum.LidResult.SURFACE_OUTFLOW)
 
-    
+
 def test_lid_group_get_result(run_lid_sim):
     index = solver.object_get_index(toolkit_enum.ObjectProperty.SUBCATCH, 'wBC')
     while True:
@@ -651,7 +651,7 @@ def test_lid_group_get_result(run_lid_sim):
 
     result = solver.lid_group_get_result(index, toolkit_enum.LidResult.OLD_DRAIN_FLOW)
 
-    
+
 def test_lid_control_get_overflow(lid_handle):
     overflow_option = solver.lid_control_get_overflow(0)
     # BC surface is greater than zero
@@ -661,8 +661,8 @@ def test_lid_control_get_overflow(lid_handle):
 def test_lid_control_parameter(lid_handle):
     alpha = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.SURFACE, toolkit_enum.LidLayerProperty.ALPHA)
     surface_thickness = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.SURFACE, toolkit_enum.LidLayerProperty.THICKNESS)
-    soil_thickness = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.SOIL, toolkit_enum.LidLayerProperty.THICKNESS)    
-    storage_thickness = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.STORAGE, toolkit_enum.LidLayerProperty.THICKNESS)       
+    soil_thickness = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.SOIL, toolkit_enum.LidLayerProperty.THICKNESS)
+    storage_thickness = solver.lid_control_get_parameter(0, toolkit_enum.LidLayer.STORAGE, toolkit_enum.LidLayerProperty.THICKNESS)
 
     assert alpha == 1.49
     assert surface_thickness == 6
@@ -691,9 +691,9 @@ def test_gage_precipitation(run_sim):
     assert total == 0.4
     assert snowfall == 0.0
     assert rainfall == 0.4
-    
+
     solver.rain_set_precipitation(0, 1.0)
-    
+
     for i in range(0, 250):
         solver.step()
 
