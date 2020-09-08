@@ -11,7 +11,7 @@
  *              Xylem Inc.
  *
  *  Author:     Caleb Buahin
- *              Xylem Inc. 
+ *              Xylem Inc.
 */
 
 
@@ -33,29 +33,6 @@
 %typemap(out) int {
     $result = Py_None;
     Py_INCREF($result);
-}
-
-
-/* GENERATES DOCUMENTATION */
-%feature("autodoc", "2");
-
-/* RENAME FUNCTIONS PYTHON STYLE */
-%include "solver_rename.i"
-
-/* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
-%exception
-{
-    $function
-    if (result > 0) {
-        char* errorMsg = NULL;
-        int errorCode = 0;
-        errorCode = swmm_getAPIError(result, &errorMsg);
-        if (errorCode == 0) {
-            PyErr_SetString(PyExc_Exception, errorMsg);
-        }
-        swmm_freeMemory(errorMsg);
-        SWIG_fail;
-    }
 }
 
 %apply int *OUTPUT {
@@ -91,7 +68,7 @@
    $1 = &temp;
 }
 %typemap(argout) (double** in_out_array) {
-    if (*$1) 
+    if (*$1)
     {
       int length = sizeof(*$1)/sizeof(double) + 1;
       PyObject *o = PyList_New(length);
@@ -133,7 +110,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_StorageStats **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "initVol", PyFloat_FromDouble((*$1)->initVol));
     PyMapping_SetItemString(o, "avgVol", PyFloat_FromDouble((*$1)->avgVol));
     PyMapping_SetItemString(o, "maxVol", PyFloat_FromDouble((*$1)->maxVol));
@@ -151,7 +128,7 @@
 %typemap(argout) SM_OutfallStats **in_out_dict {
     int length = sizeof((*$1)->totalLoad)/sizeof(double) + 1;
     PyObject *loads = PyList_New(length);
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     for(int i=0; i<length; i++) {
       PyList_SetItem(loads, i, PyFloat_FromDouble(((*$1)->totalLoad)[i]));
     }
@@ -168,7 +145,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_LinkStats **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyObject *flowTime = PyDict_New();
 
     PyMapping_SetItemString(flowTime, "DRY", PyFloat_FromDouble(((*$1)->timeInFlowClass)[0]));
@@ -201,7 +178,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_PumpStats **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "utilized", PyFloat_FromDouble((*$1)->utilized));
     PyMapping_SetItemString(o, "minFlow", PyFloat_FromDouble((*$1)->minFlow));
     PyMapping_SetItemString(o, "avgFlow", PyFloat_FromDouble((*$1)->avgFlow));
@@ -220,7 +197,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_SubcatchStats **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "precip", PyFloat_FromDouble((*$1)->precip));
     PyMapping_SetItemString(o, "runon", PyFloat_FromDouble((*$1)->runon));
     PyMapping_SetItemString(o, "evap", PyFloat_FromDouble((*$1)->evap));
@@ -235,7 +212,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_RoutingTotals **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "dwInflow", PyFloat_FromDouble((*$1)->dwInflow));
     PyMapping_SetItemString(o, "wwInflow", PyFloat_FromDouble((*$1)->wwInflow));
     PyMapping_SetItemString(o, "gwInflow", PyFloat_FromDouble((*$1)->gwInflow));
@@ -257,7 +234,7 @@
     $1 = &temp;
 }
 %typemap(argout) SM_RunoffTotals **in_out_dict {
-    PyObject *o = PyDict_New(); 
+    PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "rainfall", PyFloat_FromDouble((*$1)->rainfall));
     PyMapping_SetItemString(o, "evap", PyFloat_FromDouble((*$1)->evap));
     PyMapping_SetItemString(o, "infil", PyFloat_FromDouble((*$1)->infil));
@@ -311,6 +288,31 @@
     SM_LidResult
 }
 
+
+/* GENERATES DOCUMENTATION */
+%feature("autodoc", "2");
+
+
+/* RENAME FUNCTIONS PYTHON STYLE */
+%include "solver_rename.i"
+
+
+/* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
+%exception
+{
+    $function
+    if (result > 0) {
+        char* errorMsg = NULL;
+        int errorCode = 0;
+        errorCode = swmm_getAPIError(result, &errorMsg);
+        if (errorCode == 0) {
+            PyErr_SetString(PyExc_Exception, errorMsg);
+        }
+        swmm_freeMemory(errorMsg);
+        SWIG_fail;
+    }
+}
+
 // CANONICAL API
 int  swmm_run(char *f1, char *f2, char *f3);
 int  swmm_open(char *f1, char *f2, char *f3);
@@ -323,8 +325,8 @@ int  swmm_close(void);
 int  swmm_getVersion(void);
 
 
-// TOOLKIT API 
-int  swmm_getAPIError(int ErrorCodeAPI, char **errorMsg);
+// TOOLKIT API
+// int  swmm_getAPIError(int ErrorCodeAPI, char **errorMsg);
 int  swmm_getSimulationUnit(SM_Units type, int *OUTPUT);
 int  swmm_project_findObject(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_countObjects(SM_ObjectType type, int *OUTPUT);
@@ -349,7 +351,7 @@ int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
 int  swmm_getNodePollut(int index, SM_NodePollut type, double** in_out_array);
 int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 int  swmm_setNodeInflow(int index, double flowrate);
-int  swmm_setOutfallStage(int index, double stage); 
+int  swmm_setOutfallStage(int index, double stage);
 int  swmm_getNodeStats(int index, SM_NodeStats **in_out_dict);
 int  swmm_getStorageStats(int index, SM_StorageStats **in_out_dict);
 int  swmm_getOutfallStats(int index, SM_OutfallStats **in_out_dict);
