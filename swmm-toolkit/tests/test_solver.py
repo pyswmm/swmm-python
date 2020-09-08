@@ -39,7 +39,7 @@ def test_errorhandling():
     with pytest.raises(Exception):
         solver.open(INPUT_FILE_FAIL, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
         
-
+        
 @pytest.fixture()
 def handle(request):
     solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
@@ -83,7 +83,7 @@ def run_lid_sim(request):
         solver.close()
 
     request.addfinalizer(close)
-    
+        
 
 def test_step(handle):
     solver.start(0)
@@ -116,6 +116,13 @@ def test_find_object(handle):
     assert node_index == 12
     assert link_index == 12
 
+
+def test_error_message_handling(handle):
+    with pytest.raises(Exception) as exc_info:
+        solver.find_object(toolkit_enum.ObjectProperty.SUBCATCH, 'sloth')
+    
+    assert 'API Key Error: Object index out of Bounds' in str(exc_info.value)
+        
 
 def test_count_object(handle):
     rg_count = solver.count_object(toolkit_enum.ObjectProperty.GAGE)
