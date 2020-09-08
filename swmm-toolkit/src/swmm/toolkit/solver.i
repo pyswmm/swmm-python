@@ -87,17 +87,17 @@
 };
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
-%typemap(in, numinputs=0)double** DOUBLEPOINTER (double* doubleArray){
-   $1 = &doubleArray;
+%typemap(in, numinputs=0)double** in_out_array (double* temp){
+   $1 = &temp;
 }
-%typemap(argout) (double** DOUBLEPOINTER) {
+%typemap(argout) (double** in_out_array) {
     if (*$1) 
     {
       int length = sizeof(*$1)/sizeof(double) + 1;
       PyObject *o = PyList_New(length);
-      double* doubleArray = *$1;
+      double* temp = *$1;
       for(int i=0; i<length; i++) {
-        PyList_SetItem(o, i, PyFloat_FromDouble(doubleArray[i]));
+        PyList_SetItem(o, i, PyFloat_FromDouble(temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
       swmm_freeMemory(*$1);
@@ -105,10 +105,10 @@
 }
 
 
-%typemap(in, numinputs=0) SM_NodeStats **DOUBLEPOINTER (SM_NodeStats *temp){
+%typemap(in, numinputs=0) SM_NodeStats **in_out_dict (SM_NodeStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_NodeStats **DOUBLEPOINTER {
+%typemap(argout) SM_NodeStats **in_out_dict {
     PyObject *o = PyDict_New();
     PyMapping_SetItemString(o, "Average Depth", PyFloat_FromDouble((*$1)->avgDepth));
     PyMapping_SetItemString(o, "Maximum Depth", PyFloat_FromDouble((*$1)->maxDepth));
@@ -129,10 +129,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_StorageStats **DOUBLEPOINTER (SM_StorageStats *temp){
+%typemap(in, numinputs=0) SM_StorageStats **in_out_dict (SM_StorageStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_StorageStats **DOUBLEPOINTER {
+%typemap(argout) SM_StorageStats **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Initial Volume", PyFloat_FromDouble((*$1)->initVol));
     PyMapping_SetItemString(o, "Average Volume", PyFloat_FromDouble((*$1)->avgVol));
@@ -145,10 +145,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_OutfallStats **DOUBLEPOINTER (SM_OutfallStats *temp){
+%typemap(in, numinputs=0) SM_OutfallStats **in_out_dict (SM_OutfallStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_OutfallStats **DOUBLEPOINTER {
+%typemap(argout) SM_OutfallStats **in_out_dict {
     int length = sizeof((*$1)->totalLoad)/sizeof(double) + 1;
     PyObject *loads = PyList_New(length);
     PyObject *o = PyDict_New(); 
@@ -164,10 +164,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_LinkStats **DOUBLEPOINTER (SM_LinkStats *temp){
+%typemap(in, numinputs=0) SM_LinkStats **in_out_dict (SM_LinkStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_LinkStats **DOUBLEPOINTER {
+%typemap(argout) SM_LinkStats **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyObject *flowTime = PyDict_New();
 
@@ -197,10 +197,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_PumpStats **DOUBLEPOINTER (SM_PumpStats *temp){
+%typemap(in, numinputs=0) SM_PumpStats **in_out_dict (SM_PumpStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_PumpStats **DOUBLEPOINTER {
+%typemap(argout) SM_PumpStats **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Utilized", PyFloat_FromDouble((*$1)->utilized));
     PyMapping_SetItemString(o, "Minimum Flow", PyFloat_FromDouble((*$1)->minFlow));
@@ -216,10 +216,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_SubcatchStats **DOUBLEPOINTER (SM_SubcatchStats *temp){
+%typemap(in, numinputs=0) SM_SubcatchStats **in_out_dict (SM_SubcatchStats *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_SubcatchStats **DOUBLEPOINTER {
+%typemap(argout) SM_SubcatchStats **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Total Precipication", PyFloat_FromDouble((*$1)->precip));
     PyMapping_SetItemString(o, "Total Runon", PyFloat_FromDouble((*$1)->runon));
@@ -231,10 +231,10 @@
     swmm_freeMemory(*$1);
 }
 
-%typemap(in, numinputs=0) SM_RoutingTotals **DOUBLEPOINTER (SM_RoutingTotals *temp){
+%typemap(in, numinputs=0) SM_RoutingTotals **in_out_dict (SM_RoutingTotals *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_RoutingTotals **DOUBLEPOINTER {
+%typemap(argout) SM_RoutingTotals **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Dry Weather Inflow", PyFloat_FromDouble((*$1)->dwInflow));
     PyMapping_SetItemString(o, "Wet Weather Inflow", PyFloat_FromDouble((*$1)->wwInflow));
@@ -253,10 +253,10 @@
     swmm_freeMemory(*$1);
 }
  
-%typemap(in, numinputs=0) SM_RunoffTotals **DOUBLEPOINTER (SM_RunoffTotals *temp){
+%typemap(in, numinputs=0) SM_RunoffTotals **in_out_dict (SM_RunoffTotals *temp){
     $1 = &temp;
 }
-%typemap(argout) SM_RunoffTotals **DOUBLEPOINTER {
+%typemap(argout) SM_RunoffTotals **in_out_dict {
     PyObject *o = PyDict_New(); 
     PyMapping_SetItemString(o, "Rainfall Total", PyFloat_FromDouble((*$1)->rainfall));
     PyMapping_SetItemString(o, "Evaporation Loss", PyFloat_FromDouble((*$1)->evap));
@@ -333,8 +333,8 @@ int  swmm_setSimulationDateTime(SM_TimePropety timetype, int year, int month, in
 int  swmm_getSimulationAnalysisSetting(SM_SimOption type, int *OUTPUT);
 int  swmm_getSimulationParam(SM_SimSetting type, double *OUTPUT);
 int  swmm_getCurrentDateTime(int *year, int *month, int *day, int *hour, int *minute, int *second);
-int  swmm_getSystemRoutingStats(SM_RoutingTotals** DOUBLEPOINTER);
-int  swmm_getSystemRunoffStats(SM_RunoffTotals** DOUBLEPOINTER);
+int  swmm_getSystemRoutingStats(SM_RoutingTotals** in_out_dict);
+int  swmm_getSystemRunoffStats(SM_RunoffTotals** in_out_dict);
 
 int  swmm_getObjectIndex(SM_ObjectType type, char *id, int *OUTPUT);
 int  swmm_getObjectId(SM_ObjectType type, int index, char **id);
@@ -346,13 +346,13 @@ int  swmm_getNodeType(int index, int *OUTPUT);
 int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);
 int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
 int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
-int  swmm_getNodePollut(int index, SM_NodePollut type, double** DOUBLEPOINTER);
+int  swmm_getNodePollut(int index, SM_NodePollut type, double** in_out_array);
 int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 int  swmm_setNodeInflow(int index, double flowrate);
 int  swmm_setOutfallStage(int index, double stage); 
-int  swmm_getNodeStats(int index, SM_NodeStats **DOUBLEPOINTER);
-int  swmm_getStorageStats(int index, SM_StorageStats **DOUBLEPOINTER);
-int  swmm_getOutfallStats(int index, SM_OutfallStats **DOUBLEPOINTER);
+int  swmm_getNodeStats(int index, SM_NodeStats **in_out_dict);
+int  swmm_getStorageStats(int index, SM_StorageStats **in_out_dict);
+int  swmm_getOutfallStats(int index, SM_OutfallStats **in_out_dict);
 
 int  swmm_getLinkType(int index, int *OUTPUT);
 int  swmm_getLinkConnections(int index, int *OUTPUT, int *OUTPUT);
@@ -360,17 +360,17 @@ int  swmm_getLinkDirection(int index, signed char *value);
 int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
 int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
-int  swmm_getLinkPollut(int index, SM_LinkPollut type, double **DOUBLEPOINTER);
+int  swmm_getLinkPollut(int index, SM_LinkPollut type, double **in_out_array);
 int  swmm_setLinkSetting(int index, double setting);
-int  swmm_getLinkStats(int index, SM_LinkStats **DOUBLEPOINTER);
-int  swmm_getPumpStats(int index, SM_PumpStats **DOUBLEPOINTER);
+int  swmm_getLinkStats(int index, SM_LinkStats **in_out_dict);
+int  swmm_getPumpStats(int index, SM_PumpStats **in_out_dict);
 
 int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
 int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
 int  swmm_getSubcatchResult(int index, SM_SubcResult type, double *OUTPUT);
-int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double **DOUBLEPOINTER);
-int  swmm_getSubcatchStats(int index, SM_SubcatchStats **DOUBLEPOINTER);
+int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double **in_out_array);
+int  swmm_getSubcatchStats(int index, SM_SubcatchStats **in_out_dict);
 
 int  swmm_getLidUCount(int index, int *OUTPUT);
 int  swmm_getLidUParam(int index, int lidIndex, SM_LidUProperty param, double *OUTPUT);
