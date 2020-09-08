@@ -451,7 +451,7 @@ def test_node_get_stats(run_sim):
             break
 
     node_stats = solver.node_get_stats(5)
-    node_stats['Maximum Depth'] == pytest.approx(1.15, 0.1)
+    node_stats['maxDepth'] == pytest.approx(1.15, 0.1)
 
 
 def test_storage_get_stats(run_sim):
@@ -462,7 +462,7 @@ def test_storage_get_stats(run_sim):
             break
 
     stor_stats = solver.storage_get_stats(node_index)
-    stor_stats['Average Volume'] == pytest.approx(0, 0.1)
+    stor_stats['avgVol'] == pytest.approx(0, 0.1)
 
 
 def test_outfall_get_stats(run_sim):
@@ -473,7 +473,7 @@ def test_outfall_get_stats(run_sim):
             break
 
     stats = solver.outfall_get_stats(node_index)
-    assert isinstance(stats['Total Pollutant Load'], list)
+    assert isinstance(stats['loads'], list)
  
     
 def test_subcatch_param(handle):
