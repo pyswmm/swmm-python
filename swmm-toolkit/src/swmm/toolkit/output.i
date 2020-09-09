@@ -47,8 +47,8 @@ and return a (possibly) different pointer */
 %typemap(in) SMO_Handle *p_handle_inout (SMO_Handle retval)
 {
    /* INOUT in */
-   SWIG_ConvertPtr(obj0,SWIG_as_voidptrptr(&retval), 0, 0);
-    $1 = &retval;
+   SWIG_ConvertPtr($input, SWIG_as_voidptrptr(&retval), 0, 0);
+   $1 = &retval;
 }
 /* No need for special IN typemap for opaque pointers, it works anyway */
 

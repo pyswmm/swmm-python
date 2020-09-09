@@ -108,6 +108,13 @@ RG1              INTENSITY 1:00     1.0      TIMESERIES TS1
 ;;-------------- ---------- ---------- ---------------- -------- ----------------
 18               975        FREE                        NO                       
 
+[STORAGE]
+;;               Invert   Max.     Init.    Storage    Curve                               Evap.   
+;;Name           Elev.    Depth    Depth    Curve      Params                              Frac.    Infiltration parameters
+;;-------------- -------- -------- -------- ---------- -------- -------- -------- -------- -------- -----------------------
+SU1              0        1        0        FUNCTIONAL 1000     0        0        0        0       
+SU2              0        5        0        FUNCTIONAL 1000     0        0        0        0       
+
 [CONDUITS]
 ;;Name           From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   
 ;;-------------- ---------------- ---------------- ---------- ---------- ---------- ---------- ---------- ----------
@@ -124,6 +131,12 @@ RG1              INTENSITY 1:00     1.0      TIMESERIES TS1
 14               23               24               400        0.01       0          0          0          0         
 15               16               24               100        0.01       0          0          0          0         
 16               24               17               400        0.01       0          0          0          0         
+
+[PUMPS]
+;;               Inlet            Outlet           Pump             Init.  Startup  Shutoff 
+;;Name           Node             Node             Curve            Status Depth    Depth   
+;;-------------- ---------------- ---------------- ---------------- ------ -------- --------
+P1               SU1              SU2              Curve1           ON     0        0       
 
 [XSECTIONS]
 ;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
@@ -189,6 +202,12 @@ Residential      Lead             EMC        0          0          0          0
 Undeveloped      TSS              EXP        0.1        0.7        0          0         
 Undeveloped      Lead             EMC        0          0          0          0         
 
+[CURVES]
+;;Name           Type       X-Value    Y-Value   
+;;-------------- ---------- ---------- ----------
+Curve1           Pump3      1          0         
+Curve1                      10         1         
+
 [TIMESERIES]
 ;;Name           Date       Time       Value     
 ;;-------------- ---------- ---------- ----------
@@ -236,6 +255,7 @@ Units      None
 23               6484.210           3978.950          
 24               5389.470           3031.580          
 18               6631.580           505.260           
+SU1              6876.91            50.471          
 
 [VERTICES]
 ;;Link           X-Coord            Y-Coord           

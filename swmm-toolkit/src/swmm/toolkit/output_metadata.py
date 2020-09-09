@@ -13,7 +13,7 @@ from itertools import islice
 
 from aenum import extend_enum
 
-from swmm.toolkit import output, output_enum
+from swmm.toolkit import output, toolkit_enum
 
 
 class OutputMetadata:
@@ -21,48 +21,48 @@ class OutputMetadata:
     Simple attribute name and unit lookup.
     '''
     _unit_labels_us_ = {
-        output_enum.BaseUnits.RAIN_INT:   "in/hr",
-        output_enum.BaseUnits.SNOW_DEPTH: "in",
-        output_enum.BaseUnits.EVAP_RATE:  "in/day",
-        output_enum.BaseUnits.INFIL_RATE: "in/hr",
-        output_enum.BaseUnits.ELEV:       "ft",
-        output_enum.BaseUnits.PERCENT:    "%",
-        output_enum.BaseUnits.HEAD:       "ft",
-        output_enum.BaseUnits.VOLUME:     "cu ft",
-        output_enum.BaseUnits.VELOCITY:   "ft/sec",
-        output_enum.BaseUnits.TEMP:       "deg F",
-        output_enum.BaseUnits.UNITLESS:   "unitless",
-        output_enum.BaseUnits.NONE:       "",
+        toolkit_enum.BaseUnits.RAIN_INT:   "in/hr",
+        toolkit_enum.BaseUnits.SNOW_DEPTH: "in",
+        toolkit_enum.BaseUnits.EVAP_RATE:  "in/day",
+        toolkit_enum.BaseUnits.INFIL_RATE: "in/hr",
+        toolkit_enum.BaseUnits.ELEV:       "ft",
+        toolkit_enum.BaseUnits.PERCENT:    "%",
+        toolkit_enum.BaseUnits.HEAD:       "ft",
+        toolkit_enum.BaseUnits.VOLUME:     "cu ft",
+        toolkit_enum.BaseUnits.VELOCITY:   "ft/sec",
+        toolkit_enum.BaseUnits.TEMP:       "deg F",
+        toolkit_enum.BaseUnits.UNITLESS:   "unitless",
+        toolkit_enum.BaseUnits.NONE:       "",
 
-        output_enum.FlowUnits.CFS:        "cu ft/sec",
-        output_enum.FlowUnits.GPM:        "gal/min",
-        output_enum.FlowUnits.MGD:        "M gal/day",
+        toolkit_enum.FlowUnits.CFS:          "cu ft/sec",
+        toolkit_enum.FlowUnits.GPM:          "gal/min",
+        toolkit_enum.FlowUnits.MGD:          "M gal/day",
     }
 
     _unit_labels_si_ = {
-        output_enum.BaseUnits.RAIN_INT:   "mm/hr",
-        output_enum.BaseUnits.SNOW_DEPTH: "mm",
-        output_enum.BaseUnits.EVAP_RATE:  "mm/day",
-        output_enum.BaseUnits.INFIL_RATE: "mm/hr",
-        output_enum.BaseUnits.ELEV:       "m",
-        output_enum.BaseUnits.PERCENT:    "%",
-        output_enum.BaseUnits.HEAD:       "m",
-        output_enum.BaseUnits.VOLUME:     "cu m",
-        output_enum.BaseUnits.VELOCITY:   "m/sec",
-        output_enum.BaseUnits.TEMP:       "deg C",
-        output_enum.BaseUnits.UNITLESS:   "unitless",
-        output_enum.BaseUnits.NONE:       "",
+        toolkit_enum.BaseUnits.RAIN_INT:   "mm/hr",
+        toolkit_enum.BaseUnits.SNOW_DEPTH: "mm",
+        toolkit_enum.BaseUnits.EVAP_RATE:  "mm/day",
+        toolkit_enum.BaseUnits.INFIL_RATE: "mm/hr",
+        toolkit_enum.BaseUnits.ELEV:       "m",
+        toolkit_enum.BaseUnits.PERCENT:    "%",
+        toolkit_enum.BaseUnits.HEAD:       "m",
+        toolkit_enum.BaseUnits.VOLUME:     "cu m",
+        toolkit_enum.BaseUnits.VELOCITY:   "m/sec",
+        toolkit_enum.BaseUnits.TEMP:       "deg C",
+        toolkit_enum.BaseUnits.UNITLESS:   "unitless",
+        toolkit_enum.BaseUnits.NONE:       "",
 
-        output_enum.FlowUnits.CMS:        "cu m/sec",
-        output_enum.FlowUnits.LPS:        "L/sec",
-        output_enum.FlowUnits.MLD:        "M L/day",
+        toolkit_enum.FlowUnits.CMS:          "cu m/sec",
+        toolkit_enum.FlowUnits.LPS:          "L/sec",
+        toolkit_enum.FlowUnits.MLD:          "M L/day",
     }
 
     _unit_labels_quality_ = {
-        output_enum.ConcUnits.MG:         "mg/L",
-        output_enum.ConcUnits.UG:         "ug/L",
-        output_enum.ConcUnits.COUNT:      "Count/L",
-        output_enum.ConcUnits.NONE:       ""
+        toolkit_enum.ConcUnits.MG:           "mg/L",
+        toolkit_enum.ConcUnits.UG:           "ug/L",
+        toolkit_enum.ConcUnits.COUNT:        "Count/L",
+        toolkit_enum.ConcUnits.NONE:         ""
     }
 
 
@@ -71,7 +71,7 @@ class OutputMetadata:
         Builds metadata for pollutant attributes at runtime.
         '''
         # Get number of pollutants
-        n = output.get_proj_size(output_handle)[output_enum.ElementType.POLLUT]
+        n = output.get_proj_size(output_handle)[toolkit_enum.ElementType.POLLUT]
 
         if n > 0:
 
@@ -81,26 +81,26 @@ class OutputMetadata:
             # Get pollutant names
             for i in range(0, n):
                 pollut_name.append(output.get_elem_name(
-                    output_handle, output_enum.ElementType.POLLUT, i))
+                    output_handle, toolkit_enum.ElementType.POLLUT, i))
             # Get pollutant units
             for u in output.get_units(output_handle)[2:]:
-                pollut_units.append(output_enum.ConcUnits(u))
+                pollut_units.append(toolkit_enum.ConcUnits(u))
 
             # Create dictionary keys
             for i in range(1, n):
                 symbolic_name = 'POLLUT_CONC_' + str(i)
-                extend_enum(output_enum.SubcatchAttribute, symbolic_name, 8 + i)
-                extend_enum(output_enum.NodeAttribute, symbolic_name, 6 + i)
-                extend_enum(output_enum.LinkAttribute, symbolic_name, 5 + i)
+                extend_enum(toolkit_enum.SubcatchAttribute, symbolic_name, 8 + i)
+                extend_enum(toolkit_enum.NodeAttribute, symbolic_name, 6 + i)
+                extend_enum(toolkit_enum.LinkAttribute, symbolic_name, 5 + i)
 
             # Update metadata dictionary with pollutant metadata
-            for i, attr in enumerate(islice(output_enum.SubcatchAttribute, 8, None)):
+            for i, attr in enumerate(islice(toolkit_enum.SubcatchAttribute, 8, None)):
                 self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
 
-            for i, attr in enumerate(islice(output_enum.NodeAttribute, 6, None)):
+            for i, attr in enumerate(islice(toolkit_enum.NodeAttribute, 6, None)):
                 self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
 
-            for i, attr in enumerate(islice(output_enum.LinkAttribute, 5, None)):
+            for i, attr in enumerate(islice(toolkit_enum.LinkAttribute, 5, None)):
                 self._metadata[attr] = (pollut_name[i], self._unit_labels[pollut_units[i]])
 
 
@@ -109,8 +109,8 @@ class OutputMetadata:
         self.units = output.get_units(output_handle)
 
         # Determine prevailing unit system
-        self._unit_system = output_enum.UnitSystem(self.units[0])
-        if self._unit_system == output_enum.UnitSystem.US:
+        self._unit_system = toolkit_enum.UnitSystem(self.units[0])
+        if self._unit_system == toolkit_enum.UnitSystem.US:
             self._unit_labels = type(self)._unit_labels_us_
         else:
             self._unit_labels = type(self)._unit_labels_si_
@@ -118,84 +118,84 @@ class OutputMetadata:
         self._unit_labels.update(type(self)._unit_labels_quality_)
 
         # Set user flow units
-        self._flow = output_enum.FlowUnits(self.units[1])
+        self._flow = toolkit_enum.FlowUnits(self.units[1])
 
         self._metadata = {
-            output_enum.SubcatchAttribute.RAINFALL:
-                ("Rainfall", self._unit_labels[output_enum.BaseUnits.RAIN_INT]),
-            output_enum.SubcatchAttribute.SNOW_DEPTH:
-                ("Snow Depth", self._unit_labels[output_enum.BaseUnits.SNOW_DEPTH]),
-            output_enum.SubcatchAttribute.EVAP_LOSS:
-                ("Evaporation Loss", self._unit_labels[output_enum.BaseUnits.EVAP_RATE]),
-            output_enum.SubcatchAttribute.INFIL_LOSS:
-                ("Infiltration Loss", self._unit_labels[output_enum.BaseUnits.INFIL_RATE]),
-            output_enum.SubcatchAttribute.RUNOFF_RATE:
+            toolkit_enum.SubcatchAttribute.RAINFALL:
+                ("Rainfall", self._unit_labels[toolkit_enum.BaseUnits.RAIN_INT]),
+            toolkit_enum.SubcatchAttribute.SNOW_DEPTH:
+                ("Snow Depth", self._unit_labels[toolkit_enum.BaseUnits.SNOW_DEPTH]),
+            toolkit_enum.SubcatchAttribute.EVAP_LOSS:
+                ("Evaporation Loss", self._unit_labels[toolkit_enum.BaseUnits.EVAP_RATE]),
+            toolkit_enum.SubcatchAttribute.INFIL_LOSS:
+                ("Infiltration Loss", self._unit_labels[toolkit_enum.BaseUnits.INFIL_RATE]),
+            toolkit_enum.SubcatchAttribute.RUNOFF_RATE:
                 ("Runoff Rate", self._unit_labels[self._flow]),
-            output_enum.SubcatchAttribute.GW_OUTFLOW_RATE:
+            toolkit_enum.SubcatchAttribute.GW_OUTFLOW_RATE:
                 ("Groundwater Flow Rate", self._unit_labels[self._flow]),
-            output_enum.SubcatchAttribute.GW_TABLE_ELEV:
-                ("Groundwater Elevation", self._unit_labels[output_enum.BaseUnits.ELEV]),
-            output_enum.SubcatchAttribute.SOIL_MOISTURE:
-                ("Soil Moisture", self._unit_labels[output_enum.BaseUnits.PERCENT]),
-            output_enum.SubcatchAttribute.POLLUT_CONC_0:
-                ("Pollutant Concentration", self._unit_labels[output_enum.BaseUnits.NONE]),
+            toolkit_enum.SubcatchAttribute.GW_TABLE_ELEV:
+                ("Groundwater Elevation", self._unit_labels[toolkit_enum.BaseUnits.ELEV]),
+            toolkit_enum.SubcatchAttribute.SOIL_MOISTURE:
+                ("Soil Moisture", self._unit_labels[toolkit_enum.BaseUnits.PERCENT]),
+            toolkit_enum.SubcatchAttribute.POLLUT_CONC_0:
+                ("Pollutant Concentration", self._unit_labels[toolkit_enum.BaseUnits.NONE]),
 
-            output_enum.NodeAttribute.INVERT_DEPTH:
-                ("Invert Depth", self._unit_labels[output_enum.BaseUnits.ELEV]),
-            output_enum.NodeAttribute.HYDRAULIC_HEAD:
-                ("Hydraulic Head", self._unit_labels[output_enum.BaseUnits.HEAD]),
-            output_enum.NodeAttribute.PONDED_VOLUME:
-                ("Ponded Volume", self._unit_labels[output_enum.BaseUnits.VOLUME]),
-            output_enum.NodeAttribute.LATERAL_INFLOW:
+            toolkit_enum.NodeAttribute.INVERT_DEPTH:
+                ("Invert Depth", self._unit_labels[toolkit_enum.BaseUnits.ELEV]),
+            toolkit_enum.NodeAttribute.HYDRAULIC_HEAD:
+                ("Hydraulic Head", self._unit_labels[toolkit_enum.BaseUnits.HEAD]),
+            toolkit_enum.NodeAttribute.PONDED_VOLUME:
+                ("Ponded Volume", self._unit_labels[toolkit_enum.BaseUnits.VOLUME]),
+            toolkit_enum.NodeAttribute.LATERAL_INFLOW:
                 ("Lateral Inflow", self._unit_labels[self._flow]),
-            output_enum.NodeAttribute.TOTAL_INFLOW:
+            toolkit_enum.NodeAttribute.TOTAL_INFLOW:
                 ("Total Inflow", self._unit_labels[self._flow]),
-            output_enum.NodeAttribute.FLOODING_LOSSES:
+            toolkit_enum.NodeAttribute.FLOODING_LOSSES:
                 ("Flooding Loss", self._unit_labels[self._flow]),
-            output_enum.NodeAttribute.POLLUT_CONC_0:
-                ("Pollutant Concentration", self._unit_labels[output_enum.BaseUnits.NONE]),
+            toolkit_enum.NodeAttribute.POLLUT_CONC_0:
+                ("Pollutant Concentration", self._unit_labels[toolkit_enum.BaseUnits.NONE]),
 
-            output_enum.LinkAttribute.FLOW_RATE:
+            toolkit_enum.LinkAttribute.FLOW_RATE:
                 ("Flow Rate", self._unit_labels[self._flow]),
-            output_enum.LinkAttribute.FLOW_DEPTH:
-                ("Flow Depth", self._unit_labels[output_enum.BaseUnits.ELEV]),
-            output_enum.LinkAttribute.FLOW_VELOCITY:
-                ("Flow Velocity", self._unit_labels[output_enum.BaseUnits.VELOCITY]),
-            output_enum.LinkAttribute.FLOW_VOLUME:
-                ("Flow Volume", self._unit_labels[output_enum.BaseUnits.VOLUME]),
-            output_enum.LinkAttribute.CAPACITY:
-                ("Capacity", self._unit_labels[output_enum.BaseUnits.PERCENT]),
-            output_enum.LinkAttribute.POLLUT_CONC_0:
-                ("Pollutant Concentration", self._unit_labels[output_enum.BaseUnits.NONE]),
+            toolkit_enum.LinkAttribute.FLOW_DEPTH:
+                ("Flow Depth", self._unit_labels[toolkit_enum.BaseUnits.ELEV]),
+            toolkit_enum.LinkAttribute.FLOW_VELOCITY:
+                ("Flow Velocity", self._unit_labels[toolkit_enum.BaseUnits.VELOCITY]),
+            toolkit_enum.LinkAttribute.FLOW_VOLUME:
+                ("Flow Volume", self._unit_labels[toolkit_enum.BaseUnits.VOLUME]),
+            toolkit_enum.LinkAttribute.CAPACITY:
+                ("Capacity", self._unit_labels[toolkit_enum.BaseUnits.PERCENT]),
+            toolkit_enum.LinkAttribute.POLLUT_CONC_0:
+                ("Pollutant Concentration", self._unit_labels[toolkit_enum.BaseUnits.NONE]),
 
-            output_enum.SystemAttribute.AIR_TEMP:
-                ("Temperature", self._unit_labels[output_enum.BaseUnits.TEMP]),
-            output_enum.SystemAttribute.RAINFALL:
-                ("Rainfall", self._unit_labels[output_enum.BaseUnits.RAIN_INT]),
-            output_enum.SystemAttribute.SNOW_DEPTH:
-                ("Snow Depth", self._unit_labels[output_enum.BaseUnits.SNOW_DEPTH]),
-            output_enum.SystemAttribute.EVAP_INFIL_LOSS:
-                ("Evap and Infil Losses", self._unit_labels[output_enum.BaseUnits.INFIL_RATE]),
-            output_enum.SystemAttribute.RUNOFF_FLOW:
+            toolkit_enum.SystemAttribute.AIR_TEMP:
+                ("Temperature", self._unit_labels[toolkit_enum.BaseUnits.TEMP]),
+            toolkit_enum.SystemAttribute.RAINFALL:
+                ("Rainfall", self._unit_labels[toolkit_enum.BaseUnits.RAIN_INT]),
+            toolkit_enum.SystemAttribute.SNOW_DEPTH:
+                ("Snow Depth", self._unit_labels[toolkit_enum.BaseUnits.SNOW_DEPTH]),
+            toolkit_enum.SystemAttribute.EVAP_INFIL_LOSS:
+                ("Evap and Infil Losses", self._unit_labels[toolkit_enum.BaseUnits.INFIL_RATE]),
+            toolkit_enum.SystemAttribute.RUNOFF_FLOW:
                 ("Runoff Flow Rate", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.DRY_WEATHER_INFLOW:
+            toolkit_enum.SystemAttribute.DRY_WEATHER_INFLOW:
                 ("Dry Weather Inflow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.GW_INFLOW:
+            toolkit_enum.SystemAttribute.GW_INFLOW:
                 ("Groundwater Inflow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.RDII_INFLOW:
+            toolkit_enum.SystemAttribute.RDII_INFLOW:
                 ("RDII Inflow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.DIRECT_INFLOW:
+            toolkit_enum.SystemAttribute.DIRECT_INFLOW:
                 ("Direct Inflow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.TOTAL_LATERAL_INFLOW:
+            toolkit_enum.SystemAttribute.TOTAL_LATERAL_INFLOW:
                 ("Total Lateral Inflow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.FLOOD_LOSSES:
+            toolkit_enum.SystemAttribute.FLOOD_LOSSES:
                 ("Flood Losses", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.OUTFALL_FLOWS:
+            toolkit_enum.SystemAttribute.OUTFALL_FLOWS:
                 ("Outfall Flow", self._unit_labels[self._flow]),
-            output_enum.SystemAttribute.VOLUME_STORED:
-                ("Volume Stored", self._unit_labels[output_enum.BaseUnits.VOLUME]),
-            output_enum.SystemAttribute.EVAP_RATE:
-                ("Evaporation Rate", self._unit_labels[output_enum.BaseUnits.EVAP_RATE])
+            toolkit_enum.SystemAttribute.VOLUME_STORED:
+                ("Volume Stored", self._unit_labels[toolkit_enum.BaseUnits.VOLUME]),
+            toolkit_enum.SystemAttribute.EVAP_RATE:
+                ("Evaporation Rate", self._unit_labels[toolkit_enum.BaseUnits.EVAP_RATE])
         }
 
         self._build_pollut_metadata(output_handle)

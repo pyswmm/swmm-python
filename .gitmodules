@@ -1,3 +1,4 @@
 [submodule "swmm-toolkit/swmm-solver"]
-	path = swmm-toolkit/swmm-solver
-	url = https://github.com/SWMM-Project/swmm-solver.git
+    path = swmm-toolkit/swmm-solver
+    url = https://github.com/OpenWaterAnalytics/Stormwater-Management-Model.git
+    branch = swig
