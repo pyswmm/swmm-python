@@ -5,7 +5,6 @@ on: [push, pull_request]
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install scikit-build
-    CIBW_BEFORE_BUILD_LINUX: pip install cmake scikit-build
 
 jobs:
   build_wheels:
@@ -30,7 +29,7 @@ jobs:
         run: |
           whereis -b cmake
           cmake --version
-          
+
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
@@ -45,6 +44,7 @@ jobs:
 
       - name: Build wheels
         run: |
+          whereis -b cmake
           python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
 
       - name: Upload artifacts
