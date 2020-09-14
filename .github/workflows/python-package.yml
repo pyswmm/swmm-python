@@ -21,13 +21,16 @@ jobs:
         with:
           submodules: true
 
-      - name: Install swig
+      - name: Install swig requirements
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
-        if: ${{ contains(matrix.os, 'ubuntu') }}
+
+      - if: ${{ contains(matrix.os, 'ubuntu') }}
         run: sudo apt-get install swig
-        if: ${{ contains(matrix.os, 'macos') }}
+
+      - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install swig
+
 
       - name: Install Python
         uses: actions/setup-python@v2
