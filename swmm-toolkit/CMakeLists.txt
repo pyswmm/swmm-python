@@ -13,9 +13,9 @@ cmake_minimum_required (VERSION 3.17)
 
 project(swmm-toolkit)
 
-
+cmake_policy(SET CMP0094 NEW)
 #set(Python_FIND_VIRTUALENV FIRST)
-set(Python3_ROOT_DIR "/opt/_internal/cpython-3.7.7")
+#set(Python3_ROOT_DIR "/opt/_internal/cpython-3.7.7")
 find_package (Python3 COMPONENTS Interpreter Development)
 
 
