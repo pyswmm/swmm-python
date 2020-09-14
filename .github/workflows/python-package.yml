@@ -26,7 +26,11 @@ jobs:
         run: choco install swig
 
       - if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: sudo apt-get install swig cmake
+        run: |
+          sudo apt-get update
+          sudo install swig cmake
+          where cmake
+          cmake --version
 
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
