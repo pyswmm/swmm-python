@@ -5,7 +5,7 @@ on: [push, pull_request]
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install scikit-build
-    CIBW_BEFORE_BUILD_LINUX: pip install cmake
+    CIBW_BEFORE_BUILD_LINUX: pip install scikit-build cmake
 
 
 jobs:
@@ -13,6 +13,7 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+        fail-fast: false
       matrix:
         os: [windows-2016, ubuntu-latest, macos-latest]
 
