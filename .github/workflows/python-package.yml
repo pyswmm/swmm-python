@@ -4,8 +4,7 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
-    CIBW_BEFORE_BUILD: pip install cmake scikit-build
-    CIBW_BEFORE_BUILD_LINUX: pip install cmake scikit-build && yum install -y swig
+    CIBW_BEFORE_BUILD: pip install scikit-build
 
 jobs:
   build_wheels:
@@ -25,6 +24,9 @@ jobs:
       - name: Install requirements
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
+
+      - if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: sudo apt-get install swig cmake
 
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
