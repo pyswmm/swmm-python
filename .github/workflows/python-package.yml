@@ -27,7 +27,7 @@ jobs:
         run: choco install swig
 
       - if: ${{ contains(matrix.os, 'macos') }}
-        run: brew install libomp
+        run: brew install libomp swig
 
       - name: Install Python
         uses: actions/setup-python@v2
