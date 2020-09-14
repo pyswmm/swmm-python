@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
-    CIBW_BEFORE_BUILD_WINDOWS: pip install scikit-build
+    CIBW_BEFORE_BUILD: pip install scikit-build
 
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016]
+        os: [windows-2016, ubuntu-latest]
 
     steps:
       - name: Checkout repo
@@ -22,7 +22,12 @@ jobs:
           submodules: true
 
       - name: Install swig
+        if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: sudo apt-get install swig
+        if: ${{ contains(matrix.os, 'macos') }}
+        run: brew install swig
 
       - name: Install Python
         uses: actions/setup-python@v2
