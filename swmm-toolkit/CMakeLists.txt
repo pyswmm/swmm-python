@@ -15,7 +15,7 @@ project(swmm-toolkit)
 
 #set(Python_FIND_VIRTUALENV FIRST)
 set(Python_ROOT_DIR "/opt/python/cp37-cp37mu")
-find_package (Python COMPONENTS Interpreter Development REQUIRED)
+find_package (Python 3.7 COMPONENTS Interpreter Development REQUIRED)
 
 
 find_package(SWIG REQUIRED)
