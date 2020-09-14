@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
-    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake && choco install -f -y swig
+    CIBW_BEFORE_BUILD_WINDOWS: pip install six scikit-build cmake
 
 
 jobs:
@@ -15,12 +15,17 @@ jobs:
       matrix:
         os: [windows-2016]
 
-    steps:
-      - uses: actions/checkout@v2
+    steps
+      - name: Checkout repo
+        uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/setup-python@v2
-        name: Install Python
+
+      - name: Install swig
+        run: choco install swig
+
+      - name: Install Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.7'
 
@@ -32,6 +37,7 @@ jobs:
         run: |
           python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
