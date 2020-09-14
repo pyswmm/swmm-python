@@ -26,6 +26,11 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
 
+      - if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          whereis -b cmake
+          cmake --version
+          
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
