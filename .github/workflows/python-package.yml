@@ -14,8 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         fail-fast: false
-      matrix:
-        os: [windows-2016, ubuntu-latest, macos-latest]
+        matrix:
+          os: [windows-2016, ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout repo
