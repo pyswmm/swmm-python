@@ -5,7 +5,7 @@ on: [push, pull_request]
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install scikit-build
-    CIBW_ENVIRONMENT_LINUX: "PATH=/usr/lib/:$PATH"
+    CIBW_ENVIRONMENT_LINUX: yum install -y cmake swig && pip install scikit-build
 
 jobs:
   build_wheels:
@@ -26,11 +26,6 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
 
-      - if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: |
-          echo $PATH
-          cmake --version
-
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
@@ -44,9 +39,7 @@ jobs:
           python -m pip install cibuildwheel==1.5.1
 
       - name: Build wheels
-        run: |
-          whereis -b cmake
-          python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
+        run: python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
