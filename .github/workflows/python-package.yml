@@ -5,6 +5,7 @@ on: [push, pull_request]
 env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install scikit-build
+    CIBW_ENVIRONMENT_LINUX: "PATH=/usr/lib/:$PATH"
 
 jobs:
   build_wheels:
@@ -27,7 +28,7 @@ jobs:
 
       - if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
-          whereis -b cmake
+          echo $PATH
           cmake --version
 
       - if: ${{ contains(matrix.os, 'macos') }}
