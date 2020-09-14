@@ -16,7 +16,7 @@ project(swmm-toolkit)
 cmake_policy(SET CMP0094 NEW)
 #set(Python_FIND_VIRTUALENV FIRST)
 set(Python3_ROOT_DIR "/opt/python/*/")
-find_package (Python3 COMPONENTS Interpreter Development)
+find_package (Python3 3.7.7 COMPONENTS Interpreter Development)
 
 
 find_package(SWIG REQUIRED)
