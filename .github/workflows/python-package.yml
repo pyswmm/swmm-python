@@ -6,7 +6,7 @@ env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install cmake scikit-build
     CIBW_BEFORE_BUILD_LINUX: pip install cmake scikit-build && yum install -y swig
-
+    CIBW_ENVIRONMENT_LINUX: "Python_ROOT_DIR=/opt/_internal/cpython-3.7.7"
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
