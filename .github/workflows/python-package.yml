@@ -28,7 +28,7 @@ jobs:
       - if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
           sudo apt-get update
-          sudo install swig cmake
+          sudo apt-get install swig cmake
           where cmake
           cmake --version
 
