@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016, ubuntu-latest]
+        os: [windows-2016, ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout repo
@@ -21,12 +21,12 @@ jobs:
         with:
           submodules: true
 
-      - name: Install swig requirements
+      - name: Install requirements
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
 
       - if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: sudo apt-get install swig
+        run: sudo apt-get install cmake swig
 
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install swig
