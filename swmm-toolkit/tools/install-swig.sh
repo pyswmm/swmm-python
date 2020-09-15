@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Builds swig from source and installes
+# Build swig from source and install
 #
 
 
@@ -20,7 +20,7 @@ cd swig-4.0.2
 ./configure > /dev/null
 make > /dev/null
 
-make install
+make install > /dev/null
 
 
 cd ${CUR_DIR}
