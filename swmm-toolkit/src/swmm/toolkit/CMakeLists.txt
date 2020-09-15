@@ -48,9 +48,13 @@ target_link_options(output
         $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
 )
 
+target_include_directories(output
+    PUBLIC
+        ${Python_INCLUDE_DIRS}
+)
+
 target_link_libraries(output
     PUBLIC
-        Python::Module
         swmm-output
 )
 
@@ -104,9 +108,13 @@ target_link_options(solver
         $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
 )
 
+target_include_directories(solver
+    PUBLIC
+        ${Python_INCLUDE_DIRS}
+)
+
 target_link_libraries(solver
     PUBLIC
-        Python::Module
         swmm5
 )
 
