@@ -14,7 +14,7 @@ cmake_minimum_required (VERSION 3.17)
 project(swmm-toolkit)
 
 
-find_package (Python 3.7 COMPONENTS Interpreter Development)
+find_package (Python 3.7 COMPONENTS Interpreter Development.Module)
 set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
 
 
