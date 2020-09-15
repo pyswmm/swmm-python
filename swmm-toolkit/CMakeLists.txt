@@ -13,12 +13,9 @@ cmake_minimum_required (VERSION 3.17)
 
 project(swmm-toolkit)
 
-#set(Python_FIND_VIRTUALENV FIRST)
 
-#set(Python_ROOT_DIR "/opt/python/cp37-cp37mu")
-#set(Python_INCLUDE_DIR ${PYTHON_INCLUDE_DIR})
-#set(Python_LIBRARY ${Python_ROOT_DIR}/)
-find_package (Python 3.7 COMPONENTS Interpreter Development REQUIRED)
+#find_package (Python 3.7 COMPONENTS Interpreter Development REQUIRED)
+set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
 
 
 find_package(SWIG REQUIRED)
