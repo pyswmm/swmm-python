@@ -6,7 +6,7 @@ env:
     CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-* *-win32 *_i686 *_ppc64le *_s390x"
     CIBW_BEFORE_BUILD: pip install scikit-build
     CIBW_BEFORE_BUILD_LINUX: yum install -y swig && pip install cmake scikit-build
-
+    CIBW_REPAIR_WHEEL_COMMAND: ""
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
