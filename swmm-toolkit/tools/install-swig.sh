@@ -5,19 +5,20 @@
 #
 
 
-CUR_DIR=@{PWD}
+CUR_DIR=${PWD}
 cd /tmp
 
 
 yum install -y pcre-devel
 
 curl -L http://prdownloads.sourceforge.net/swig/swig-4.0.2.tar.gz > swig-4.0.2.tar.gz
+tar xzf swig-4.0.2.tar.gz
 
-tar xvzf swig-4.0.2.tar.gz
 
 cd swig-4.0.2
 
-./configure && make
+./configure > /dev/null
+make > /dev/null
 
 make install
 
