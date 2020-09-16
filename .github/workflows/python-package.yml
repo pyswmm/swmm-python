@@ -28,8 +28,8 @@ jobs:
         run: choco install swig
 
       - if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: apt-get install swig
-        
+        run: sudo apt-get install swig
+
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
