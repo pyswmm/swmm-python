@@ -30,8 +30,10 @@ jobs:
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
-      - name: Build wheels
-        run: pip wheel --wheel-dir=./dist .
+      - name: Build wheel
+        run: |
+            cd
+            pip wheel --wheel-dir=./dist .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
