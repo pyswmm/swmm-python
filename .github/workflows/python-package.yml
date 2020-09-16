@@ -1,4 +1,4 @@
-name: Build
+name: Build Wheels
 
 on: [push, pull_request]
 
@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
 
-      - name: Install requirements
+      - name: Install build requirements
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
 
