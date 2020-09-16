@@ -14,8 +14,10 @@ cmake_minimum_required (VERSION 3.17)
 project(swmm-toolkit)
 
 
-find_package (Python 3.7 COMPONENTS Interpreter Development.Module)
+set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
 set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
+set(Python_LIBRARY ${PYTHON_LIBRARY})
+find_package (Python ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development)
 
 
 find_package(SWIG REQUIRED)

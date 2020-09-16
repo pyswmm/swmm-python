@@ -13,21 +13,27 @@ set(CMAKE_SWIG_FLAGS -py3)
 
 # Determine filename suffix for python extension
 if(WIN32)
-    set(Python_EXTENSION ".${Python_SOABI}.pyd")
+    set(LIB_EXT "pyd")
 else()
-    set(Python_EXTENSION ".${Python_SOABI}.so")
+    set(LIB_EXT "so")
 endif()
+
+set(Python_EXTENSION ".${Python_SOABI}.${LIB_EXT}")
 
 
 # Location of package at runtime on MacOS/Linux
 if(APPLE)
-    set(PACKAGE_RPATH "@loader_path/../../../..;@loader_path/../../../../extern")
+    set(LIB_ROOT "@loader_path")
 else()
-    set(PACKAGE_RPATH "$ORIGIN/../../../..;$ORIGIN/../../../../extern")
+    set(LIB_ROOT "$ORIGIN")
 endif()
 
+set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern")
 
-#######   OUTPUT TARGET   #######
+
+#############################################################
+####################    OUTPUT TARGET    ####################
+#############################################################
 
 set_property(SOURCE output.i
     PROPERTY
@@ -55,6 +61,7 @@ target_include_directories(output
 
 target_link_libraries(output
     PUBLIC
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
         swmm-output
 )
 
@@ -86,8 +93,9 @@ install(
         "src/swmm/toolkit"
 )
 
-
-#######   SOLVER TARGET   #######
+#############################################################
+####################    SOLVER TARGET    ####################
+#############################################################
 
 set_property(SOURCE solver.i
     PROPERTY
@@ -115,6 +123,7 @@ target_include_directories(solver
 
 target_link_libraries(solver
     PUBLIC
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
         swmm5
 )
 
