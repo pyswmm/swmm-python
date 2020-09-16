@@ -9,7 +9,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          os: [windows-2016, macos-latest]
+          os: [windows-2016, ubuntu-latest, macos-latest]
           py: [3.6, 3.7, 3.8]
 
     steps:
@@ -27,6 +27,9 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
 
+      - if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: apt-get install swig
+        
       - if: ${{ contains(matrix.os, 'macos') }}
         run: brew install libomp swig
 
