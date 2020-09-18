@@ -36,6 +36,12 @@ jobs:
       - name: Build wheel
         run: pip wheel --wheel-dir=./dist ./swmm-toolkit
 
+      - name: Test wheel
+        run: |
+          pip install pytest numpy
+          pip install --no-index --find-links=./dist swmm-toolkit
+          pytest
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
