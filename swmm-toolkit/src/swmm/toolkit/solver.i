@@ -60,7 +60,10 @@
 
 %apply char **OUTCHAR {
     char **errorMsg,
-    char **id
+    char **id,
+    char **major, 
+    char **minor, 
+    char **patch
 };
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
@@ -80,7 +83,6 @@
       swmm_freeMemory(*$1);
     }
 }
-
 
 %typemap(in, numinputs=0) SM_NodeStats **in_out_dict (SM_NodeStats *temp){
     $1 = &temp;
@@ -322,7 +324,7 @@ int  swmm_end(void);
 int  swmm_report(void);
 int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
 int  swmm_close(void);
-int  swmm_getVersion(void);
+int  swmm_getVersionInfo(char** major, char** minor, char** patch);
 
 
 // TOOLKIT API

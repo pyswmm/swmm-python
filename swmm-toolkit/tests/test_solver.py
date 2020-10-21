@@ -97,6 +97,12 @@ def test_step(handle):
     solver.report()
 
 
+def test_version(handle):
+    major, minor, patch = solver.version()
+    print(major, minor, patch)
+    assert major == '5'
+    
+
 def test_simulation_unit(handle):
     simulation_system_unit_option = solver.simulation_get_unit(toolkit_enum.UnitProperty.SYSTEM_UNIT)
     simulation_flow_unit_option = solver.simulation_get_unit(toolkit_enum.UnitProperty.FLOW_UNIT)
