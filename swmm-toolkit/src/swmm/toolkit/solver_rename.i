@@ -20,7 +20,7 @@
 %rename(report)                                     swmm_report;
 %rename(get_mass_bal_err)                           swmm_getMassBalErr;
 %rename(close)                                      swmm_close;
-%rename(version)                                    swmm_getVersion;
+%rename(version)                                    swmm_getVersionInfo;
 
 //%rename(error_get_message)                          swmm_getAPIError;
 %rename(system_get_routing_stats)                   swmm_getSystemRoutingStats;
