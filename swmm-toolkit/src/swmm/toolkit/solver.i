@@ -45,7 +45,14 @@
 };
 
 %apply double *OUTPUT {
+    double *elapsedTime,
     double *value
+};
+
+%apply float *OUTPUT {
+    float *runoffErr,
+    float *flowErr, 
+    float *qualErr
 };
 
 %apply signed char *OUTPUT {
@@ -314,15 +321,8 @@
 }
 
 // CANONICAL API
-int  swmm_run(char *f1, char *f2, char *f3);
-int  swmm_open(char *f1, char *f2, char *f3);
-int  swmm_start(int saveFlag);
-int  swmm_step(double *OUTPUT);
-int  swmm_end(void);
-int  swmm_report(void);
-int  swmm_getMassBalErr(float *OUTPUT, float *OUTPUT, float *OUTPUT);
-int  swmm_close(void);
-int  swmm_getVersionInfo(char** major, char** minor, char** patch);
+%include "swmm5.h"
+
 
 
 // TOOLKIT API
