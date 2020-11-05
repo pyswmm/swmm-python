@@ -67,16 +67,14 @@
 };
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
-%typemap(in, numinputs=0)double** in_out_array (double* temp){
+%typemap(in, numinputs=0)float **double_out (double *temp), int *int_dim (int temp){
    $1 = &temp;
 }
-%typemap(argout) (double** in_out_array) {
-    if (*$1)
-    {
-      int length = sizeof(*$1)/sizeof(double) + 1;
-      PyObject *o = PyList_New(length);
+%typemap(argout) (float **double_out, int *int_dim) {
+    if (*$1) {
+      PyObject *o = PyList_New(*$2);
       double* temp = *$1;
-      for(int i=0; i<length; i++) {
+      for(int i=0; i<*$2; i++) {
         PyList_SetItem(o, i, PyFloat_FromDouble(temp[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
@@ -350,7 +348,7 @@ int  swmm_getNodeType(int index, int *OUTPUT);
 int  swmm_getNodeParam(int index, SM_NodeProperty parameter, double *OUTPUT);
 int  swmm_setNodeParam(int index, SM_NodeProperty parameter, double value);
 int  swmm_getNodeResult(int index, SM_NodeResult type, double *OUTPUT);
-int  swmm_getNodePollut(int index, SM_NodePollut type, double** in_out_array);
+int  swmm_getNodePollut(int index, SM_NodePollut type, double **double_out, int *int_dim);
 int  swmm_getNodeTotalInflow(int index, double *OUTPUT);
 int  swmm_setNodeInflow(int index, double flowrate);
 int  swmm_setOutfallStage(int index, double stage);
@@ -364,7 +362,7 @@ int  swmm_getLinkDirection(int index, signed char *value);
 int  swmm_getLinkParam(int index, SM_LinkProperty parameter, double *OUTPUT);
 int  swmm_setLinkParam(int index, SM_LinkProperty parameter, double value);
 int  swmm_getLinkResult(int index, SM_LinkResult type, double *OUTPUT);
-int  swmm_getLinkPollut(int index, SM_LinkPollut type, double **in_out_array);
+int  swmm_getLinkPollut(int index, SM_LinkPollut type, double **double_out, int *int_dim);
 int  swmm_setLinkSetting(int index, double setting);
 int  swmm_getLinkStats(int index, SM_LinkStats **in_out_dict);
 int  swmm_getPumpStats(int index, SM_PumpStats **in_out_dict);
@@ -373,7 +371,7 @@ int  swmm_getSubcatchOutConnection(int index, int *OUTPUT, int *OUTPUT);
 int  swmm_getSubcatchParam(int index, SM_SubcProperty parameter, double *OUTPUT);
 int  swmm_setSubcatchParam(int index, SM_SubcProperty parameter, double value);
 int  swmm_getSubcatchResult(int index, SM_SubcResult type, double *OUTPUT);
-int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double **in_out_array);
+int  swmm_getSubcatchPollut(int index, SM_SubcPollut type, double **double_out, int *int_dim);
 int  swmm_getSubcatchStats(int index, SM_SubcatchStats **in_out_dict);
 
 int  swmm_getLidUCount(int index, int *OUTPUT);
