@@ -40,6 +40,13 @@
 
 
 %apply int *OUTPUT {
+    int *index,
+    int *value,
+    int *count, 
+    int *node1, 
+    int *node2,
+    int *out_index,
+    int *condition,
     int *year,
     int *month,
     int *day,
@@ -51,7 +58,8 @@
 
 %apply double *OUTPUT {
     double *elapsedTime,
-    double *value
+    double *value,
+    double *result
 };
 
 
@@ -75,7 +83,6 @@
 %cstring_output_allocate(char **OUTCHAR, swmm_freeMemory(*$1));
 
 %apply char **OUTCHAR {
-//    char **errorMsg,
     char **id,
     char **major, 
     char **minor, 
@@ -84,20 +91,32 @@
 
 
 /* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
-%typemap(in, numinputs=0)float **double_out (double *temp), int *int_dim (int temp){
-   $1 = &temp;
+%typemap(in, numinputs=0) double **double_out (double *temp) {
+    $1=&temp;
 }
-%typemap(argout) (float **double_out, int *int_dim) {
+%typemap(in, numinputs=0) int *int_dim (int temp) {
+    $1=&temp;
+}
+%typemap(argout) (double **double_out, int *int_dim) {
     if (*$1) {
       PyObject *o = PyList_New(*$2);
-      double* temp = *$1;
+      //double *temp = *$1;
       for(int i=0; i<*$2; i++) {
-        PyList_SetItem(o, i, PyFloat_FromDouble(temp[i]));
+        PyList_SetItem(o, i, PyFloat_FromDouble(temp$argnum[i]));
       }
       $result = SWIG_Python_AppendOutput($result, o);
       swmm_freeMemory(*$1);
     }
 }
+%apply double **double_out {
+    double **pollutArray
+};
+%apply int *int_dim {
+    int *length
+}
+%apply (double **double_out, int *int_dim) {
+    (double **pollutArray, int *length)
+};
 
 
 /* TYPEMAP FOR ENUMERATED TYPE INPUT ARGUMENTS */
@@ -170,8 +189,9 @@
 
 
 // TOOLKIT API
-%ignore swmm_freeOutfallStats;
+%ignore swmm_run_cb;
 %ignore swmm_getAPIError;
+%ignore swmm_freeOutfallStats;
 %ignore swmm_freeMemory;
 
 %include "toolkitAPI.h"
