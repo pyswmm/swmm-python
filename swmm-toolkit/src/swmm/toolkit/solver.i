@@ -203,6 +203,8 @@
 // CANONICAL API
 %ignore swmm_getError;
 %ignore swmm_getWarnings;
+%ignore swmm_IsOpenFlag;
+%ignore swmm_IsStartedFlag;
 
 %include "swmm5.h"
 
