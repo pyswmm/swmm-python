@@ -23,7 +23,7 @@
 %rename(close)                                      swmm_close;
 %rename(version)                                    swmm_getVersion;
 
-//%rename(error_get_message)                          swmm_getAPIError;
+%rename(version_info)                               swmm_getVersionInfo;
 %rename(system_get_routing_stats)                   swmm_getSystemRoutingStats;
 %rename(system_get_runoff_stats)                    swmm_getSystemRunoffStats;
 

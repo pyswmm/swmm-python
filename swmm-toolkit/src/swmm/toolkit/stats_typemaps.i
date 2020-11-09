@@ -24,6 +24,10 @@
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
 }
+%apply SM_NodeStats **in_out_dict {
+    SM_NodeStats **nodeStats
+}
+
 
 %typemap(in, numinputs=0) SM_StorageStats **in_out_dict (SM_StorageStats *temp){
     $1 = &temp;
@@ -39,6 +43,9 @@
     PyMapping_SetItemString(o, "maxVolDate", PyFloat_FromDouble((*$1)->maxVolDate));
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
+}
+%apply SM_StorageStats **in_out_dict {
+    SM_StorageStats **storageStats
 }
 
 %typemap(in, numinputs=0) SM_OutfallStats **in_out_dict (SM_OutfallStats *temp){
@@ -59,6 +66,10 @@
     swmm_freeOutfallStats(*$1);
     swmm_freeMemory(*$1);
 }
+%apply SM_OutfallStats **in_out_dict {
+    SM_OutfallStats **outfallStats
+}
+
 
 %typemap(in, numinputs=0) SM_LinkStats **in_out_dict (SM_LinkStats *temp){
     $1 = &temp;
@@ -92,6 +103,10 @@
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
 }
+%apply SM_LinkStats **in_out_dict {
+    SM_LinkStats **linkStats
+}
+
 
 %typemap(in, numinputs=0) SM_PumpStats **in_out_dict (SM_PumpStats *temp){
     $1 = &temp;
@@ -111,6 +126,10 @@
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
 }
+%apply SM_PumpStats **in_out_dict {
+    SM_PumpStats **pumpStats
+}
+
 
 %typemap(in, numinputs=0) SM_SubcatchStats **in_out_dict (SM_SubcatchStats *temp){
     $1 = &temp;
@@ -126,6 +145,10 @@
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
 }
+%apply SM_SubcatchStats **in_out_dict {
+    SM_SubcatchStats **subcatchStats
+}
+
 
 %typemap(in, numinputs=0) SM_RoutingTotals **in_out_dict (SM_RoutingTotals *temp){
     $1 = &temp;
@@ -148,6 +171,10 @@
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
 }
+%apply SM_RoutingTotals **in_out_dict {
+    SM_RoutingTotals **routingTot
+}
+
 
 %typemap(in, numinputs=0) SM_RunoffTotals **in_out_dict (SM_RunoffTotals *temp){
     $1 = &temp;
@@ -168,4 +195,7 @@
     PyMapping_SetItemString(o, "Continuity Error", PyFloat_FromDouble((*$1)->pctError));
     $result = SWIG_Python_AppendOutput($result, o);
     swmm_freeMemory(*$1);
+}
+%apply SM_RunoffTotals **in_out_dict {
+    SM_RunoffTotals **runoffTot
 }

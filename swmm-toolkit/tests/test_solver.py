@@ -98,7 +98,7 @@ def test_step(handle):
 
 
 def test_version(handle):
-    major, minor, patch = solver.version()
+    major, minor, patch = solver.version_info()
     print(major, minor, patch)
     assert major == '5'
     
@@ -111,11 +111,11 @@ def test_simulation_unit(handle):
 
 
 def test_object_find(handle):
-    rg_index = solver.object_find(toolkit_enum.ObjectProperty.GAGE, 'RG1')
-    sub_index_0 = solver.object_find(toolkit_enum.ObjectProperty.SUBCATCH, '2')
-    sub_index_1 = solver.object_find(toolkit_enum.ObjectProperty.SUBCATCH, '3')
-    node_index = solver.object_find(toolkit_enum.ObjectProperty.NODE, '24')
-    link_index = solver.object_find(toolkit_enum.ObjectProperty.LINK, '16')
+    rg_index = solver.object_find(toolkit_enum.ObjectType.GAGE, 'RG1')
+    sub_index_0 = solver.object_find(toolkit_enum.ObjectType.SUBCATCH, '2')
+    sub_index_1 = solver.object_find(toolkit_enum.ObjectType.SUBCATCH, '3')
+    node_index = solver.object_find(toolkit_enum.ObjectType.NODE, '24')
+    link_index = solver.object_find(toolkit_enum.ObjectType.LINK, '16')
     assert rg_index == 0
     assert sub_index_0 == 0
     assert sub_index_1 == 1
@@ -125,14 +125,14 @@ def test_object_find(handle):
 
 def test_error_message_handling(handle):
     with pytest.raises(Exception) as exc_info:
-        solver.object_find(toolkit_enum.ObjectProperty.SUBCATCH, 'sloth')
+        solver.object_find(toolkit_enum.ObjectType.SUBCATCH, 'sloth')
 
     assert 'API Key Error: Object index out of Bounds' in str(exc_info.value)
 
 
 def test_object_count(handle):
-    rg_count = solver.object_count(toolkit_enum.ObjectProperty.GAGE)
-    sub_count = solver.object_count(toolkit_enum.ObjectProperty.SUBCATCH)
+    rg_count = solver.object_count(toolkit_enum.ObjectType.GAGE)
+    sub_count = solver.object_count(toolkit_enum.ObjectType.SUBCATCH)
     assert rg_count == 1
     assert sub_count == 8
 
@@ -186,22 +186,22 @@ def test_simulation_parameter(handle):
 
 
 def test_object_get_index(handle):
-    node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, '6')
-    sub_index = solver.object_get_index(toolkit_enum.ObjectProperty.SUBCATCH, '20')
+    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, '6')
+    sub_index = solver.object_get_index(toolkit_enum.ObjectType.SUBCATCH, '20')
 
     assert node_index == -1
     assert sub_index == -1
 
-    node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, '20')
-    sub_index = solver.object_get_index(toolkit_enum.ObjectProperty.SUBCATCH, '6')
+    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, '20')
+    sub_index = solver.object_get_index(toolkit_enum.ObjectType.SUBCATCH, '6')
 
     assert node_index == 8
     assert sub_index == 5
 
 
 def test_object_get_id(handle):
-    node_name = solver.object_get_id(toolkit_enum.ObjectProperty.NODE, 8)
-    sub_name = solver.object_get_id(toolkit_enum.ObjectProperty.SUBCATCH, 5)
+    node_name = solver.object_get_id(toolkit_enum.ObjectType.NODE, 8)
+    sub_name = solver.object_get_id(toolkit_enum.ObjectType.SUBCATCH, 5)
     assert node_name == '20'
     assert sub_name == '6'
 
@@ -226,7 +226,7 @@ def test_get_runoff_stats(run_sim):
 
 def test_link_get_type(handle):
     link_type = solver.link_get_type(2)
-    assert link_type == toolkit_enum.LinkType.CONDUIT.value
+    assert link_type == toolkit_enum.LinkType.CONDUIT
 
 
 def test_link_get_connections(handle):
@@ -340,7 +340,7 @@ def test_link_get_stats(run_sim):
 
 
 def test_pump_get_stats(run_sim):
-    index = solver.object_get_index(toolkit_enum.ObjectProperty.LINK, 'P1')
+    index = solver.object_get_index(toolkit_enum.ObjectType.LINK, 'P1')
     while True:
         time = solver.step()
         if time == 0:
@@ -351,10 +351,10 @@ def test_pump_get_stats(run_sim):
 
 def test_node_get_type(handle):
     node_type = solver.node_get_type(8)
-    assert node_type == toolkit_enum.NodeType.JUNCTION.value
-    node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, '18')
+    assert node_type == toolkit_enum.NodeType.JUNCTION
+    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, '18')
     node_type = solver.node_get_type(node_index)
-    assert node_type == toolkit_enum.NodeType.OUTFALL.value
+    assert node_type == toolkit_enum.NodeType.OUTFALL
 
 
 def test_node_param(handle):
@@ -461,7 +461,7 @@ def test_node_get_stats(run_sim):
 
 
 def test_storage_get_stats(run_sim):
-    node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, 'SU1')
+    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, 'SU1')
     while True:
         time = solver.step()
         if time == 0:
@@ -472,7 +472,7 @@ def test_storage_get_stats(run_sim):
 
 
 def test_outfall_get_stats(run_sim):
-    node_index = solver.object_get_index(toolkit_enum.ObjectProperty.NODE, '18')
+    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, '18')
     while True:
         time = solver.step()
         if time == 0:
@@ -516,16 +516,17 @@ def test_subcatch_param(handle):
 
 def test_subcatch_get_connection(handle):
     object_type, object_index = solver.subcatch_get_connection(0)
-    assert object_type == toolkit_enum.ObjectProperty.NODE.value
+    assert object_type == toolkit_enum.ObjectType.NODE
     assert object_index == 1
+
     object_type, object_index = solver.subcatch_get_connection(1)
-    assert object_type == toolkit_enum.ObjectProperty.NODE.value
+    assert object_type == toolkit_enum.ObjectType.NODE
     assert object_index == 2
     object_type, object_index = solver.subcatch_get_connection(2)
-    assert object_type == toolkit_enum.ObjectProperty.NODE.value
+    assert object_type == toolkit_enum.ObjectType.NODE
     assert object_index == 0
     object_type, object_index = solver.subcatch_get_connection(3)
-    assert object_type == toolkit_enum.ObjectProperty.NODE.value
+    assert object_type == toolkit_enum.ObjectType.NODE
     assert object_index == 10
 
 
@@ -649,7 +650,7 @@ def test_lid_usage_get_result(run_lid_sim):
 
 
 def test_lid_group_get_result(run_lid_sim):
-    index = solver.object_get_index(toolkit_enum.ObjectProperty.SUBCATCH, 'wBC')
+    index = solver.object_get_index(toolkit_enum.ObjectType.SUBCATCH, 'wBC')
     while True:
         time = solver.step()
         if time == 0:
