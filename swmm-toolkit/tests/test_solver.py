@@ -450,38 +450,6 @@ def test_outfall_set_stage(run_sim):
     solver.step()
 
 
-def test_node_get_stats(run_sim):
-    while True:
-        time = solver.step()
-        if time == 0:
-            break
-
-    node_stats = solver.node_get_stats(5)
-    node_stats['maxDepth'] == pytest.approx(1.15, 0.1)
-
-
-def test_storage_get_stats(run_sim):
-    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, 'SU1')
-    while True:
-        time = solver.step()
-        if time == 0:
-            break
-
-    stor_stats = solver.storage_get_stats(node_index)
-    stor_stats['avgVol'] == pytest.approx(0, 0.1)
-
-
-def test_outfall_get_stats(run_sim):
-    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, '18')
-    while True:
-        time = solver.step()
-        if time == 0:
-            break
-
-    stats = solver.outfall_get_stats(node_index)
-    assert isinstance(stats['loads'], list)
-
-
 def test_subcatch_param(handle):
     width = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.WIDTH)
     area = solver.subcatch_get_parameter(0, toolkit_enum.SubcatchProperty.AREA)

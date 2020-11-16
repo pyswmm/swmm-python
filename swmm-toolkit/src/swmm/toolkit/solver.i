@@ -24,11 +24,13 @@
 #define SWIG_FILE_WITH_INIT
 
 #include "swmm5.h"
-#include "toolkitAPI.h"
-#include "toolkitAPI_enums.h"
+#include "toolkit.h"
+#include "toolkit_enums.h"
+#include "toolkit_structs.h"
 %}
 
-%include "stats_typemaps.i"
+
+%include "stats_typemaps.i";
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
@@ -212,10 +214,9 @@
 // TOOLKIT API
 %ignore swmm_run_cb;
 %ignore swmm_getAPIError;
-%ignore swmm_freeOutfallStats;
 %ignore swmm_freeMemory;
 
-%include "toolkitAPI.h"
+%include "toolkit.h"
 
 
 %exception;
