@@ -59,3 +59,15 @@ def test_outfall_stats(before_end):
 
     stats = solver.outfall_get_stats(index)
     assert stats.totalLoad != None
+
+
+def test_get_routing_totals(before_end):
+
+    stats = solver.system_get_routing_totals()
+    assert stats != None
+
+
+def test_get_runoff_totals(before_end):
+
+    stats = solver.system_get_runoff_totals()
+    assert stats != None

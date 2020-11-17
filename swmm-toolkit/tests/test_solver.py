@@ -206,24 +206,6 @@ def test_object_get_id(handle):
     assert sub_name == '6'
 
 
-def test_get_routing_stats(run_sim):
-    while True:
-        time = solver.step()
-        if time == 0:
-            break
-
-    stats = solver.system_get_routing_stats()
-
-
-def test_get_runoff_stats(run_sim):
-    while True:
-        time = solver.step()
-        if time == 0:
-            break
-
-    stats = solver.system_get_runoff_stats()
-
-
 def test_link_get_type(handle):
     link_type = solver.link_get_type(2)
     assert link_type == toolkit_enum.LinkType.CONDUIT

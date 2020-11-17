@@ -88,14 +88,14 @@
 %rename (RoutingTotals) SM_RoutingTotals;
 %statsmaps(SM_RoutingTotals);
 %apply SM_RoutingTotals *out_stats {
-    SM_RoutingTotals *routingTot
+    SM_RoutingTotals *routingTotals
 }
 
 
 %rename (RunoffTotals) SM_RunoffTotals;
 %statsmaps(SM_RunoffTotals);
 %apply SM_RunoffTotals *out_stats {
-    SM_RunoffTotals *runoffTot
+    SM_RunoffTotals *runoffTotals
 }
 
 
