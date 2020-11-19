@@ -29,28 +29,16 @@
 %delobject SMO_close;
 
 
-/* TYPEMAPS FOR VOID POINTER */
+/* TYPEMAPS FOR HANDLE POINTER */
 /* Used for functions that output a new opaque pointer */
-%typemap(in, numinputs=0) SMO_Handle *p_handle (void *retval)
-{
- /* OUTPUT in */
-    retval = NULL;
-    $1 = &retval;
+%typemap(in,numinputs=0) SMO_Handle *p_handle (SMO_Handle temp) {
+    $1 = &temp;
 }
 /* used for functions that take in an opaque pointer (or NULL)
 and return a (possibly) different pointer */
-%typemap(argout) SMO_Handle *p_handle
-{
- /* OUTPUT argout */
-    %append_output(SWIG_NewPointerObj(SWIG_as_voidptr(retval$argnum), $1_descriptor, 0));
+%typemap(argout) SMO_Handle *p_handle {
+    %append_output(SWIG_NewPointerObj(*$1, SWIGTYPE_p_Handle, SWIG_POINTER_NEW));
 }
-%typemap(in) SMO_Handle *p_handle_inout (SMO_Handle retval)
-{
-   /* INOUT in */
-   SWIG_ConvertPtr($input, SWIG_as_voidptrptr(&retval), 0, 0);
-   $1 = &retval;
-}
-/* No need for special IN typemap for opaque pointers, it works anyway */
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
