@@ -32,6 +32,23 @@ class ConcUnits(Enum, start=0):
     COUNT
     NONE
 
+class ObjectType(Enum, start=0):
+    GAGE
+    SUBCATCH
+    NODE
+    LINK
+    POLLUT
+    LANDUSE
+    TIMEPATTERN
+    CURVE
+    TSERIES
+    CONTROL
+    TRANSECT
+    AQUIFER
+    UNITHYD
+    SNOWMELT
+    SHAPE
+    LID
 
 class NodeType(Enum, start=0):
     JUNCTION
@@ -133,27 +150,7 @@ class BaseUnits(Enum, start = 1):
 
 #
 # Solver Toolkit API Enums
-#
-
-class ObjectProperty(Enum, start=0):
-    GAGE
-    SUBCATCH 
-    NODE
-    LINK  
-    POLLUT
-    LAND_USE 
-    TIME_PATTERN
-    CURVE
-    TIMESERIES   
-    CONTROL
-    TRANSECT
-    AQUIFER
-    UNIT_HYD  
-    SNOW_MELT
-    SHAPE
-    LID
-
-    
+#    
 class TimeProperty(Enum, start=0):
     START_DATE
     END_DATE

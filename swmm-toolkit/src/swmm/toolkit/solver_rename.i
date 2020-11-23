@@ -2,10 +2,11 @@
  *  solver_rename.i - Rename mapping for swmm-solver
  *
  *  Created:    2/26/2020
- *
- *  Author:     Michael E. Tryby
+ *  
+ *  Authors:    Michael E. Tryby
  *              US EPA - ORD/CESER
- *  Author:     Jennifer Wu
+ *
+ *              Jennifer Wu
  *              Xylem Inc.
  *
 */
@@ -20,11 +21,11 @@
 %rename(report)                                     swmm_report;
 %rename(get_mass_bal_err)                           swmm_getMassBalErr;
 %rename(close)                                      swmm_close;
-%rename(version)                                    swmm_getVersionInfo;
+%rename(version)                                    swmm_getVersion;
 
-//%rename(error_get_message)                          swmm_getAPIError;
-%rename(system_get_routing_stats)                   swmm_getSystemRoutingStats;
-%rename(system_get_runoff_stats)                    swmm_getSystemRunoffStats;
+%rename(version_info)                               swmm_getVersionInfo;
+%rename(system_get_routing_totals)                  swmm_getSystemRoutingTotals;
+%rename(system_get_runoff_totals)                   swmm_getSystemRunoffTotals;
 
 %rename(object_find)                                swmm_project_findObject;
 %rename(object_count)                               swmm_countObjects;
