@@ -187,11 +187,12 @@ def test_simulation_parameter(handle):
 
 
 def test_object_get_index(handle):
-    node_index = swmm.project_get_index(toolkit_enum.ObjectType.NODE, '6')
-    sub_index = swmm.project_get_index(toolkit_enum.ObjectType.SUBCATCH, '20')
+    with pytest.raises(Exception) as exc_info:
+        node_index = swmm.project_get_index(toolkit_enum.ObjectType.NODE, '6')
+        sub_index = swmm.project_get_index(toolkit_enum.ObjectType.SUBCATCH, '20')
 
-    assert node_index == -1
-    assert sub_index == -1
+#    assert node_index == -1
+#    assert sub_index == -1
 
     node_index = swmm.project_get_index(toolkit_enum.ObjectType.NODE, '20')
     sub_index = swmm.project_get_index(toolkit_enum.ObjectType.SUBCATCH, '6')

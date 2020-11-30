@@ -28,8 +28,8 @@
 
 
 // Duplicates?
-%rename(project_find_object)                swmm_project_findObject;
-%rename(project_get_index)                  swmm_getObjectIndex;
+%rename(project_get_index)                  swmm_project_findObject;
+//%rename(project_get_index)                  swmm_getObjectIndex;
 
 %rename(project_get_id)                     swmm_getObjectId;
 %rename(project_get_count)                  swmm_countObjects;
