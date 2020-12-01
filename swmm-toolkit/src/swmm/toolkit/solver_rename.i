@@ -13,20 +13,13 @@
 
 
 // RENAME FUNCTIONS ACCORDING TO PEP8
-%rename(solver_run)                         swmm_run;
-%rename(solver_open)                        swmm_open;
-%rename(solver_start)                       swmm_start;
-%rename(solver_step)                        swmm_step;
-%rename(solver_end)                         swmm_end;
-%rename(solver_close)                       swmm_close;
-%rename(solver_routing_errors)              swmm_getMassBalErr;
 
-%rename(report_write)                       swmm_report;
-
-%rename(swmm_version)                       swmm_getVersion;
-%rename(swmm_version_info)                  swmm_getVersionInfo;
+// LEAVE OTHER CANONICAL API CALLS ALONE 
+%rename(swmm_get_mass_balance)              swmm_getMassBalErr;
+%rename(swmm_get_version)                   swmm_getVersion;
 
 
+// NEW TOOLKIT API CALLS
 // Duplicates?
 %rename(project_get_index)                  swmm_project_findObject;
 //%rename(project_get_index)                  swmm_getObjectIndex;
@@ -101,5 +94,8 @@
 %rename(lid_group_get_result)               swmm_getLidGResult;
 
 
-%rename(rain_get_precipitation)             swmm_getGagePrecip;
-%rename(rain_set_precipitation)             swmm_setGagePrecip;
+%rename(raingage_get_precipitation)         swmm_getGagePrecip;
+%rename(raingage_set_precipitation)         swmm_setGagePrecip;
+
+
+%rename(swmm_version_info)                  swmm_getVersionInfo;
