@@ -4,8 +4,7 @@
 # Created:    Jul 2, 2018
 # Updated:    May 7, 2020
 #
-# Author:     Michael E. Tryby
-#             US EPA - ORD/NRMRL
+#  Author:    See AUTHORS
 #
 # Suggested Usage:
 #   python setup.py build

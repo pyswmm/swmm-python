@@ -1,9 +1,15 @@
+#
+#  test_stats.py
+#
+#  Created:    Nov  16, 2020
+#  Updated:
+#
+#  Author:     See AUTHORS
+#
 
 import os
-import ctypes
 
 import pytest
-import numpy 
 
 from swmm.toolkit import solver, toolkit_enum
 

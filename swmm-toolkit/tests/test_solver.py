@@ -4,10 +4,8 @@
 #  Created:    Aug  8, 2018
 #  Updated:    Apr 20, 2020
 #
-#  Author:     Michael E. Tryby
-#              US EPA - ORD/NRMRL
-#              Jennifer Wu
-#              Xylem Inc.
+#  Author:     See AUTHORS
+#
 
 
 import os

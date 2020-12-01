@@ -4,8 +4,7 @@
 #   Created: Aug 7, 2018
 #   Updated: Apr 20, 2020
 #
-#   Author: Michael E. Tryby
-#           US EPA - ORD/NRMRL
+#   Author:  See AUTHORS
 #
 #   Unit testing for SWMM Output API using pytest.
 #

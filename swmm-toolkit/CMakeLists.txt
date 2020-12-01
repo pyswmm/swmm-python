@@ -4,8 +4,7 @@
 # Created:   Feb 6, 2020
 # Modified   May 7, 2020
 #
-# Author: Michael E. Tryby
-#         US EPA ORD/CESER
+#  Author:     See AUTHORS
 #
 
 

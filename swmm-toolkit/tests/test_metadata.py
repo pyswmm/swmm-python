@@ -5,8 +5,7 @@
 #   Created:  Apr 8, 2020
 #   Modified: Apr 20, 2020
 #
-#   Author: Michael E. Tryby
-#           US EPA - ORD/CESER
+#   Author:    See AUTHORS
 #
 #   Unit testing for SWMM output metadata using pytest.
 #

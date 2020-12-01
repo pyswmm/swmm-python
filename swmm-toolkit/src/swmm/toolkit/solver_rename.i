@@ -3,11 +3,7 @@
  *
  *  Created:    2/26/2020
  *  
- *  Authors:    Michael E. Tryby
- *              US EPA - ORD/CESER
- *
- *              Jennifer Wu
- *              Xylem Inc.
+ *  Author:     See AUTHORS
  *
 */
 
