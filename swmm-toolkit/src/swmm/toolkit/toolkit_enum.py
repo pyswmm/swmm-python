@@ -1,13 +1,11 @@
 #
 #  output_enum.py -
 #
-#  Created: February 21, 2020
+#  Created:   February 21, 2020
 #  Updated:
 #
-#  Author:     Michael E. Tryby
-#              US EPA - ORD/CESER
-#  Author:     Jennifer Wu
-#              Xylem Inc.
+#  Author:    See AUTHORS
+#
 
 from aenum import Enum, IntEnum
 

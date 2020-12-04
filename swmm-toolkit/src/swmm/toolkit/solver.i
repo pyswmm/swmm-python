@@ -4,14 +4,8 @@
  *  Created:    7/2/2018
  *  Updated:    8/17/2020
  *
- *  Author:     Michael E. Tryby
- *              US EPA - ORD/NRMRL
- *
- *  Author:     Jennifer Wu
- *              Xylem Inc.
- *
- *  Author:     Caleb Buahin
- *              Xylem Inc.
+ *  Author:     See AUTHORS
+ * 
 */
 
 

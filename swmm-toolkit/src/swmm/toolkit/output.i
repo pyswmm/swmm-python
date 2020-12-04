@@ -4,8 +4,7 @@
  *  Created:    November 3, 2017
  *  Updated:    February 21, 2020
  *
- *  Author:     Michael E. Tryby
- *              US EPA - ORD/NRMRL
+ *  Author:     See AUTHORS
  *
 */
 
