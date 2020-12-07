@@ -75,7 +75,7 @@ def exclude_files(cmake_manifest):
 
 setup(
     name = "swmm-toolkit",
-    version = "0.6.0",
+    version = "0.7.0",
 
     cmake_args = cmake_args,
 
