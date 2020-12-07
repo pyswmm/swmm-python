@@ -30,6 +30,9 @@
 %}
 
 
+/* RENAME FUNCTIONS PYTHON STYLE */
+%include "solver_rename.i"
+
 %include "stats_typemaps.i";
 
 
@@ -179,11 +182,7 @@
 
 
 /* GENERATES DOCUMENTATION */
-%feature("autodoc", "2");
-
-
-/* RENAME FUNCTIONS PYTHON STYLE */
-%include "solver_rename.i"
+%include "solver_docs.i"
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */

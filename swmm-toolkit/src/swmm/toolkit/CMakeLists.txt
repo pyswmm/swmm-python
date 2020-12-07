@@ -28,7 +28,7 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern")
+set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib")
 
 
 #############################################################
