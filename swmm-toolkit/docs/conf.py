@@ -33,9 +33,20 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
+    'numpydoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx'
 ]
+
+napoleon_use_rtype = False
+viewcode_follow_imported_members = True
+numpydoc_show_class_members = True
+numpydoc_show_inherited_class_members = False
+numpydoc_class_members_toctree = False
+autodoc_member_order = 'bysource'
+#utoclass_content = 'both'
+numfig=True
+numfig_format = {'figure':  'Figure %s', 'table': 'Table %s', 'code-block': 'Listing %s'}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

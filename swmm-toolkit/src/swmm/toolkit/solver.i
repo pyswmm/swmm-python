@@ -29,6 +29,8 @@
 #include "toolkit_structs.h"
 %}
 
+/* GENERATES DOCUMENTATION */
+%include "solver_docs.i"
 
 /* RENAME FUNCTIONS PYTHON STYLE */
 %include "solver_rename.i"
@@ -181,10 +183,6 @@
 }
 
 
-/* GENERATES DOCUMENTATION */
-%include "solver_docs.i"
-
-
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
 {
@@ -213,6 +211,7 @@
 // TOOLKIT API
 %ignore swmm_run_cb;
 %ignore swmm_getAPIError;
+%ignore swmm_getObjectIndex;
 %ignore swmm_freeMemory;
 
 %include "toolkit.h"

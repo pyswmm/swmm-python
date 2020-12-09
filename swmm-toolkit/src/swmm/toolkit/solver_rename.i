@@ -12,7 +12,6 @@
  *  Purpose: Renames functions according to PEP8
 */
 
-%rename (ObjectType)  SM_9=ObjectType;
 
 // RENAME STATS STRUCTS
 %rename (NodeStats)                         SM_NodeStats;
