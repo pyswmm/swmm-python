@@ -32,13 +32,11 @@
             s->totalLoad = (double *)calloc(num_pollut, sizeof(double));
         return s;
     }
-
     ~SM_OutfallStats(SM_OutfallStats *self) {
         if (self != NULL)
             free(self->totalLoad);
         free(self);
     }
-
     double get_totalLoad(int index) {
         return self->totalLoad[index];
     }
@@ -57,6 +55,7 @@
 %apply SM_OutfallStats *out_outfall_stats {
     SM_OutfallStats *outfallStats
 }
+
 
 
 %statsmaps(SM_LinkStats);

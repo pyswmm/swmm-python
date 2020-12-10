@@ -7,81 +7,84 @@
 
 Attributes
 ----------
-avgDepth
+avgDepth: double
     average node depth (level)
-maxDepth
+maxDepth: double
     max node depth (level) (from routing step)
-maxDepthDate
+maxDepthDate: DateTime
     date of maximum depth
-maxRptDepth
+maxRptDepth: double
     max node depth (level) (from reporting step)
-volFlooded
+volFlooded: double
     total volume flooded (volume)
-timeFlooded
+timeFlooded: double
     total time flooded
-timeSurcharged
+timeSurcharged: double
     total time surcharged
-timeCourantCritical
+timeCourantCritical: double
     total time courant critical
-totLatFlow
+totLatFlow: double
     total lateral inflow (volume)
-maxLatFlow
+maxLatFlow: double
     maximum lateral inflow (flowrate)
-maxInflow
+maxInflow: double
     maximum total inflow (flowrate)
-maxOverflow
+maxOverflow: double
     maximum flooding (flowrate)
-maxPondedVol
+maxPondedVol: double
     maximum ponded volume (volume)
-maxInflowDate
+maxInflowDate: DateTime
     date of maximum inflow
-maxOverflowDate
+maxOverflowDate: DateTime
     date of maximum overflow
 " 
 ) SM_NodeStats();
+
 
 %feature("autodoc", 
 "Storage Statistics
 
 Attributes
 ----------
-initVol
+initVol: double
     initial volume (volume)
-avgVol
+avgVol: double
     average volume (volume) (from routing step)
-maxVol
+maxVol: double
     maximum volume (volume) (from routing step)
-maxFlow
+maxFlow: double
     maximum total inflow (flowrate) (from routing step)
-evapLosses
+evapLosses: double
     evaporation losses (volume)
-exfilLosses
+exfilLosses: double
     exfiltration losses (volume)
-maxVolDate
+maxVolDate: datetime
     date of maximum volume
 " 
 ) SM_StorageStats();
+
 
 %feature("autodoc", 
 "Outfall Statistics
 
 Attributes
 ----------
-avgFlow
+avgFlow: double
     average flow (flowrate)
-maxFlow
+maxFlow: double
     maximum flow (flowrate) (from routing step)
-totalLoad
+totalLoad: double *
     total pollutant load (mass)
-totalPeriods
+totalPeriods: double
     total simulation steps (from routing step)
 " 
-) SM_OutfallStats();
+) SM_OutfallStats(int);
+
 
 %feature("autodoc", 
 "Link Statistics
 
-.. rubric:: Flow 'Classes'
+.. rubric:: 'Flow Classes'
 
 ===========   ===========================
 Flow Class    Description                
@@ -97,149 +100,153 @@ DN_CRITICAL   free-fall at downstream end
 
 Attributes
 ----------
-maxFlow
+maxFlow: double
     maximum flow (flowrate) (from routing step)
-maxFlowDate
+maxFlowDate: double
     date of maximum flowrate
-maxVeloc
+maxVeloc: double
     maximum velocity (from routing step)
-maxDepth
+maxDepth: double
     maximum depth (level)
-timeNormalFlow
+timeNormalFlow: double
     time in normal flow
-timeInletControl
+timeInletControl: double
     time under inlet control
-timeSurcharged
+timeSurcharged: double
     time surcharged
-timeFullUpstream
+timeFullUpstream: double
     time full upstream
-timeFullDnstream
+timeFullDnstream: double
     time full downstream
-timeFullFlow
+timeFullFlow: double
     time full flow
-timeCapacityLimited
+timeCapacityLimited: double
     time capacity limited
-timeInFlowClass
-    time in flow class (See: Flow Classes)
-timeCourantCritical
+timeInFlowClass: double[7]
+    time in flow class (See: 'Flow Classes')
+timeCourantCritical: double
     time courant critical
-flowTurns
+flowTurns: double
     number of flow turns
-flowTurnSign
+flowTurnSign: double
     number of flow turns sign
 " 
 ) SM_LinkStats();
+
 
 %feature("autodoc", 
 "Pump Statistics
 
 Attributes
 ----------
-utilized
+utilized: double
     time utilized
-minFlow
+minFlow: double
     minimum flowrate
-avgFlow
+avgFlow: double
     average flowrate
-maxFlow
+maxFlow: double
     maximum flowrate
-volume
+volume: double
     total pumping volume (volume)
-energy
+energy: double
     total energy demand
-offCurveLow
+offCurveLow: double
     hysteresis low (off depth wrt curve)
-offCurveHigh
+offCurveHigh: double
     hysteresis high (on depth wrt curve)
-startUps
+startUps: int
     number of start ups
-totalPeriods
+totalPeriods: int
     total simulation steps (from routing step)
 " 
 ) SM_PumpStats();
+
 
 %feature("autodoc", 
 "Subcatchment Statistics
 
 Attributes
 ----------
-precip
+precip: double
     total precipication (length)
-runon
+runon: double
     total runon (volume)
-evap
+evap: double
     total evaporation (volume)
-infil
+infil: double
     total infiltration (volume)
-runoff
+runoff: double
     total runoff (volume)
-maxFlow
+maxFlow: double
     maximum runoff rate (flowrate)
 " 
 ) SM_SubcatchStats();
 
+
 %feature("autodoc", 
-"Routing Totals
+"System Flow Routing Totals
 
 Attributes
 ----------
-dwInflow
+dwInflow: double
     dry weather inflow
-wwInflow
+wwInflow: double
     wet weather inflow
-gwInflow
+gwInflow: double
     groundwater inflow
-iiInflow
+iiInflow: double
     RDII inflow
-exInflow
+exInflow: double
     direct inflow
-flooding
+flooding: double
     internal flooding
-outflow
+outflow: double
     external outflow
-evapLoss
+evapLoss: double
     evaporation loss
-seepLoss
+seepLoss: double
     seepage loss
-reacted
+reacted: double
     reaction losses
-initStorage
+initStorage: double
     initial storage volume
-finalStorage
+finalStorage: double
     final storage volume
-pctError
+pctError: double
     continuity error
 " 
 ) SM_RoutingTotals();
 
+
 %feature("autodoc", 
-"Runoff Totals
+"System Runoff Totals
 
 Attributes
 ----------
-rainfall
+rainfall: double
     rainfall total (depth)
-evap
+evap: double
     evaporation loss (volume)
-infil
+infil: double
     infiltration loss (volume)
-runoff
+runoff: double
     runoff volume (volume)
-drains
+drains: double
     LID drains (volume)
-runon
+runon: double
     runon from outfalls (volume)
-initStorage
+initStorage: double
     inital surface storage (depth)
-finalStorage
+finalStorage: double
     final surface storage (depth)
-initSnowCover
+initSnowCover: double
     initial snow cover (depth)
-finalSnowCover
+finalSnowCover: double
     final snow cover (depth)
-snowRemoved
+snowRemoved: double
     snow removal (depth)
-pctError
+pctError: double
     continuity error (%)
 " 
 ) SM_RunoffTotals();
@@ -248,8 +255,6 @@ pctError
 // CANONICAL API
 %feature("autodoc", 
 "Opens SWMM input file, reads in network data, runs, and closes
-
-swmm_run(f1, f2, f3) -> int
 
 Parameters
 ----------
@@ -262,8 +267,6 @@ f3: char const *
 %feature("autodoc",
 "Opens SWMM input file & reads in network data
 
-swmm_open(f1, f2, f3) -> int
-
 Parameters
 ----------
 f1: char const *
@@ -275,8 +278,6 @@ f3: char const *
 %feature("autodoc",
 "Start SWMM simulation
 
-swmm_start(saveFlag) -> int
-
 Parameters
 ----------
 saveFlag: int
@@ -285,43 +286,31 @@ saveFlag: int
 
 %feature("autodoc",
 "Step SWMM simulation forward
-    
-swmm_step() -> int
 "
 ) swmm_step;
 
 %feature("autodoc",
 "End SWMM simulation   
-    
-swmm_end() -> int
 "
 ) swmm_end;
 
 %feature("autodoc",
 "Write text report file
-
-swmm_report() -> int
 "
 ) swmm_report;
 
 %feature("autodoc",
 "Get routing errors
-
-swmm_get_mass_balance() -> int
 "
 ) swmm_getMassBalErr;
 
 %feature("autodoc",
 "Frees all memory and files used by SWMM
-    
-swmm_close() -> int
 "
 ) swmm_close;
 
 %feature("autodoc",
 "Get Legacy SWMM version number
-
-swmm_get_version() -> int
 "
 ) swmm_getVersion;
 
@@ -329,15 +318,11 @@ swmm_get_version() -> int
 // TOOLKIT API
 %feature("autodoc",
 "Get full semantic version number info
-
-swmm_version_info() -> int
 "
 ) swmm_getVersionInfo;
 
 %feature("autodoc",
 "Finds the index of an object given its ID.
-
-project_get_index(type, id) -> int
 
 Parameters
 ----------
@@ -347,7 +332,7 @@ id: char *
 ) swmm_project_findObject;
 
 %feature("autodoc", 
-"project_get_id(type, index) -> int
+"Gets Object ID
 
 Parameters
 ----------
@@ -357,7 +342,7 @@ index: int
 ) swmm_getObjectId;
 
 %feature("autodoc", 
-"project_get_count(type) -> int
+"Gets Object Count
 
 Parameters
 ----------
@@ -367,7 +352,7 @@ type: SM_ObjectType
 
 
 %feature("autodoc", 
-"simulation_get_datetime(type) -> int
+"Get the simulation datetime information
 
 Parameters
 ----------
@@ -376,12 +361,12 @@ type: SM_TimePropety
 ) swmm_getSimulationDateTime;
 
 %feature("autodoc", 
-"simulation_get_current_datetime() -> int
+"Get the current simulation datetime information.
 "
 ) swmm_getCurrentDateTime;
 
 %feature("autodoc", 
-"simulation_set_datetime(type, year, month, day, hour, minute, second) -> int
+"Set simulation datetime information.
 
 Parameters
 ----------
@@ -396,7 +381,7 @@ second: int
 ) swmm_setSimulationDateTime;
 
 %feature("autodoc", 
-"simulation_get_setting(type) -> int
+"Gets Simulation Analysis Setting
 
 Parameters
 ----------
@@ -405,7 +390,7 @@ type: SM_SimOption
 ) swmm_getSimulationAnalysisSetting;
 
 %feature("autodoc", 
-"simulation_get_parameter(type) -> int
+"Gets Simulation Analysis Setting
 
 Parameters
 ----------
@@ -415,7 +400,6 @@ type: SM_SimSetting
 
 %feature("autodoc",
 "Gets Simulation Unit
-simulation_get_unit(type) -> int
 
 Parameters
 ----------
@@ -425,7 +409,7 @@ type: SM_Units
 
 
 %feature("autodoc", 
-"node_get_type(index) -> int
+"Get the type of node with specified index.
 
 Parameters
 ----------
@@ -434,7 +418,7 @@ index: int
 ) swmm_getNodeType;
 
 %feature("autodoc", 
-"node_get_parameter(index, param) -> int
+"Get a property value for specified node.
 
 Parameters
 ----------
@@ -444,7 +428,7 @@ param: SM_NodeProperty
 ) swmm_getNodeParam;
 
 %feature("autodoc", 
-"node_set_parameter(index, param, value) -> int
+"Set a property value for specified node.
 
 Parameters
 ----------
@@ -455,7 +439,7 @@ value: double
 ) swmm_setNodeParam;
 
 %feature("autodoc", 
-"node_get_result(index, type) -> int
+"Get a result value for specified node.
 
 Parameters
 ----------
@@ -465,7 +449,7 @@ type: SM_NodeResult
 ) swmm_getNodeResult;
 
 %feature("autodoc", 
-"node_get_pollutant(index, type) -> int
+"Gets pollutant values for a specified node.
 
 Parameters
 ----------
@@ -475,7 +459,7 @@ type: SM_NodePollut
 ) swmm_getNodePollut;
 
 %feature("autodoc", 
-"node_get_total_inflow(index) -> int
+"Get the cumulative inflow for a node.
 
 Parameters
 ----------
@@ -484,7 +468,8 @@ index: int
 ) swmm_getNodeTotalInflow;
 
 %feature("autodoc", 
-"node_set_total_inflow(index, flowrate) -> int
+"Set an inflow rate to a node. The inflow rate is held constant until the 
+caller changes it.
 
 Parameters
 ----------
@@ -494,7 +479,7 @@ flowrate: double
 ) swmm_setNodeInflow;
 
 %feature("autodoc", 
-"node_get_stats(index) -> int
+"Get a node statistics.
 
 Parameters
 ----------
@@ -504,7 +489,7 @@ index: int
 
 
 %feature("autodoc", 
-"storage_get_stats(index) -> int
+"Get a storage statistics.
 
 Parameters
 ----------
@@ -514,7 +499,7 @@ index: int
 
 
 %feature("autodoc", 
-"outfall_set_stage(index, stage) -> int
+"Set outfall stage.
 
 Parameters
 ----------
@@ -524,7 +509,7 @@ stage: double
 ) swmm_setOutfallStage;
 
 %feature("autodoc", 
-"outfall_get_stats(index) -> int
+"Get outfall statistics.
 
 Parameters
 ----------
@@ -534,7 +519,7 @@ index: int
 
 
 %feature("autodoc", 
-"link_get_type(index) -> int
+"Get the type of link with specified index.
 
 Parameters
 ----------
@@ -543,7 +528,8 @@ index: int
 ) swmm_getLinkType;
 
 %feature("autodoc", 
-"link_get_connections(index) -> int
+"Get the link Connection Node Indeces. If the conduit has a negative slope, 
+the dynamic wave solver will automatically reverse the nodes. 
 
 Parameters
 ----------
@@ -552,7 +538,7 @@ index: int
 ) swmm_getLinkConnections;
 
 %feature("autodoc", 
-"link_get_direction(index) -> int
+"Get the link flow direction
 
 Parameters
 ----------
@@ -561,7 +547,7 @@ index: int
 ) swmm_getLinkDirection;
 
 %feature("autodoc", 
-"link_get_parameter(index, param) -> int
+"Get a property value for specified link.
 
 Parameters
 ----------
@@ -571,7 +557,7 @@ param: SM_LinkProperty
 ) swmm_getLinkParam;
 
 %feature("autodoc", 
-"link_set_parameter(index, param, value) -> int
+"Set a property value for specified link.
 
 Parameters
 ----------
@@ -582,7 +568,7 @@ value: double
 ) swmm_setLinkParam;
 
 %feature("autodoc", 
-"link_get_result(index, type) -> int
+"Get a result value for specified link.
 
 Parameters
 ----------
@@ -592,7 +578,7 @@ type: SM_LinkResult
 ) swmm_getLinkResult;
 
 %feature("autodoc", 
-"link_get_pollutant(index, type) -> int
+"Gets pollutant values for a specified link.
 
 Parameters
 ----------
@@ -602,7 +588,9 @@ type: SM_LinkPollut
 ) swmm_getLinkPollut;
 
 %feature("autodoc", 
-"link_set_target_setting(index, setting) -> int
+"Set a link setting (pump, orifice, or weir). Setting for an orifice and a 
+weir should be [0, 1]. A setting for a pump can range from [0, inf). However, 
+if a pump is set to 1, it will pump at its maximum curve setting.
 
 Parameters
 ----------
@@ -612,7 +600,7 @@ setting: double
 ) swmm_setLinkSetting;
 
 %feature("autodoc", 
-"link_get_stats(index) -> int
+"Get link statistics.
 
 Parameters
 ----------
@@ -622,7 +610,7 @@ index: int
 
 
 %feature("autodoc", 
-"pump_get_stats(index) -> int
+"Get pump statistics.
 
 Parameters
 ----------
@@ -632,7 +620,8 @@ index: int
 
 
 %feature("autodoc", 
-"subcatch_get_connection(index) -> int
+"Get the Subcatchment connection. Subcatchments can load to a node, another 
+subcatchment, or itself.
 
 Parameters
 ----------
@@ -641,7 +630,7 @@ index: int
 ) swmm_getSubcatchOutConnection;
 
 %feature("autodoc", 
-"subcatch_get_parameter(index, param) -> int
+"Get a property value for specified subcatchment.
 
 Parameters
 ----------
@@ -651,7 +640,7 @@ param: SM_SubcProperty
 ) swmm_getSubcatchParam;
 
 %feature("autodoc", 
-"subcatch_set_parameter(index, param, value) -> int
+"Set a property value for specified subcatchment.
 
 Parameters
 ----------
@@ -662,7 +651,7 @@ value: double
 ) swmm_setSubcatchParam;
 
 %feature("autodoc", 
-"subcatch_get_result(index, type) -> int
+"Get a result value for specified subcatchment.
 
 Parameters
 ----------
@@ -672,7 +661,7 @@ type: SM_SubcResult
 ) swmm_getSubcatchResult;
 
 %feature("autodoc", 
-"subcatch_get_pollutant(index, type) -> int
+"Gets pollutant values for a specified subcatchment.
 
 Parameters
 ----------
@@ -682,7 +671,7 @@ type: SM_SubcPollut
 ) swmm_getSubcatchPollut;
 
 %feature("autodoc", 
-"subcatch_get_stats(index) -> int
+"Get subcatchment statistics.
 
 Parameters
 ----------
@@ -692,18 +681,18 @@ index: int
 
 
 %feature("autodoc", 
-"system_get_routing_totals() -> int
+"Get system routing totals.
 "
 ) swmm_getSystemRoutingTotals;
 
 %feature("autodoc", 
-"system_get_runoff_totals() -> int
+"Get system runoff totals.
 "
 ) swmm_getSystemRunoffTotals;
 
 
 %feature("autodoc", 
-"lid_usage_get_count(index) -> int
+"Get the number of lid units on a subcatchment.
 
 Parameters
 ----------
@@ -712,7 +701,7 @@ index: int
 ) swmm_getLidUCount;
 
 %feature("autodoc", 
-"lid_usage_get_parameter(index, lidIndex, param) -> int
+"Get a property value for a specified lid unit on a specified subcatchment
 
 Parameters
 ----------
@@ -723,7 +712,7 @@ param: SM_LidUProperty
 ) swmm_getLidUParam;
 
 %feature("autodoc", 
-"lid_usage_set_parameter(index, lidIndex, param, value) -> int
+"Set a property value for a specified lid unit on a specified subcatchment
 
 Parameters
 ----------
@@ -735,7 +724,7 @@ value: double
 ) swmm_setLidUParam;
 
 %feature("autodoc", 
-"lid_usage_get_option(index, lidIndex, param) -> int
+"Get the lid option for a specified lid unit on a specified subcatchment
 
 Parameters
 ----------
@@ -746,7 +735,7 @@ param: SM_LidUOptions
 ) swmm_getLidUOption;
 
 %feature("autodoc", 
-"lid_usage_set_option(index, lidIndex, param, value) -> int
+"Set the lid option for a specified lid unit on a specified subcatchment
 
 Parameters
 ----------
@@ -758,7 +747,7 @@ value: int
 ) swmm_setLidUOption;
 
 %feature("autodoc", 
-"lid_usage_get_flux_rate(index, lidIndex, layerIndex) -> int
+"Get the lid unit water balance simulated value at current time
 
 Parameters
 ----------
@@ -769,7 +758,7 @@ layerIndex: SM_LidLayer
 ) swmm_getLidUFluxRates;
 
 %feature("autodoc", 
-"lid_usage_get_result(index, lidIndex, type) -> int
+"Get the lid unit of a specified subcatchment result at current time
 
 Parameters
 ----------
@@ -780,7 +769,7 @@ type: SM_LidResult
 ) swmm_getLidUResult;
 
 %feature("autodoc", 
-"lid_control_get_overflow(lidControlIndex) -> int
+"Get the lid control surface immediate overflow condition
 
 Parameters
 ----------
@@ -789,7 +778,7 @@ lidControlIndex: int
 ) swmm_getLidCOverflow;
 
 %feature("autodoc", 
-"lid_control_get_parameter(lidControlIndex, layerIndex, param) -> int
+"Get a property value for specified lid control
 
 Parameters
 ----------
@@ -800,7 +789,7 @@ param: SM_LidLayerProperty
 ) swmm_getLidCParam;
 
 %feature("autodoc", 
-"lid_control_set_parameter(lidControlIndex, layerIndex, param, value) -> int
+"Set a property value for specified lid control
 
 Parameters
 ----------
@@ -812,7 +801,7 @@ value: double
 ) swmm_setLidCParam;
 
 %feature("autodoc", 
-"lid_group_get_result(index, type) -> int
+"Get the lid group of a specified subcatchment result at current time
 
 Parameters
 ----------
@@ -823,7 +812,7 @@ type: SM_LidResult
 
 
 %feature("autodoc", 
-"raingage_get_precipitation(index, type) -> int
+"Get precipitation rates for a gage.
 
 Parameters
 ----------
@@ -833,7 +822,7 @@ type: SM_GagePrecip
 ) swmm_getGagePrecip;
 
 %feature("autodoc", 
-"raingage_set_precipitation(index, total_precip) -> int
+"Set a total precipitation intensity to the gage.
 
 Parameters
 ----------
