@@ -1,11 +1,10 @@
 #
 #  output_metadata.py -
 #
-#  Created: February 20, 2020
+#  Created:  February 20, 2020
 #  Updated:
 #
-#  Author:     Michael E. Tryby
-#              US EPA - ORD/CESER
+#  Author:   See AUTHORS
 #
 
 

@@ -4,8 +4,7 @@
 # Created:    Jul 2, 2018
 # Updated:    May 7, 2020
 #
-# Author:     Michael E. Tryby
-#             US EPA - ORD/NRMRL
+#  Author:    See AUTHORS
 #
 # Suggested Usage:
 #   python setup.py build
@@ -76,7 +75,7 @@ def exclude_files(cmake_manifest):
 
 setup(
     name = "swmm-toolkit",
-    version = "0.6.0",
+    version = "0.7.0",
 
     cmake_args = cmake_args,
 

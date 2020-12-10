@@ -3,8 +3,7 @@
  *
  *  Created:    2/12/2020
  *
- *  Author:     Michael E. Tryby
- *              US EPA - ORD/CESER
+ *  Author:     See AUTHORS
  *
 */
 

@@ -1,4 +1,12 @@
-
+/*
+ *  stats_typemaps.i - SWIG interface description file for swmm structs
+ *
+ *  Created:    11/16/2020
+ *  Updated:
+ *
+ *  Author:     See AUTHORS
+ * 
+*/
 
 
 %define %statsmaps(Type)

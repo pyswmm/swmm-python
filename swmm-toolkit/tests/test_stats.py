@@ -1,9 +1,15 @@
+#
+#  test_stats.py
+#
+#  Created:    Nov  16, 2020
+#  Updated:
+#
+#  Author:     See AUTHORS
+#
 
 import os
-import ctypes
 
 import pytest
-import numpy 
 
 from swmm.toolkit import solver, toolkit_enum
 
@@ -16,24 +22,24 @@ OUTPUT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.out')
 
 @pytest.fixture()
 def before_end(request):
-    solver.open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
-    solver.start(0)
+    solver.swmm_open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
+    solver.swmm_start(0)
     
     while True:
-        time = solver.step()
+        time = solver.swmm_step()
         if time == 0:
             break
     
     def close():
-        solver.end()
-        solver.close()
+        solver.swmm_end()
+        solver.swmm_close()
 
     request.addfinalizer(close)
 
 
 def test_node_get_stats(before_end):
     while True:
-        time = solver.step()
+        time = solver.swmm_step()
         if time == 0:
             break
 
@@ -42,9 +48,9 @@ def test_node_get_stats(before_end):
 
 
 def test_storage_get_stats(before_end):
-    node_index = solver.object_get_index(toolkit_enum.ObjectType.NODE, 'SU1')
+    node_index = solver.project_get_index(toolkit_enum.ObjectType.NODE, 'SU1')
     while True:
-        time = solver.step()
+        time = solver.swmm_step()
         if time == 0:
             break
 
@@ -55,7 +61,7 @@ def test_storage_get_stats(before_end):
 def test_outfall_stats(before_end):
     id = '18'
 
-    index = solver.object_get_index(toolkit_enum.ObjectType.NODE, id)
+    index = solver.project_get_index(toolkit_enum.ObjectType.NODE, id)
 
     stats = solver.outfall_get_stats(index)
     assert stats.totalLoad != None
