@@ -11,12 +11,10 @@
 }
 %enddef
 
-
 %statsmaps(SM_NodeStats);
 %apply SM_NodeStats *out_stats {
     SM_NodeStats *nodeStats
 }
-
 
 %statsmaps(SM_StorageStats);
 %apply SM_StorageStats *out_stats {

@@ -29,6 +29,7 @@
 #include "toolkit_structs.h"
 %}
 
+
 /* GENERATES DOCUMENTATION */
 %include "solver_docs.i"
 
@@ -36,6 +37,7 @@
 %include "solver_rename.i"
 
 %include "stats_typemaps.i";
+
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */

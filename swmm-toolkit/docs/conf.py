@@ -44,7 +44,7 @@ numpydoc_show_class_members = True
 numpydoc_show_inherited_class_members = False
 numpydoc_class_members_toctree = False
 autodoc_member_order = 'bysource'
-#utoclass_content = 'both'
+autoclass_content = 'init'
 numfig=True
 numfig_format = {'figure':  'Figure %s', 'table': 'Table %s', 'code-block': 'Listing %s'}
 

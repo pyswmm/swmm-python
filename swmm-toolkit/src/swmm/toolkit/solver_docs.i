@@ -3,44 +3,246 @@
 
 // PUBLIC STRUCTS
 %feature("autodoc", 
-"   Node Statistics
+"Node Statistics
+
+Attributes
+----------
+avgDepth
+    average node depth (level)
+maxDepth
+    max node depth (level) (from routing step)
+maxDepthDate
+    date of maximum depth
+maxRptDepth
+    max node depth (level) (from reporting step)
+volFlooded
+    total volume flooded (volume)
+timeFlooded
+    total time flooded
+timeSurcharged
+    total time surcharged
+timeCourantCritical
+    total time courant critical
+totLatFlow
+    total lateral inflow (volume)
+maxLatFlow
+    maximum lateral inflow (flowrate)
+maxInflow
+    maximum total inflow (flowrate)
+maxOverflow
+    maximum flooding (flowrate)
+maxPondedVol
+    maximum ponded volume (volume)
+maxInflowDate
+    date of maximum inflow
+maxOverflowDate
+    date of maximum overflow
 " 
-) SM_NodeStats;
+) SM_NodeStats();
 
 %feature("autodoc", 
-"   Storage Statistics
+"Storage Statistics
+
+Attributes
+----------
+initVol
+    initial volume (volume)
+avgVol
+    average volume (volume) (from routing step)
+maxVol
+    maximum volume (volume) (from routing step)
+maxFlow
+    maximum total inflow (flowrate) (from routing step)
+evapLosses
+    evaporation losses (volume)
+exfilLosses
+    exfiltration losses (volume)
+maxVolDate
+    date of maximum volume
 " 
-) SM_StorageStats;
+) SM_StorageStats();
 
 %feature("autodoc", 
-"   Outfall Statistics
+"Outfall Statistics
+
+Attributes
+----------
+avgFlow
+    average flow (flowrate)
+maxFlow
+    maximum flow (flowrate) (from routing step)
+totalLoad
+    total pollutant load (mass)
+totalPeriods
+    total simulation steps (from routing step)
 " 
-) SM_OutfallStats;
+) SM_OutfallStats();
 
 %feature("autodoc", 
-"   Link Statistics
+"Link Statistics
+
+.. rubric:: Flow 'Classes'
+
+===========   ===========================
+Flow Class    Description                
+===========   ===========================
+DRY           dry conduit
+UP_DRY        upstream end is dry
+DN_DRY        downstream end is dry
+SUBCRITICAL   sub-critical flow
+SUPCRITICAL   super-critical flow
+UP_CRITICAL   free-fall at upstream end
+DN_CRITICAL   free-fall at downstream end
+===========   ===========================
+
+Attributes
+----------
+maxFlow
+    maximum flow (flowrate) (from routing step)
+maxFlowDate
+    date of maximum flowrate
+maxVeloc
+    maximum velocity (from routing step)
+maxDepth
+    maximum depth (level)
+timeNormalFlow
+    time in normal flow
+timeInletControl
+    time under inlet control
+timeSurcharged
+    time surcharged
+timeFullUpstream
+    time full upstream
+timeFullDnstream
+    time full downstream
+timeFullFlow
+    time full flow
+timeCapacityLimited
+    time capacity limited
+timeInFlowClass
+    time in flow class (See: Flow Classes)
+timeCourantCritical
+    time courant critical
+flowTurns
+    number of flow turns
+flowTurnSign
+    number of flow turns sign
 " 
-) SM_LinkStats;
+) SM_LinkStats();
 
 %feature("autodoc", 
-"   Pump Statistics
+"Pump Statistics
+
+Attributes
+----------
+utilized
+    time utilized
+minFlow
+    minimum flowrate
+avgFlow
+    average flowrate
+maxFlow
+    maximum flowrate
+volume
+    total pumping volume (volume)
+energy
+    total energy demand
+offCurveLow
+    hysteresis low (off depth wrt curve)
+offCurveHigh
+    hysteresis high (on depth wrt curve)
+startUps
+    number of start ups
+totalPeriods
+    total simulation steps (from routing step)
 " 
-) SM_PumpStats;
+) SM_PumpStats();
 
 %feature("autodoc", 
-"   Subcatchment Statistics
+"Subcatchment Statistics
+
+Attributes
+----------
+precip
+    total precipication (length)
+runon
+    total runon (volume)
+evap
+    total evaporation (volume)
+infil
+    total infiltration (volume)
+runoff
+    total runoff (volume)
+maxFlow
+    maximum runoff rate (flowrate)
 " 
-) SM_SubcatchStats;
+) SM_SubcatchStats();
 
 %feature("autodoc", 
-"   Routing Totals
+"Routing Totals
+
+Attributes
+----------
+dwInflow
+    dry weather inflow
+wwInflow
+    wet weather inflow
+gwInflow
+    groundwater inflow
+iiInflow
+    RDII inflow
+exInflow
+    direct inflow
+flooding
+    internal flooding
+outflow
+    external outflow
+evapLoss
+    evaporation loss
+seepLoss
+    seepage loss
+reacted
+    reaction losses
+initStorage
+    initial storage volume
+finalStorage
+    final storage volume
+pctError
+    continuity error
 " 
-) SM_RoutingTotals;
+) SM_RoutingTotals();
 
 %feature("autodoc", 
-"   Runoff Totals
+"Runoff Totals
+
+Attributes
+----------
+rainfall
+    rainfall total (depth)
+evap
+    evaporation loss (volume)
+infil
+    infiltration loss (volume)
+runoff
+    runoff volume (volume)
+drains
+    LID drains (volume)
+runon
+    runon from outfalls (volume)
+initStorage
+    inital surface storage (depth)
+finalStorage
+    final surface storage (depth)
+initSnowCover
+    initial snow cover (depth)
+finalSnowCover
+    final snow cover (depth)
+snowRemoved
+    snow removal (depth)
+pctError
+    continuity error (%)
 " 
-) SM_RunoffTotals;
+) SM_RunoffTotals();
 
 
 // CANONICAL API
