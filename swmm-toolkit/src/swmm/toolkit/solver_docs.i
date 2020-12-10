@@ -1,4 +1,17 @@
+/*
+ *  solver_docs.i - Documentation for swmm-solver
+ *
+ *  Created:    12/10/2020
+ *  
+ *  Author:     See AUTHORS
+ *
+*/
 
+
+%define SOLVER_MODULE_DOCS
+"Solver Module
+"
+%enddef
 
 
 // PUBLIC STRUCTS

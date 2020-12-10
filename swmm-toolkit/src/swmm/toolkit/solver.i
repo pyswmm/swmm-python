@@ -13,7 +13,10 @@
 %include "cstring.i"
 
 
-%module(package="swmm.toolkit") solver
+/* Docstrings for module */
+%include "solver_docs.i"
+
+%module(package="swmm.toolkit", docstring=SOLVER_MODULE_DOCS) solver
 %{
 #define SWIG_FILE_WITH_INIT
 
@@ -22,10 +25,6 @@
 #include "toolkit_enums.h"
 #include "toolkit_structs.h"
 %}
-
-
-/* GENERATES DOCUMENTATION */
-%include "solver_docs.i"
 
 /* RENAME FUNCTIONS PYTHON STYLE */
 %include "solver_rename.i"

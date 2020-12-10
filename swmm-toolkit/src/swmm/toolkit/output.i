@@ -13,14 +13,20 @@
 %include "cstring.i"
 
 
-%module(package="swmm.toolkit") output
+/* Docstrings for module */
+%include "output_docs.i"
+
+%module(package="swmm.toolkit", docstring=OUTPUT_MODULE_DOCS) output
 %{
 #define SWIG_FILE_WITH_INIT
 
 #include "swmm_output_enums.h"
 #include "swmm_output.h"
-
 %}
+
+/* RENAME FUNCTIONS PYTHON STYLE */
+//%rename("%(regex:/^\w+_([a-zA-Z]+)/\L\\1/)s") "";
+%include "output_rename.i"
 
 
 /* MARK FUNCTIONS FOR ALLOCATING AND DEALLOCATING HANDLES */
@@ -112,16 +118,6 @@ and return a (possibly) different pointer */
     SMO_linkAttribute,
     SMO_systemAttribute
 }
-
-
-
-/* RENAME FUNCTIONS PYTHON STYLE */
-//%rename("%(regex:/^\w+_([a-zA-Z]+)/\L\\1/)s") "";
-%include "output_rename.i"
-
-
-/* GENERATES DOCUMENTATION */
-%feature("autodoc", "2");
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
