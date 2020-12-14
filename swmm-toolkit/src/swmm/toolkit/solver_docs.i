@@ -335,11 +335,11 @@ elapsedTime: double
 
 Returns
 -------
- runoffErr: float *
+runoffErr: float *
     Runoff routing error
- flowErr: float * 
+flowErr: float * 
     Flow routing error
- qualErr: float * 
+qualErr: float * 
     Quality routing error
 "
 ) swmm_getMassBalErr;
