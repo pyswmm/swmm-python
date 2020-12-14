@@ -16,6 +16,11 @@
 
 %feature("autodoc", 
 "Initialize pointer for output handle.
+
+Returns
+-------
+p_handle: SMO_Handle *
+    A SWMM output handle
 "
 ) SMO_init;
 
@@ -25,7 +30,9 @@
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 path: char const *
+    the name of the binary output file to be opened.
 "
 ) SMO_open;
 
@@ -35,6 +42,7 @@ path: char const *
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 "
 ) SMO_close;
 
@@ -44,6 +52,13 @@ p_handle: SMO_Handle
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
+
+Returns
+-------
+version: int *
+    The SWMM version number found in the output file prologue.
+
 "
 ) SMO_getVersion;
 
@@ -53,6 +68,14 @@ p_handle: SMO_Handle
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
+
+Returns
+-------
+elementCount:int **
+    array of element count values
+length:int *
+    array size
 "
 ) SMO_getProjectSize;
 
@@ -63,6 +86,14 @@ p_handle: SMO_Handle
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
+
+Returns
+-------
+unitFlag: int **
+    Array of unit flag values
+length: int *
+    Array length
 "
 ) SMO_getUnits;
 
@@ -72,6 +103,12 @@ p_handle: SMO_Handle
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
+
+Returns
+-------
+date: double *
+    SWMM simulation start date (encoded)
 "
 ) SMO_getStartDate;
 
@@ -81,7 +118,14 @@ p_handle: SMO_Handle
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 code: SMO_time
+    A time parameter code (see :ref: SMO_Time)
+
+Returns
+-------
+time: int *
+    Time value
 "
 ) SMO_getTimes;
 
@@ -91,8 +135,18 @@ code: SMO_time
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 type: SMO_elementType
+    The type of the element being queried
 elementIndex: int
+    The index of the element being queried
+
+Returns
+-------
+name: char **
+    Element name array
+length: int *
+    Length of array
 "
 ) SMO_getElementName;
 
@@ -104,10 +158,18 @@ length using timeIndex and length respectively.
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 subcatchIndex: int
 attr: SMO_subcatchAttribute
 startPeriod: int
 endPeriod: int
+
+Returns
+-------
+outValueArray: float **
+    array of time series values
+length: int *
+    length of array
 "
 ) SMO_getSubcatchSeries;
 
@@ -118,10 +180,18 @@ length using timeIndex and length respectively.
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 nodeIndex: int
 attr: SMO_nodeAttribute
 startPeriod: int
 endPeriod: int
+
+Returns
+-------
+outValueArray: float **
+    array of time series values
+length: int *
+    length of array
 "
 ) SMO_getNodeSeries;
 
@@ -132,10 +202,18 @@ length using timeIndex and length respectively.
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 linkIndex: int
 attr: SMO_linkAttribute
 startPeriod: int
 endPeriod: int
+
+Returns
+-------
+outValueArray: float **
+    array of time series values
+length: int *
+    length of array
 "
 ) SMO_getLinkSeries;
 
@@ -146,9 +224,17 @@ length using timeIndex and length respectively.
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 attr: SMO_systemAttribute
 startPeriod: int
 endPeriod: int
+
+Returns
+-------
+outValueArray: float **
+    array of time series values
+length: int *
+    length of array
 "
 ) SMO_getSystemSeries;
 
@@ -159,8 +245,16 @@ endPeriod: int
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 attr: SMO_subcatchAttribute
+
+Returns
+-------
+outValueArray: float **
+    the array of subcatchment attribute values
+length: int *
+    length of array
 "
 ) SMO_getSubcatchAttribute;
 
@@ -170,8 +264,16 @@ attr: SMO_subcatchAttribute
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 attr: SMO_nodeAttribute
+
+Returns
+-------
+outValueArray: float **
+    the array of node attribute values
+length: int *
+    length of array
 "
 ) SMO_getNodeAttribute;
 
@@ -181,8 +283,16 @@ attr: SMO_nodeAttribute
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 attr: SMO_linkAttribute
+
+Returns
+-------
+outValueArray: float **
+    the array of link attribute values
+length: int *
+    length of array
 "
 ) SMO_getLinkAttribute;
 
@@ -192,8 +302,16 @@ attr: SMO_linkAttribute
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 attr: SMO_systemAttribute
+
+Returns
+-------
+outValueArray: float **
+    the array of system attribute values
+length: int *
+    length of array
 "
 ) SMO_getSystemAttribute;
 
@@ -204,8 +322,16 @@ attr: SMO_systemAttribute
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 subcatchIndex: int
+
+Returns
+-------
+outValueArray: float **
+    the array of subcatchment result values
+length: int *
+    length of array
 "
 ) SMO_getSubcatchResult;
 
@@ -215,8 +341,16 @@ subcatchIndex: int
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 nodeIndex: int
+
+Returns
+-------
+outValueArray: float **
+    the array of node result values
+length: int *
+    length of array
 "
 ) SMO_getNodeResult;
 
@@ -226,8 +360,16 @@ nodeIndex: int
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 linkIndex: int
+
+Returns
+-------
+outValueArray: float **
+    the array of link result values
+length: int *
+    length of array
 "
 ) SMO_getLinkResult;
 
@@ -237,7 +379,15 @@ linkIndex: int
 Parameters
 ----------
 p_handle: SMO_Handle
+    A SWMM output handle
 timeIndex: int
 dummyIndex: int
+
+Returns
+-------
+outValueArray: float **
+    the array of system result values
+length: int *
+    length of array
 "
 ) SMO_getSystemResult;
