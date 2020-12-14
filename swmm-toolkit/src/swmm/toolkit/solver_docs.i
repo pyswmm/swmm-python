@@ -71,7 +71,7 @@ evapLosses: double
     evaporation losses (volume)
 exfilLosses: double
     exfiltration losses (volume)
-maxVolDate: datetime
+maxVolDate: DateTime
     date of maximum volume
 " 
 ) SM_StorageStats();
@@ -272,10 +272,14 @@ pctError: double
 Parameters
 ----------
 f1: char const *
+    pointer to name of input file (must exist)
 f2: char const *
+    pointer to name of report file (to be created)
 f3: char const *
+    pointer to name of binary output file (to be created)
 "
 ) swmm_run;
+
 
 %feature("autodoc",
 "Opens SWMM input file & reads in network data
@@ -283,10 +287,14 @@ f3: char const *
 Parameters
 ----------
 f1: char const *
+    pointer to name of input file (must exist)
 f2: char const *
+    pointer to name of report file (to be created)
 f3: char const *
+    pointer to name of binary output file (to be created)
 "
 ) swmm_open;
+
 
 %feature("autodoc",
 "Start SWMM simulation
@@ -294,36 +302,62 @@ f3: char const *
 Parameters
 ----------
 saveFlag: int
+    TRUE or FALSE to save timeseries to report file
 "
 ) swmm_start;
 
+
 %feature("autodoc",
 "Step SWMM simulation forward
+
+Returns
+-------
+elapsedTime: double
+    elapsed simulation time [milliseconds]
 "
 ) swmm_step;
+
 
 %feature("autodoc",
 "End SWMM simulation   
 "
 ) swmm_end;
 
+
 %feature("autodoc",
 "Write text report file
 "
 ) swmm_report;
 
+
 %feature("autodoc",
 "Get routing errors
+
+Returns
+-------
+ runoffErr: float *
+    Runoff routing error
+ flowErr: float * 
+    Flow routing error
+ qualErr: float * 
+    Quality routing error
 "
 ) swmm_getMassBalErr;
+
 
 %feature("autodoc",
 "Frees all memory and files used by SWMM
 "
 ) swmm_close;
 
+
 %feature("autodoc",
 "Get Legacy SWMM version number
+
+Returns
+-------
+version: int
+    Version number
 "
 ) swmm_getVersion;
 
@@ -331,8 +365,18 @@ saveFlag: int
 // TOOLKIT API
 %feature("autodoc",
 "Get full semantic version number info
+
+Returns
+-------
+major: char ** 
+    sematic version major number
+minor: char ** 
+    sematic version minor number
+patch: char ** 
+    sematic version patch number
 "
 ) swmm_getVersionInfo;
+
 
 %feature("autodoc",
 "Finds the index of an object given its ID.
@@ -340,9 +384,17 @@ saveFlag: int
 Parameters
 ----------
 type: SM_ObjectType
+    type An object type (see :ref: SM_ObjectType)
 id: char *
+    id The object ID
+
+Returns
+-------    
+index: int *
+    The objects index
 "
 ) swmm_project_findObject;
+
 
 %feature("autodoc", 
 "Gets Object ID
@@ -350,9 +402,17 @@ id: char *
 Parameters
 ----------
 type: SM_ObjectType
+    type Option code (see :ref: SM_ObjectType)
 index: int
+    index of the Object
+
+Returns
+-------
+id: char **
+    The string ID of object.
 "
 ) swmm_getObjectId;
+
 
 %feature("autodoc", 
 "Gets Object Count
@@ -360,6 +420,12 @@ index: int
 Parameters
 ----------
 type: SM_ObjectType
+    Option code (see :ref: SM_ObjectType)
+
+Returns
+-------
+count: int *
+    Option value
 "
 ) swmm_countObjects;
 
@@ -370,28 +436,69 @@ type: SM_ObjectType
 Parameters
 ----------
 type: SM_TimePropety
+    The property type code (See :ref: SM_TimePropety)
+
+Returns
+-------
+year: int *
+    The year
+month: int *
+    The month
+day: int *
+    The day
+hour: int *
+    The hour
+minute: int *
+    The minute
+second: int *
+    The seconds
 "
 ) swmm_getSimulationDateTime;
 
+
 %feature("autodoc", 
 "Get the current simulation datetime information.
+
+Returns
+-------
+year: int *
+    The year
+month: int *
+    The month
+day: int *
+    The day
+hour: int *
+    The hour
+minute: int *
+    The minute
+second: int *
+    The seconds
 "
 ) swmm_getCurrentDateTime;
+
 
 %feature("autodoc", 
 "Set simulation datetime information.
 
 Parameters
 ----------
-type: SM_TimePropety
+type: SM_TimePropety 
+    type The property type code (See :ref: SM_TimePropety)
 year: int
+    The year
 month: int
+    The month
 day: int
+    The day
 hour: int
+    The hour
 minute: int
+    The minute
 second: int
+    The seconds
 "
 ) swmm_setSimulationDateTime;
+
 
 %feature("autodoc", 
 "Gets Simulation Analysis Setting
@@ -399,8 +506,15 @@ second: int
 Parameters
 ----------
 type: SM_SimOption
+    Option code (see :ref: SM_SimOption)
+
+Returns
+-------
+value: int *
+    Option value
 "
 ) swmm_getSimulationAnalysisSetting;
+
 
 %feature("autodoc", 
 "Gets Simulation Analysis Setting
@@ -408,8 +522,15 @@ type: SM_SimOption
 Parameters
 ----------
 type: SM_SimSetting
+    Option code (see :ref: SM_SimSetting)
+
+Returns
+-------
+value: double *
+    Option value
 "
 ) swmm_getSimulationParam;
+
 
 %feature("autodoc",
 "Gets Simulation Unit
@@ -417,6 +538,12 @@ type: SM_SimSetting
 Parameters
 ----------
 type: SM_Units
+    Option code (see :ref: SM_Units)
+
+Returns
+-------
+value: int *
+    Option value
 "
 ) swmm_getSimulationUnit;
 
@@ -427,8 +554,16 @@ type: SM_Units
 Parameters
 ----------
 index: int
+    The index of a node
+
+Returns
+-------
+Ntype: SM_NodeType *
+    The type code for the node (:ref: SM_NodeType). 
+    id must be pre-allocated by the caller.
 "
 ) swmm_getNodeType;
+
 
 %feature("autodoc", 
 "Get a property value for specified node.
@@ -436,9 +571,17 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a node
 param: SM_NodeProperty
+    The property type code (See :ref: SM_NodeProperty)
+
+Returns
+-------
+value: double *
+    The value of the node's property
 "
 ) swmm_getNodeParam;
+
 
 %feature("autodoc", 
 "Set a property value for specified node.
@@ -446,10 +589,14 @@ param: SM_NodeProperty
 Parameters
 ----------
 index: int
+    The index of a node
 param: SM_NodeProperty
+    The property type code (See :ref: SM_NodeProperty)
 value: double
+    The new value of the node's property
 "
 ) swmm_setNodeParam;
+
 
 %feature("autodoc", 
 "Get a result value for specified node.
@@ -457,9 +604,17 @@ value: double
 Parameters
 ----------
 index: int
+    The index of a node
 type: SM_NodeResult
+    The property type code (See :ref: SM_NodeResult)
+
+Returns
+-------
+result: double *
+    The result of the node's property
 "
 ) swmm_getNodeResult;
+
 
 %feature("autodoc", 
 "Gets pollutant values for a specified node.
@@ -467,9 +622,17 @@ type: SM_NodeResult
 Parameters
 ----------
 index: int
+    The index of a node
 type: SM_NodePollut
+    The property type code (see :ref: SM_NodePollut)
+
+Returns
+-------
+PollutArray: double *
+    result array
 "
 ) swmm_getNodePollut;
+
 
 %feature("autodoc", 
 "Get the cumulative inflow for a node.
@@ -477,8 +640,15 @@ type: SM_NodePollut
 Parameters
 ----------
 index: int
+    The index of a node
+
+Returns
+-------
+value: double *
+    The total inflow.
 "
 ) swmm_getNodeTotalInflow;
+
 
 %feature("autodoc", 
 "Set an inflow rate to a node. The inflow rate is held constant until the 
@@ -487,9 +657,12 @@ caller changes it.
 Parameters
 ----------
 index: int
+    The node index.
 flowrate: double
+    The new node inflow rate.
 "
 ) swmm_setNodeInflow;
+
 
 %feature("autodoc", 
 "Get a node statistics.
@@ -497,6 +670,12 @@ flowrate: double
 Parameters
 ----------
 index: int
+    The index of a node
+
+Returns
+-------
+nodeStats: SM_NodeStats * 
+    The Node Stats struct (see :ref: SM_NodeStats) pre-allocated by the caller.
 "
 ) swmm_getNodeStats;
 
@@ -507,6 +686,12 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a storage node
+
+Returns
+-------
+storageStats: SM_StorageStats * 
+    The storage Stats struct (see :ref: SM_StorageStats) pre-allocated by the caller.
 "
 ) swmm_getStorageStats;
 
@@ -517,9 +702,12 @@ index: int
 Parameters
 ----------
 index: int
+    The outfall node index.
 stage: double
+    The outfall node stage (head).
 "
 ) swmm_setOutfallStage;
+
 
 %feature("autodoc", 
 "Get outfall statistics.
@@ -527,6 +715,15 @@ stage: double
 Parameters
 ----------
 index: int
+    The index of a outfall node
+
+Returns
+-------
+outfallStats: SM_OutfallStats * 
+    The outfall Stats struct (see :ref: SM_OutfallStats).
+    pre-allocated by the caller. Caller is also responsible for freeing the
+    SM_OutfallStats structure using swmm_freeOutfallStats(). This frees any
+    pollutants array.
 "
 ) swmm_getOutfallStats;
 
@@ -537,8 +734,15 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a link
+
+Returns
+-------
+Ltype: SM_LinkType *
+    The type code for the link (:ref: SM_LinkType).
 "
 ) swmm_getLinkType;
+
 
 %feature("autodoc", 
 "Get the link Connection Node Indeces. If the conduit has a negative slope, 
@@ -547,8 +751,17 @@ the dynamic wave solver will automatically reverse the nodes.
 Parameters
 ----------
 index: int
+    The index of a link
+
+Returns
+-------
+Node1: int *
+    The upstream node index.
+Node2: int *
+    The downstream node index.
 "
 ) swmm_getLinkConnections;
+
 
 %feature("autodoc", 
 "Get the link flow direction
@@ -556,8 +769,15 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a link
+
+Returns
+-------
+value: char *
+    The link flow direction.
 "
 ) swmm_getLinkDirection;
+
 
 %feature("autodoc", 
 "Get a property value for specified link.
@@ -565,9 +785,17 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a link
 param: SM_LinkProperty
+    The property type code (See :ref: SM_LinkProperty)
+
+Returns
+-------
+value: double *
+    The value of the link's property
 "
 ) swmm_getLinkParam;
+
 
 %feature("autodoc", 
 "Set a property value for specified link.
@@ -575,10 +803,14 @@ param: SM_LinkProperty
 Parameters
 ----------
 index: int
+    The index of a link
 param: SM_LinkProperty
+    The property type code (See :ref: SM_LinkProperty)
 value: double
+    The new value of the link's property
 "
 ) swmm_setLinkParam;
+
 
 %feature("autodoc", 
 "Get a result value for specified link.
@@ -586,9 +818,17 @@ value: double
 Parameters
 ----------
 index: int
+    The index of a link
 type: SM_LinkResult
+    The property type code (See :ref: SM_LinkResult)
+
+Returns
+-------
+result: double *
+    The result of the link's property
 "
 ) swmm_getLinkResult;
+
 
 %feature("autodoc", 
 "Gets pollutant values for a specified link.
@@ -596,9 +836,17 @@ type: SM_LinkResult
 Parameters
 ----------
 index: int
+    The index of a link
 type: SM_LinkPollut
+    The property type code (see :ref: SM_LinkPollut)
+
+Returns
+-------
+PollutArray: double *
+    result array
 "
 ) swmm_getLinkPollut;
+
 
 %feature("autodoc", 
 "Set a link setting (pump, orifice, or weir). Setting for an orifice and a 
@@ -608,9 +856,12 @@ if a pump is set to 1, it will pump at its maximum curve setting.
 Parameters
 ----------
 index: int
+    The link index.
 setting: double
+    The new setting for the link.
 "
 ) swmm_setLinkSetting;
+
 
 %feature("autodoc", 
 "Get link statistics.
@@ -618,6 +869,12 @@ setting: double
 Parameters
 ----------
 index: int
+    The link index.
+
+Returns
+-------
+linkStats: SM_LinkStats *
+    The link Stats struct (see :ref: SM_LinkStats). pre-allocated by the caller.
 "
 ) swmm_getLinkStats;
 
@@ -628,6 +885,12 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a pump
+
+Returns
+-------
+pumpStats: SM_PumpStats *
+    The link Stats struct (see :ref: SM_PumpStats). pre-allocated by the caller.
 "
 ) swmm_getPumpStats;
 
@@ -639,8 +902,17 @@ subcatchment, or itself.
 Parameters
 ----------
 index: int
+    The index of a Subcatchment
+
+Returns
+-------
+type: SM_ObjectType
+    The type of object loading (See :ref: SM_ObjectType)
+out_index: int *
+    The object index
 "
 ) swmm_getSubcatchOutConnection;
+
 
 %feature("autodoc", 
 "Get a property value for specified subcatchment.
@@ -648,9 +920,17 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 param: SM_SubcProperty
+    The property type code (See :ref: SM_SubcProperty)
+
+Returns
+-------
+value: double *
+    The value of the subcatchment's property
 "
 ) swmm_getSubcatchParam;
+
 
 %feature("autodoc", 
 "Set a property value for specified subcatchment.
@@ -658,10 +938,14 @@ param: SM_SubcProperty
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 param: SM_SubcProperty
+    The property type code (See :ref: SM_SubcProperty)
 value: double
+    The new value of the subcatchment's property
 "
 ) swmm_setSubcatchParam;
+
 
 %feature("autodoc", 
 "Get a result value for specified subcatchment.
@@ -669,9 +953,17 @@ value: double
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 type: SM_SubcResult
+    The property type code (See :ref: SM_SubcResult)
+
+Returns
+-------
+result: double *
+    The result of the subcatchment's property
 "
 ) swmm_getSubcatchResult;
+
 
 %feature("autodoc", 
 "Gets pollutant values for a specified subcatchment.
@@ -679,9 +971,17 @@ type: SM_SubcResult
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 type: SM_SubcPollut
+    The property type code (see :ref: SM_SubcPollut)
+
+Returns
+-------
+PollutArray: double **
+    result array
 "
 ) swmm_getSubcatchPollut;
+
 
 %feature("autodoc", 
 "Get subcatchment statistics.
@@ -689,17 +989,39 @@ type: SM_SubcPollut
 Parameters
 ----------
 index: int
+    The index of a subcatchment
+
+Returns
+-------
+subcatchStats: SM_SubcatchStats *
+    The link Stats struct (see :ref: SM_SubcatchStats).
+    pre-allocated by the caller. Caller is also responsible for freeing the
+    SM_SubcatchStats structure using swmm_freeSubcatchStats(). This frees any
+    pollutants array.
 "
 ) swmm_getSubcatchStats;
 
 
 %feature("autodoc", 
 "Get system routing totals.
+
+Returns
+-------
+routingTot: SM_RoutingTotals *
+    The system Routing Stats struct (see :ref: SM_RoutingTotals).
+    pre-allocated by the caller.
 "
 ) swmm_getSystemRoutingTotals;
 
+
 %feature("autodoc", 
 "Get system runoff totals.
+
+Returns
+-------
+runoffTot: SM_RunoffTotals *
+    The system Runoff Stats struct (see :ref: SM_RunoffTotals).
+    pre-allocated by the caller.
 "
 ) swmm_getSystemRunoffTotals;
 
@@ -710,8 +1032,15 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a subcatchment
+
+Returns
+-------
+value: int *
+    The number of lid units on a subcatchment
 "
 ) swmm_getLidUCount;
+
 
 %feature("autodoc", 
 "Get a property value for a specified lid unit on a specified subcatchment
@@ -719,10 +1048,19 @@ index: int
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 param: SM_LidUProperty
+    The property type code (See :ref: SM_LidUProperty)
+
+Returns
+-------
+value: double
+    The value of the lid unit's property
 "
 ) swmm_getLidUParam;
+
 
 %feature("autodoc", 
 "Set a property value for a specified lid unit on a specified subcatchment
@@ -730,11 +1068,16 @@ param: SM_LidUProperty
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 param: SM_LidUProperty
+    The property type code (See :ref: SM_LidUProperty)
 value: double
+    The new value of the lid unit's property
 "
 ) swmm_setLidUParam;
+
 
 %feature("autodoc", 
 "Get the lid option for a specified lid unit on a specified subcatchment
@@ -742,10 +1085,19 @@ value: double
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 param: SM_LidUOptions
+    The lid option type code (See :ref: SM_LidUOptions)
+
+Returns
+-------
+value: int *
+    The value of the option for the lid unit
 "
 ) swmm_getLidUOption;
+
 
 %feature("autodoc", 
 "Set the lid option for a specified lid unit on a specified subcatchment
@@ -753,11 +1105,16 @@ param: SM_LidUOptions
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 param: SM_LidUOptions
+    The lid option type code (See :ref: SM_LidUOptions)
 value: int
+    The new value of the option for the lid unit
 "
 ) swmm_setLidUOption;
+
 
 %feature("autodoc", 
 "Get the lid unit water balance simulated value at current time
@@ -765,10 +1122,19 @@ value: int
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 layerIndex: SM_LidLayer
+    The index of specified lid layer (See :ref: SM_LidLayer)
+
+Returns
+-------
+result: double * 
+    The result for the specified lid unit
 "
 ) swmm_getLidUFluxRates;
+
 
 %feature("autodoc", 
 "Get the lid unit of a specified subcatchment result at current time
@@ -776,10 +1142,19 @@ layerIndex: SM_LidLayer
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 lidIndex: int
+    The index of specified lid unit
 type: SM_LidResult
+    The result type code (See :ref: SM_LidResult)
+
+Returns
+-------
+result: double *
+    The result for the specified lid unit
 "
 ) swmm_getLidUResult;
+
 
 %feature("autodoc", 
 "Get the lid control surface immediate overflow condition
@@ -787,8 +1162,15 @@ type: SM_LidResult
 Parameters
 ----------
 lidControlIndex: int
+    The index of specified lid control
+
+Returns
+-------
+condition: int *
+    The value of surface immediate overflow condition
 "
 ) swmm_getLidCOverflow;
+
 
 %feature("autodoc", 
 "Get a property value for specified lid control
@@ -796,10 +1178,19 @@ lidControlIndex: int
 Parameters
 ----------
 lidControlIndex: int
+    The index of specified lid control
 layerIndex: SM_LidLayer
+    The index of specified lid layer (See :ref: SM_LidLayer)
 param: SM_LidLayerProperty
+    The property type code (See :ref: SM_LidLayerProperty)
+
+Returns
+-------
+value: double 
+    The value of lid control's property
 "
 ) swmm_getLidCParam;
+
 
 %feature("autodoc", 
 "Set a property value for specified lid control
@@ -807,11 +1198,16 @@ param: SM_LidLayerProperty
 Parameters
 ----------
 lidControlIndex: int
+    The index of specified lid control
 layerIndex: SM_LidLayer
+    The index of specified lid layer (See :ref: SM_LidLayer)
 param: SM_LidLayerProperty
+    The property type code (See :ref: SM_LidLayerProperty)
 value: double
+    The new value for the lid control's property
 "
 ) swmm_setLidCParam;
+
 
 %feature("autodoc", 
 "Get the lid group of a specified subcatchment result at current time
@@ -819,7 +1215,14 @@ value: double
 Parameters
 ----------
 index: int
+    The index of a subcatchment
 type: SM_LidResult
+    The result type code (See :ref: SM_LidResult)
+
+Returns
+-------
+result: double *
+    The result for the specified lid group
 "
 ) swmm_getLidGResult;
 
@@ -830,9 +1233,17 @@ type: SM_LidResult
 Parameters
 ----------
 index: int
+    The index of gage
 type: SM_GagePrecip
+    The property type code (see :ref: SM_GagePrecip)
+
+Returns
+-------
+GageArray: double *
+    precipitation rate
 "
 ) swmm_getGagePrecip;
+
 
 %feature("autodoc", 
 "Set a total precipitation intensity to the gage.
@@ -840,6 +1251,8 @@ type: SM_GagePrecip
 Parameters
 ----------
 index: int
+    The gage index.
 total_precip: double
+    The new total precipitation intensity.
 "
 ) swmm_setGagePrecip;
