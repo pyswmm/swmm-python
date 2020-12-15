@@ -33,7 +33,7 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 path: char const *
-    the name of the binary output file to be opened.
+    The name of the binary output file to be opened.
 "
 ) SMO_open;
 
@@ -77,9 +77,9 @@ p_handle: SMO_Handle
 Returns
 -------
 elementCount:int **
-    array of element count values
+    Array of element count values
 length:int *
-    array size
+    Array size
 "
 ) SMO_getProjectSize;
 
@@ -167,6 +167,7 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 subcatchIndex: int
+    The subcatchment index for time series
 attr: SMO_subcatchAttribute
     Code for the subcatch attribute to report (see :ref: SMO_subcatchAttribute)
 startPeriod: int
@@ -177,9 +178,9 @@ endPeriod: int
 Returns
 -------
 outValueArray: float **
-    array of time series values
+    Array of time series values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSubcatchSeries;
 
@@ -193,6 +194,7 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 nodeIndex: int
+    The node index for time series
 attr: SMO_nodeAttribute
     Code for the node attribute to report (see :ref: SMO_nodeAttribute)
 startPeriod: int
@@ -203,9 +205,9 @@ endPeriod: int
 Returns
 -------
 outValueArray: float **
-    array of time series values
+    Array of time series values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getNodeSeries;
 
@@ -219,6 +221,7 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 linkIndex: int
+    The link index for time series
 attr: SMO_linkAttribute
     Code for the link attribute to report (see :ref: SMO_linkAttribute)
 startPeriod: int
@@ -229,9 +232,9 @@ endPeriod: int
 Returns
 -------
 outValueArray: float **
-    array of time series values
+    Array of time series values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getLinkSeries;
 
@@ -254,9 +257,9 @@ endPeriod: int
 Returns
 -------
 outValueArray: float **
-    array of time series values
+    Array of time series values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSystemSeries;
 
@@ -276,9 +279,9 @@ attr: SMO_subcatchAttribute
 Returns
 -------
 outValueArray: float **
-    the array of subcatchment attribute values
+    The array of subcatchment attribute values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSubcatchAttribute;
 
@@ -298,9 +301,9 @@ attr: SMO_nodeAttribute
 Returns
 -------
 outValueArray: float **
-    the array of node attribute values
+    The array of node attribute values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getNodeAttribute;
 
@@ -320,9 +323,9 @@ attr: SMO_linkAttribute
 Returns
 -------
 outValueArray: float **
-    the array of link attribute values
+    The array of link attribute values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getLinkAttribute;
 
@@ -342,9 +345,9 @@ attr: SMO_systemAttribute
 Returns
 -------
 outValueArray: float **
-    the array of system attribute values
+    The array of system attribute values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSystemAttribute;
 
@@ -364,9 +367,9 @@ subcatchIndex: int
 Returns
 -------
 outValueArray: float **
-    the array of subcatchment result values
+    The array of subcatchment result values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSubcatchResult;
 
@@ -386,9 +389,9 @@ nodeIndex: int
 Returns
 -------
 outValueArray: float **
-    the array of node result values
+    The array of node result values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getNodeResult;
 
@@ -408,9 +411,9 @@ linkIndex: int
 Returns
 -------
 outValueArray: float **
-    the array of link result values
+    The array of link result values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getLinkResult;
 
@@ -425,13 +428,13 @@ p_handle: SMO_Handle
 timeIndex: int
     The time period index for reporting results
 dummyIndex: int
-    No op index for API consistency
+    No-op for API consistency
 
 Returns
 -------
 outValueArray: float **
-    the array of system result values
+    The array of system result values
 length: int *
-    length of array
+    Length of array
 "
 ) SMO_getSystemResult;
