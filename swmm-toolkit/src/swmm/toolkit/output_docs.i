@@ -24,6 +24,7 @@ p_handle: SMO_Handle *
 "
 ) SMO_init;
 
+
 %feature("autodoc",
 "Open binary output file and reads prologue and epilogue.
 
@@ -36,6 +37,7 @@ path: char const *
 "
 ) SMO_open;
 
+
 %feature("autodoc",
 "Close binary output file and perform cleanup. 
 
@@ -45,6 +47,7 @@ p_handle: SMO_Handle
     A SWMM output handle
 "
 ) SMO_close;
+
 
 %feature("autodoc",
 "Get the SWMM version that produced the binary output file. 
@@ -61,6 +64,7 @@ version: int *
 
 "
 ) SMO_getVersion;
+
 
 %feature("autodoc",
 "Project element counts.
@@ -97,6 +101,7 @@ length: int *
 "
 ) SMO_getUnits;
 
+
 %feature("autodoc",
 "Analysis start date.
 
@@ -111,6 +116,7 @@ date: double *
     SWMM simulation start date (encoded)
 "
 ) SMO_getStartDate;
+
 
 %feature("autodoc",
 "Analysis step size and number of periods.
@@ -128,6 +134,7 @@ time: int *
     Time value
 "
 ) SMO_getTimes;
+
 
 %feature("autodoc",
 "Given an element index returns the element name.
@@ -161,8 +168,11 @@ p_handle: SMO_Handle
     A SWMM output handle
 subcatchIndex: int
 attr: SMO_subcatchAttribute
+    Code for the subcatch attribute to report (see :ref: SMO_subcatchAttribute)
 startPeriod: int
+    Time period of series start
 endPeriod: int
+    Time period of series end
 
 Returns
 -------
@@ -172,6 +182,7 @@ length: int *
     length of array
 "
 ) SMO_getSubcatchSeries;
+
 
 %feature("autodoc",
 "Get time series results for particular attribute. Specify series start and 
@@ -183,8 +194,11 @@ p_handle: SMO_Handle
     A SWMM output handle
 nodeIndex: int
 attr: SMO_nodeAttribute
+    Code for the node attribute to report (see :ref: SMO_nodeAttribute)
 startPeriod: int
+    Time period of series start
 endPeriod: int
+    Time period of series end
 
 Returns
 -------
@@ -194,6 +208,7 @@ length: int *
     length of array
 "
 ) SMO_getNodeSeries;
+
 
 %feature("autodoc",
 "Get time series results for particular attribute. Specify series start and 
@@ -205,8 +220,11 @@ p_handle: SMO_Handle
     A SWMM output handle
 linkIndex: int
 attr: SMO_linkAttribute
+    Code for the link attribute to report (see :ref: SMO_linkAttribute)
 startPeriod: int
+    Time period of series start
 endPeriod: int
+    Time period of series end
 
 Returns
 -------
@@ -217,6 +235,7 @@ length: int *
 "
 ) SMO_getLinkSeries;
 
+
 %feature("autodoc",
 "Get time series results for particular attribute. Specify series start and 
 length using timeIndex and length respectively.
@@ -226,8 +245,11 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 attr: SMO_systemAttribute
+    Code for the system attribute to report (see :ref: SMO_systemAttribute)
 startPeriod: int
+    Time period of series start
 endPeriod: int
+    Time period of series end
 
 Returns
 -------
@@ -247,7 +269,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 attr: SMO_subcatchAttribute
+    Code for the subcatchment attribute to report (see :ref: SMO_subcatchAttribute)
 
 Returns
 -------
@@ -258,6 +282,7 @@ length: int *
 "
 ) SMO_getSubcatchAttribute;
 
+
 %feature("autodoc",
 "For all nodes at given time, get a particular attribute.
 
@@ -266,7 +291,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 attr: SMO_nodeAttribute
+    Code for the node attribute to report (see :ref: SMO_nodeAttribute)
 
 Returns
 -------
@@ -277,6 +304,7 @@ length: int *
 "
 ) SMO_getNodeAttribute;
 
+
 %feature("autodoc",
 "For all links at given time, get a particular attribute.
 
@@ -285,7 +313,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 attr: SMO_linkAttribute
+    Code for the link attribute to report (see :ref: SMO_linkAttribute)
 
 Returns
 -------
@@ -296,6 +326,7 @@ length: int *
 "
 ) SMO_getLinkAttribute;
 
+
 %feature("autodoc",
 "For the system at given time, get a particular attribute.
 
@@ -304,7 +335,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 attr: SMO_systemAttribute
+    Code for the system attribute to report (see :ref: SMO_systemAttribute)
 
 Returns
 -------
@@ -324,7 +357,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 subcatchIndex: int
+    The subcatchment index for reporting results
 
 Returns
 -------
@@ -335,6 +370,7 @@ length: int *
 "
 ) SMO_getSubcatchResult;
 
+
 %feature("autodoc",
 "For a node at given time, get all attributes.
 
@@ -343,7 +379,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 nodeIndex: int
+    The node index for reporting results
 
 Returns
 -------
@@ -354,6 +392,7 @@ length: int *
 "
 ) SMO_getNodeResult;
 
+
 %feature("autodoc",
 "For a link at given time, get all attributes.
 
@@ -362,7 +401,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 linkIndex: int
+    The link index for reporting results
 
 Returns
 -------
@@ -373,6 +414,7 @@ length: int *
 "
 ) SMO_getLinkResult;
 
+
 %feature("autodoc",
 "For the system at given time, get all attributes.
 
@@ -381,7 +423,9 @@ Parameters
 p_handle: SMO_Handle
     A SWMM output handle
 timeIndex: int
+    The time period index for reporting results
 dummyIndex: int
+    No op index for API consistency
 
 Returns
 -------
