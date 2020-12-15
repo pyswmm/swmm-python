@@ -1,5 +1,5 @@
 #
-#  toolkit_enum.py -
+#  shared_enum.py -
 #
 #  Created:   February 21, 2020
 #  Updated:
@@ -13,7 +13,7 @@ from aenum import Enum, IntEnum
 class UnitSystem(Enum, start=0):
     """SWMM Unit System enum class. 
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ================ ====================
     :attr:`~US`      US Traditional units
@@ -27,7 +27,7 @@ class UnitSystem(Enum, start=0):
 class FlowUnits(Enum, start=0):
     """SWMM Flow Units enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ================ =======================
     :attr:`~CFS`     cubic feet per second
@@ -49,7 +49,7 @@ class FlowUnits(Enum, start=0):
 class ConcUnits(Enum, start=0):
     """SWMM Concentration Units enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ================ ====================
     :attr:`~MG`      Milligrams per liter
@@ -67,7 +67,7 @@ class ConcUnits(Enum, start=0):
 class BaseUnits(Enum, start = 1):
     """Base Units enum class
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     =================== ==================
     :attr:`~RAIN_INT`   rainfall intensity
@@ -105,7 +105,7 @@ class BaseUnits(Enum, start = 1):
 class ObjectType(Enum, start=0):
     """SWMM Object Types enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ==================== ===============================
     :attr:`~GAGE`        rain gage 
@@ -213,7 +213,7 @@ class Time(Enum, start = 0):
 class SubcatchAttribute(Enum, start = 0):
     """Subcatchment Attributes enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ========================= ===============================
     :attr:`~RAINFALL`         rainfall intensity
@@ -241,7 +241,7 @@ class SubcatchAttribute(Enum, start = 0):
 class NodeAttribute(Enum, start = 0):
     """Node Attribute enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ========================= ===============================
     :attr:`~INVERT_DEPTH`     water depth above invert
@@ -265,7 +265,7 @@ class NodeAttribute(Enum, start = 0):
 class LinkAttribute(Enum, start = 0):
     """Link Attribute enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ====================== ===============================
     :attr:`~FLOW_RATE`     flow rate
@@ -287,7 +287,7 @@ class LinkAttribute(Enum, start = 0):
 class SystemAttribute(Enum, start = 0):
     """System Attribute enum class.
 
-    .. ruberic:: Enum Members
+    .. rubric:: Enum Members
 
     ============================= ====================
     :attr:`~AIR_TEMP`             air temperature

@@ -78,7 +78,7 @@ set_target_properties(output
 install(
     FILES
         "__init__.py"
-        "toolkit_enum.py"
+        "shared_enum.py"
         "output_metadata.py"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"
     DESTINATION

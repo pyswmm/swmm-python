@@ -164,7 +164,7 @@
 }
 %typemap(argout) EnumTypeOut * {
     char *temp = "$1_basetype";
-    PyObject *module = PyImport_ImportModule("swmm.toolkit.toolkit_enum");
+    PyObject *module = PyImport_ImportModule("swmm.toolkit.shared_enum");
     PyObject *function = PyDict_GetItemString(PyModule_GetDict(module), (temp + 3));
     if (PyCallable_Check(function)) {
         PyObject *enum_out = PyObject_CallFunction(function, "i", *$1);

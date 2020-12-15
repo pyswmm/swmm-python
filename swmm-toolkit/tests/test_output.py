@@ -15,7 +15,7 @@ import os
 import pytest
 import numpy as np
 
-from swmm.toolkit import output, toolkit_enum, output_metadata
+from swmm.toolkit import output, shared_enum, output_metadata
 
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
@@ -76,13 +76,13 @@ def test_getstartdate(handle):
 
 def test_gettimes(handle):
 
-    assert output.get_times(handle, toolkit_enum.Time.REPORT_STEP) == 3600
-    assert output.get_times(handle, toolkit_enum.Time.NUM_PERIODS) == 36
+    assert output.get_times(handle, shared_enum.Time.REPORT_STEP) == 3600
+    assert output.get_times(handle, shared_enum.Time.NUM_PERIODS) == 36
 
 
 def test_getelementname(handle):
 
-    assert output.get_elem_name(handle, toolkit_enum.ElementType.NODE, 1) == "10"
+    assert output.get_elem_name(handle, shared_enum.ElementType.NODE, 1) == "10"
 
 
 def test_getsubcatchseries(handle):
@@ -98,7 +98,7 @@ def test_getsubcatchseries(handle):
                           0.00509294,
                           0.0027438672])
 
-    test_array = output.get_subcatch_series(handle, 1, toolkit_enum.SubcatchAttribute.RUNOFF_RATE, 0, 10)
+    test_array = output.get_subcatch_series(handle, 1, shared_enum.SubcatchAttribute.RUNOFF_RATE, 0, 10)
 
     assert len(test_array) == 10
     assert np.allclose(test_array, ref_array)
@@ -115,7 +115,7 @@ def test_getsubcatchattribute(handle):
                           0.225,
                           0.225])
 
-    test_array = output.get_subcatch_attribute(handle, 1, toolkit_enum.SubcatchAttribute.INFIL_LOSS)
+    test_array = output.get_subcatch_attribute(handle, 1, shared_enum.SubcatchAttribute.INFIL_LOSS)
 
     assert len(test_array) == 8
     assert np.allclose(test_array, ref_array)
