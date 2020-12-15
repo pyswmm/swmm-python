@@ -1,5 +1,5 @@
 #
-#  output_enum.py -
+#  toolkit_enum.py -
 #
 #  Created:   February 21, 2020
 #  Updated:
@@ -11,30 +11,32 @@ from aenum import Enum, IntEnum
 
 
 class UnitSystem(Enum, start=0):
-    """
+    """SWMM Unit System enum class. 
+
     .. ruberic:: Enum Members
 
-    ================ =================
-    :attr:`~US`
-    :attr:`~SI`
-    ================ =================
+    ================ ====================
+    :attr:`~US`      US Traditional units
+    :attr:`~SI`      SI (metric) units
+    ================ ====================
     """
     US
     SI
 
 
 class FlowUnits(Enum, start=0):
-    """
+    """SWMM Flow Units enum class.
+
     .. ruberic:: Enum Members
 
-    ================ =================
-    :attr:`~CFS`
-    :attr:`~GPM`
-    :attr:`~MGD`
-    :attr:`~CMS`
-    :attr:`~LPS`
-    :attr:`~MLD`
-    ================ =================
+    ================ =======================
+    :attr:`~CFS`     cubic feet per second
+    :attr:`~GPM`     gallons per minute
+    :attr:`~MGD`     million gallons per day
+    :attr:`~CMS`     cubic meters per second
+    :attr:`~LPS`     liters per second
+    :attr:`~MLD`     million liters per day
+    ================ =======================
     """
     CFS
     GPM
@@ -45,15 +47,16 @@ class FlowUnits(Enum, start=0):
 
 
 class ConcUnits(Enum, start=0):
-    """
+    """SWMM Concentration Units enum class.
+
     .. ruberic:: Enum Members
 
-    ================ =================
-    :attr:`~MG`
-    :attr:`~UG`
-    :attr:`~COUNT`
-    :attr:`~NONE`
-    ================ =================
+    ================ ====================
+    :attr:`~MG`      Milligrams per liter
+    :attr:`~UG`      Micrograms per liter
+    :attr:`~COUNT`   Counts per liter
+    :attr:`~NONE`    None
+    ================ ====================
     """
     MG,
     UG,
@@ -61,28 +64,67 @@ class ConcUnits(Enum, start=0):
     NONE
 
 
-class ObjectType(Enum, start=0):
-    """
+class BaseUnits(Enum, start = 1):
+    """Base Units enum class
+
     .. ruberic:: Enum Members
 
-    ==================== ==============
-    :attr:`~GAGE`
-    :attr:`~SUBCATCH`
-    :attr:`~NODE`
-    :attr:`~LINK`
-    :attr:`~POLLUT`
-    :attr:`~LANDUSE`
-    :attr:`~TIMEPATTERN`
-    :attr:`~CURVE`
-    :attr:`~TSERIES`
-    :attr:`~CONTROL`
-    :attr:`~TRANSECT`
-    :attr:`~AQUIFER`
-    :attr:`~UNITHYD`
-    :attr:`~SNOWMELT`
-    :attr:`~SHAPE`
-    :attr:`~LID`
-    ==================== ==============
+    =================== ==================
+    :attr:`~RAIN_INT`   rainfall intensity
+    :attr:`~SNOW_DEPTH` rainfall depth  
+    :attr:`~EVAP_RATE`  evaporation rate
+    :attr:`~INFIL_RATE` infiltration rate
+    :attr:`~FLOW_RATE`  flow rate
+    :attr:`~ELEV`       elevation
+    :attr:`~PERCENT`    percent
+    :attr:`~CONCEN`     concentration
+    :attr:`~HEAD`       head
+    :attr:`~VOLUME`     volume
+    :attr:`~VELOCITY`   velocity
+    :attr:`~TEMP`       temperature
+    :attr:`~UNITLESS`   unitless quantity
+    :attr:`~NONE`       none
+    =================== ==================
+    """
+    RAIN_INT
+    SNOW_DEPTH
+    EVAP_RATE
+    INFIL_RATE
+    FLOW_RATE
+    ELEV
+    PERCENT
+    CONCEN
+    HEAD
+    VOLUME
+    VELOCITY
+    TEMP
+    UNITLESS
+    NONE
+
+
+class ObjectType(Enum, start=0):
+    """SWMM Object Types enum class.
+
+    .. ruberic:: Enum Members
+
+    ==================== ===============================
+    :attr:`~GAGE`        rain gage 
+    :attr:`~SUBCATCH`    subcatchment
+    :attr:`~NODE`        conveyance system node
+    :attr:`~LINK`        conveyance system link
+    :attr:`~POLLUT`      pollutant
+    :attr:`~LANDUSE`     land use category
+    :attr:`~TIMEPATTERN` dry weather flow time pattern
+    :attr:`~CURVE`       generic table of values
+    :attr:`~TSERIES`     generic time series of values
+    :attr:`~CONTROL`     conveyance system control rules
+    :attr:`~TRANSECT`    irregular channel cross-section
+    :attr:`~AQUIFER`     groundwater aquifer
+    :attr:`~UNITHYD`     RDII unit hydrograph
+    :attr:`~SNOWMELT`    snowmelt parameter set
+    :attr:`~SHAPE`       custom conduit shape
+    :attr:`~LID`         LID treatment unit
+    ==================== ===============================
     """
     GAGE
     SUBCATCH
@@ -103,15 +145,12 @@ class ObjectType(Enum, start=0):
 
 
 class NodeType(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Node Sub-Types enum class.
 
-    ================= =================
     :attr:`~JUNCTION`
     :attr:`~OUTFALL`
     :attr:`~STORAGE`
     :attr:`~DIVIDER`
-    ================= =================
     """
     JUNCTION
     OUTFALL
@@ -120,16 +159,13 @@ class NodeType(Enum, start=0):
 
 
 class LinkType(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Link Sub-Types enum class.
 
-    ================ =================
     :attr:`~CONDUIT`
     :attr:`~PUMP`
-    :attr:`~ORIFACE`
+    :attr:`~ORIFICE`
     :attr:`~WEIR`
     :attr:`~OUTLET`
-    ================ =================
     """
     CONDUIT
     PUMP
@@ -139,29 +175,23 @@ class LinkType(Enum, start=0):
 
 
 class LinkDirection(Enum):
-    """
-    .. ruberic:: Enum Members
+    """Link Direction enum class.
 
-    =============================== ===
     :attr:`~UPSTREAM_TO_DOWNSTREAM`
     :attr:`~DOWNSTREAM_TO_UPSTREAM`
-    =============================== ===
     """
     UPSTREAM_TO_DOWNSTREAM = 1
     DOWNSTREAM_TO_UPSTREAM = -1
     
 
 class ElementType(IntEnum, start = 0):
-    """
-    .. ruberic:: Enum Members
+    """SWMM Element Types enum class.
 
-    ================= =================
     :attr:`~SUBCATCH`
     :attr:`~NODE`
     :attr:`~LINK`
     :attr:`~SYSTEM`
     :attr:`~POLLUT`
-    ================= =================
     """
     SUBCATCH
     NODE
@@ -171,33 +201,31 @@ class ElementType(IntEnum, start = 0):
 
 
 class Time(Enum, start = 0):
-    """
-    .. ruberic:: Enum Members
+    """Time enum class.
 
-    ==================== ==============
     :attr:`~REPORT_STEP`
     :attr:`~NUM_PERIODS`
-    ==================== ==============
     """
     REPORT_STEP
     NUM_PERIODS
 
 
 class SubcatchAttribute(Enum, start = 0):
-    """
+    """Subcatchment Attributes enum class.
+
     .. ruberic:: Enum Members
 
-    ========================= =========
-    :attr:`~RAINFALL`
-    :attr:`~SNOW_DEPTH`
-    :attr:`~EVAP_LOSS`
-    :attr:`~INFIL_LOSS`
-    :attr:`~RUNOFF_RATE`
-    :attr:`~GW_OUTFLOW_RATE`
-    :attr:`~GW_TABLE_ELEV`
-    :attr:`~SOIL_MOISTURE`
-    :attr:`~POLLUT_CONC_0`
-    ======================== ==========
+    ========================= ===============================
+    :attr:`~RAINFALL`         rainfall intensity
+    :attr:`~SNOW_DEPTH`       snow depth
+    :attr:`~EVAP_LOSS`        evaporation loss 
+    :attr:`~INFIL_LOSS`       infiltration loss
+    :attr:`~RUNOFF_RATE`      runoff flow rate
+    :attr:`~GW_OUTFLOW_RATE`  groundwater flow rate to node
+    :attr:`~GW_TABLE_ELEV`    elevation of saturated gw table
+    :attr:`~SOIL_MOISTURE`    soil moisture
+    :attr:`~POLLUT_CONC_0`    pollutant washoff concentration
+    ========================= ===============================
     """    
     RAINFALL
     SNOW_DEPTH
@@ -211,18 +239,19 @@ class SubcatchAttribute(Enum, start = 0):
 
 
 class NodeAttribute(Enum, start = 0):
-    """
+    """Node Attribute enum class.
+
     .. ruberic:: Enum Members
 
-    ========================= =========
-    :attr:`~INVERT_DEPTH`
-    :attr:`~HYDRAULIC_HEAD`
-    :attr:`~PONDED_VOLUME`
-    :attr:`~LATERAL_INFLOW`
-    :attr:`~TOTAL_INFLOW`
-    :attr:`~FLOODING_LOSSES`
-    :attr:`~POLLUT_CONC_0`
-    ======================== ==========
+    ========================= ===============================
+    :attr:`~INVERT_DEPTH`     water depth above invert
+    :attr:`~HYDRAULIC_HEAD`   hydraulic head
+    :attr:`~PONDED_VOLUME`    volume stored and ponded
+    :attr:`~LATERAL_INFLOW`   lateral inflow rate
+    :attr:`~TOTAL_INFLOW`     total inflow rate
+    :attr:`~FLOODING_LOSSES`  overflow rate
+    :attr:`~POLLUT_CONC_0`    concentration of each pollutant
+    ========================= ===============================
     """
     INVERT_DEPTH
     HYDRAULIC_HEAD
@@ -234,17 +263,18 @@ class NodeAttribute(Enum, start = 0):
 
 
 class LinkAttribute(Enum, start = 0):
-    """
+    """Link Attribute enum class.
+
     .. ruberic:: Enum Members
 
-    ====================== ============
-    :attr:`~FLOW_RATE`
-    :attr:`~FLOW_DEPTH`
-    :attr:`~FLOW_VELOCITY`
-    :attr:`~FLOW_VOLUME`
-    :attr:`~CAPACITY`
-    :attr:`~POLLUT_CONC_0`
-    ====================== ============
+    ====================== ===============================
+    :attr:`~FLOW_RATE`     flow rate
+    :attr:`~FLOW_DEPTH`    flow depth
+    :attr:`~FLOW_VELOCITY` flow velocity
+    :attr:`~FLOW_VOLUME`   link volume
+    :attr:`~CAPACITY`      ratio of area to full area
+    :attr:`~POLLUT_CONC_0` concentration of each pollutant
+    ====================== ===============================
     """
     FLOW_RATE
     FLOW_DEPTH
@@ -255,25 +285,26 @@ class LinkAttribute(Enum, start = 0):
 
 
 class SystemAttribute(Enum, start = 0):
-    """
+    """System Attribute enum class.
+
     .. ruberic:: Enum Members
 
-    ================ =================
-    :attr:`~AIR_TEMP`
-    :attr:`~RAINFALL`
-    :attr:`~SNOW_DEPTH`
-    :attr:`~EVAP_INFIL_LOSS`
-    :attr:`~RUNOFF_FLOW`
-    :attr:`~DRY_WEATHER_INFLOW`
-    :attr:`~GW_INFLOW`
-    :attr:`~RDII_INFLOW`
-    :attr:`~DIRECT_INFLOW`
-    :attr:`~TOTAL_LATERAL_INFLOW`
-    :attr:`~FLOOD_LOSSES`
-    :attr:`~OUTFALL_FLOWS`
-    :attr:`~VOLUME_STORED`
-    :attr:`~EVAP_RATE`
-    ================ =================
+    ============================= ====================
+    :attr:`~AIR_TEMP`             air temperature
+    :attr:`~RAINFALL`             rainfall intensity
+    :attr:`~SNOW_DEPTH`           snow depth
+    :attr:`~EVAP_INFIL_LOSS`      infiltration
+    :attr:`~RUNOFF_FLOW`          runoff
+    :attr:`~DRY_WEATHER_INFLOW`   dry weather inflow
+    :attr:`~GW_INFLOW`            ground water inflow
+    :attr:`~RDII_INFLOW`          RDII inflow
+    :attr:`~DIRECT_INFLOW`        external inflow
+    :attr:`~TOTAL_LATERAL_INFLOW` total lateral inflow
+    :attr:`~FLOOD_LOSSES`         flooding outflow
+    :attr:`~OUTFALL_FLOWS`        outfall outflow
+    :attr:`~VOLUME_STORED`        storage volume
+    :attr:`~EVAP_RATE`            evaporation
+    ============================= ====================
     """
     AIR_TEMP
     RAINFALL
@@ -291,55 +322,15 @@ class SystemAttribute(Enum, start = 0):
     EVAP_RATE
 
 
-class BaseUnits(Enum, start = 1):
-    """
-    .. ruberic:: Enum Members
-
-    ================ =================
-    :attr:`~RAIN_INT`
-    :attr:`~SNOW_DEPTH`
-    :attr:`~EVAP_RATE`
-    :attr:`~INFIL_RATE`
-    :attr:`~FLOW_RATE`
-    :attr:`~ELEV`
-    :attr:`~PERCENT`
-    :attr:`~CONCEN`
-    :attr:`~HEAD`
-    :attr:`~VOLUME`
-    :attr:`~VELOCITY`
-    :attr:`~TEMP`
-    :attr:`~UNITLESS`
-    :attr:`~NONE`
-    ================ =================
-    """
-    RAIN_INT
-    SNOW_DEPTH
-    EVAP_RATE
-    INFIL_RATE
-    FLOW_RATE
-    ELEV
-    PERCENT
-    CONCEN
-    HEAD
-    VOLUME
-    VELOCITY
-    TEMP
-    UNITLESS
-    NONE
-
-
 #
 # Solver Toolkit API Enums
 #    
 class TimeProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Time Property enum class.
 
-    ================ =================
     :attr:`~START_DATE`
     :attr:`~END_DATE`
     :attr:`~REPORT_DATE`
-    ================ =================
     """
     START_DATE
     END_DATE
@@ -347,23 +338,18 @@ class TimeProperty(Enum, start=0):
 
 
 class UnitProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Unit Property enum class.
 
-    ================ =================
     :attr:`~SYSTEM_UNIT`
     :attr:`~FLOW_UNIT`
-    ================ =================
     """
     SYSTEM_UNIT
     FLOW_UNIT
 
 
 class SimOption(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Simulation Option enum class.
 
-    ================ =================
     :attr:`~ALLOW_POND`
     :attr:`~SKIP_STEADY`
     :attr:`~IGNORE_RAIN`
@@ -372,7 +358,6 @@ class SimOption(Enum, start=0):
     :attr:`~IGNORE_GW`
     :attr:`~IGNORE_ROUTE`
     :attr:`~IGNORE_ROUTE_QUALITY`
-    ================ =================
     """
     ALLOW_POND
     SKIP_STEADY
@@ -385,10 +370,8 @@ class SimOption(Enum, start=0):
 
 
 class SimSetting(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Simulation Settings enum class.
 
-    ================ =================
     :attr:`~ROUTE_STEP`
     :attr:`~MIN_ROUTE_STEP`
     :attr:`~LENGTH_STEP`
@@ -403,7 +386,6 @@ class SimSetting(Enum, start=0):
     :attr:`~HEAD_TOLERANCE`
     :attr:`~SYSTEM_FLOW_TOLERANCE`
     :attr:`~LATERAL_FLOW_TOLERANCE`
-    ================ =================
     """
     ROUTE_STEP
     MIN_ROUTE_STEP
@@ -422,16 +404,13 @@ class SimSetting(Enum, start=0):
 
 
 class NodeProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Node Property enum class.
 
-    ================ =================
     :attr:`~INVERT_ELEVATION`
     :attr:`~FULL_DEPTH`
     :attr:`~SURCHARGE_DEPTH`
     :attr:`~POND_AREA`
     :attr:`~INITIAL_DEPTH`
-    ================ =================
     """
     INVERT_ELEVATION
     FULL_DEPTH
@@ -441,10 +420,8 @@ class NodeProperty(Enum, start=0):
 
 
 class NodeResult(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Node Result enum class.
 
-    ================ =================
     :attr:`~TOTAL_INFLOW`
     :attr:`~TOTAL_OUTFLOW`
     :attr:`~LOSSES`
@@ -453,7 +430,6 @@ class NodeResult(Enum, start=0):
     :attr:`~DEPTH`
     :attr:`~HEAD`
     :attr:`~LATERAL_INFLOW`
-    ================ =================
     """
     TOTAL_INFLOW
     TOTAL_OUTFLOW
@@ -466,21 +442,16 @@ class NodeResult(Enum, start=0):
 
 
 class NodePollutant(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Node Pollutant enum class.
 
-    ================ =================
     :attr:`~QUALITY`
-    ================ =================
     """
     QUALITY
 
 
 class LinkProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Link Property enum class.
 
-    ================ =================
     :attr:`~OFFSET_1`
     :attr:`~OFFSET_2`
     :attr:`~INITIAL_FLOW`
@@ -488,7 +459,6 @@ class LinkProperty(Enum, start=0):
     :attr:`~INLET_LOSS`
     :attr:`~OUTLET_LOSS`
     :attr:`~AVERAGE_LOSS`
-    ================ =================
     """
     OFFSET_1
     OFFSET_2
@@ -500,10 +470,8 @@ class LinkProperty(Enum, start=0):
 
 
 class LinkResult(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Link Result enum class.
 
-    ================ =================
     :attr:`~FLOW`
     :attr:`~DEPTH`
     :attr:`~VOLUME`
@@ -512,7 +480,6 @@ class LinkResult(Enum, start=0):
     :attr:`~SETTING`
     :attr:`~TARGET_SETTING`
     :attr:`~FROUDE`
-    ================ =================
     """
     FLOW
     DEPTH
@@ -525,29 +492,23 @@ class LinkResult(Enum, start=0):
 
 
 class LinkPollutant(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Link Pollutant enum class.
 
-    ================ =================
     :attr:`~QUALITY`
     :attr:`~TOTAL_LOAD`
-    ================ =================
     """
     QUALITY
     TOTAL_LOAD
 
     
 class SubcatchProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Subcatchment Property enum class.
 
-    ================ =================
     :attr:`~WIDTH`
     :attr:`~AREA`
     :attr:`~IMPERVIOUS_FRACTION`
     :attr:`~SLOPE`
     :attr:`~CURB_LENGTH`
-    ================ =================
     """
     WIDTH
     AREA
@@ -557,17 +518,14 @@ class SubcatchProperty(Enum, start=0):
 
 
 class SubcatchResult(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Subcatchment Result enum class.
 
-    ================ =================
     :attr:`~RAIN`
     :attr:`~EVAPORATION`
     :attr:`~INFILTRATION`
     :attr:`~RUNON`
     :attr:`~RUNOFF`
     :attr:`~SNOW`
-    ================ =================
     """
     RAIN
     EVAPORATION
@@ -578,15 +536,12 @@ class SubcatchResult(Enum, start=0):
 
 
 class SubcatchPollutant(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Subcatchment Pollutant enum class.
 
-    ================ =================
     :attr:`~BUILD_UP`
     :attr:`~CONCENTRATION`
     :attr:`~QUALITY`
     :attr:`~TOTAL_LOAD`
-    ================ =================
     """
     BUILD_UP
     CONCENTRATION
@@ -595,17 +550,14 @@ class SubcatchPollutant(Enum, start=0):
 
     
 class LidUsageProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """LID Usage Property enum class.
 
-    ================ =================
     :attr:`~UNIT_AREA`
     :attr:`~TOP_WIDTH`
     :attr:`~BOTTOM_WIDTH`
     :attr:`~INITIAL_SATURATION`
     :attr:`~FROM_IMPERVIOUS`
     :attr:`~FROM_PERVIOUS`
-    ================ =================
     """
     UNIT_AREA
     TOP_WIDTH
@@ -616,16 +568,13 @@ class LidUsageProperty(Enum, start=0):
 
 
 class LidUsageOption(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """LID Usage Option enum class.
 
-    ================ =================
     :attr:`~INDEX`
     :attr:`~NUMBER`
     :attr:`~TO_PERV`
     :attr:`~DRAIN_SUBCATCH`
     :attr:`~DRAIN_NODE`
-    ================ =================
     """
     INDEX
     NUMBER
@@ -635,17 +584,14 @@ class LidUsageOption(Enum, start=0):
 
 
 class LidLayer(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """LID Layer enum class.
 
-    ================ =================
     :attr:`~SURFACE`
     :attr:`~SOIL`
     :attr:`~STORAGE`
     :attr:`~PAVEMENT`
     :attr:`~DRAIN`
     :attr:`~DRAIN_MAT`
-    ================ =================
     """
     SURFACE
     SOIL
@@ -656,10 +602,8 @@ class LidLayer(Enum, start=0):
 
     
 class LidLayerProperty(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """LID Layer Property enum class.
 
-    ================ =================
     :attr:`~THICKNESS`
     :attr:`~VOID_FRACTION`
     :attr:`~ROUGHNESS`
@@ -683,7 +627,6 @@ class LidLayerProperty(Enum, start=0):
     :attr:`~DRAIN_CURVE`
     :attr:`~DRAIN_REGEN_DAYS`
     :attr:`~DRAIN_REGEN_DEGREE`
-    ================ =================
     """
     THICKNESS
     VOID_FRACTION
@@ -711,10 +654,8 @@ class LidLayerProperty(Enum, start=0):
 
 
 class LidResult(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """LID Result enum class.
 
-    ================ =================
     :attr:`~INFLOW`
     :attr:`~EVAPORATION`
     :attr:`~INFILTRATION`
@@ -745,7 +686,6 @@ class LidResult(Enum, start=0):
     :attr:`~STORAGE_EXFILTRATION`
     :attr:`~STORAGE_EVAPORATION`
     :attr:`~STORAGE_DRAIN`
-    ================ =================
     """
     INFLOW
     EVAPORATION
@@ -780,14 +720,11 @@ class LidResult(Enum, start=0):
 
     
 class RainResult(Enum, start=0):
-    """
-    .. ruberic:: Enum Members
+    """Rain Result enum class.
 
-    ================ =================
     :attr:`~TOTAL`
     :attr:`~RAINFALL`
     :attr:`~SNOWFALL`
-    ================ =================
     """
     TOTAL
     RAINFALL
