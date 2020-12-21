@@ -19,22 +19,17 @@
 }
 %enddef
 
-
-%rename (NodeStats) SM_NodeStats;
 %statsmaps(SM_NodeStats);
 %apply SM_NodeStats *out_stats {
     SM_NodeStats *nodeStats
 }
 
-
-%rename (StorageStats) SM_StorageStats;
 %statsmaps(SM_StorageStats);
 %apply SM_StorageStats *out_stats {
     SM_StorageStats *storageStats
 }
 
 
-%rename (OutfallStats) SM_OutfallStats;
 /* PROVIDE CUSTOM CONSTRUCTOR/DECONSTRUCTOR */
 %nodefaultctor SM_OutfallStats;
 
@@ -45,13 +40,11 @@
             s->totalLoad = (double *)calloc(num_pollut, sizeof(double));
         return s;
     }
-
     ~SM_OutfallStats(SM_OutfallStats *self) {
         if (self != NULL)
             free(self->totalLoad);
         free(self);
     }
-
     double get_totalLoad(int index) {
         return self->totalLoad[index];
     }
@@ -72,35 +65,31 @@
 }
 
 
-%rename (LinkStats) SM_LinkStats;
+
 %statsmaps(SM_LinkStats);
 %apply SM_LinkStats *out_stats {
     SM_LinkStats *linkStats
 }
 
 
-%rename (PumpStats) SM_PumpStats;
 %statsmaps(SM_PumpStats);
 %apply SM_PumpStats *out_stats {
     SM_PumpStats *pumpStats
 }
 
 
-%rename (SubcatchStats) SM_SubcatchStats;
 %statsmaps(SM_SubcatchStats);
 %apply SM_SubcatchStats *out_stats {
     SM_SubcatchStats *subcatchStats
 }
 
 
-%rename (RoutingTotals) SM_RoutingTotals;
 %statsmaps(SM_RoutingTotals);
 %apply SM_RoutingTotals *out_stats {
     SM_RoutingTotals *routingTotals
 }
 
 
-%rename (RunoffTotals) SM_RunoffTotals;
 %statsmaps(SM_RunoffTotals);
 %apply SM_RunoffTotals *out_stats {
     SM_RunoffTotals *runoffTotals

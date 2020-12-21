@@ -5,29 +5,34 @@
  *  
  *  Author:     See AUTHORS
  *
+ *  Purpose: Renames functions according to PEP8
 */
 
 
-// RENAME FUNCTIONS ACCORDING TO PEP8
+// RENAME STATS STRUCTS
+%rename (NodeStats)                         SM_NodeStats;
+%rename (StorageStats)                      SM_StorageStats;
+%rename (OutfallStats)                      SM_OutfallStats;
+%rename (LinkStats)                         SM_LinkStats;
+%rename (PumpStats)                         SM_PumpStats;
+%rename (SubcatchStats)                     SM_SubcatchStats;
+%rename (RoutingTotals)                     SM_RoutingTotals;
+%rename (RunoffTotals)                      SM_RunoffTotals;
 
-// LEAVE OTHER CANONICAL API CALLS ALONE 
+
+// RENAME CANONICAL API AS NECESSARY
 %rename(swmm_get_mass_balance)              swmm_getMassBalErr;
 %rename(swmm_get_version)                   swmm_getVersion;
 
 
-// NEW TOOLKIT API CALLS
-// Duplicates?
+// RENAME NEW API
 %rename(project_get_index)                  swmm_project_findObject;
-//%rename(project_get_index)                  swmm_getObjectIndex;
-
 %rename(project_get_id)                     swmm_getObjectId;
 %rename(project_get_count)                  swmm_countObjects;
 
 
-// Duplicates?
 %rename(simulation_get_datetime)            swmm_getSimulationDateTime;
 %rename(simulation_get_current_datetime)    swmm_getCurrentDateTime;
-
 %rename(simulation_set_datetime)            swmm_setSimulationDateTime;
 %rename(simulation_get_setting)             swmm_getSimulationAnalysisSetting;
 %rename(simulation_get_parameter)           swmm_getSimulationParam;

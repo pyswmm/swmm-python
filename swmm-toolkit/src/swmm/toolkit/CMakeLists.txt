@@ -27,7 +27,7 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern")
+set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib")
 
 
 #############################################################
@@ -78,7 +78,7 @@ set_target_properties(output
 install(
     FILES
         "__init__.py"
-        "toolkit_enum.py"
+        "shared_enum.py"
         "output_metadata.py"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"
     DESTINATION

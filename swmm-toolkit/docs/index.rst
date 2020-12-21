@@ -8,7 +8,7 @@ Welcome to swmm.toolkit's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    API documentation <apidoc/swmm>

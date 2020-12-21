@@ -11,7 +11,7 @@ import os
 
 import pytest
 
-from swmm.toolkit import solver, toolkit_enum
+from swmm.toolkit import solver, shared_enum
 
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
@@ -48,7 +48,7 @@ def test_node_get_stats(before_end):
 
 
 def test_storage_get_stats(before_end):
-    node_index = solver.project_get_index(toolkit_enum.ObjectType.NODE, 'SU1')
+    node_index = solver.project_get_index(shared_enum.ObjectType.NODE, 'SU1')
     while True:
         time = solver.swmm_step()
         if time == 0:
@@ -61,7 +61,7 @@ def test_storage_get_stats(before_end):
 def test_outfall_stats(before_end):
     id = '18'
 
-    index = solver.project_get_index(toolkit_enum.ObjectType.NODE, id)
+    index = solver.project_get_index(shared_enum.ObjectType.NODE, id)
 
     stats = solver.outfall_get_stats(index)
     assert stats.totalLoad != None

@@ -13,7 +13,10 @@
 %include "cstring.i"
 
 
-%module(package="swmm.toolkit") solver
+/* Docstrings for module */
+%include "solver_docs.i"
+
+%module(package="swmm.toolkit", docstring=SOLVER_MODULE_DOCS) solver
 %{
 #define SWIG_FILE_WITH_INIT
 
@@ -23,8 +26,11 @@
 #include "toolkit_structs.h"
 %}
 
+/* RENAME FUNCTIONS PYTHON STYLE */
+%include "solver_rename.i"
 
 %include "stats_typemaps.i";
+
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
@@ -158,7 +164,7 @@
 }
 %typemap(argout) EnumTypeOut * {
     char *temp = "$1_basetype";
-    PyObject *module = PyImport_ImportModule("swmm.toolkit.toolkit_enum");
+    PyObject *module = PyImport_ImportModule("swmm.toolkit.shared_enum");
     PyObject *function = PyDict_GetItemString(PyModule_GetDict(module), (temp + 3));
     if (PyCallable_Check(function)) {
         PyObject *enum_out = PyObject_CallFunction(function, "i", *$1);
@@ -170,14 +176,6 @@
     SM_NodeType *,
     SM_LinkType *
 }
-
-
-/* GENERATES DOCUMENTATION */
-%feature("autodoc", "2");
-
-
-/* RENAME FUNCTIONS PYTHON STYLE */
-%include "solver_rename.i"
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
@@ -208,6 +206,7 @@
 // TOOLKIT API
 %ignore swmm_run_cb;
 %ignore swmm_getAPIError;
+%ignore swmm_getObjectIndex;
 %ignore swmm_freeMemory;
 
 %include "toolkit.h"
