@@ -4,7 +4,7 @@
 #  __init__.py - SWMM toolkit package
 #
 #  Created:    Aug 9, 2018
-#  Updated:    May 20, 2020
+#  Updated:    Dec 22, 2020
 #
 #  Author:     See AUTHORS
 #
@@ -14,17 +14,17 @@ A low level pythonic API for the swmm-output and swmm-solver dlls using SWIG.
 '''
 
 
-__author__ = "Michael Tryby"
+__author__ = "See AUTHORS"
 __copyright__ = "None"
 __credits__ = "Colleen Barr, Sam Hatchett"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.5.0"
-__date__ = "May 20, 2020"
+__version__ = "0.8.0"
+__date__ = "December 22, 2020"
 
 __maintainer__ = "Michael Tryby"
 __email__ = "tryby.michael@epa.gov"
-__status__  = "Development"
+__status__  = "Beta"
 
 
 import os
