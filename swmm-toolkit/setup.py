@@ -15,6 +15,7 @@
 
 import platform
 import subprocess
+import pathlib
 
 from skbuild import setup
 from setuptools import Command
@@ -73,20 +74,48 @@ def exclude_files(cmake_manifest):
     return list(filter(lambda name: not (name.endswith(exclude_pats)), cmake_manifest))
 
 
+
+# Get the long description from the README file
+here = pathlib.Path(__file__).parent.resolve()
+long_description = (here / 'README.md').read_text(encoding='utf-8')
+
+
 setup(
     name = "swmm-toolkit",
-    version = "0.7.0",
-
-    cmake_args = cmake_args,
+    version = "0.8.0",
 
     packages = ["swmm.toolkit"],
     package_dir = {"": "src"},
 
     zip_safe = False,
-
     install_requires = ["aenum"],
 
     cmdclass = {"clean": CleanCommand},
+    cmake_args = cmake_args,
+    cmake_process_manifest_hook = exclude_files,
 
-    cmake_process_manifest_hook = exclude_files
+
+    description='OWA SWMM Python Toolkit',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/OpenWaterAnalytics/swmm-python',
+    
+    author='See AUTHORS',
+    maintainer_email='tryby.michael@epa.gov',
+    license='CC0',
+
+    keywords="swmm5, swmm, stormwater, hydraulics, hydrology, ",
+    classifiers=[
+        "Topic :: Scientific/Engineering",
+        "Topic :: Documentation :: Sphinx",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: Linux",
+        "Operating System :: MacOS",
+        "License :: CC0 License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: C",
+        "Development Status :: 4 - Beta",
+    ]
 )
