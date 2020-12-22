@@ -108,7 +108,7 @@ setup(
     classifiers=[
         "Topic :: Scientific/Engineering",
         "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX :: Linux,
+        "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
         "Programming Language :: Python :: 3.6",
