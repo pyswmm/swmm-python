@@ -11,7 +11,12 @@
 #    None
 #
 
+
 PLAT="manylinux2014_x86_64"
+
+
+pip install auditwheel
+
 
 for whl in ./dist/*.whl; do
     auditwheel repair "$whl" --plat "$PLAT" -w ./dist 

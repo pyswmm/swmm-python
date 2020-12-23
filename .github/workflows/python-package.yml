@@ -38,9 +38,7 @@ jobs:
 
       - name: Repair wheel
         if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: | 
-          pip install auditwheel
-          ./swmm-toolkit/tools/repair_wheels.sh
+        run: ./swmm-toolkit/tools/repair_wheels.sh
 
       - name: Test wheel
         run: |
