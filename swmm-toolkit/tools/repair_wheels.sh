@@ -21,3 +21,6 @@ pip install auditwheel
 for whl in ./dist/*.whl; do
     auditwheel repair "$whl" --plat "$PLAT" -w ./dist 
  done
+
+
+rm -rf ./dist/*-linux_x86_64.whl
