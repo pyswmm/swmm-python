@@ -40,7 +40,7 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
           pip install auditwheel
-          auditwheel -v repair ./dist/*-linux_x86_64.whl --plat "manylinux2014_x86_64" -w ./dist 
+          auditwheel repair ./dist/*-linux_x86_64.whl --plat "manylinux2014_x86_64" -w ./dist 
           rm -rf ./dist/*-linux_x86_64.whl
 
       - name: Test wheel
