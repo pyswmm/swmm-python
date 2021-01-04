@@ -27,6 +27,7 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
+# Inserting line continuation '\' in this long path string breaks wheel repair
 set(PACKAGE_RPATH 
     "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
 )
