@@ -10,7 +10,10 @@
 
 cmake_minimum_required (VERSION 3.17)
 
-project(swmm-toolkit)
+project(swmm-toolkit
+    VERSION
+        0.8.0
+)
 
 
 set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})

@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Updated:   May 6, 2020
+# Updated:   Dec 29, 2020
 #
 #  Author:   See AUTHORS
 #
@@ -27,7 +27,10 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-set(PACKAGE_RPATH "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib")
+# Inserting line continuation '\' in this long path string breaks wheel repair
+set(PACKAGE_RPATH 
+    "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
+)
 
 
 #############################################################
