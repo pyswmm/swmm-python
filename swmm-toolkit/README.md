@@ -16,8 +16,6 @@
 
 [![version](https://img.shields.io/pypi/v/swmm-toolkit.svg?maxAge=3600)](https://pypi.org/project/swmm-toolkit/) [![Downloads](https://pepy.tech/badge/swmm-toolkit)](https://pepy.tech/project/swmm-toolkit)
 
-The latest release of `swmm-toolkit` can be installed from PyPI using the following command.
-
   ``pip install swmm-toolkit``
 
 
