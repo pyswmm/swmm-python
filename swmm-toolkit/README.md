@@ -3,14 +3,6 @@
 `swmm-toolkit` contains SWIG generated Python wrappers for the swmm-solver and swmm-output libraries. 
 
 
-## Features
-
-`swmm-toolkit` makes SWMM a fully fledged Python extension with:  
-
- - Python integration at the speed of C
- - Full access to library APIs
- - Pythonic naming, enums, exceptions, and return value handling 
-
 ## Build Status
 
 ![Build Wheels](https://github.com/SWMM-Project/swmm-python/workflows/Build%20Wheels/badge.svg)
@@ -23,6 +15,15 @@
   ``pip install swmm-toolkit``
 
 
+## Features
+
+`swmm-toolkit` makes SWMM a fully fledged Python extension with:  
+ - Compatibility with USEPA SWMM
+ - Python integration at the speed of C
+ - Full access to library APIs
+ - Pythonic naming, enums, exceptions, and return value handling 
+ 
+ 
 ## Basic Usage
 
 Run a SWMM simulation. 
