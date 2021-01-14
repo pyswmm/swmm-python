@@ -16,8 +16,8 @@ project(swmm-toolkit
 )
 
 
-find_package(PythonExtensions)
-set(Python_ROOT_DIR ${PYTHON_PREFIX})
+#find_package(PythonExtensions)
+set(Python_ROOT_DIR "/opt/python/cp36-cp36m")
 
 set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
 set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
