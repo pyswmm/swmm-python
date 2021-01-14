@@ -16,9 +16,8 @@ project(swmm-toolkit
 )
 
 
-if(LINUX) 
-    set(Python_ROOT_DIR ${/opt/python/**})
-endif()
+find_package(PythonExtensions)
+set(Python_ROOT_DIR ${PYTHON_PREFIX})
 
 set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
 set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
