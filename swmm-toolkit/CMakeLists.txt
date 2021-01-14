@@ -17,7 +17,7 @@ project(swmm-toolkit
 
 
 if(LINUX) 
-    set(Python_ROOT_DIR ${/opt/python})
+    set(Python_ROOT_DIR ${/opt/python/*})
 endif()
 
 set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
