@@ -35,43 +35,43 @@ jobs:
            path: ./wheelhouse/*.whl
 
 
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-        fail-fast: false
-        matrix:
-          os: [windows-2016, macos-10.15]
-          py: [3.6, 3.7, 3.8]
+  # build_wheels:
+  #   name: Build wheels on ${{ matrix.os }}
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #       fail-fast: false
+  #       matrix:
+  #         os: [windows-2016, macos-10.15]
+  #         py: [3.6, 3.7, 3.8]
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v2
+  #       with:
+  #         submodules: true
 
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.py }}
+  #     - name: Install Python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: ${{ matrix.py }}
 
-      - name: Install build requirements
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: choco install swig
+  #     - name: Install build requirements
+  #       if: ${{ contains(matrix.os, 'windows') }}
+  #       run: choco install swig
 
-      - if: ${{ contains(matrix.os, 'macos') }}
-        run: brew install libomp swig
+  #     - if: ${{ contains(matrix.os, 'macos') }}
+  #       run: brew install libomp swig
 
-      - name: Build wheel
-        run: pip wheel --wheel-dir=./dist ./swmm-toolkit
+  #     - name: Build wheel
+  #       run: pip wheel --wheel-dir=./dist ./swmm-toolkit
 
-      - name: Test wheel
-        run: |
-          pip install pytest numpy
-          pip install --no-index --find-links=./dist swmm-toolkit
-          pytest
+  #     - name: Test wheel
+  #       run: |
+  #         pip install pytest numpy
+  #         pip install --no-index --find-links=./dist swmm-toolkit
+  #         pytest
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: ./dist/swmm_toolkit*.whl
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         path: ./dist/swmm_toolkit*.whl
