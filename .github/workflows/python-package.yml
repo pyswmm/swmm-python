@@ -2,7 +2,8 @@ name: Build Wheels
 
 on: [push, pull_request]
 
-env: 
+env:
+  CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014"
   CIBW_BUILD: "cp36-* cp37-* cp38-* *-manylinux_x86_64"
   CIBW_SKIP: "*-manylinux_i686*"
   CIBW_BEFORE_ALL_LINUX: yum install -y swig
