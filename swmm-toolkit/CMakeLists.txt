@@ -16,14 +16,18 @@ project(swmm-toolkit
 )
 
 
-#find_package(PythonExtensions)
-set(Python_ROOT_DIR "/opt/python/cp36-cp36m")
+find_package(PythonExtensions REQUIRED)
+    message(STATUS "PYTHON_PREFIX=${PYTHON_PREFIX}")
 
-#set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
-#set(Python_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
-#set(Python_LIBRARY ${PYTHON_LIBRARY})
-find_package (Python ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development)
+set(Python_FIND_VIRTUALENV FIRST)
+#set(Python3_ROOT_DIR ${PYTHON_PREFIX})
+#set(Python3_EXECUTABLE ${PYTHON_PREFIX}/bin)
+#set(Python3_LIBRARY ${PYTHON_PREFIX}/lib)
+#set(Python3_INCLUDE_DIRS ${PYTHON_PREFIX}/include)
 
+set(CMAKE_FIND_DEBUG_MODE TRUE)
+    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module)
+set(CMAKE_FIND_DEBUG_MODE FALSE)
 
 find_package(SWIG REQUIRED)
 cmake_policy(SET CMP0078 NEW)

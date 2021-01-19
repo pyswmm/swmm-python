@@ -17,7 +17,7 @@ else()
     set(LIB_EXT "so")
 endif()
 
-set(Python_EXTENSION ".${Python_SOABI}.${LIB_EXT}")
+set(Python3_EXTENSION ".${Python3_SOABI}.${LIB_EXT}")
 
 
 # Location of package at runtime on MacOS/Linux
@@ -58,18 +58,18 @@ target_link_options(output
 
 target_include_directories(output
     PUBLIC
-        ${Python_INCLUDE_DIRS}
+        ${Python3_INCLUDE_DIRS}
 )
 
 target_link_libraries(output
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm-output
 )
 
 set_target_properties(output
     PROPERTIES
-        SUFFIX ${Python_EXTENSION}
+        SUFFIX ${Python3_EXTENSION}
         SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
@@ -120,18 +120,18 @@ target_link_options(solver
 
 target_include_directories(solver
     PUBLIC
-        ${Python_INCLUDE_DIRS}
+        ${Python3_INCLUDE_DIRS}
 )
 
 target_link_libraries(solver
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
 )
 
 set_target_properties(solver
     PROPERTIES
-        SUFFIX ${Python_EXTENSION}
+        SUFFIX ${Python3_EXTENSION}
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE

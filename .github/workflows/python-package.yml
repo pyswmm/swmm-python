@@ -5,7 +5,8 @@ on: [push, pull_request]
 env: 
   CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
   CIBW_BUILD: "cp36-* cp37-* cp38-* *-manylinux2014_x86_64"
-  CIBW_BEFORE_BUILD_LINUX: pip install six scikit-build cmake && yum install -y swig
+  CIBW_BEFORE_ALL_LINUX: yum install -y swig
+  CIBW_BEFORE_BUILD_LINUX: pip install scikit-build cmake
 
 
 jobs:
