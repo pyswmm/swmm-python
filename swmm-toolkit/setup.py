@@ -86,14 +86,13 @@ setup(
 
     packages = ["swmm.toolkit"],
     package_dir = {"": "src"},
-
+ 
     zip_safe = False,
     install_requires = ["aenum"],
 
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
     cmake_process_manifest_hook = exclude_files,
-
 
     description='OWA SWMM Python Toolkit',
     long_description=long_description,

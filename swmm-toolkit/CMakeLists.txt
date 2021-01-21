@@ -42,10 +42,10 @@ add_subdirectory(src/swmm/toolkit)
 
 
 # Relocate external libs into install package
-if(APPLE)
+if(NOT MSVC)
     install(CODE "execute_process(
         COMMAND
-            ${PROJECT_SOURCE_DIR}/tools/relocate.zsh ${EXTERN_LIB_PATH}
+            ${PROJECT_SOURCE_DIR}/tools/relocate.$<$<BOOL:${APPLE}>:z>sh ${EXTERN_LIB_PATH}
         WORKING_DIRECTORY
             ${CMAKE_INSTALL_PREFIX}
         )"

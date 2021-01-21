@@ -148,7 +148,6 @@ install(
         "src/swmm/toolkit"
 )
 
-
 # Stages extension library for package build
 install(
     TARGETS
