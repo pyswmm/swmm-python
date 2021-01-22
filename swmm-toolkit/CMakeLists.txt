@@ -26,7 +26,7 @@ project(swmm-toolkit
 
 # Trick here is to perform build in a python virtual environment
 set(Python_FIND_VIRTUALENV FIRST)
-find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module)
+find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module REQUIRED)
 
 
 # SWIG is a build requirement so needs to be installed first
