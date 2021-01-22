@@ -7,6 +7,10 @@
 #  Author:   See AUTHORS
 #
 
+################################################################################
+#################    CMAKELISTS FOR SWMM-TOOLKIT EXT BUILD    ##################
+################################################################################
+
 
 set(CMAKE_SWIG_FLAGS -py3)
 
@@ -16,7 +20,6 @@ if(WIN32)
 else()
     set(LIB_EXT "so")
 endif()
-
 set(Python3_EXTENSION ".${Python3_SOABI}.${LIB_EXT}")
 
 
@@ -29,7 +32,7 @@ endif()
 
 # Inserting line continuation '\' in this long path string breaks wheel repair
 set(PACKAGE_RPATH 
-    "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
+    "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
 )
 
 
@@ -50,6 +53,7 @@ swig_add_library(output
     SOURCES
         output.i
 )
+
 
 target_link_options(output
     PUBLIC
@@ -113,6 +117,7 @@ swig_add_library(solver
         solver.i
 )
 
+
 target_link_options(solver
     PUBLIC
         $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
@@ -140,7 +145,7 @@ set_target_properties(solver
 )
 
 
-# Stages extension module for package build
+# Stages python module for package build
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"

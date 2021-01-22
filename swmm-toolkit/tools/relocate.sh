@@ -20,3 +20,9 @@ fi
 
 echo "INFO: Relocating ... $1"
 
+base=${1##*/}
+chmod 755 extern/${base}
+
+
+# Changes load path for lib in libswmm5
+patchelf --set-rpath '$ORIGIN/FKY' lib/libswmm5.so/*

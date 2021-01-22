@@ -7,6 +7,9 @@
 #  Author:     See AUTHORS
 #
 
+################################################################################
+##################    CMAKELISTS FOR SWMM-TOOLKIT PROJECT    ###################
+################################################################################
 
 cmake_minimum_required (VERSION 3.17)
 
@@ -16,38 +19,39 @@ project(swmm-toolkit
 )
 
 
-find_package(PythonExtensions REQUIRED)
-    message(STATUS "PYTHON_PREFIX=${PYTHON_PREFIX}")
+# TODO: Figure out how to use this
+#find_package(PythonExtensions REQUIRED)
+#message(STATUS "PYTHON_PREFIX=${PYTHON_PREFIX}")
 
+
+# Trick here is to perform build in a python virtual environment
 set(Python_FIND_VIRTUALENV FIRST)
-#set(Python3_ROOT_DIR ${PYTHON_PREFIX})
-#set(Python3_EXECUTABLE ${PYTHON_PREFIX}/bin)
-#set(Python3_LIBRARY ${PYTHON_PREFIX}/lib)
-#set(Python3_INCLUDE_DIRS ${PYTHON_PREFIX}/include)
+find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module)
 
-set(CMAKE_FIND_DEBUG_MODE TRUE)
-    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module)
-set(CMAKE_FIND_DEBUG_MODE FALSE)
 
+# SWIG is a build requirement so needs to be installed first
 find_package(SWIG REQUIRED)
 cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
 
-add_subdirectory(swmm-solver)
+# This gets passed down the project tree to trigger rpath configuration
+option(BUILD_WHEEL "Configure for python wheel build" ON)
 
+
+add_subdirectory(swmm-solver)
 
 add_subdirectory(src/swmm/toolkit)
 
 
 # Relocate external libs into install package
-if(NOT MSVC)
-    install(CODE "execute_process(
-        COMMAND
-            ${PROJECT_SOURCE_DIR}/tools/relocate.$<$<BOOL:${APPLE}>:z>sh ${EXTERN_LIB_PATH}
-        WORKING_DIRECTORY
-            ${CMAKE_INSTALL_PREFIX}
-        )"
-    )
-endif()
+#if(NOT MSVC)
+#    install(CODE "execute_process(
+#        COMMAND
+#            ${PROJECT_SOURCE_DIR}/tools/relocate.$<$<BOOL:${APPLE}>:z>sh ${EXTERN_LIB_PATH}
+#        WORKING_DIRECTORY
+#            ${CMAKE_INSTALL_PREFIX}
+#        )"
+#    )
+#endif()

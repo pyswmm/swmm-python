@@ -11,11 +11,12 @@
 #    1 - Path to library
 #
 
-echo "INFO: Relocating ... $1"
-
 if [[ -z "$1" ]]; then
     echo "ERROR: Required argument is missing"; return 1
 fi
+
+echo "INFO: Relocating ... $1"
+
 
 chmod 755 extern/$1:t
 
