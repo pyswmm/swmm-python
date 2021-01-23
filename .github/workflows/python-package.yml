@@ -64,6 +64,11 @@ jobs:
           python-version: ${{ matrix.py }}
        
       - name: Configure python venv
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          python -m venv ./build-env
+          .\build-env\Scripts\Activate.ps1          
+      - if: ${{ contains(matrix.os, 'macos') }}
         run: |
           python -m venv ./build-env
           source ./build-env/bin/activate
