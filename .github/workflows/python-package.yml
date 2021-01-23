@@ -37,13 +37,12 @@ jobs:
            path: ./wheelhouse/*.whl
 
 
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  build_wheels_windows:
+    name: Windows ${{ matrix.py }}
+    runs-on: windows-2016
     strategy:
         fail-fast: false
         matrix:
-          os: [windows-2016, macos-10.15]
           py: [3.6, 3.7, 3.8]
 
     steps:
@@ -53,9 +52,48 @@ jobs:
           submodules: true
       
       - name: Install build requirements
-        if: ${{ contains(matrix.os, 'windows') }}
         run: choco install swig
-      - if: ${{ contains(matrix.os, 'macos') }}
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.py }}
+       
+      - name: Configure python venv
+        run: python -m venv ./build-env
+        
+      - name: Build wheel 
+        run: |
+          ./build-env/Scripts/Activate.ps1
+          pip wheel --wheel-dir=./dist ./swmm-toolkit          
+
+      - name: Test wheel
+        run: |
+          pip install pytest numpy
+          pip install --no-index --find-links=./dist swmm-toolkit
+          pytest
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/swmm_toolkit*.whl
+
+
+  build_wheels_macos:
+    name: MacOS ${{ matrix.py }}
+    runs-on: macos-10.15
+    strategy:
+        fail-fast: false
+        matrix:
+          py: [3.6, 3.7, 3.8]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - name: Install build requirements
         run: brew install libomp swig
 
       - name: Install Python
@@ -67,11 +105,6 @@ jobs:
         run: python -m venv ./build-env
         
       - name: Build wheel 
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: |
-          ./build-env/Scripts/Activate.ps1
-          pip wheel --wheel-dir=./dist ./swmm-toolkit          
-      - if: ${{ contains(matrix.os, 'macos') }}
         run: |
           source ./build-env/bin/activate
           pip wheel --wheel-dir=./dist ./swmm-toolkit
