@@ -64,17 +64,17 @@ jobs:
           python-version: ${{ matrix.py }}
        
       - name: Configure python venv
+        run: python -m venv ./build-env
+        
+      - name: Build wheel 
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
-          python -m venv ./build-env
-          .\build-env\Scripts\Activate.ps1          
+          ./build-env/Scripts/Activate.ps1
+          pip wheel --wheel-dir=./dist ./swmm-toolkit          
       - if: ${{ contains(matrix.os, 'macos') }}
         run: |
-          python -m venv ./build-env
           source ./build-env/bin/activate
-
-      - name: Build wheel
-        run: pip wheel --wheel-dir=./dist ./swmm-toolkit
+          pip wheel --wheel-dir=./dist ./swmm-toolkit
 
       #- name: Test wheel
       #  run: |
