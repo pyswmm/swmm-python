@@ -20,7 +20,7 @@ if(WIN32)
 else()
     set(LIB_EXT "so")
 endif()
-set(Python3_EXTENSION ".${Python3_SOABI}.${LIB_EXT}")
+set(PYTHON_SUFFIX ".${Python3_SOABI}.${LIB_EXT}")
 
 
 # Location of package at runtime on MacOS/Linux
@@ -73,7 +73,7 @@ target_link_libraries(output
 
 set_target_properties(output
     PROPERTIES
-        SUFFIX ${Python3_EXTENSION}
+        SUFFIX ${PYTHON_SUFFIX}
         SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
@@ -136,7 +136,7 @@ target_link_libraries(solver
 
 set_target_properties(solver
     PROPERTIES
-        SUFFIX ${Python3_EXTENSION}
+        SUFFIX ${PYTHON_SUFFIX}
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
