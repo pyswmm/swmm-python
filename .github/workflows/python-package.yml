@@ -62,6 +62,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.py }}
+       
+      - name: Configure python venv
         run: |
           python -m venv ./build-env
           source ./build-env/bin/activate
