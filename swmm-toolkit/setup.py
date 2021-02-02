@@ -56,6 +56,13 @@ class CleanCommand(Command):
         p.wait()
 
 
+# Set up location of wheel libraries depending on build platform
+if platform_system == "Windows":
+    package_dir = {"swmm_toolkit":"bin", "swmm.toolkit": "src/swmm/toolkit"}
+else:
+    package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"}
+
+
 # Set Platform specific cmake args here
 if platform_system == "Windows":
     cmake_args = ["-GVisual Studio 15 2017 Win64"]
@@ -74,7 +81,6 @@ def exclude_files(cmake_manifest):
     return list(filter(lambda name: not (name.endswith(exclude_pats)), cmake_manifest))
 
 
-
 # Get the long description from the README file
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
@@ -85,7 +91,7 @@ setup(
     version = "0.8.1",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
-    package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"},
+    package_dir = package_dir,
  
     zip_safe = False,
     install_requires = ["aenum"],
