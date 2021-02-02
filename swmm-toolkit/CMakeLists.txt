@@ -19,16 +19,16 @@ project(swmm-toolkit
 )
 
 
-# TODO: Figure out how to use this
-#find_package(PythonExtensions REQUIRED)
-#message(STATUS "PYTHON_PREFIX=${PYTHON_PREFIX}")
-
-
 # Trick here is to perform build in a python virtual environment
 set(Python_FIND_VIRTUALENV FIRST)
 set(CMAKE_FIND_DEBUG_MODE TRUE)
-find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module REQUIRED)
+if(NOT MSVC)
+    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module REQUIRED)
+else()
+    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development REQUIRED)
+endif()
 set(CMAKE_FIND_DEBUG_MODE FALSE)
+
 
 # SWIG is a build requirement so needs to be installed first
 find_package(SWIG REQUIRED)
