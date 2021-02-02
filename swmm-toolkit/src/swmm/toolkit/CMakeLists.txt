@@ -30,9 +30,9 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-# Inserting line continuation '\' in this long path string breaks wheel repair
+# Set up rpath on MacOS and Linux
 set(PACKAGE_RPATH 
-    "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
+    "${LIB_ROOT}/../../swmm_toolkit/;${LIB_ROOT}/../../swmm_toolkit.libs/"
 )
 
 
@@ -103,6 +103,7 @@ install(
 ####################    SOLVER TARGET    ####################
 #############################################################
 
+
 set_property(SOURCE solver.i
     PROPERTY
         USE_TARGET_INCLUDE_DIRECTORIES ON
@@ -132,6 +133,7 @@ target_link_libraries(solver
     PUBLIC
         $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
+        OpenMP::OpenMP_C
 )
 
 set_target_properties(solver

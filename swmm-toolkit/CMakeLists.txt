@@ -35,12 +35,18 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
+find_package(OpenMP REQUIRED)
 
 # This gets passed down the project tree to trigger rpath configuration
 option(BUILD_WHEEL "Configure for python wheel build" ON)
 
 
 add_subdirectory(swmm-solver)
+#set(swmm5_DIR ${CMAKE_SOURCE_DIR}/swmm-solver/build/install/cmake)
+#find_package(swmm5)
+
+#set(swmm-output_DIR ${CMAKE_SOURCE_DIR}/swmm-solver/build/install/cmake)
+#find_package(swmm-output)
 
 add_subdirectory(src/swmm/toolkit)
 

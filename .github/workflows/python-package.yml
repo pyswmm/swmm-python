@@ -38,7 +38,7 @@ jobs:
 
 
   build_wheels_windows:
-    name: Windows ${{ matrix.py }}
+    name: Windows Python ${{ matrix.py }}
     runs-on: windows-2016
     strategy:
         fail-fast: false
@@ -80,7 +80,7 @@ jobs:
 
 
   build_wheels_macos:
-    name: MacOS ${{ matrix.py }}
+    name: MacOS Python ${{ matrix.py }}
     runs-on: macos-10.15
     strategy:
         fail-fast: false

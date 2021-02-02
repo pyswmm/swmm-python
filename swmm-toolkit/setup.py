@@ -81,11 +81,11 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 
 setup(
-    name = "swmm-toolkit",
+    name = "swmm_toolkit",
     version = "0.8.1",
 
-    packages = ["swmm.toolkit"],
-    package_dir = {"": "src"},
+    packages = ["swmm_toolkit", "swmm.toolkit"],
+    package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"},
  
     zip_safe = False,
     install_requires = ["aenum"],
