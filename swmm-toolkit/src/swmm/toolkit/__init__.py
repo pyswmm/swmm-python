@@ -33,7 +33,7 @@ import platform
 
 # Adds directory containing swmm libraries to path
 if platform.system() == "Windows":
-    libdir = os.path.join(os.path.dirname(__file__), "../../../../bin")
+    libdir = os.path.join(os.path.dirname(__file__), "../../swmm_toolkit")
 
     if hasattr(os, 'add_dll_directory'):
         os.add_dll_directory(libdir)
