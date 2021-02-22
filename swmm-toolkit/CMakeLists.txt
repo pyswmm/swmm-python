@@ -43,11 +43,6 @@ option(BUILD_WHEEL "Configure for python wheel build" ON)
 
 
 add_subdirectory(swmm-solver)
-#set(swmm5_DIR ${CMAKE_SOURCE_DIR}/swmm-solver/build/install/cmake)
-#find_package(swmm5)
-
-#set(swmm-output_DIR ${CMAKE_SOURCE_DIR}/swmm-solver/build/install/cmake)
-#find_package(swmm-output)
 
 add_subdirectory(src/swmm/toolkit)
 
