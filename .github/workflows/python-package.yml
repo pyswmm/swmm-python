@@ -50,8 +50,8 @@ jobs:
 
       - name: Install Python
         uses: actions/setup-python@v2
-          with:
-            python-version: ${{ matrix.py }}
+        with:
+          python-version: ${{ matrix.py }}
 
       - name: Install build requirements
         if: ${{ contains(matrix.os, 'windows') }}
