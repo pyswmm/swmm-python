@@ -3,17 +3,44 @@ name: Build Wheels
 on: [push, pull_request]
 
 env:
-  CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014"
-  CIBW_BUILD: "cp36-* cp37-* cp38-* *-manylinux_x86_64"
-  CIBW_SKIP: "pp* cp27-* cp34-* cp35-* cp39-* *-win32 *_i686 *_ppc64le *_s390x"
-  CIBW_BEFORE_ALL_LINUX: yum install -y swig
-  CIBW_BEFORE_BUILD_LINUX: pip install scikit-build cmake
+  DOCKER_IMAGE: dockcross/manylinux2014-x64
 
 
 jobs:
-  build_wheels_linux:
+  build_linux_wheels:
     name: Build wheels on linux
     runs-on: ubuntu-18.04
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install
+        run: |
+          docker pull $DOCKER_IMAGE
+          docker run --rm $DOCKER_IMAGE > ./dockcross
+          chmod +x ./dockcross
+
+      - name: Script
+        run: ./dockcross swmm-toolkit/tools/build-wheels.sh
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/swmm_toolkit*.whl
+
+
+
+jobs:
+  build_win-mac_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2016, macos-10.15]
+        py: [3.6, 3.7, 3.8, 3.9]
 
     steps:
        - name: Checkout repo
@@ -21,101 +48,31 @@ jobs:
          with:
            submodules: true
 
-       - name: Install Python
-         uses: actions/setup-python@v2
-         with:
-           python-version: '3.7'
+        - name: Install Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: ${{ matrix.py }}
 
-       - name: Install cibuildwheel
-         run: python -m pip install cibuildwheel==1.7.4
+        - name: Install build requirements
+          if: ${{ contains(matrix.os, 'windows') }}
+          run: choco install swig
 
-       - name: Build wheels
-         run: python -m cibuildwheel --output-dir wheelhouse swmm-toolkit
+        - if: ${{ contains(matrix.os, 'macos') }}
+          run: brew install libomp swig
 
-       - uses: actions/upload-artifact@v2
-         with:
-           path: ./wheelhouse/*.whl
+        - name: Build wheel
+          working-directory: ./swmm-toolkit
+          run: |
+          pip install setuptools wheel scikit-build cmake
+          python setup.py bdist_wheel
 
+        - name: Test wheel
+          run: |
+            pip install pytest numpy
+            pip install --no-index --find-links=./dist swmm_toolkit
+            pytest
 
-  build_wheels_windows:
-    name: Windows Python ${{ matrix.py }}
-    runs-on: windows-2016
-    strategy:
-        fail-fast: false
-        matrix:
-          py: [3.6, 3.7, 3.8]
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-      
-      - name: Install build requirements
-        run: choco install swig
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.py }}
-       
-      - name: Configure python venv
-        run: python -m venv ./build-env
-        
-      - name: Build wheel 
-        run: |
-          ./build-env/Scripts/Activate.ps1
-          pip wheel --wheel-dir=./dist ./swmm-toolkit          
-
-      - name: Test wheel
-        run: |
-          pip install pytest numpy
-          pip install --no-index --find-links=./dist swmm-toolkit
-          pytest
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: ./dist/swmm_toolkit*.whl
-
-
-  build_wheels_macos:
-    name: MacOS Python ${{ matrix.py }}
-    runs-on: macos-10.15
-    strategy:
-        fail-fast: false
-        matrix:
-          py: [3.6, 3.7, 3.8]
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-      
-      - name: Install build requirements
-        run: brew install libomp swig
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.py }}
-       
-      - name: Configure python venv
-        run: python -m venv ./build-env
-        
-      - name: Build wheel 
-        run: |
-          source ./build-env/bin/activate
-          pip wheel --wheel-dir=./dist ./swmm-toolkit
-
-      - name: Test wheel
-        run: |
-          pip install pytest numpy
-          pip install --no-index --find-links=./dist swmm-toolkit
-          pytest
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: ./dist/swmm_toolkit*.whl
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            path: ./dist/swmm_toolkit*.whl
