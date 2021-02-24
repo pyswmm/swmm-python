@@ -37,8 +37,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-    defaults: 
-      working-directory: ./swmm-toolkit
+    defaults:
+      run:  
+        working-directory: ./swmm-toolkit
       
       matrix:
         os: [windows-2016, macos-10.15]
