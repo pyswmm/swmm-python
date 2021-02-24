@@ -43,36 +43,36 @@ jobs:
         py: [3.6, 3.7, 3.8, 3.9]
 
     steps:
-       - name: Checkout repo
-         uses: actions/checkout@v2
-         with:
-           submodules: true
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
 
-        - name: Install Python
-          uses: actions/setup-python@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
           with:
             python-version: ${{ matrix.py }}
 
-        - name: Install build requirements
-          if: ${{ contains(matrix.os, 'windows') }}
-          run: choco install swig
+      - name: Install build requirements
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: choco install swig
 
-        - if: ${{ contains(matrix.os, 'macos') }}
-          run: brew install libomp swig
+      - if: ${{ contains(matrix.os, 'macos') }}
+        run: brew install libomp swig
 
-        - name: Build wheel
-          working-directory: ./swmm-toolkit
-          run: |
+      - name: Build wheel
+        working-directory: ./swmm-toolkit
+        run: |
           pip install setuptools wheel scikit-build cmake
           python setup.py bdist_wheel
 
-        - name: Test wheel
-          run: |
-            pip install pytest numpy
-            pip install --no-index --find-links=./dist swmm_toolkit
-            pytest
+      - name: Test wheel
+        run: |
+          pip install pytest numpy
+          pip install --no-index --find-links=./dist swmm_toolkit
+          pytest
 
-        - name: Upload artifacts
-          uses: actions/upload-artifact@v2
-          with:
-            path: ./dist/swmm_toolkit*.whl
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/swmm_toolkit*.whl
