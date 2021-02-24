@@ -31,8 +31,6 @@ jobs:
           path: ./dist/swmm_toolkit*.whl
 
 
-
-jobs:
   build_win-mac_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
