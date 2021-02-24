@@ -31,6 +31,7 @@ jobs:
           path: ./dist/swmm_toolkit*.whl
 
 
+
   build_win-mac_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -64,7 +65,7 @@ jobs:
           python-version: ${{ matrix.py }}
 
       - name: Install build requirements
-        run: ${{matix.build-reqs}}
+        run: ${{matrix.build-reqs}}
 
       - name: Build wheel
         working-directory: ./swmm-toolkit
