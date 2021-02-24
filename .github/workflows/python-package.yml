@@ -35,12 +35,11 @@ jobs:
   build_win-mac_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
     defaults:
       run:  
         working-directory: ./swmm-toolkit
-      
+    strategy:
+      fail-fast: false
       matrix:
         os: [windows-2016, macos-10.15]
         py: [3.6, 3.7, 3.8, 3.9]
