@@ -37,6 +37,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+    defaults: 
+      working-directory: ./swmm-toolkit
       
       matrix:
         os: [windows-2016, macos-10.15]
@@ -46,12 +48,10 @@ jobs:
           - os: windows-2016
             build-reqs: choco install swig
             activate: ./build-env/Scripts/activate
-            move:  move ./dist/ ../dist/
             
           - os: macos-10.15
             build-reqs: brew install libomp swig
             activate: source ./build-env/bin/activate
-            move: mv -f ./dist/*.whl ../dist/
                 
     steps:
       - name: Checkout repo
@@ -68,13 +68,11 @@ jobs:
         run: ${{matrix.build-reqs}}
 
       - name: Build wheel in virtual env
-        working-directory: ./swmm-toolkit
         run: |
           python -m venv --clear ./build-env
           ${{matrix.activate}}
           python -m pip install -r build-requirements.txt
           python setup.py bdist_wheel
-          ${{matrix.move}}
           deactivate
           
       - name: Test wheel
