@@ -1,0 +1,6 @@
+
+
+
+pytest 
+numpy 
+aenum==2.2.4
