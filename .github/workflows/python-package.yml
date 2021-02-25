@@ -28,7 +28,7 @@ jobs:
       
       - uses: actions/upload-artifact@v2
         with:
-          path: ./dist/swmm_toolkit*.whl
+          path: ./dist/swmm_toolkit-*-manylinux2014_x86_64.whl
 
 
 
@@ -41,16 +41,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2016, macos-10.15]
         py: [3.6, 3.7, 3.8, 3.9]
-        
         include:
           - os: windows-2016
-            build-reqs: choco install swig
+            sys-pkgs: choco install swig
             activate: ./build-env/Scripts/activate
             
           - os: macos-10.15
-            build-reqs: brew install libomp swig
+            system_pkgs: brew install libomp swig
             activate: source ./build-env/bin/activate
                 
     steps:
@@ -64,8 +62,8 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
 
-      - name: Install build requirements
-        run: ${{matrix.build-reqs}}
+      - name: Install required system packages
+        run: ${{matrix.sys_pkgs}}
 
       - name: Build wheel in virtual env
         run: |
