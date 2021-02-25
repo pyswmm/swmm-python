@@ -45,7 +45,7 @@ jobs:
         py: [3.6, 3.7, 3.8, 3.9]
         include:
           - os: windows-2016
-            sys-pkgs: choco install swig
+            sys_pkgs: choco install swig
             activate: ./build-env/Scripts/activate
             
           - os: macos-10.15
