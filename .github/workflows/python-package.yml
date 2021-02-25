@@ -41,6 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [windows-2016, macos-10.15]
         py: [3.6, 3.7, 3.8, 3.9]
         include:
           - os: windows-2016
@@ -48,7 +49,7 @@ jobs:
             activate: ./build-env/Scripts/activate
             
           - os: macos-10.15
-            system_pkgs: brew install libomp swig
+            sys_pkgs: brew install libomp swig
             activate: source ./build-env/bin/activate
                 
     steps:
