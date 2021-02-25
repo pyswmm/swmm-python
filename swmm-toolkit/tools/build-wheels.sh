@@ -59,4 +59,5 @@ for PYBIN in /opt/python/*/bin; do
     fi
 done
 
+# Cleanup 
 rm -rf ./test-env
