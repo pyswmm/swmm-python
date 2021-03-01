@@ -18,7 +18,7 @@ for PYBIN in /opt/python/*/bin; do
         source ./build-env/bin/activate
 
         # Install build requirements
-        python -m pip install setuptools wheel scikit-build cmake
+        python -m pip install -r build-requirements.txt
 
         # Build wheel
         python setup.py bdist_wheel
@@ -50,7 +50,7 @@ for PYBIN in /opt/python/*/bin; do
         ${PYBIN}/python -m venv --clear ./test-env
         source ./test-env/bin/activate
 
-        python -m pip install pytest numpy aenum==2.2.4
+        python -m pip install -r swmm-toolkit/test-requirements.txt
 
         python -m pip install --verbose --no-index --find-links=./dist swmm_toolkit
         pytest
