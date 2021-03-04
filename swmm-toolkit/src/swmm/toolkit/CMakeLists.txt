@@ -7,6 +7,10 @@
 #  Author:   See AUTHORS
 #
 
+################################################################################
+#################    CMAKELISTS FOR SWMM-TOOLKIT EXT BUILD    ##################
+################################################################################
+
 
 set(CMAKE_SWIG_FLAGS -py3)
 
@@ -16,8 +20,7 @@ if(WIN32)
 else()
     set(LIB_EXT "so")
 endif()
-
-set(Python_EXTENSION ".${Python_SOABI}.${LIB_EXT}")
+set(PYTHON_SUFFIX ".${Python3_SOABI}.${LIB_EXT}")
 
 
 # Location of package at runtime on MacOS/Linux
@@ -27,9 +30,9 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-# Inserting line continuation '\' in this long path string breaks wheel repair
+# Set up rpath on MacOS and Linux
 set(PACKAGE_RPATH 
-    "${LIB_ROOT}/../../../..;${LIB_ROOT}/../../../../extern;${LIB_ROOT}/../../../lib;${LIB_ROOT}/../../swmm_toolkit-${CMAKE_PROJECT_VERSION}.data/data/lib"
+    "${LIB_ROOT}/../../swmm_toolkit/;${LIB_ROOT}/../../swmm_toolkit.libs/"
 )
 
 
@@ -51,6 +54,7 @@ swig_add_library(output
         output.i
 )
 
+
 target_link_options(output
     PUBLIC
         $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
@@ -58,18 +62,18 @@ target_link_options(output
 
 target_include_directories(output
     PUBLIC
-        ${Python_INCLUDE_DIRS}
+        ${Python3_INCLUDE_DIRS}
 )
 
 target_link_libraries(output
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm-output
 )
 
 set_target_properties(output
     PROPERTIES
-        SUFFIX ${Python_EXTENSION}
+        SUFFIX ${PYTHON_SUFFIX}
         SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
@@ -99,6 +103,7 @@ install(
 ####################    SOLVER TARGET    ####################
 #############################################################
 
+
 set_property(SOURCE solver.i
     PROPERTY
         USE_TARGET_INCLUDE_DIRECTORIES ON
@@ -113,6 +118,7 @@ swig_add_library(solver
         solver.i
 )
 
+
 target_link_options(solver
     PUBLIC
         $<$<BOOL:${APPLE}>:-undefineddynamic_lookup>
@@ -120,18 +126,19 @@ target_link_options(solver
 
 target_include_directories(solver
     PUBLIC
-        ${Python_INCLUDE_DIRS}
+        ${Python3_INCLUDE_DIRS}
 )
 
 target_link_libraries(solver
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python::Module>
+        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
+        OpenMP::OpenMP_C
 )
 
 set_target_properties(solver
     PROPERTIES
-        SUFFIX ${Python_EXTENSION}
+        SUFFIX ${PYTHON_SUFFIX}
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
@@ -140,14 +147,13 @@ set_target_properties(solver
 )
 
 
-# Stages extension module for package build
+# Stages python module for package build
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"
     DESTINATION
         "src/swmm/toolkit"
 )
-
 
 # Stages extension library for package build
 install(

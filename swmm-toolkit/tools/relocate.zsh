@@ -11,18 +11,19 @@
 #    1 - Path to library
 #
 
-echo "INFO: Relocating ... $1"
-
 if [[ -z "$1" ]]; then
     echo "ERROR: Required argument is missing"; return 1
 fi
 
-chmod 755 extern/$1:t
+echo "INFO: Relocating ... $1"
+
+
+chmod 755 lib/$1:t
 
 
 # Grabs current path for lib
 IFS=$' '
-TOKEN=($( otool -l extern/$1:t | grep LC_ID_DYLIB -A2 | grep name ))
+TOKEN=($( otool -l lib/$1:t | grep LC_ID_DYLIB -A2 | grep name ))
 LIB_PATH=${TOKEN[2]}
 
 
@@ -33,4 +34,4 @@ install_name_tool -change ${LIB_PATH} @rpath/$1:t src/swmm/toolkit/_solver*.so
 install_name_tool -change ${LIB_PATH} @rpath/$1:t lib/libswmm5.dylib
 
 # Changes id on relocated lib
-install_name_tool -id @rpath/$1:t extern/$1:t
+install_name_tool -id @rpath/$1:t lib/$1:t

@@ -19,7 +19,7 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Sam Hatchett"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.8.0"
+__version__ = "0.8.1"
 __date__ = "December 22, 2020"
 
 __maintainer__ = "Michael Tryby"
@@ -33,7 +33,7 @@ import platform
 
 # Adds directory containing swmm libraries to path
 if platform.system() == "Windows":
-    libdir = os.path.join(os.path.dirname(__file__), "../../../../bin")
+    libdir = os.path.join(os.path.dirname(__file__), "../../swmm_toolkit")
 
     if hasattr(os, 'add_dll_directory'):
         os.add_dll_directory(libdir)
