@@ -194,10 +194,10 @@ class ElementType(IntEnum, start = 0):
     :attr:`~POLLUT`
     """
     SUBCATCH = 0
-    NODE = 2
-    LINK = 3
-    SYSTEM = 4
-    POLLUT = 5
+    NODE = 1
+    LINK = 2
+    SYSTEM = 3
+    POLLUT = 4
 
 
 class Time(Enum, start = 0):
