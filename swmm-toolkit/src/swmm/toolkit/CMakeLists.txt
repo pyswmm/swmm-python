@@ -133,7 +133,7 @@ target_link_libraries(solver
     PUBLIC
         $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
-        OpenMP::OpenMP_C
+        $<$<BOOL:${OpenMP_FOUND}>:OpenMP::OpenMP_C>
 )
 
 set_target_properties(solver

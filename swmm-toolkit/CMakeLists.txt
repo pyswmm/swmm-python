@@ -36,7 +36,11 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
-find_package(OpenMP REQUIRED)
+
+find_package(OpenMP 
+	OPTIONAL_COMPONENTS
+		C
+)
 
 # This gets passed down the project tree to trigger rpath configuration
 option(BUILD_WHEEL "Configure for python wheel build" ON)
@@ -48,7 +52,7 @@ add_subdirectory(src/swmm/toolkit)
 
 
 # Relocate external libs into install package
-if(APPLE)
+if(APPLE AND OpenMP_FOUND)
    install(CODE "execute_process(
        COMMAND
            ${PROJECT_SOURCE_DIR}/tools/relocate.zsh ${EXTERN_LIB_PATH}

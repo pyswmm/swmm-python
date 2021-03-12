@@ -94,7 +94,7 @@ setup(
     package_dir = package_dir,
  
     zip_safe = False,
-    install_requires = ["aenum==2.2.6"],
+    install_requires = ["aenum==3.0.0"],
 
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
