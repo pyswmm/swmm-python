@@ -21,13 +21,13 @@ project(swmm-toolkit
 
 # Trick here is to perform build in a python virtual environment
 set(Python_FIND_VIRTUALENV FIRST)
-set(CMAKE_FIND_DEBUG_MODE TRUE)
+#set(CMAKE_FIND_DEBUG_MODE TRUE)
 if(NOT MSVC)
     find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module REQUIRED)
 else()
     find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development REQUIRED)
 endif()
-set(CMAKE_FIND_DEBUG_MODE FALSE)
+#set(CMAKE_FIND_DEBUG_MODE FALSE)
 
 
 # SWIG is a build requirement so needs to be installed first
@@ -37,10 +37,15 @@ cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
 
-find_package(OpenMP 
-	OPTIONAL_COMPONENTS
-		C
-)
+if (APPLE)
+    include(./extern/openmp.cmake)
+else()
+    find_package(OpenMP
+        OPTIONAL_COMPONENTS
+            C
+    )
+endif()
+
 
 # This gets passed down the project tree to trigger rpath configuration
 option(BUILD_WHEEL "Configure for python wheel build" ON)
@@ -52,12 +57,12 @@ add_subdirectory(src/swmm/toolkit)
 
 
 # Relocate external libs into install package
-if(APPLE AND OpenMP_FOUND)
-   install(CODE "execute_process(
-       COMMAND
-           ${PROJECT_SOURCE_DIR}/tools/relocate.zsh ${EXTERN_LIB_PATH}
-       WORKING_DIRECTORY
-           ${CMAKE_INSTALL_PREFIX}
-       )"
-   )
-endif()
+#if(APPLE AND OpenMP_FOUND)
+#   install(CODE "execute_process(
+#       COMMAND
+#           ${PROJECT_SOURCE_DIR}/tools/relocate.zsh ${EXTERN_LIB_PATH}
+#       WORKING_DIRECTORY
+#           ${CMAKE_INSTALL_PREFIX}
+#       )"
+#   )
+#endif()
