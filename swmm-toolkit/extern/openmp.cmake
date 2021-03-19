@@ -19,7 +19,7 @@
 include(FetchContent)
 
 
-FetchContent_Declare(openmp
+FetchContent_Declare(OpenMP
     URL
         https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/openmp-11.1.0.src.tar.xz
     URL_HASH
@@ -29,7 +29,9 @@ FetchContent_Declare(openmp
 set(OPENMP_STANDALONE_BUILD TRUE)
 set(LIBOMP_INSTALL_ALIASES OFF)
 
-FetchContent_MakeAvailable(openmp)
+FetchContent_MakeAvailable(OpenMP)
+set(OpenMP_AVAILABLE TRUE)
+
 
 target_link_directories(omp
     PUBLIC
