@@ -1,7 +1,8 @@
 
 
 
-setuptools 
-wheel 
-scikit-build 
+setuptools
+wheel
+scikit-build
 cmake
+ninja

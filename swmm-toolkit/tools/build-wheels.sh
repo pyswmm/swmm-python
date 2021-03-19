@@ -1,4 +1,13 @@
 #!/bin/bash
+
+#
+#  build-wheels.sh - in a manyLinux docker image using dock10cross
+#
+#  Date created: Feb 2, 2021
+#
+#  Author:       See AUTHORS
+#
+
 set -e -x
 
 
@@ -59,5 +68,5 @@ for PYBIN in /opt/python/*/bin; do
     fi
 done
 
-# Cleanup 
+# Cleanup
 rm -rf ./test-env

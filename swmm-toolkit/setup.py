@@ -68,7 +68,7 @@ if platform_system == "Windows":
     cmake_args = ["-GVisual Studio 15 2017 Win64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-GXcode","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"]
+    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.9"]
 
 else:
     cmake_args = ["-GUnix Makefiles"]
@@ -92,7 +92,7 @@ setup(
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
- 
+
     zip_safe = False,
     install_requires = ["aenum==3.0.0"],
 
@@ -104,7 +104,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/OpenWaterAnalytics/swmm-python',
-    
+
     author='See AUTHORS',
     maintainer_email='tryby.michael@epa.gov',
     license='CC0',
