@@ -23,6 +23,10 @@ REPORT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.rpt')
 OUTPUT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.out')
 INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'temp_nodata.inp')
 
+INPUT_FILE_UNICODE = os.path.join(DATA_PATH, 'test_Söderhamn.inp')
+TEMP_REPORT_FILE = os.path.join(DATA_PATH, 'temp_example.rpt')
+TEMP_OUTPUT_FILE = os.path.join(DATA_PATH, 'temp_example.out')
+
 
 def test_run():
     solver.swmm_run(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
@@ -31,6 +35,10 @@ def test_run():
 def test_openclose():
     solver.swmm_open(INPUT_FILE_EXAMPLE_1, REPORT_FILE_TEST_1, OUTPUT_FILE_TEST_1)
     solver.swmm_close()
+
+
+def test_unicode():
+    solver.swmm_run(INPUT_FILE_UNICODE, TEMP_REPORT_FILE, TEMP_OUTPUT_FILE)
 
 
 def test_errorhandling():
