@@ -5,7 +5,7 @@
  *  Updated:    8/17/2020
  *
  *  Author:     See AUTHORS
- * 
+ *
 */
 
 
@@ -43,8 +43,8 @@
 %apply int *OUTPUT {
     int *index,
     int *value,
-    int *count, 
-    int *node1, 
+    int *count,
+    int *node1,
     int *node2,
     int *out_index,
     int *condition,
@@ -66,7 +66,7 @@
 
 %apply float *OUTPUT {
     float *runoffErr,
-    float *flowErr, 
+    float *flowErr,
     float *qualErr
 }
 
@@ -85,9 +85,26 @@
 
 %apply char **OUTCHAR {
     char **id,
-    char **major, 
-    char **minor, 
+    char **major,
+    char **minor,
     char **patch
+}
+
+/* TYPEMAP FOR UNICODE TO BYTE STRING CONVERSION */
+%typemap(in) UnicodeTypeIn (char *buf, int alloc, int res) {
+    char *buf = 0;
+    int alloc = 0;
+    int res;
+
+    PyObject *o = PyUnicode_AsEncodedString($input, "latin-1", NULL);
+    res = SWIG_AsCharPtrAndSize(swig_obj[$argnum - 1], &buf, NULL, &alloc);
+    arg$argnum = (char *)(buf);
+}
+
+%apply UnicodeTypeIn {
+    const char *f1,
+    const char *f2,
+    const char *f3
 }
 
 

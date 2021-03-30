@@ -48,8 +48,8 @@ class CleanCommand(Command):
             exe = "/bin/bash"
 
         elif platform_system == "Darwin":
-            cmd = ['setopt extended_glob nullglob; rm -vrf _skbuild dist **/build .pytest_cache \
-            **/__pycache__ **/*.egg-info **/data/(^test_*).* **/data/en* **/.DS_Store MANIFEST']
+            cmd = ['setopt nullglob; rm -vrf _skbuild dist ./*.egg-info \
+            MANIFEST ./.pytest_cache ./tests/__pycache__ tests/data/temp_*.*']
             exe = '/bin/zsh'
 
         p = subprocess.Popen(cmd, shell=True, executable=exe)

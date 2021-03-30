@@ -23,3 +23,5 @@ swmm-toolkit/docs/_build
 
 swmm-toolkit/tests/data/*
 !test_*.*
+
+build-env/
