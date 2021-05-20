@@ -19,6 +19,7 @@
 %module(package="swmm.toolkit", docstring=SOLVER_MODULE_DOCS) solver
 %{
 #define SWIG_FILE_WITH_INIT
+#define SWIG_PYTHON_STRICT_BYTE_CHAR
 
 #include "swmm5.h"
 #include "toolkit.h"

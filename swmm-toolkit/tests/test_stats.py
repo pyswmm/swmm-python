@@ -15,9 +15,9 @@ from swmm.toolkit import solver, shared_enum
 
 
 DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'test_Example1.inp')
-REPORT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.rpt')
-OUTPUT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.out')
+INPUT_FILE_EXAMPLE_1 = os.path.join(DATA_PATH, 'test_Example1.inp').encode('latin-1')
+REPORT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.rpt').encode('latin-1')
+OUTPUT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.out').encode('latin-1')
 
 
 @pytest.fixture()
@@ -48,7 +48,7 @@ def test_node_get_stats(before_end):
 
 
 def test_storage_get_stats(before_end):
-    node_index = solver.project_get_index(shared_enum.ObjectType.NODE, 'SU1')
+    node_index = solver.project_get_index(shared_enum.ObjectType.NODE, 'SU1'.encode('latin-1'))
     while True:
         time = solver.swmm_step()
         if time == 0:
@@ -61,7 +61,7 @@ def test_storage_get_stats(before_end):
 def test_outfall_stats(before_end):
     id = '18'
 
-    index = solver.project_get_index(shared_enum.ObjectType.NODE, id)
+    index = solver.project_get_index(shared_enum.ObjectType.NODE, id.encode('latin-1'))
 
     stats = solver.outfall_get_stats(index)
     assert stats.totalLoad != None
