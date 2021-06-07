@@ -32,7 +32,7 @@ endif()
 
 # Set up rpath on MacOS and Linux
 set(PACKAGE_RPATH
-    "${LIB_ROOT}/../../swmm_toolkit/;${LIB_ROOT}/../../swmm_toolkit.libs/"
+    "${LIB_ROOT}/../../swmm_toolkit/"
 )
 
 
