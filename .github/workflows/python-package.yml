@@ -29,7 +29,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: ./dist/swmm_toolkit-*.manylinux2014_x86_64.whl
+          path: ./dist/*.manylinux2014_x86_64.whl
 
 
 
