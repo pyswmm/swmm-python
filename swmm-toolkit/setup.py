@@ -2,7 +2,7 @@
 # setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    Jul 2, 2018
-# Updated:    May 19, 2021
+# Updated:    Jun 7, 2021
 #
 #  Author:    See AUTHORS
 #

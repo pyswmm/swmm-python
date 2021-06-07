@@ -2,9 +2,9 @@
 # CMakeLists.txt - CMake configuration file for swmm-toolkit python package
 #
 # Created:   Feb 6, 2020
-# Modified   May 19, 2021
+# Modified   Jun 7, 2021
 #
-#  Author:     See AUTHORS
+#  Author:   See AUTHORS
 #
 
 ################################################################################
