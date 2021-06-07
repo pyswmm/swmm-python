@@ -7,37 +7,6 @@ env:
 
 
 jobs:
-  build_nrtest_plugin:
-    name: Build plugin wheel
-    runs-on: macos-10.15
-    defaults:
-      run:
-        working-directory: ./nrtest-swmm
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-
-      - name: Build wheel
-        run: |
-            pip install wheel
-            python setup.py bdist_wheel
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: nrtest-swmm/dist/*.whl
-
-
-
-jobs:
   build_linux_wheels:
     name: Build wheels on linux
     runs-on: ubuntu-18.04
