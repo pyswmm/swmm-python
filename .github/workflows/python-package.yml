@@ -2,15 +2,57 @@ name: Build Wheels
 
 on: [push, pull_request]
 
+env:
+  DOCKER_IMAGE: dockcross/manylinux2014-x64
+
+
 jobs:
-  build_wheels:
+  build_linux_wheels:
+    name: Build wheels on linux
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install
+        run: |
+          docker pull $DOCKER_IMAGE
+          docker run --rm $DOCKER_IMAGE > ./dockcross
+          chmod +x ./dockcross
+
+      - name: Script
+        run: ./dockcross swmm-toolkit/tools/build-wheels.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/*.manylinux2014_x86_64.whl
+
+
+
+  build_win-mac_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./swmm-toolkit
+
     strategy:
-        fail-fast: false
-        matrix:
-          os: [windows-2016, ubuntu-16.04, macos-10.15]
-          py: [3.6, 3.7, 3.8]
+      fail-fast: false
+      matrix:
+        os: [windows-2016, macos-10.15]
+        py: [3.6, 3.7, 3.8, 3.9]
+        include:
+          - os: windows-2016
+            sys_pkgs: choco install swig
+            activate: ./build-env/Scripts/activate
+
+          - os: macos-10.15
+            sys_pkgs: brew install swig ninja
+            activate: source ./build-env/bin/activate
 
     steps:
       - name: Checkout repo
@@ -23,33 +65,24 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
 
-      - name: Install build requirements
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: choco install swig
+      - name: Install required system packages
+        run: ${{matrix.sys_pkgs}}
 
-      - if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: sudo apt-get install swig
-
-      - if: ${{ contains(matrix.os, 'macos') }}
-        run: brew install libomp swig
-
-      - name: Build wheel
-        run: pip wheel --wheel-dir=./dist ./swmm-toolkit
-
-      - name: Repair wheel
-        if: ${{ contains(matrix.os, 'ubuntu') }}
+      - name: Build wheel in virtual env
         run: |
-          pip install auditwheel
-          auditwheel repair ./dist/*-linux_x86_64.whl --plat "manylinux2014_x86_64" -w ./dist 
-          rm -rf ./dist/*-linux_x86_64.whl
+          python -m venv --clear ./build-env
+          ${{matrix.activate}}
+          python -m pip install -r build-requirements.txt
+          python setup.py bdist_wheel
+          deactivate
 
       - name: Test wheel
         run: |
-          pip install pytest numpy
-          pip install --no-index --find-links=./dist swmm-toolkit
+          pip install -r test-requirements.txt
+          pip install --no-index --find-links=./dist swmm_toolkit
           pytest
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: ./dist/swmm_toolkit*.whl
+          path: swmm-toolkit/dist/*.whl
