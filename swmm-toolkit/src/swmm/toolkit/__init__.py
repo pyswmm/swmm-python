@@ -4,7 +4,7 @@
 #  __init__.py - SWMM toolkit package
 #
 #  Created:    Aug 9, 2018
-#  Updated:    Dec 22, 2020
+#  Updated:    May 19, 2021
 #
 #  Author:     See AUTHORS
 #
@@ -19,8 +19,8 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Sam Hatchett"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.8.1"
-__date__ = "December 22, 2020"
+__version__ = "0.8.2"
+__date__ = "June 7, 2021"
 
 __maintainer__ = "Michael Tryby"
 __email__ = "tryby.michael@epa.gov"

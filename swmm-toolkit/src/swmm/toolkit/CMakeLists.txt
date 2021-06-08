@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Updated:   Dec 29, 2020
+# Updated:   May 19, 2021
 #
 #  Author:   See AUTHORS
 #
@@ -31,8 +31,8 @@ else()
 endif()
 
 # Set up rpath on MacOS and Linux
-set(PACKAGE_RPATH 
-    "${LIB_ROOT}/../../swmm_toolkit/;${LIB_ROOT}/../../swmm_toolkit.libs/"
+set(PACKAGE_RPATH
+    "${LIB_ROOT}/../../swmm_toolkit/"
 )
 
 

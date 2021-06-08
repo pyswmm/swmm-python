@@ -10,7 +10,7 @@ jobs:
   build_linux_wheels:
     name: Build wheels on linux
     runs-on: ubuntu-18.04
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -25,10 +25,11 @@ jobs:
 
       - name: Script
         run: ./dockcross swmm-toolkit/tools/build-wheels.sh
-      
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
-          path: ./dist/swmm_toolkit-*-manylinux2014_x86_64.whl
+          path: ./dist/*.manylinux2014_x86_64.whl
 
 
 
@@ -36,8 +37,9 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     defaults:
-      run:  
+      run:
         working-directory: ./swmm-toolkit
+
     strategy:
       fail-fast: false
       matrix:
@@ -47,11 +49,11 @@ jobs:
           - os: windows-2016
             sys_pkgs: choco install swig
             activate: ./build-env/Scripts/activate
-            
+
           - os: macos-10.15
-            sys_pkgs: brew install swig
+            sys_pkgs: brew install swig ninja
             activate: source ./build-env/bin/activate
-                
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -73,7 +75,7 @@ jobs:
           python -m pip install -r build-requirements.txt
           python setup.py bdist_wheel
           deactivate
-          
+
       - name: Test wheel
         run: |
           pip install -r test-requirements.txt

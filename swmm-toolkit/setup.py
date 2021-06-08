@@ -2,7 +2,7 @@
 # setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    Jul 2, 2018
-# Updated:    May 7, 2020
+# Updated:    Jun 7, 2021
 #
 #  Author:    See AUTHORS
 #
@@ -87,14 +87,14 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 
 setup(
-    name = "swmm_toolkit",
-    version = "0.8.1",
+    name = "swmm-toolkit",
+    version = "0.8.2",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
 
     zip_safe = False,
-    install_requires = ["aenum==3.0.0"],
+    install_requires = ["aenum==2.2.6"],
 
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
