@@ -2,12 +2,14 @@
 # CMakeLists.txt - CMake configuration file for OpenMP Library on Darwin
 #
 # Created: Mar 17, 2021
-# Updated:
+# Updated: May 19, 2021
 #
 # Author: Michael E. Tryby
 #         US EPA ORD/CESER
 #
 # Note:
+#  Need to build libomp for binary compatibility with Python.
+#
 #  OpenMP library build fails for Xcode generator. Use Ninja or Unix Makefiles
 #  instead.
 #
