@@ -29,6 +29,7 @@ __status__  = "Beta"
 
 import os
 import platform
+import sys
 
 
 # Adds directory containing swmm libraries to path
@@ -36,6 +37,8 @@ if platform.system() == "Windows":
     libdir = os.path.join(os.path.dirname(__file__), "../../swmm_toolkit")
 
     if hasattr(os, 'add_dll_directory'):
-        os.add_dll_directory(libdir)
+       if 'conda' in sys.version:
+           os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE']="1"
+       os.add_dll_directory(libdir)
     else:
         os.environ["PATH"] = libdir + ";" + os.environ["PATH"]
