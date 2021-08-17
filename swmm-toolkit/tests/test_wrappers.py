@@ -7,7 +7,7 @@ from swmm.toolkit import shared_enum
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(HERE,'..','wrappers'))
-from utils import get_ts_from_model
+from utils import get_ts_from_model, get_system_ts_from_model
 DATA_PATH = os.path.join(HERE, 'data')
 OUTPUT_FILE_EXAMPLE1 = os.path.join(DATA_PATH, 'test_Example1.out')
 CONDUIT_IDs = ['15', '6']
@@ -43,4 +43,21 @@ def test_get_ts_from_model_node():
 
     df_1 = df.iloc[0:3]
     df_2 = pd.DataFrame(df_dict)
+    pd.testing.assert_frame_equal(df_1, df_2)
+
+def test_get_system_ts_from_model():
+    # test rainfall
+    df = get_system_ts_from_model(OUTPUT_FILE_EXAMPLE1, system_variable='rainfall')
+
+    df_1 = df.iloc[0:3]
+    df_2 = pd.DataFrame([0.25,0.50,0.80], 
+    index=[pd.Timestamp('1998-01-01 00:00:00'),pd.Timestamp('1998-01-01 01:00:00'),pd.Timestamp('1998-01-01 02:00:00')])
+    pd.testing.assert_frame_equal(df_1, df_2)
+
+    # test temperature
+    df = get_system_ts_from_model(OUTPUT_FILE_EXAMPLE1, system_variable='temperature')
+
+    df_1 = df.iloc[0:3]
+    df_2 = pd.DataFrame([70.0,70.0,70.0], 
+    index=[pd.Timestamp('1998-01-01 00:00:00'),pd.Timestamp('1998-01-01 01:00:00'),pd.Timestamp('1998-01-01 02:00:00')])
     pd.testing.assert_frame_equal(df_1, df_2)

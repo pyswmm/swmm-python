@@ -51,6 +51,7 @@ def get_ts_from_model(swmm_out, object_ids, attribute, object_type='link'):
     object_ids : SWMM model node/link ID (eg. ['a','b'] : list of links or nodes) 
     attribute : python  swmm library attribute for type of data 
         (eg. for link flow rate: output.LinkAttribute.FLOW_RATE)
+    object_type : type of the SWMM model object (right now only supports "link" and "node" objects)
 
     Returns
     -------
@@ -85,4 +86,42 @@ def get_ts_from_model(swmm_out, object_ids, attribute, object_type='link'):
     df = pd.DataFrame(objectid_values, index = date_times) 
     return df
 
+def get_system_ts_from_model(swmm_out, system_variable='rainfall'):
+    '''
+    Parameters
+    ----------
+    swmm_out : SWMM model output file 
+    system_variable : name of the system variable (e.g. rainfall, temperature) 
+        based on test model sytem variables defined "system_variable" index as follow (was not able to identify other all zero values)
+        0:temperature, 1:rainfall, 4:total_inflow, 12: storage, 9:runoff, 10:flooding, 11:outflow, 3:losses
+
+    Returns
+    -------
+    Pandas dataframe time series for the systemwide variables ("system_variable") like rainfall and temperature
+
+    '''
+    # define system variable index
+    ystem_var_dict = {"temperature":0, "rainfall":1, "total_inflow":4, "storage":12, "runoff":9, "flooding":10, "outflow":11, "losses":3}
+    system_var_index = ystem_var_dict[system_variable]
+
+    # open handle
+    handle = output.init()
+    output.open(handle, swmm_out)
+    # Get Date Time array
+    date_times, num_steps = get_date_time_array(handle)
+
+    # Extract time series data
+    variable_vals = []
+    dummy_index = 0
+    for dateindex in range(0, len(date_times)):
+        variable_val = output.get_system_result(handle, dateindex, dummy_index)[system_var_index]
+        variable_vals.append(variable_val)
+
+
+    # close handle
+    output.close(handle)
+
+    # read model time series into pandas dataframe
+    df = pd.DataFrame(variable_vals, index = date_times) 
+    return df
 
