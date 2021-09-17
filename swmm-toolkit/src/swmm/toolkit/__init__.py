@@ -14,10 +14,10 @@ A low level pythonic API for the swmm-output and swmm-solver dlls using SWIG.
 '''
 
 
-__author__ = "See AUTHORS"
-__copyright__ = "None"
-__credits__ = "Colleen Barr, Sam Hatchett"
-__license__ = "CC0 1.0 Universal"
+__author__ = "see CITATION"
+__copyright__ = "see CONTRIBUTORS"
+__credits__ = "see ACKNOWLEDGEMENTS"
+__license__ = "CC BY 4.0 Universal"
 
 __version__ = "0.8.2"
 __date__ = "June 7, 2021"

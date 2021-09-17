@@ -20,10 +20,10 @@ import numpy as np
 import nrtest_swmm.output_reader as ordr
 
 
-__author__ = "Michael E. Tryby"
-__copyright__ = "None"
-__credits__ = "Colleen Barr, Maurizio Cingi, Mark Gray, David Hall, Bryant McDonnell"
-__license__ = "CC0 1.0 Universal"
+__author__ = "see CITATION"
+__copyright__ = "see CONTRIBUTORS"
+__credits__ = "see ACKNOWLEDGEMENTS"
+__license__ = "CC BY 4.0 Universal"
 
 __version__ = "0.7.0"
 __date__ = "Jul 28, 2021"
@@ -65,7 +65,7 @@ def swmm_allclose_compare(path_test, path_ref, rtol, atol):
     for (test, ref) in zip(ordr.output_generator(path_test),
                            ordr.output_generator(path_ref)):
 
-        # Compare arrays when lengths are unequal by truncating extra elements 
+        # Compare arrays when lengths are unequal by truncating extra elements
         length = min(len(test[0]), len(ref[0]))
 
         # Skip over results if they are equal to optimize performance
