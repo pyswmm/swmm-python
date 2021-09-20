@@ -1,0 +1,21 @@
+#
+# CONTRIBUTORS
+#
+# List of people whose contributions reside in the default project
+# branch ordered alphabetically by last name. This file is modeled
+# after the CREDITS file maintained by the Linux project.
+#
+# Fields are:
+#   name (N), email (E), license (L), description (D)
+#
+
+
+N: Constantine Karos
+E: ckaros@outlook.com
+L: CC BY 4.0
+D: Bug fix
+
+N: Michael Tryby
+E: tryby.michael@epa.gov
+L: Public Domain (within US), CC BY 4.0 (all other jurisdictions)
+D: Maintainer, developer

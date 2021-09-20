@@ -2,8 +2,8 @@
  *  output_docs.i - Documentation for swmm-output
  *
  *  Created:    12/10/2020
- *  
- *  Author:     See AUTHORS
+ *
+ *  Author:     See CONTRIBUTORS
  *
 */
 
@@ -14,7 +14,7 @@
 %enddef
 
 
-%feature("autodoc", 
+%feature("autodoc",
 "Initialize pointer for output handle.
 
 Returns
@@ -39,7 +39,7 @@ path: char const *
 
 
 %feature("autodoc",
-"Close binary output file and perform cleanup. 
+"Close binary output file and perform cleanup.
 
 Parameters
 ----------
@@ -50,7 +50,7 @@ p_handle: SMO_Handle
 
 
 %feature("autodoc",
-"Get the SWMM version that produced the binary output file. 
+"Get the SWMM version that produced the binary output file.
 
 Parameters
 ----------
@@ -159,7 +159,7 @@ length: int *
 
 
 %feature("autodoc",
-"Get time series results for particular attribute. Specify series start and 
+"Get time series results for particular attribute. Specify series start and
 length using timeIndex and length respectively.
 
 Parameters
@@ -186,7 +186,7 @@ length: int *
 
 
 %feature("autodoc",
-"Get time series results for particular attribute. Specify series start and 
+"Get time series results for particular attribute. Specify series start and
 length using timeIndex and length respectively.
 
 Parameters
@@ -213,7 +213,7 @@ length: int *
 
 
 %feature("autodoc",
-"Get time series results for particular attribute. Specify series start and 
+"Get time series results for particular attribute. Specify series start and
 length using timeIndex and length respectively.
 
 Parameters
@@ -240,7 +240,7 @@ length: int *
 
 
 %feature("autodoc",
-"Get time series results for particular attribute. Specify series start and 
+"Get time series results for particular attribute. Specify series start and
 length using timeIndex and length respectively.
 
 Parameters

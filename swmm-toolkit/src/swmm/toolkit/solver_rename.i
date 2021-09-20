@@ -2,8 +2,8 @@
  *  solver_rename.i - Rename mapping for swmm-solver
  *
  *  Created:    2/26/2020
- *  
- *  Author:     See AUTHORS
+ *
+ *  Author:     See CONTRIBUTORS
  *
  *  Purpose: Renames functions according to PEP8
 */

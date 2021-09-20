@@ -4,8 +4,8 @@
  *  Created:    11/16/2020
  *  Updated:
  *
- *  Author:     See AUTHORS
- * 
+ *  Author:     See CONTRIBUTORS
+ *
 */
 
 

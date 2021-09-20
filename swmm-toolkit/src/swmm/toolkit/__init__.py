@@ -6,7 +6,7 @@
 #  Created:    Aug 9, 2018
 #  Updated:    May 19, 2021
 #
-#  Author:     See AUTHORS
+#  Author:     See CONTRIBUTORS
 #
 
 '''
@@ -15,9 +15,9 @@ A low level pythonic API for the swmm-output and swmm-solver dlls using SWIG.
 
 
 __author__ = "see CITATION"
-__copyright__ = "see CONTRIBUTORS"
+__copyright__ = "see LICENSE"
 __credits__ = "see ACKNOWLEDGEMENTS"
-__license__ = "CC BY 4.0 Universal"
+__license__ = "see LICENSE"
 
 __version__ = "0.8.2"
 __date__ = "June 7, 2021"

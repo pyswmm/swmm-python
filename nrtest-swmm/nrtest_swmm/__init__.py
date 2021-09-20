@@ -21,9 +21,9 @@ import nrtest_swmm.output_reader as ordr
 
 
 __author__ = "see CITATION"
-__copyright__ = "see CONTRIBUTORS"
+__copyright__ = "see LICENSE"
 __credits__ = "see ACKNOWLEDGEMENTS"
-__license__ = "CC BY 4.0 Universal"
+__license__ = "see LICENSE"
 
 __version__ = "0.7.0"
 __date__ = "Jul 28, 2021"

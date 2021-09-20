@@ -3,7 +3,7 @@
  *
  *  Created:    2/12/2020
  *
- *  Author:     See AUTHORS
+ *  Author:     See CONTRIBUTORS
  *
 */
 

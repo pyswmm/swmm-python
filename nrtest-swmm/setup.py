@@ -30,10 +30,6 @@ setup(
     version='0.7.0',
     description="SWMM extension for nrtest",
 
-    author="Michael E. Tryby",
-    author_email='tryby.michael@epa.gov',
-    url='https://github.com/USEPA',
-
     packages=['nrtest_swmm',],
     scripts=['scripts/report-diff',],
     entry_points=entry_points,
@@ -44,6 +40,10 @@ setup(
         'numpy>=1.7.0',
         'swmm-toolkit',
     ],
+
+    author='See CITATION',
+    maintainer_email='tryby.michael@epa.gov',
+    license='CCBY4.0',
 
     keywords='nrtest_swmm',
     classifiers=[

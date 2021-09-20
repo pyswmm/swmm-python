@@ -4,7 +4,7 @@
 #  Created:  February 20, 2020
 #  Updated:
 #
-#  Author:   See AUTHORS
+#  Author:   See CONTRIBUTORS
 #
 
 

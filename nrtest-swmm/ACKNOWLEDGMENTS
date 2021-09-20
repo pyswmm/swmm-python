@@ -7,20 +7,9 @@
 #   name (N), description (D)
 #
 
+
 N: Colleen Barr
 D: Developer swmm-output library
 
-N: Caleb Buahin
-D: Development operations
-
-N: Laurent Courty
-D: Linux wheel build
-
 N: David Hall
 D: Maintainer nrtest
-
-N: Sam Hatchett
-D: scikit-build configuration
-
-N: Bryant McDonnell
-D: Maintainer OWA/SWMM

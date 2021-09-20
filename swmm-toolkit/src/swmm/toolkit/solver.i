@@ -4,8 +4,8 @@
  *  Created:    7/2/2018
  *  Updated:    8/17/2020
  *
- *  Author:     See AUTHORS
- * 
+ *  Author:     See CONTRIBUTORS
+ *
 */
 
 
@@ -43,8 +43,8 @@
 %apply int *OUTPUT {
     int *index,
     int *value,
-    int *count, 
-    int *node1, 
+    int *count,
+    int *node1,
     int *node2,
     int *out_index,
     int *condition,
@@ -66,7 +66,7 @@
 
 %apply float *OUTPUT {
     float *runoffErr,
-    float *flowErr, 
+    float *flowErr,
     float *qualErr
 }
 
@@ -85,8 +85,8 @@
 
 %apply char **OUTCHAR {
     char **id,
-    char **major, 
-    char **minor, 
+    char **major,
+    char **minor,
     char **patch
 }
 

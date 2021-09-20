@@ -4,14 +4,14 @@
 #  Created:   February 21, 2020
 #  Updated:
 #
-#  Author:    See AUTHORS
+#  Author:    See CONTRIBUTORS
 #
 
 from aenum import Enum, IntEnum
 
 
 class UnitSystem(Enum):
-    """SWMM Unit System enum class. 
+    """SWMM Unit System enum class.
 
     .. rubric:: Enum Members
 
@@ -71,7 +71,7 @@ class BaseUnits(Enum, start = 1):
 
     =================== ==================
     :attr:`~RAIN_INT`   rainfall intensity
-    :attr:`~SNOW_DEPTH` rainfall depth  
+    :attr:`~SNOW_DEPTH` rainfall depth
     :attr:`~EVAP_RATE`  evaporation rate
     :attr:`~INFIL_RATE` infiltration rate
     :attr:`~FLOW_RATE`  flow rate
@@ -108,7 +108,7 @@ class ObjectType(Enum):
     .. rubric:: Enum Members
 
     ==================== ===============================
-    :attr:`~GAGE`        rain gage 
+    :attr:`~GAGE`        rain gage
     :attr:`~SUBCATCH`    subcatchment
     :attr:`~NODE`        conveyance system node
     :attr:`~LINK`        conveyance system link
@@ -182,7 +182,7 @@ class LinkDirection(Enum):
     """
     UPSTREAM_TO_DOWNSTREAM = 1
     DOWNSTREAM_TO_UPSTREAM = -1
-    
+
 
 class ElementType(IntEnum, start = 0):
     """SWMM Element Types enum class.
@@ -218,7 +218,7 @@ class SubcatchAttribute(Enum, start = 0):
     ========================= ===============================
     :attr:`~RAINFALL`         rainfall intensity
     :attr:`~SNOW_DEPTH`       snow depth
-    :attr:`~EVAP_LOSS`        evaporation loss 
+    :attr:`~EVAP_LOSS`        evaporation loss
     :attr:`~INFIL_LOSS`       infiltration loss
     :attr:`~RUNOFF_RATE`      runoff flow rate
     :attr:`~GW_OUTFLOW_RATE`  groundwater flow rate to node
@@ -226,7 +226,7 @@ class SubcatchAttribute(Enum, start = 0):
     :attr:`~SOIL_MOISTURE`    soil moisture
     :attr:`~POLLUT_CONC_0`    pollutant washoff concentration
     ========================= ===============================
-    """    
+    """
     RAINFALL = 0
     SNOW_DEPTH = 1
     EVAP_LOSS = 2
@@ -324,7 +324,7 @@ class SystemAttribute(Enum, start = 0):
 
 #
 # Solver Toolkit API Enums
-#    
+#
 class TimeProperty(Enum):
     """Time Property enum class.
 
@@ -500,7 +500,7 @@ class LinkPollutant(Enum):
     QUALITY = 0
     TOTAL_LOAD = 1
 
-    
+
 class SubcatchProperty(Enum):
     """Subcatchment Property enum class.
 
@@ -548,7 +548,7 @@ class SubcatchPollutant(Enum):
     QUALITY = 2
     TOTAL_LOAD = 3
 
-    
+
 class LidUsageProperty(Enum):
     """LID Usage Property enum class.
 
@@ -600,7 +600,7 @@ class LidLayer(Enum):
     DRAIN = 4
     DRAIN_MAT = 5
 
-    
+
 class LidLayerProperty(Enum):
     """LID Layer Property enum class.
 
@@ -718,7 +718,7 @@ class LidResult(Enum):
     STORAGE_EVAPORATION = 28
     STORAGE_DRAIN = 29
 
-    
+
 class RainResult(Enum):
     """Rain Result enum class.
 

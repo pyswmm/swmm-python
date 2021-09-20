@@ -1,8 +1,10 @@
 
 # Copyright Notice
 
-Copyright (c) 2018-2021 see CONTRIBUTORS. Excluding materials in the
-public domain.
+This project contains material prepared by the U.S. Government not afforded
+copyright protection in the United States. Foreign copyrights may apply.
+
+Copyright (c) 2017-2021 see CONTRIBUTORS. Excluding material in the public domain.
 
 
 # License Notice
@@ -328,3 +330,13 @@ Section 8 -- Interpretation.
 
 For more information, please see
     <https://creativecommons.org/licenses/by/4.0/legalcode>
+
+
+
+# Third-Party Libraries
+
+The package nrtest-swmm requires third-party software libraries with separate
+licensing policies.
+
+## nrtest -- MIT License
+    <https://github.com/davidchall/nrtest/blob/master/LICENSE>
