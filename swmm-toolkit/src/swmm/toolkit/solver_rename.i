@@ -99,4 +99,4 @@
 %rename(raingage_set_precipitation)         swmm_setGagePrecip;
 
 
-%rename(swmm_version_info)                  swmm_getVersionInfo;
+%rename(swmm_version_info)                  swmm_getSemVersion;
