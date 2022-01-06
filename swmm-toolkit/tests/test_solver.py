@@ -96,7 +96,7 @@ def test_step(handle):
 
 
 def test_version(handle):
-    major, minor, patch = solver.swmm_version_info()
+    major, minor, patch = solver.swmm_version_info().split('.')
     print(major, minor, patch)
     assert major == '5'
     

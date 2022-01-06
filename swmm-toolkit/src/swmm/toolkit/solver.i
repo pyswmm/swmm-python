@@ -179,6 +179,17 @@
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
+%exception swmm_getSemVersion
+{
+    $function
+}
+
+%exception swmm_getBuildId
+{
+    $function
+}
+
+/* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
 {
     $function
