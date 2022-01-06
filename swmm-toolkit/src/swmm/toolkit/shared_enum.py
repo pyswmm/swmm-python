@@ -441,6 +441,7 @@ class NodeResult(Enum):
     DEPTH = 5
     HEAD = 6
     LATERAL_INFLOW = 7
+    HRT = 8
 
 
 class NodePollutant(Enum):
@@ -449,6 +450,8 @@ class NodePollutant(Enum):
     :attr:`~QUALITY`
     """
     QUALITY = 0
+    INF_CONC = 1
+    REACTOR_CONC = 2
 
 
 class LinkProperty(Enum):
@@ -501,6 +504,7 @@ class LinkPollutant(Enum):
     """
     QUALITY = 0
     TOTAL_LOAD = 1
+    REACTOR_CONC = 2
 
     
 class SubcatchProperty(Enum):
