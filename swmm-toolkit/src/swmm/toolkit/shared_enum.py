@@ -304,6 +304,7 @@ class SystemAttribute(Enum, start = 0):
     :attr:`~OUTFALL_FLOWS`        outfall outflow
     :attr:`~VOLUME_STORED`        storage volume
     :attr:`~EVAP_RATE`            evaporation
+    :attr:`~P_EVAP_RATE`          potential evapotranspiration
     ============================= ====================
     """
     AIR_TEMP = 0
@@ -320,6 +321,7 @@ class SystemAttribute(Enum, start = 0):
     OUTFALL_FLOWS = 11
     VOLUME_STORED = 12
     EVAP_RATE = 13
+    P_EVAP_RATE = 14
 
 
 #
