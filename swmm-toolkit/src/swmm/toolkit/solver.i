@@ -221,9 +221,7 @@
 %ignore swmm_freeMemory;
 
 
-#define EXPORT_TOOLKIT
 %include "toolkit.h"
-
 
 
 %exception;

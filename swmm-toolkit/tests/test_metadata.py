@@ -80,7 +80,7 @@ def test_outputmetadata(handle):
         shared_enum.SystemAttribute.OUTFALL_FLOWS:        ("Outfall Flow",               "cu ft/sec"),
         shared_enum.SystemAttribute.VOLUME_STORED:        ("Volume Stored",              "cu ft"),
         shared_enum.SystemAttribute.EVAP_RATE:            ("Evaporation Rate",           "in/day"),
-        shared_enum.SystemAttribute.P_EVAP_RATE:          ("Potential Evaporation Rate", "in/day")
+        shared_enum.SystemAttribute.PTNL_EVAP_RATE:       ("Potential Evaporation Rate", "in/day")
     }
 
     for attr in shared_enum.SubcatchAttribute:

@@ -304,7 +304,7 @@ class SystemAttribute(Enum, start = 0):
     :attr:`~OUTFALL_FLOWS`        outfall outflow
     :attr:`~VOLUME_STORED`        storage volume
     :attr:`~EVAP_RATE`            evaporation
-    :attr:`~P_EVAP_RATE`          potential evapotranspiration
+    :attr:`~PTNL_EVAP_RATE`       potential evapotranspiration
     ============================= ====================
     """
     AIR_TEMP = 0
@@ -321,7 +321,7 @@ class SystemAttribute(Enum, start = 0):
     OUTFALL_FLOWS = 11
     VOLUME_STORED = 12
     EVAP_RATE = 13
-    P_EVAP_RATE = 14
+    PTNL_EVAP_RATE = 14
 
 
 #
@@ -432,6 +432,7 @@ class NodeResult(Enum):
     :attr:`~DEPTH`
     :attr:`~HEAD`
     :attr:`~LATERAL_INFLOW`
+    :attr:`~HYD_RES_TIME`
     """
     TOTAL_INFLOW = 0
     TOTAL_OUTFLOW = 1
@@ -441,16 +442,18 @@ class NodeResult(Enum):
     DEPTH = 5
     HEAD = 6
     LATERAL_INFLOW = 7
-    HRT = 8
+    HYD_RES_TIME = 8
 
 
 class NodePollutant(Enum):
     """Node Pollutant enum class.
 
     :attr:`~QUALITY`
+    :attr:`~INFLOW_CONC`
+    :attr:`~REACTOR_CONC`
     """
     QUALITY = 0
-    INF_CONC = 1
+    INFLOW_CONC = 1
     REACTOR_CONC = 2
 
 
@@ -501,6 +504,7 @@ class LinkPollutant(Enum):
 
     :attr:`~QUALITY`
     :attr:`~TOTAL_LOAD`
+    :attr:`~REACTOR_CONC`
     """
     QUALITY = 0
     TOTAL_LOAD = 1

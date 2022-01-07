@@ -195,7 +195,7 @@ class OutputMetadata:
                 ("Volume Stored", self._unit_labels[shared_enum.BaseUnits.VOLUME]),
             shared_enum.SystemAttribute.EVAP_RATE:
                 ("Evaporation Rate", self._unit_labels[shared_enum.BaseUnits.EVAP_RATE]),
-            shared_enum.SystemAttribute.P_EVAP_RATE:
+            shared_enum.SystemAttribute.PTNL_EVAP_RATE:
                 ("Potential Evaporation Rate", self._unit_labels[shared_enum.BaseUnits.EVAP_RATE])
         }
 
