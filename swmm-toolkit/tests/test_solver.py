@@ -21,6 +21,10 @@ OUTPUT_FILE_TEST_1 = os.path.join(DATA_PATH, 'temp_Example.out')
 INPUT_FILE_EXAMPLE_2 = os.path.join(DATA_PATH, 'test_Example2.inp')
 REPORT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.rpt')
 OUTPUT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.out')
+INPUT_FILE_EXAMPLE_3 = os.path.join(DATA_PATH, 'test_Example3.inp')
+REPORT_FILE_TEST_3 = os.path.join(DATA_PATH, 'temp_Example3.rpt')
+OUTPUT_FILE_TEST_3 = os.path.join(DATA_PATH, 'temp_Example3.out')
+
 INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'temp_nodata.inp')
 
 
@@ -74,6 +78,17 @@ def lid_handle(request):
 @pytest.fixture()
 def run_lid_sim(request):
     solver.swmm_open(INPUT_FILE_EXAMPLE_2, REPORT_FILE_TEST_2, OUTPUT_FILE_TEST_2)
+    solver.swmm_start(0)
+
+    def close():
+        solver.swmm_end()
+        solver.swmm_close()
+
+    request.addfinalizer(close)
+
+@pytest.fixture()
+def run_pollut_sim(request):
+    solver.swmm_open(INPUT_FILE_EXAMPLE_3, REPORT_FILE_TEST_3, OUTPUT_FILE_TEST_3)
     solver.swmm_start(0)
 
     def close():
@@ -296,6 +311,19 @@ def test_link_get_pollutant(run_sim):
     assert tss == pytest.approx(14.7179, 0.1)
     assert lead == pytest.approx(2.9435, 0.1)
 
+def test_link_set_pollutant(run_pollut_sim):
+    upstream_link = 'Valve'
+    downstream_node = 'Outfall'
+    pollutant = 'P1'
+
+    upstream_link = solver.project_get_index(shared_enum.ObjectType.LINK, upstream_link)
+    downstream_node = solver.project_get_index(shared_enum.ObjectType.NODE, downstream_node)
+    pollutant = solver.project_get_index(shared_enum.ObjectType.POLLUT, pollutant)
+
+    for i in range(0, 200):
+        solver.link_set_pollutant(upstream_link,shared_enum.LinkPollutant.QUALITY,pollutant,1000)
+        solver.swmm_step()
+    assert round(solver.node_get_pollutant(downstream_node,shared_enum.NodePollutant.QUALITY)[pollutant]) == 1000
 
 def test_link_set_target_setting(run_sim):
     target_setting = solver.link_get_result(0, shared_enum.LinkResult.TARGET_SETTING)
@@ -396,6 +424,30 @@ def test_node_get_pollutant(run_sim):
     tss, lead = tuple(pollut)
     assert tss == pytest.approx(14.7179, 0.1)
     assert lead == pytest.approx(2.9435, 0.1)
+
+
+def test_node_set_pollutant(run_pollut_sim):
+    upstream_node = 'Tank'
+    downstream_node = 'Outfall'
+    pollutant = 'P1'
+
+    upstream_node = solver.project_get_index(shared_enum.ObjectType.NODE, upstream_node)
+    downstream_node = solver.project_get_index(shared_enum.ObjectType.NODE, downstream_node)
+    pollutant = solver.project_get_index(shared_enum.ObjectType.POLLUT, pollutant)
+
+    for i in range(0, 200):
+        solver.node_set_pollutant(upstream_node,pollutant,1000)
+        solver.swmm_step()
+    assert round(solver.node_get_pollutant(downstream_node,shared_enum.NodePollutant.QUALITY)[pollutant]) == 1000
+
+def test_node_get_hrt(run_pollut_sim):
+    upstream_node = 'Tank'
+    upstream_node = solver.project_get_index(shared_enum.ObjectType.NODE, upstream_node)
+
+
+    for i in range(0, 200):        
+        solver.swmm_step()
+    assert round(solver.node_get_result(upstream_node, shared_enum.NodeResult.HYD_RES_TIME)) == 17
 
 
 def test_node_total_inflow(run_sim):
