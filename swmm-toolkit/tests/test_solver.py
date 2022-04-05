@@ -481,7 +481,7 @@ def test_node_set_pollutant(run_pollut_sim):
     pollutant = solver.project_get_index(shared_enum.ObjectType.POLLUT, pollutant)
 
     for i in range(0, 200):
-        solver.node_set_pollutant(upstream_node,pollutant,1000)
+        solver.node_set_pollutant(upstream_node,shared_enum.NodePollutant.QUALITY, pollutant,1000)
         solver.swmm_step()
     assert round(solver.node_get_pollutant(downstream_node,shared_enum.NodePollutant.QUALITY)[pollutant]) == 1000
 
