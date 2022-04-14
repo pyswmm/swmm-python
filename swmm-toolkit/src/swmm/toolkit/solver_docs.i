@@ -665,12 +665,14 @@ flowrate: double
 
 
 %feature("autodoc", 
-"Set node inflow pollutant concentration
+"Set node pollutant concentration
 
 Parameters
 ----------
 index: int
     The link index.
+type: SM_NodePollut
+    The property type code (see :ref: SM_NodePollut). Currently Only QUALITY (0) is supported.
 pollutant_index: int
     The index of the pollutant to set.
 pollutant_value:
