@@ -65,7 +65,7 @@ else:
 
 # Set Platform specific cmake args here
 if platform_system == "Windows":
-    cmake_args = ["-GVisual Studio 15 2017 Win64"]
+    cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
     cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.9"]
@@ -116,10 +116,10 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: C",
         "Development Status :: 4 - Beta",
     ]
