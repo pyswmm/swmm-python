@@ -670,7 +670,7 @@ flowrate: double
 Parameters
 ----------
 index: int
-    The link index.
+    The node index.
 type: SM_NodePollut
     The property type code (see :ref: SM_NodePollut). Currently Only QUALITY (0) is supported.
 pollutant_index: int
