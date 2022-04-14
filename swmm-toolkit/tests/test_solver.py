@@ -311,6 +311,22 @@ def test_link_get_pollutant(run_sim):
     assert tss == pytest.approx(14.7179, 0.1)
     assert lead == pytest.approx(2.9435, 0.1)
 
+def test_link_get_pollutant_reactor(run_sim):
+    pollut = solver.link_get_pollutant(0, shared_enum.LinkPollutant.REACTOR_CONC)
+    tss, lead = tuple(pollut)
+    assert tss == 0.0
+    assert lead == 0.0
+
+    for i in range(0, 250):
+        solver.swmm_step()
+    pollut = solver.link_get_pollutant(0, shared_enum.LinkPollutant.REACTOR_CONC)
+    print(pollut)
+
+    tss, lead = tuple(pollut)
+
+    assert tss == pytest.approx(14.7179, 0.1)
+    assert lead == pytest.approx(2.9435, 0.1)
+
 def test_link_set_pollutant(run_pollut_sim):
     upstream_link = 'Valve'
     downstream_node = 'Outfall'
@@ -425,6 +441,35 @@ def test_node_get_pollutant(run_sim):
     assert tss == pytest.approx(14.7179, 0.1)
     assert lead == pytest.approx(2.9435, 0.1)
 
+def test_node_get_pollutant_reactor(run_pollut_sim):
+    # Need to test on a storage node
+    node_index = solver.project_get_index(shared_enum.ObjectType.NODE, 'Tank')
+    #print(node_index)
+    pollut = solver.node_get_pollutant(1, shared_enum.NodePollutant.REACTOR_CONC)
+    p1 = pollut[0]
+    assert p1 == 0.0
+
+    for i in range(0, 250):
+        solver.swmm_step()
+        pollut = solver.node_get_pollutant(1, shared_enum.NodePollutant.REACTOR_CONC)
+
+    p1 = pollut[0]
+    assert p1 == pytest.approx(2.4455, 0.1)
+
+def test_node_get_pollutant_inflow(run_pollut_sim):
+    # Need to test on a storage node
+    node_index = solver.project_get_index(shared_enum.ObjectType.NODE, 'Tank')
+    #print(node_index)
+    pollut = solver.node_get_pollutant(1, shared_enum.NodePollutant.INFLOW_CONC)
+    p1 = pollut[0]
+    assert p1 == 0.0
+
+    for i in range(0, 250):
+        solver.swmm_step()
+        pollut = solver.node_get_pollutant(1, shared_enum.NodePollutant.INFLOW_CONC)
+
+    p1 = pollut[0]
+    assert p1 == pytest.approx(10.0, 0.1)
 
 def test_node_set_pollutant(run_pollut_sim):
     upstream_node = 'Tank'
@@ -436,7 +481,7 @@ def test_node_set_pollutant(run_pollut_sim):
     pollutant = solver.project_get_index(shared_enum.ObjectType.POLLUT, pollutant)
 
     for i in range(0, 200):
-        solver.node_set_pollutant(upstream_node,pollutant,1000)
+        solver.node_set_pollutant(upstream_node,shared_enum.NodePollutant.QUALITY, pollutant,1000)
         solver.swmm_step()
     assert round(solver.node_get_pollutant(downstream_node,shared_enum.NodePollutant.QUALITY)[pollutant]) == 1000
 
