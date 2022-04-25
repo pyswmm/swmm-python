@@ -114,7 +114,12 @@ def test_version(handle):
     major, minor, patch = solver.swmm_version_info().split('.')
     print(major, minor, patch)
     assert major == '5'
-    
+
+def test_legacy_version(handle):
+    version = solver.swmm_get_version()
+    major = str(version)[0]
+    assert isinstance(version, int)
+    assert major == '5'
 
 def test_simulation_unit(handle):
     simulation_system_unit_option = solver.simulation_get_unit(shared_enum.UnitProperty.SYSTEM_UNIT)

@@ -39,6 +39,10 @@
     Py_INCREF($result);
 }
 
+%typemap(out) int swmm_getVersion {
+  $result = PyInt_FromLong($1);
+}
+
 
 %apply int *OUTPUT {
     int *index,
@@ -185,6 +189,11 @@
 }
 
 %exception swmm_getBuildId
+{
+    $function
+}
+
+%exception swmm_getVersion
 {
     $function
 }
