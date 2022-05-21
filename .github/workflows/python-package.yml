@@ -9,7 +9,7 @@ env:
 jobs:
   build_nrtest_plugin:
     name: Build nrtest-swmm plugin
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./nrtest-swmm
@@ -37,7 +37,7 @@ jobs:
 
   build_linux_wheels:
     name: Build wheels on linux
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repo
