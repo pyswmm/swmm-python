@@ -53,13 +53,13 @@ jobs:
 
       - name: Install requirements
         run: |
+          pwd
+          ls
           python3 -m pip install -r build-requirements.txt
           python3 setup.py bdist_wheel
 
       - name: Test wheel
         run: |
-          pwd
-          ls
           python3 -m pip install -r test-requirements.txt
           python3 -m pip install --no-index --find-links=./dist swmm_toolkit
           pytest
