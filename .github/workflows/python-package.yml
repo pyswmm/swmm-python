@@ -59,6 +59,7 @@ jobs:
 
       - name: Test wheel
         run: |
+          cd swmm-toolkit
           python3 -m pip install -r test-requirements.txt
           python3 -m pip install --no-index --find-links=./dist swmm_toolkit
           pytest
