@@ -4,14 +4,14 @@
 #  __init__.py - SWMM toolkit package
 #
 #  Created:    Aug 9, 2018
-#  Updated:    May 19, 2021
+#  Updated:    July 2, 2022
 #
 #  Author:     See AUTHORS
 #
 
-'''
+"""
 A low level pythonic API for the swmm-output and swmm-solver dlls using SWIG.
-'''
+"""
 
 
 __author__ = "See AUTHORS"
@@ -37,8 +37,9 @@ if platform.system() == "Windows":
     libdir = os.path.join(os.path.dirname(__file__), "../../swmm_toolkit")
 
     if hasattr(os, 'add_dll_directory'):
-       if 'conda' in sys.version:
-           os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE']="1"
-       os.add_dll_directory(libdir)
+        conda_exists = os.path.exists(os.path.join(sys.prefix, 'conda-meta'))
+        if conda_exists:
+            os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE'] = "1"
+        os.add_dll_directory(libdir)
     else:
         os.environ["PATH"] = libdir + ";" + os.environ["PATH"]
