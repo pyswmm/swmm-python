@@ -54,14 +54,16 @@ jobs:
       - name: Install requirements
         run: |
           cd swmm-toolkit
-          python3 -m pip install -r build-requirements.txt
-          python3 setup.py bdist_wheel
+          conda activate test
+          python -m pip install -r build-requirements.txt
+          python setup.py bdist_wheel
 
       - name: Test wheel
         run: |
           cd swmm-toolkit
-          python3 -m pip install -r test-requirements.txt
-          python3 -m pip install --no-index --find-links=./dist swmm_toolkit --user
+          conda activate test
+          python -m pip install -r test-requirements.txt
+          python -m pip install --no-index --find-links=./dist swmm_toolkit --user
           pytest
 
 
