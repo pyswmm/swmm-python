@@ -61,7 +61,7 @@ jobs:
         run: |
           cd swmm-toolkit
           python3 -m pip install -r test-requirements.txt
-          python3 -m pip install --no-index --find-links=./dist swmm_toolkit
+          python3 -m pip install --no-index --find-links=./dist swmm_toolkit --user
           pytest
 
 
