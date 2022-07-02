@@ -33,6 +33,50 @@ jobs:
         with:
           path: nrtest-swmm/dist/*.whl
 
+  build_conda_wheels:
+    name: Conda wheel test (${{ matrix.python-version }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["macos-latest", "windows-latest"]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        include:
+          - os: windows-2022
+            sys_pkgs: choco install swig
+            activate: ./build-env/Scripts/activate
+
+          - os: macos-10.15
+            sys_pkgs: brew install swig ninja
+            activate: source ./build-env/bin/activate
+
+    steps:
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install required system packages
+        run: ${{matrix.sys_pkgs}}
+
+      - name: Build wheel in virtual env
+        run: |
+          python -m venv --clear ./build-env
+          ${{matrix.activate}}
+          python -m pip install -r build-requirements.txt
+          python setup.py bdist_wheel
+          deactivate
+
+      - name: Test wheel
+        run: |
+          pip install -r test-requirements.txt
+          pip install --no-index --find-links=./dist swmm_toolkit
+          pytest
 
 
   build_linux_wheels:
