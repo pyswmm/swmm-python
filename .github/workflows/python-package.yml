@@ -53,8 +53,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          pwd
-          ls
+          cd swmm-toolkit
           python3 -m pip install -r build-requirements.txt
           python3 setup.py bdist_wheel
 
