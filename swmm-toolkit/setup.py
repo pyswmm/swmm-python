@@ -109,7 +109,7 @@ setup(
     maintainer_email='tryby.michael@epa.gov',
     license='CC0',
 
-    keywords="swmm5, swmm, stormwater, hydraulics, hydrology, ",
+    keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
     classifiers=[
         "Topic :: Scientific/Engineering",
         "Operating System :: Microsoft :: Windows",
@@ -121,6 +121,6 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: C",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
     ]
 )
