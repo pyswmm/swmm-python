@@ -33,7 +33,7 @@ jobs:
         with:
           path: nrtest-swmm/dist/*.whl
 
-  build_conda_wheels:
+  test_conda_build:
     name: Conda wheel test mac
     runs-on: macos-latest
     defaults:
@@ -50,6 +50,7 @@ jobs:
         with:
           auto-update-conda: true
           channels: conda-forge
+          # Python 3.9 does not support all libs we need in swmm-python
           python-version: 3.8
 
       - name: Install required system packages
