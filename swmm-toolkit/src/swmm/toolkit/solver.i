@@ -39,6 +39,10 @@
     Py_INCREF($result);
 }
 
+%typemap(out) int swmm_getVersion {
+  $result = PyInt_FromLong($1);
+}
+
 
 %apply int *OUTPUT {
     int *index,
@@ -179,6 +183,22 @@
 
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
+%exception swmm_getSemVersion
+{
+    $function
+}
+
+%exception swmm_getBuildId
+{
+    $function
+}
+
+%exception swmm_getVersion
+{
+    $function
+}
+
+/* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
 {
     $function
@@ -208,6 +228,7 @@
 %ignore swmm_getAPIError;
 %ignore swmm_getObjectIndex;
 %ignore swmm_freeMemory;
+
 
 %include "toolkit.h"
 

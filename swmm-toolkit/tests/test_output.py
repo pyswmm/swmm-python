@@ -194,3 +194,12 @@ def test_getsystemresult(handle):
 
     assert len(test_array) == 14
     assert np.allclose(test_array, ref_array)
+
+def test_getsystemattribute(handle):
+
+    ref_array = np.array([70.0])
+
+    test_array = output.get_system_attribute(handle, 0, shared_enum.SystemAttribute.AIR_TEMP)
+
+    assert len(test_array) == 1
+    assert np.allclose(test_array, ref_array)

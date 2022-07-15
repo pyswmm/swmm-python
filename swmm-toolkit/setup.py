@@ -65,7 +65,7 @@ else:
 
 # Set Platform specific cmake args here
 if platform_system == "Windows":
-    cmake_args = ["-GVisual Studio 15 2017 Win64"]
+    cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
     cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.9"]
@@ -88,7 +88,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name = "swmm-toolkit",
-    version = "0.8.2",
+    version = "0.9.0",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
@@ -109,18 +109,18 @@ setup(
     maintainer_email='tryby.michael@epa.gov',
     license='CC0',
 
-    keywords="swmm5, swmm, stormwater, hydraulics, hydrology, ",
+    keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
     classifiers=[
         "Topic :: Scientific/Engineering",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: C",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
     ]
 )

@@ -10,7 +10,7 @@
 from aenum import Enum, IntEnum
 
 
-class UnitSystem(Enum, start=0):
+class UnitSystem(Enum):
     """SWMM Unit System enum class. 
 
     .. rubric:: Enum Members
@@ -20,11 +20,11 @@ class UnitSystem(Enum, start=0):
     :attr:`~SI`      SI (metric) units
     ================ ====================
     """
-    US
-    SI
+    US = 0
+    SI = 1
 
 
-class FlowUnits(Enum, start=0):
+class FlowUnits(Enum):
     """SWMM Flow Units enum class.
 
     .. rubric:: Enum Members
@@ -38,15 +38,15 @@ class FlowUnits(Enum, start=0):
     :attr:`~MLD`     million liters per day
     ================ =======================
     """
-    CFS
-    GPM
-    MGD
-    CMS
-    LPS
-    MLD
+    CFS = 0
+    GPM = 1
+    MGD = 2
+    CMS = 3
+    LPS = 4
+    MLD = 5
 
 
-class ConcUnits(Enum, start=0):
+class ConcUnits(Enum):
     """SWMM Concentration Units enum class.
 
     .. rubric:: Enum Members
@@ -58,10 +58,10 @@ class ConcUnits(Enum, start=0):
     :attr:`~NONE`    None
     ================ ====================
     """
-    MG,
-    UG,
-    COUNT
-    NONE
+    MG = 0
+    UG = 1
+    COUNT = 2
+    NONE = 3
 
 
 class BaseUnits(Enum, start = 1):
@@ -86,23 +86,23 @@ class BaseUnits(Enum, start = 1):
     :attr:`~NONE`       none
     =================== ==================
     """
-    RAIN_INT
-    SNOW_DEPTH
-    EVAP_RATE
-    INFIL_RATE
-    FLOW_RATE
-    ELEV
-    PERCENT
-    CONCEN
-    HEAD
-    VOLUME
-    VELOCITY
-    TEMP
-    UNITLESS
-    NONE
+    RAIN_INT = 1
+    SNOW_DEPTH = 2
+    EVAP_RATE = 3
+    INFIL_RATE = 4
+    FLOW_RATE = 5
+    ELEV = 6
+    PERCENT = 7
+    CONCEN = 8
+    HEAD = 9
+    VOLUME = 10
+    VELOCITY = 11
+    TEMP = 12
+    UNITLESS = 13
+    NONE = 14
 
 
-class ObjectType(Enum, start=0):
+class ObjectType(Enum):
     """SWMM Object Types enum class.
 
     .. rubric:: Enum Members
@@ -126,25 +126,25 @@ class ObjectType(Enum, start=0):
     :attr:`~LID`         LID treatment unit
     ==================== ===============================
     """
-    GAGE
-    SUBCATCH
-    NODE
-    LINK
-    POLLUT
-    LANDUSE
-    TIMEPATTERN
-    CURVE
-    TSERIES
-    CONTROL
-    TRANSECT
-    AQUIFER
-    UNITHYD
-    SNOWMELT
-    SHAPE
-    LID
+    GAGE = 0
+    SUBCATCH = 1
+    NODE = 2
+    LINK = 3
+    POLLUT = 4
+    LANDUSE = 5
+    TIMEPATTERN = 6
+    CURVE = 7
+    TSERIES = 8
+    CONTROL = 9
+    TRANSECT = 10
+    AQUIFER = 11
+    UNITHYD = 12
+    SNOWMELT = 13
+    SHAPE = 14
+    LID = 15
 
 
-class NodeType(Enum, start=0):
+class NodeType(Enum):
     """Node Sub-Types enum class.
 
     :attr:`~JUNCTION`
@@ -152,13 +152,13 @@ class NodeType(Enum, start=0):
     :attr:`~STORAGE`
     :attr:`~DIVIDER`
     """
-    JUNCTION
-    OUTFALL
-    STORAGE
-    DIVIDER
+    JUNCTION = 0
+    OUTFALL = 1
+    STORAGE = 2
+    DIVIDER = 3
 
 
-class LinkType(Enum, start=0):
+class LinkType(Enum):
     """Link Sub-Types enum class.
 
     :attr:`~CONDUIT`
@@ -167,11 +167,11 @@ class LinkType(Enum, start=0):
     :attr:`~WEIR`
     :attr:`~OUTLET`
     """
-    CONDUIT
-    PUMP
-    ORIFICE
-    WEIR
-    OUTLET
+    CONDUIT = 0
+    PUMP = 1
+    ORIFICE = 2
+    WEIR = 3
+    OUTLET = 4
 
 
 class LinkDirection(Enum):
@@ -193,11 +193,11 @@ class ElementType(IntEnum, start = 0):
     :attr:`~SYSTEM`
     :attr:`~POLLUT`
     """
-    SUBCATCH
-    NODE
-    LINK
-    SYSTEM
-    POLLUT
+    SUBCATCH = 0
+    NODE = 1
+    LINK = 2
+    SYSTEM = 3
+    POLLUT = 4
 
 
 class Time(Enum, start = 0):
@@ -206,8 +206,8 @@ class Time(Enum, start = 0):
     :attr:`~REPORT_STEP`
     :attr:`~NUM_PERIODS`
     """
-    REPORT_STEP
-    NUM_PERIODS
+    REPORT_STEP = 0
+    NUM_PERIODS = 1
 
 
 class SubcatchAttribute(Enum, start = 0):
@@ -227,15 +227,15 @@ class SubcatchAttribute(Enum, start = 0):
     :attr:`~POLLUT_CONC_0`    pollutant washoff concentration
     ========================= ===============================
     """    
-    RAINFALL
-    SNOW_DEPTH
-    EVAP_LOSS
-    INFIL_LOSS
-    RUNOFF_RATE
-    GW_OUTFLOW_RATE
-    GW_TABLE_ELEV
-    SOIL_MOISTURE
-    POLLUT_CONC_0
+    RAINFALL = 0
+    SNOW_DEPTH = 1
+    EVAP_LOSS = 2
+    INFIL_LOSS = 3
+    RUNOFF_RATE = 4
+    GW_OUTFLOW_RATE = 5
+    GW_TABLE_ELEV = 6
+    SOIL_MOISTURE = 7
+    POLLUT_CONC_0 = 8
 
 
 class NodeAttribute(Enum, start = 0):
@@ -253,13 +253,13 @@ class NodeAttribute(Enum, start = 0):
     :attr:`~POLLUT_CONC_0`    concentration of each pollutant
     ========================= ===============================
     """
-    INVERT_DEPTH
-    HYDRAULIC_HEAD
-    PONDED_VOLUME
-    LATERAL_INFLOW
-    TOTAL_INFLOW
-    FLOODING_LOSSES
-    POLLUT_CONC_0
+    INVERT_DEPTH = 0
+    HYDRAULIC_HEAD = 1
+    PONDED_VOLUME = 2
+    LATERAL_INFLOW = 3
+    TOTAL_INFLOW = 4
+    FLOODING_LOSSES = 5
+    POLLUT_CONC_0 = 6
 
 
 class LinkAttribute(Enum, start = 0):
@@ -276,12 +276,12 @@ class LinkAttribute(Enum, start = 0):
     :attr:`~POLLUT_CONC_0` concentration of each pollutant
     ====================== ===============================
     """
-    FLOW_RATE
-    FLOW_DEPTH
-    FLOW_VELOCITY
-    FLOW_VOLUME
-    CAPACITY
-    POLLUT_CONC_0
+    FLOW_RATE = 0
+    FLOW_DEPTH = 1
+    FLOW_VELOCITY = 2
+    FLOW_VOLUME = 3
+    CAPACITY = 4
+    POLLUT_CONC_0 = 5
 
 
 class SystemAttribute(Enum, start = 0):
@@ -304,50 +304,52 @@ class SystemAttribute(Enum, start = 0):
     :attr:`~OUTFALL_FLOWS`        outfall outflow
     :attr:`~VOLUME_STORED`        storage volume
     :attr:`~EVAP_RATE`            evaporation
+    :attr:`~PTNL_EVAP_RATE`       potential evapotranspiration
     ============================= ====================
     """
-    AIR_TEMP
-    RAINFALL
-    SNOW_DEPTH
-    EVAP_INFIL_LOSS
-    RUNOFF_FLOW
-    DRY_WEATHER_INFLOW
-    GW_INFLOW
-    RDII_INFLOW
-    DIRECT_INFLOW
-    TOTAL_LATERAL_INFLOW
-    FLOOD_LOSSES
-    OUTFALL_FLOWS
-    VOLUME_STORED
-    EVAP_RATE
+    AIR_TEMP = 0
+    RAINFALL = 1
+    SNOW_DEPTH = 2
+    EVAP_INFIL_LOSS = 3
+    RUNOFF_FLOW = 4
+    DRY_WEATHER_INFLOW = 5
+    GW_INFLOW = 6
+    RDII_INFLOW = 7
+    DIRECT_INFLOW = 8
+    TOTAL_LATERAL_INFLOW = 9
+    FLOOD_LOSSES = 10
+    OUTFALL_FLOWS = 11
+    VOLUME_STORED = 12
+    EVAP_RATE = 13
+    PTNL_EVAP_RATE = 14
 
 
 #
 # Solver Toolkit API Enums
 #    
-class TimeProperty(Enum, start=0):
+class TimeProperty(Enum):
     """Time Property enum class.
 
     :attr:`~START_DATE`
     :attr:`~END_DATE`
     :attr:`~REPORT_DATE`
     """
-    START_DATE
-    END_DATE
-    REPORT_DATE
+    START_DATE = 0
+    END_DATE = 1
+    REPORT_DATE = 2
 
 
-class UnitProperty(Enum, start=0):
+class UnitProperty(Enum):
     """Unit Property enum class.
 
     :attr:`~SYSTEM_UNIT`
     :attr:`~FLOW_UNIT`
     """
-    SYSTEM_UNIT
-    FLOW_UNIT
+    SYSTEM_UNIT = 0
+    FLOW_UNIT = 1
 
 
-class SimOption(Enum, start=0):
+class SimOption(Enum):
     """Simulation Option enum class.
 
     :attr:`~ALLOW_POND`
@@ -359,17 +361,17 @@ class SimOption(Enum, start=0):
     :attr:`~IGNORE_ROUTE`
     :attr:`~IGNORE_ROUTE_QUALITY`
     """
-    ALLOW_POND
-    SKIP_STEADY
-    IGNORE_RAIN
-    IGNORE_RDII
-    IGNORE_SNOW
-    IGNORE_GW
-    IGNORE_ROUTE
-    IGNORE_ROUTE_QUALITY
+    ALLOW_POND = 0
+    SKIP_STEADY = 1
+    IGNORE_RAIN = 2
+    IGNORE_RDII = 3
+    IGNORE_SNOW = 4
+    IGNORE_GW = 5
+    IGNORE_ROUTE = 6
+    IGNORE_ROUTE_QUALITY = 7
 
 
-class SimSetting(Enum, start=0):
+class SimSetting(Enum):
     """Simulation Settings enum class.
 
     :attr:`~ROUTE_STEP`
@@ -387,23 +389,23 @@ class SimSetting(Enum, start=0):
     :attr:`~SYSTEM_FLOW_TOLERANCE`
     :attr:`~LATERAL_FLOW_TOLERANCE`
     """
-    ROUTE_STEP
-    MIN_ROUTE_STEP
-    LENGTH_STEP
-    START_DRY_DAYS
-    COURANT_FACTOR
-    MIN_SURFACE_AREA
-    MIN_SLOPE
-    RUNOFF_ERROR
-    GW_ERROR
-    FLOW_ERROR
-    QUALITY_ERROR
-    HEAD_TOLERANCE
-    SYSTEM_FLOW_TOLERANCE
-    LATERAL_FLOW_TOLERANCE
+    ROUTE_STEP = 0
+    MIN_ROUTE_STEP = 1
+    LENGTH_STEP = 2
+    START_DRY_DAYS = 3
+    COURANT_FACTOR = 4
+    MIN_SURFACE_AREA = 5
+    MIN_SLOPE = 6
+    RUNOFF_ERROR = 7
+    GW_ERROR = 8
+    FLOW_ERROR = 9
+    QUALITY_ERROR = 10
+    HEAD_TOLERANCE = 11
+    SYSTEM_FLOW_TOLERANCE = 12
+    LATERAL_FLOW_TOLERANCE = 13
 
 
-class NodeProperty(Enum, start=0):
+class NodeProperty(Enum):
     """Node Property enum class.
 
     :attr:`~INVERT_ELEVATION`
@@ -412,14 +414,14 @@ class NodeProperty(Enum, start=0):
     :attr:`~POND_AREA`
     :attr:`~INITIAL_DEPTH`
     """
-    INVERT_ELEVATION
-    FULL_DEPTH
-    SURCHARGE_DEPTH
-    POND_AREA
-    INITIAL_DEPTH
+    INVERT_ELEVATION = 0
+    FULL_DEPTH = 1
+    SURCHARGE_DEPTH = 2
+    POND_AREA = 3
+    INITIAL_DEPTH = 4
 
 
-class NodeResult(Enum, start=0):
+class NodeResult(Enum):
     """Node Result enum class.
 
     :attr:`~TOTAL_INFLOW`
@@ -430,26 +432,32 @@ class NodeResult(Enum, start=0):
     :attr:`~DEPTH`
     :attr:`~HEAD`
     :attr:`~LATERAL_INFLOW`
+    :attr:`~HYD_RES_TIME`
     """
-    TOTAL_INFLOW
-    TOTAL_OUTFLOW
-    LOSSES
-    VOLUME
-    FLOOD
-    DEPTH
-    HEAD
-    LATERAL_INFLOW
+    TOTAL_INFLOW = 0
+    TOTAL_OUTFLOW = 1
+    LOSSES = 2
+    VOLUME = 3
+    FLOOD = 4
+    DEPTH = 5
+    HEAD = 6
+    LATERAL_INFLOW = 7
+    HYD_RES_TIME = 8
 
 
-class NodePollutant(Enum, start=0):
+class NodePollutant(Enum):
     """Node Pollutant enum class.
 
     :attr:`~QUALITY`
+    :attr:`~INFLOW_CONC`
+    :attr:`~REACTOR_CONC`
     """
-    QUALITY
+    QUALITY = 0
+    INFLOW_CONC = 1
+    REACTOR_CONC = 2
 
 
-class LinkProperty(Enum, start=0):
+class LinkProperty(Enum):
     """Link Property enum class.
 
     :attr:`~OFFSET_1`
@@ -460,16 +468,16 @@ class LinkProperty(Enum, start=0):
     :attr:`~OUTLET_LOSS`
     :attr:`~AVERAGE_LOSS`
     """
-    OFFSET_1
-    OFFSET_2
-    INITIAL_FLOW
-    FLOW_LIMIT
-    INLET_LOSS
-    OUTLET_LOSS
-    AVERAGE_LOSS
+    OFFSET_1 = 0
+    OFFSET_2 = 1
+    INITIAL_FLOW = 2
+    FLOW_LIMIT = 3
+    INLET_LOSS = 4
+    OUTLET_LOSS = 5
+    AVERAGE_LOSS = 6
 
 
-class LinkResult(Enum, start=0):
+class LinkResult(Enum):
     """Link Result enum class.
 
     :attr:`~FLOW`
@@ -481,27 +489,29 @@ class LinkResult(Enum, start=0):
     :attr:`~TARGET_SETTING`
     :attr:`~FROUDE`
     """
-    FLOW
-    DEPTH
-    VOLUME
-    US_SURFACE_AREA
-    DS_SURFACE_AREA
-    SETTING
-    TARGET_SETTING
-    FROUDE
+    FLOW = 0
+    DEPTH = 1
+    VOLUME = 2
+    US_SURFACE_AREA = 3
+    DS_SURFACE_AREA = 4
+    SETTING = 5
+    TARGET_SETTING = 6
+    FROUDE = 7
 
 
-class LinkPollutant(Enum, start=0):
+class LinkPollutant(Enum):
     """Link Pollutant enum class.
 
     :attr:`~QUALITY`
     :attr:`~TOTAL_LOAD`
+    :attr:`~REACTOR_CONC`
     """
-    QUALITY
-    TOTAL_LOAD
+    QUALITY = 0
+    TOTAL_LOAD = 1
+    REACTOR_CONC = 2
 
     
-class SubcatchProperty(Enum, start=0):
+class SubcatchProperty(Enum):
     """Subcatchment Property enum class.
 
     :attr:`~WIDTH`
@@ -510,14 +520,14 @@ class SubcatchProperty(Enum, start=0):
     :attr:`~SLOPE`
     :attr:`~CURB_LENGTH`
     """
-    WIDTH
-    AREA
-    IMPERVIOUS_FRACTION
-    SLOPE
-    CURB_LENGTH
+    WIDTH = 0
+    AREA = 1
+    IMPERVIOUS_FRACTION = 2
+    SLOPE = 3
+    CURB_LENGTH = 4
 
 
-class SubcatchResult(Enum, start=0):
+class SubcatchResult(Enum):
     """Subcatchment Result enum class.
 
     :attr:`~RAIN`
@@ -527,15 +537,15 @@ class SubcatchResult(Enum, start=0):
     :attr:`~RUNOFF`
     :attr:`~SNOW`
     """
-    RAIN
-    EVAPORATION
-    INFILTRATION
-    RUNON
-    RUNOFF
-    SNOW
+    RAIN = 0
+    EVAPORATION = 1
+    INFILTRATION = 2
+    RUNON = 3
+    RUNOFF = 4
+    SNOW = 5
 
 
-class SubcatchPollutant(Enum, start=0):
+class SubcatchPollutant(Enum):
     """Subcatchment Pollutant enum class.
 
     :attr:`~BUILD_UP`
@@ -543,13 +553,13 @@ class SubcatchPollutant(Enum, start=0):
     :attr:`~QUALITY`
     :attr:`~TOTAL_LOAD`
     """
-    BUILD_UP
-    CONCENTRATION
-    QUALITY
-    TOTAL_LOAD
+    BUILD_UP = 0
+    CONCENTRATION = 1
+    QUALITY = 2
+    TOTAL_LOAD = 3
 
     
-class LidUsageProperty(Enum, start=0):
+class LidUsageProperty(Enum):
     """LID Usage Property enum class.
 
     :attr:`~UNIT_AREA`
@@ -559,15 +569,15 @@ class LidUsageProperty(Enum, start=0):
     :attr:`~FROM_IMPERVIOUS`
     :attr:`~FROM_PERVIOUS`
     """
-    UNIT_AREA
-    TOP_WIDTH
-    BOTTOM_WIDTH
-    INITIAL_SATURATION
-    FROM_IMPERVIOUS
-    FROM_PERVIOUS
+    UNIT_AREA = 0
+    TOP_WIDTH = 1
+    BOTTOM_WIDTH = 2
+    INITIAL_SATURATION = 3
+    FROM_IMPERVIOUS = 4
+    FROM_PERVIOUS = 5
 
 
-class LidUsageOption(Enum, start=0):
+class LidUsageOption(Enum):
     """LID Usage Option enum class.
 
     :attr:`~INDEX`
@@ -576,14 +586,14 @@ class LidUsageOption(Enum, start=0):
     :attr:`~DRAIN_SUBCATCH`
     :attr:`~DRAIN_NODE`
     """
-    INDEX
-    NUMBER
-    TO_PERV
-    DRAIN_SUBCATCH
-    DRAIN_NODE
+    INDEX = 0
+    NUMBER = 1
+    TO_PERV = 2
+    DRAIN_SUBCATCH = 3
+    DRAIN_NODE = 4
 
 
-class LidLayer(Enum, start=0):
+class LidLayer(Enum):
     """LID Layer enum class.
 
     :attr:`~SURFACE`
@@ -593,15 +603,15 @@ class LidLayer(Enum, start=0):
     :attr:`~DRAIN`
     :attr:`~DRAIN_MAT`
     """
-    SURFACE
-    SOIL
-    STORAGE
-    PAVEMENT
-    DRAIN
-    DRAIN_MAT
+    SURFACE = 0
+    SOIL = 1
+    STORAGE = 2
+    PAVEMENT = 3
+    DRAIN = 4
+    DRAIN_MAT = 5
 
     
-class LidLayerProperty(Enum, start=0):
+class LidLayerProperty(Enum):
     """LID Layer Property enum class.
 
     :attr:`~THICKNESS`
@@ -628,32 +638,32 @@ class LidLayerProperty(Enum, start=0):
     :attr:`~DRAIN_REGEN_DAYS`
     :attr:`~DRAIN_REGEN_DEGREE`
     """
-    THICKNESS
-    VOID_FRACTION
-    ROUGHNESS
-    SURFACE_SLOPE
-    SIDE_SLOP
-    ALPHA
-    POROSITY
-    FIELD_CAPACITY
-    WILTING_POINT
-    SUCTION_HEAD
-    K_SATURATION
-    K_SLOPE
-    CLOG_FACTOR
-    IMPERVIOUS_FRACTION
-    DRAIN_COEFFICIENT
-    DRAIN_EXPONENT
-    DRAIN_OFFSET
-    DRAIN_DELAY
-    DRAIN_HEAD_OPEN
-    DRAIN_HEAD_CLOSE
-    DRAIN_CURVE
-    DRAIN_REGEN_DAYS
-    DRAIN_REGEN_DEGREE
+    THICKNESS = 0
+    VOID_FRACTION = 1
+    ROUGHNESS = 2
+    SURFACE_SLOPE = 3
+    SIDE_SLOP = 4
+    ALPHA = 5
+    POROSITY = 6
+    FIELD_CAPACITY = 7
+    WILTING_POINT = 8
+    SUCTION_HEAD = 9
+    K_SATURATION = 10
+    K_SLOPE = 11
+    CLOG_FACTOR = 12
+    IMPERVIOUS_FRACTION = 13
+    DRAIN_COEFFICIENT = 14
+    DRAIN_EXPONENT = 15
+    DRAIN_OFFSET = 16
+    DRAIN_DELAY = 17
+    DRAIN_HEAD_OPEN = 18
+    DRAIN_HEAD_CLOSE = 19
+    DRAIN_CURVE = 20
+    DRAIN_REGEN_DAYS = 21
+    DRAIN_REGEN_DEGREE = 22
 
 
-class LidResult(Enum, start=0):
+class LidResult(Enum):
     """LID Result enum class.
 
     :attr:`~INFLOW`
@@ -687,45 +697,45 @@ class LidResult(Enum, start=0):
     :attr:`~STORAGE_EVAPORATION`
     :attr:`~STORAGE_DRAIN`
     """
-    INFLOW
-    EVAPORATION
-    INFILTRATION
-    SURFACE_FLOW
-    DRAIN_FLOW
-    INITIAL_VOLUME
-    FINAL_VOLUME
-    SURFACE_DEPTH
-    PAVEMENT_DEPTH
-    SOIL_MOISTURE
-    STORAGE_DEPTH
-    DRY_TIME
-    OLD_DRAIN_FLOW
-    NEW_DRAIN_FLOW
-    PERVIOUS_AREA
-    FLOW_TO_PERVIOUS_AREA
-    EVAPORATE_RATE
-    NATIVE_INFILTRATION
-    SURFACE_INFLOW
-    SURFACE_INFILTRATION
-    SURFACE_EVAPORATION
-    SURFACE_OUTFLOW
-    PAVEMENT_EVAPORATION
-    PAVEMENT_PERCOLATION
-    SOIL_EVAPORATION
-    SOIL_PERCOLATION
-    STORAGE_INFLOW
-    STORAGE_EXFILTRATION
-    STORAGE_EVAPORATION
-    STORAGE_DRAIN
+    INFLOW = 0
+    EVAPORATION = 1
+    INFILTRATION = 2
+    SURFACE_FLOW = 3
+    DRAIN_FLOW = 4
+    INITIAL_VOLUME = 5
+    FINAL_VOLUME = 6
+    SURFACE_DEPTH = 7
+    PAVEMENT_DEPTH = 8
+    SOIL_MOISTURE = 9
+    STORAGE_DEPTH = 10
+    DRY_TIME = 11
+    OLD_DRAIN_FLOW = 12
+    NEW_DRAIN_FLOW = 13
+    PERVIOUS_AREA = 14
+    FLOW_TO_PERVIOUS_AREA = 15
+    EVAPORATE_RATE = 16
+    NATIVE_INFILTRATION = 17
+    SURFACE_INFLOW = 18
+    SURFACE_INFILTRATION = 19
+    SURFACE_EVAPORATION = 20
+    SURFACE_OUTFLOW = 21
+    PAVEMENT_EVAPORATION = 22
+    PAVEMENT_PERCOLATION = 23
+    SOIL_EVAPORATION = 24
+    SOIL_PERCOLATION = 25
+    STORAGE_INFLOW = 26
+    STORAGE_EXFILTRATION = 27
+    STORAGE_EVAPORATION = 28
+    STORAGE_DRAIN = 29
 
     
-class RainResult(Enum, start=0):
+class RainResult(Enum):
     """Rain Result enum class.
 
     :attr:`~TOTAL`
     :attr:`~RAINFALL`
     :attr:`~SNOWFALL`
     """
-    TOTAL
-    RAINFALL
-    SNOWFALL
+    TOTAL = 0
+    RAINFALL = 1
+    SNOWFALL = 2

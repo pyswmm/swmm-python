@@ -44,6 +44,7 @@
 %rename(node_set_parameter)                 swmm_setNodeParam;
 %rename(node_get_result)                    swmm_getNodeResult;
 %rename(node_get_pollutant)                 swmm_getNodePollut;
+%rename(node_set_pollutant)                 swmm_setNodePollut;
 %rename(node_get_total_inflow)              swmm_getNodeTotalInflow;
 %rename(node_set_total_inflow)              swmm_setNodeInflow;
 %rename(node_get_stats)                     swmm_getNodeStats;
@@ -63,6 +64,7 @@
 %rename(link_set_parameter)                 swmm_setLinkParam;
 %rename(link_get_result)                    swmm_getLinkResult;
 %rename(link_get_pollutant)                 swmm_getLinkPollut;
+%rename(link_set_pollutant)                 swmm_setLinkPollut;
 %rename(link_set_target_setting)            swmm_setLinkSetting;
 %rename(link_get_stats)                     swmm_getLinkStats;
 
@@ -99,4 +101,5 @@
 %rename(raingage_set_precipitation)         swmm_setGagePrecip;
 
 
-%rename(swmm_version_info)                  swmm_getVersionInfo;
+%rename(swmm_version_info)                  swmm_getSemVersion;
+%rename(swmm_build_id)                      swmm_getBuildId;

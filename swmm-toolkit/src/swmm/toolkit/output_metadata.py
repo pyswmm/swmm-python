@@ -33,9 +33,9 @@ class OutputMetadata:
         shared_enum.BaseUnits.UNITLESS:   "unitless",
         shared_enum.BaseUnits.NONE:       "",
 
-        shared_enum.FlowUnits.CFS:          "cu ft/sec",
-        shared_enum.FlowUnits.GPM:          "gal/min",
-        shared_enum.FlowUnits.MGD:          "M gal/day",
+        shared_enum.FlowUnits.CFS:        "cu ft/sec",
+        shared_enum.FlowUnits.GPM:        "gal/min",
+        shared_enum.FlowUnits.MGD:        "M gal/day",
     }
 
     _unit_labels_si_ = {
@@ -52,16 +52,16 @@ class OutputMetadata:
         shared_enum.BaseUnits.UNITLESS:   "unitless",
         shared_enum.BaseUnits.NONE:       "",
 
-        shared_enum.FlowUnits.CMS:          "cu m/sec",
-        shared_enum.FlowUnits.LPS:          "L/sec",
-        shared_enum.FlowUnits.MLD:          "M L/day",
+        shared_enum.FlowUnits.CMS:        "cu m/sec",
+        shared_enum.FlowUnits.LPS:        "L/sec",
+        shared_enum.FlowUnits.MLD:        "M L/day",
     }
 
     _unit_labels_quality_ = {
-        shared_enum.ConcUnits.MG:           "mg/L",
-        shared_enum.ConcUnits.UG:           "ug/L",
-        shared_enum.ConcUnits.COUNT:        "Count/L",
-        shared_enum.ConcUnits.NONE:         ""
+        shared_enum.ConcUnits.MG:         "mg/L",
+        shared_enum.ConcUnits.UG:         "ug/L",
+        shared_enum.ConcUnits.COUNT:      "Count/L",
+        shared_enum.ConcUnits.NONE:       ""
     }
 
 
@@ -194,7 +194,9 @@ class OutputMetadata:
             shared_enum.SystemAttribute.VOLUME_STORED:
                 ("Volume Stored", self._unit_labels[shared_enum.BaseUnits.VOLUME]),
             shared_enum.SystemAttribute.EVAP_RATE:
-                ("Evaporation Rate", self._unit_labels[shared_enum.BaseUnits.EVAP_RATE])
+                ("Evaporation Rate", self._unit_labels[shared_enum.BaseUnits.EVAP_RATE]),
+            shared_enum.SystemAttribute.PTNL_EVAP_RATE:
+                ("Potential Evaporation Rate", self._unit_labels[shared_enum.BaseUnits.EVAP_RATE])
         }
 
         self._build_pollut_metadata(output_handle)
