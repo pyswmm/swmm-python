@@ -49,7 +49,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: 3.7
+          python-version: 3.9
 
       - name: Install required system packages
         run: brew install swig ninja
@@ -58,14 +58,14 @@ jobs:
         run: |
           cd swmm-toolkit
           conda activate test
-          python -m pip install -r build-requirements.txt
+          conda install --yes --file build-requirements.txt
           python setup.py bdist_wheel
 
       - name: Test wheel
         run: |
           cd swmm-toolkit
           conda activate test
-          python -m pip install -r test-requirements.txt
+          conda install --yes --file test-requirements.txt
           python -m pip install --no-index --find-links=./dist swmm_toolkit --user
           pytest
 
