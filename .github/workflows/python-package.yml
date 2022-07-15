@@ -36,6 +36,9 @@ jobs:
   build_conda_wheels:
     name: Conda wheel test mac
     runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash -l {0}
 
     steps:
       - name: Checkout repo
