@@ -50,7 +50,7 @@ jobs:
         with:
           auto-update-conda: true
           channels: conda-forge
-          python-version: 3.9
+          python-version: 3.8
 
       - name: Install required system packages
         run: brew install swig ninja
