@@ -665,6 +665,26 @@ flowrate: double
 
 
 %feature("autodoc", 
+"Set node pollutant concentration
+
+Parameters
+----------
+index: int
+    The node index.
+type: SM_NodePollut
+    The property type code (see :ref: SM_NodePollut). Currently Only QUALITY (0) is supported.
+pollutant_index: int
+    The index of the pollutant to set.
+pollutant_value:
+    The new pollutant concentration to set.
+
+"
+) swmm_setNodePollut;
+
+
+
+
+%feature("autodoc", 
 "Get a node statistics.
 
 Parameters
@@ -862,6 +882,23 @@ setting: double
 "
 ) swmm_setLinkSetting;
 
+
+%feature("autodoc", 
+"Set link pollutant concentration
+
+Parameters
+----------
+index: int
+    The link index.
+type: SM_LinkPollut
+    The property type code (see :ref: SM_LinkPollut). Currently Only QUALITY (0) is supported.
+pollutant_index: int
+    The index of the pollutant to set.
+pollutant_value:
+    The new pollutant concentration to set.
+
+"
+) swmm_setLinkPollut;
 
 %feature("autodoc", 
 "Get link statistics.
