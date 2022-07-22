@@ -25,8 +25,8 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Maurizio Cingi, Mark Gray, David Hall, Bryant McDonnell"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.6.0"
-__date__ = "May 8, 2020"
+__version__ = "0.7.0"
+__date__ = "Jul 28, 2021"
 
 __maintainer__ = "Michael E. Tryby"
 __email__ = "tryby.michael@epa.gov"
@@ -65,15 +65,15 @@ def swmm_allclose_compare(path_test, path_ref, rtol, atol):
     for (test, ref) in zip(ordr.output_generator(path_test),
                            ordr.output_generator(path_ref)):
 
-        if len(test[0]) != len(ref[0]):
-            raise ValueError('Inconsistent lengths')
+        # Compare arrays when lengths are unequal by truncating extra elements 
+        length = min(len(test[0]), len(ref[0]))
 
-        # Skip over results if they are equal
-        if (np.array_equal(test[0], ref[0])):
+        # Skip over results if they are equal to optimize performance
+        if (np.array_equal(test[0][:length], ref[0][:length])):
             continue
 
         else:
-            np.testing.assert_allclose(test[0], ref[0], rtol, atol)
+            np.testing.assert_allclose(test[0][:length], ref[0][:length], rtol, atol)
 
     return True
 
