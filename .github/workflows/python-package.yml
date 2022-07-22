@@ -9,7 +9,7 @@ env:
 jobs:
   build_nrtest_plugin:
     name: Build nrtest-swmm plugin
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./nrtest-swmm
@@ -33,11 +33,48 @@ jobs:
         with:
           path: nrtest-swmm/dist/*.whl
 
+  test_conda_build:
+    name: Conda wheel test mac
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          channels: conda-forge
+          # Python 3.9 does not support all libs we need in swmm-python
+          python-version: 3.8
+
+      - name: Install required system packages
+        run: brew install swig ninja
+
+      - name: Install requirements
+        run: |
+          cd swmm-toolkit
+          conda activate test
+          conda install --yes --file build-requirements.txt
+          python setup.py bdist_wheel
+
+      - name: Test wheel
+        run: |
+          cd swmm-toolkit
+          conda activate test
+          conda install --yes --file test-requirements.txt
+          python -m pip install --no-index --find-links=./dist swmm_toolkit --user
+          pytest
 
 
   build_linux_wheels:
     name: Build wheels on linux
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo

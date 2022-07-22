@@ -94,7 +94,7 @@ setup(
     package_dir = package_dir,
 
     zip_safe = False,
-    install_requires = ["aenum==2.2.6"],
+    install_requires = ["aenum==3.1.11"],
 
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
@@ -106,10 +106,10 @@ setup(
     url='https://github.com/OpenWaterAnalytics/swmm-python',
 
     author='See AUTHORS',
-    maintainer_email='tryby.michael@epa.gov',
+    maintainer_email='bemcdonnell@gmail.com',
     license='CC0',
 
-    keywords="swmm5, swmm, stormwater, hydraulics, hydrology, ",
+    keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
     classifiers=[
         "Topic :: Scientific/Engineering",
         "Operating System :: Microsoft :: Windows",
@@ -121,6 +121,6 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: C",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
     ]
 )
