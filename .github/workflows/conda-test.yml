@@ -3,7 +3,8 @@ name: Conda Tests
 on:
   workflow_run:
     workflows: ["Build Wheels"]
-    types: [requested]
+    types:
+      - completed
     branches:
       - '/dev-condatest'
 
