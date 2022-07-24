@@ -34,14 +34,17 @@ jobs:
       - name: Install requirements
         run: |
           cd swmm-toolkit
-          conda activate test
-          conda install --yes --file build-requirements.txt
+          conda create -n test-env pip
+          conda activate test-env
+          pip install -r build-requirements.txt
           python setup.py bdist_wheel
+          conda deactivate
 
       - name: Test wheel
         run: |
           cd swmm-toolkit
-          conda activate test
-          conda install --yes --file test-requirements.txt
-          python -m pip install --no-index --find-links=./dist swmm_toolkit --user
+          conda activate test-env
+          pip install -r test-requirements.txt
+          python -m pip install --no-index --find-links=./dist swmm_toolkit
           pytest
+          conda deactivate
