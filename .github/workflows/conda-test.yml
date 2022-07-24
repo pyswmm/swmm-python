@@ -5,7 +5,7 @@ on:
     workflows: ["Build Wheels"]
     types: [requested]
     branches:
-      - '**'
+      - '/dev-condatest'
 
 
 jobs:
