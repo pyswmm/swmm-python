@@ -21,7 +21,7 @@ mkdir -p ./dist
 cd swmm-toolkit
 
 # Build wheels
-for PYBIN in /opt/python/cp{37,38,39,310}*/bin; do
+for PYBIN in /opt/python/cp{37,38,39,310,311}*/bin; do
     # Setup python virtual environment for build
     ${PYBIN}/python -m venv --clear ./build-env
     source ./build-env/bin/activate
