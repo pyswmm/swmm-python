@@ -13,7 +13,7 @@ set -e -x
 
 
 # Install a system package required by our library
-sudo yum install -y swig
+# sudo yum install -y swig
 
 
 # Setup and build in swmm-toolkit dir
