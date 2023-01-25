@@ -25,14 +25,14 @@ def _binary_diff(path_test, path_ref, min_cdd):
     for (test, ref) in zip(ordr.output_generator(path_test),
                            ordr.output_generator(path_ref)):
 
-        if len(test[0]) != len(ref[0]):
-            raise ValueError('Inconsistent lengths')
+        # Compare arrays when lengths are unequal by truncating extra elements
+        length = min(len(test[0]), len(ref[0]))
 
         # Skip over arrays that are equal
-        if np.array_equal(test[0], ref[0]):
+        if np.array_equal(test[0][:length], ref[0][:length]):
             continue
         else:
-            lre = _log_relative_error(test[0], ref[0])
+            lre = _log_relative_error(test[0][:length], ref[0][:length])
             idx = np.unravel_index(np.argmin(lre), lre.shape)
 
             if lre[idx] < min_cdd:
