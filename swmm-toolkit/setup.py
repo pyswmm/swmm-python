@@ -68,7 +68,7 @@ if platform_system == "Windows":
     cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=12.4", "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"]
+    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=12.4", "-DCMAKE_OSX_ARCHITECTURES:STRING=arm64;x86_64"]
 
 else:
     cmake_args = ["-GUnix Makefiles"]
