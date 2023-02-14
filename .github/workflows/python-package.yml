@@ -71,14 +71,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2022, macos-10.15]
+        os: [windows-2022, macos-latest]
         py: ["3.7", "3.8", "3.9", "3.10", "3.11"]
         include:
           - os: windows-2022
             sys_pkgs: choco install swig
             activate: ./build-env/Scripts/activate
 
-          - os: macos-10.15
+          - os: macos-latest
             sys_pkgs: brew install swig ninja
             activate: source ./build-env/bin/activate
 
