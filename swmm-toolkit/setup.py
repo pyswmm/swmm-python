@@ -88,7 +88,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name = "swmm-toolkit",
-    version = "0.9.1",
+    version = "0.10.0",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
