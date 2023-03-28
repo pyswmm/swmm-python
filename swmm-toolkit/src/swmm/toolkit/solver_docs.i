@@ -1293,3 +1293,57 @@ total_precip: double
     The new total precipitation intensity.
 "
 ) swmm_setGagePrecip;
+
+
+%feature("autodoc", 
+"Get a property value for the inlet of a specified link.
+
+Parameters
+----------
+index: int
+    The index of a link with desired inlets
+param: SM_InletProperty
+    The property type code (See :ref: SM_InletProperty)
+
+Returns
+-------
+value: double *
+    The value of the inlet's property
+"
+) swmm_getInletParam;
+
+
+%feature("autodoc", 
+"Get a property value for the inlet of a specified link.
+
+Parameters
+----------
+index: int
+    The index of a link with desired inlets
+param: SM_InletProperty
+    The property type code (See :ref: SM_InletProperty)
+
+Returns
+-------
+value: double *
+    The new value of the inlet's property
+"
+) swmm_setInletParam;
+
+
+%feature("autodoc", 
+"Get a result value for specified link.
+
+Parameters
+----------
+index: int
+    The index of a link with desired inlets
+type: SM_InletResult
+    The result type code (See :ref: SM_InletResult)
+
+Returns
+-------
+result: double *
+    The value of the inlet's result at the current simulation timestep
+"
+) swmm_getInletResult;

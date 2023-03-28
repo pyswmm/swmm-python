@@ -68,6 +68,9 @@
 %rename(link_set_target_setting)            swmm_setLinkSetting;
 %rename(link_get_stats)                     swmm_getLinkStats;
 
+%rename(inlet_get_parameter)                swmm_getInletParam;
+%rename(inlet_set_parameter)                swmm_setInletParam;
+%rename(inlet_get_result)                   swmm_getInletResult;
 
 %rename(pump_get_stats)                     swmm_getPumpStats;
 

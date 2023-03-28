@@ -24,6 +24,9 @@ OUTPUT_FILE_TEST_2 = os.path.join(DATA_PATH, 'temp_Example2.out')
 INPUT_FILE_EXAMPLE_3 = os.path.join(DATA_PATH, 'test_Example3.inp')
 REPORT_FILE_TEST_3 = os.path.join(DATA_PATH, 'temp_Example3.rpt')
 OUTPUT_FILE_TEST_3 = os.path.join(DATA_PATH, 'temp_Example3.out')
+INPUT_FILE_INLET = os.path.join(DATA_PATH, 'test_inlet_drains.inp')
+REPORT_FILE_INLET = os.path.join(DATA_PATH, 'temp_inlet_drains.rpt')
+OUTPUT_FILE_INLET = os.path.join(DATA_PATH, 'temp_inlet_drains.out')
 
 INPUT_FILE_FAIL = os.path.join(DATA_PATH, 'temp_nodata.inp')
 
@@ -87,6 +90,27 @@ def run_lid_sim(request):
     request.addfinalizer(close)
 
 @pytest.fixture()
+def inlet_handle(request):
+    solver.swmm_open(INPUT_FILE_INLET, REPORT_FILE_INLET, OUTPUT_FILE_INLET)
+
+
+    def close():
+        solver.swmm_close()
+
+    request.addfinalizer(close)
+
+@pytest.fixture()
+def run_inlet_sim(request):
+    solver.swmm_open(INPUT_FILE_INLET, REPORT_FILE_INLET, OUTPUT_FILE_INLET)
+    solver.swmm_start(0)
+
+    def close():
+        solver.swmm_end()
+        solver.swmm_close()
+
+    request.addfinalizer(close)
+
+@pytest.fixture()
 def run_pollut_sim(request):
     solver.swmm_open(INPUT_FILE_EXAMPLE_3, REPORT_FILE_TEST_3, OUTPUT_FILE_TEST_3)
     solver.swmm_start(0)
@@ -109,6 +133,19 @@ def test_step(handle):
     solver.swmm_end()
     solver.swmm_report()
 
+def test_stride(handle):
+    solver.swmm_start(0)
+    steps = 0
+    while True:
+        time = solver.swmm_stride(60 * 60)
+        steps+=1
+        if time == 0:
+            break
+
+    solver.swmm_end()
+    solver.swmm_report()
+    # advancing a 36 hour simulation hourly should yeild 36 steps
+    assert steps == 36
 
 def test_version(handle):
     major, minor, patch = solver.swmm_version_info().split('.')
@@ -761,3 +798,38 @@ def test_gage_precipitation(run_sim):
     assert total == 1.0
     assert snowfall == 0.0
     assert rainfall == 1.0
+
+
+
+def test_inlet_error(inlet_handle):
+    with pytest.raises(Exception) as e:
+        index = solver.project_get_index(shared_enum.ObjectType.LINK,"C3")
+        clogged = solver.inlet_get_parameter(index, shared_enum.InletProperty.CLOG_FACTOR)
+    assert "Specified link is not assigned an inlet" in str(e.value)
+
+
+def test_inlet_clogging(inlet_handle):
+    index = solver.project_get_index(shared_enum.ObjectType.LINK,"Street1")
+
+    num_inlets = solver.inlet_get_parameter(index, shared_enum.InletProperty.NUM_INLETS)
+    assert num_inlets == 1
+    
+    clogged = solver.inlet_get_parameter(index, shared_enum.InletProperty.CLOG_FACTOR)
+    assert clogged == 50
+
+    solver.inlet_set_parameter(index, shared_enum.InletProperty.CLOG_FACTOR,0)
+    clogged = solver.inlet_get_parameter(index, shared_enum.InletProperty.CLOG_FACTOR)
+    assert clogged == 0
+
+    flow_limit = solver.inlet_get_parameter(index, shared_enum.InletProperty.FLOW_LIMIT)
+    assert flow_limit == 2.2
+
+    solver.inlet_set_parameter(index, shared_enum.InletProperty.FLOW_LIMIT,5.5)
+    flow_limit = solver.inlet_get_parameter(index, shared_enum.InletProperty.FLOW_LIMIT)
+    assert flow_limit == 5.5
+
+    dep_height = solver.inlet_get_parameter(index, shared_enum.InletProperty.DEPRESSION_HEIGHT)
+    assert dep_height == 0.5
+
+    dep_width = solver.inlet_get_parameter(index, shared_enum.InletProperty.DEPRESSION_WIDTH)
+    assert dep_width == 2

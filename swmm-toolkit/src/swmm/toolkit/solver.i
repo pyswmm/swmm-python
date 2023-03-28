@@ -158,7 +158,9 @@
     SM_LidLayerProperty,
     SM_LidUProperty,
     SM_LidUOptions,
-    SM_LidResult
+    SM_LidResult,
+    SM_InletProperty,
+    SM_InletResult
 }
 
 

@@ -739,3 +739,17 @@ class RainResult(Enum):
     TOTAL = 0
     RAINFALL = 1
     SNOWFALL = 2
+
+class InletProperty(Enum):
+    NUM_INLETS = 0
+    CLOG_FACTOR = 1
+    FLOW_LIMIT = 2
+    DEPRESSION_HEIGHT = 3
+    DEPRESSION_WIDTH = 4
+    
+
+class InletResult(Enum):
+    FLOW_FACTOR = 0
+    FLOW_CAPTURE = 1
+    BACK_FLOW = 2
+    BLACK_FLOW_RATIO = 3
