@@ -219,6 +219,16 @@
 %ignore swmm_getWarnings;
 %ignore swmm_IsOpenFlag;
 %ignore swmm_IsStartedFlag;
+%ignore swmm_IsStartedFlag;
+
+%ignore swmm_getCount;
+%ignore swmm_getName;
+%ignore swmm_getIndex;
+%ignore swmm_getValue;
+%ignore swmm_setValue;
+%ignore swmm_getSavedValue;
+%ignore swmm_writeLine;
+%ignore swmm_decodeDate;
 
 %include "swmm5.h"
 
