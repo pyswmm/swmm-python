@@ -16,7 +16,7 @@
 import platform
 import subprocess
 import pathlib
-
+import os
 from skbuild import setup
 from setuptools import Command
 
@@ -63,8 +63,10 @@ else:
     package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"}
 
 
+if os.environ.get('CMAKE_ARGS') is not None:
+    cmake_args = os.environ.get('CMAKE_ARGS').split()
 # Set Platform specific cmake args here
-if platform_system == "Windows":
+elif platform_system == "Windows":
     cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
