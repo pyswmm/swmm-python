@@ -63,8 +63,9 @@ else:
     package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"}
 
 
-if os.environ.get('CMAKE_ARGS') is not None:
-    cmake_args = os.environ.get('CMAKE_ARGS').split()
+if os.environ.get('SWMM_CMAKE_ARGS') is not None:
+    cmake_args = os.environ.get('SWMM_CMAKE_ARGS').split()
+
 # Set Platform specific cmake args here
 elif platform_system == "Windows":
     cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
@@ -90,7 +91,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name = "swmm-toolkit",
-    version = "0.14.1",
+    version = "0.14.2",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,

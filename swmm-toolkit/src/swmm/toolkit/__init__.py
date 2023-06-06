@@ -19,7 +19,7 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Sam Hatchett"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.14.1"
+__version__ = "0.14.2"
 __date__ = "June 7, 2021"
 
 __maintainer__ = "Michael Tryby"
