@@ -23,7 +23,8 @@ from setuptools import Command
 
 # Determine platform
 platform_system = platform.system()
-
+if platform_system == 'Darwin':
+    mac_version, _, _ =  platform.mac_ver()
 
 class CleanCommand(Command):
     ''' Cleans project tree '''
@@ -71,7 +72,8 @@ elif platform_system == "Windows":
     cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=13"]
+    osx_target = f"-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING={mac_version}"
+    cmake_args = ["-GNinja", osx_target]
 
 else:
     cmake_args = ["-GUnix Makefiles"]
