@@ -71,7 +71,7 @@ elif platform_system == "Windows":
     cmake_args = ["-GVisual Studio 17 2022","-Ax64"]
 
 elif platform_system == "Darwin":
-    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.9"]
+    cmake_args = ["-GNinja","-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=13"]
 
 else:
     cmake_args = ["-GUnix Makefiles"]
@@ -92,26 +92,20 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
     name = "swmm-toolkit",
     version = "0.14.2",
-
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
-
     zip_safe = False,
     install_requires = ["aenum==3.1.11"],
-
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
     cmake_process_manifest_hook = exclude_files,
-
     description='OWA SWMM Python Toolkit',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/OpenWaterAnalytics/swmm-python',
-
     author='See AUTHORS',
     maintainer_email='bemcdonnell@gmail.com',
     license='CC0',
-
     keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
     classifiers=[
         "Topic :: Scientific/Engineering",

@@ -38,14 +38,10 @@ include(${SWIG_USE_FILE})
 
 
 # If wheel build on Apple fetch and build OpenMP Library
-if (APPLE)
-    include(./extern/openmp.cmake)
-else()
-    find_package(OpenMP
-        OPTIONAL_COMPONENTS
-            C
-    )
-endif()
+find_package(OpenMP
+	OPTIONAL_COMPONENTS
+        C
+)
 
 
 # Add project subdirectories
