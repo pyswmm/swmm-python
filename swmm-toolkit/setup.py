@@ -19,7 +19,7 @@ import pathlib
 import os
 from skbuild import setup
 from setuptools import Command
-
+import sys
 
 # Determine platform
 platform_system = platform.system()
@@ -56,11 +56,28 @@ class CleanCommand(Command):
         p.wait()
 
 
-# Set up location of wheel libraries depending on build platform
-if platform_system == "Windows":
-    package_dir = {"swmm_toolkit":"bin", "swmm.toolkit": "src/swmm/toolkit"}
+# Set up location of wheel libraries depending on build platform and command
+# commands that trigger cmake from skbuild.setuptools_wrap._should_run_cmake
+commands_that_trigger_cmake = {
+        "build",
+        "build_ext",
+        "develop",
+        "install",
+        "install_lib",
+        "bdist",
+        "bdist_dumb",
+        "bdist_egg",
+        "bdist_rpm",
+        "bdist_wininst",
+        "bdist_wheel",
+        "test",
+    }
+command = sys.argv[1] if len(sys.argv) > 1 else None
+if command in commands_that_trigger_cmake:
+    swmm_toolkit_dir= "bin" if platform_system == "Windows" else "lib"
 else:
-    package_dir = {"swmm_toolkit":"lib", "swmm.toolkit": "src/swmm/toolkit"}
+    swmm_toolkit_dir= "swmm-solver"
+package_dir = {"swmm_toolkit" : swmm_toolkit_dir, "swmm.toolkit": "src/swmm/toolkit"}
 
 
 if os.environ.get('SWMM_CMAKE_ARGS') is not None:
@@ -87,7 +104,6 @@ def exclude_files(cmake_manifest):
 # Get the long description from the README file
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
-
 
 setup(
     name = "swmm-toolkit",
