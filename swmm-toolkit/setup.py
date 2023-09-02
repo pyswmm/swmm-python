@@ -20,6 +20,13 @@ import os
 from skbuild import setup
 from setuptools import Command
 
+# hack to trick setuptools until we transition to scikit-build-core
+# without these libs, setuptools will fail to build sdist thinking the 
+# package is pure python and missing.
+_HERE_ = os.path.abspath(os.path.dirname(__file__))
+os.mkdir(os.path.join(_HERE_, 'bin'))
+os.mkdir(os.path.join(_HERE_, 'lib'))
+
 
 # Determine platform
 platform_system = platform.system()
@@ -88,7 +95,6 @@ def exclude_files(cmake_manifest):
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
-
 setup(
     name = "swmm-toolkit",
     version = "0.14.2",
@@ -128,3 +134,8 @@ setup(
         "Development Status :: 5 - Production/Stable",
     ]
 )
+
+
+# clean up setuptools hack
+os.rmdir(os.path.join(_HERE_, 'bin'))
+os.rmdir(os.path.join(_HERE_, 'lib'))
