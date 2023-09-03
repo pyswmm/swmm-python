@@ -833,3 +833,21 @@ def test_inlet_clogging(inlet_handle):
 
     dep_width = solver.inlet_get_parameter(index, shared_enum.InletProperty.DEPRESSION_WIDTH)
     assert dep_width == 2
+
+def test_hotstart(run_inlet_sim):
+    for i in range(0, 100):
+        solver.swmm_step()
+
+    # save hotstart and pull out a node depth
+    solver.swmm_hotstart(shared_enum.HotstartFile.SAVE,'HS_FILE.hs')
+    prev_depth = solver.node_get_result(0, shared_enum.NodeResult.DEPTH)
+    solver.swmm_end()
+    solver.swmm_close()
+
+    # restart sim using hotstart file and check that node depth is the same
+    solver.swmm_open(INPUT_FILE_INLET, REPORT_FILE_INLET, OUTPUT_FILE_INLET)
+    solver.swmm_hotstart(shared_enum.HotstartFile.USE,'HS_FILE.hs')
+    solver.swmm_start(0)
+    new_depth = solver.node_get_result(0, shared_enum.NodeResult.DEPTH)
+    assert prev_depth > 0
+    assert prev_depth == pytest.approx(new_depth, 0.1)

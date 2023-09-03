@@ -741,6 +741,13 @@ class RainResult(Enum):
     SNOWFALL = 2
 
 class InletProperty(Enum):
+    """Inlet Property enum class.
+    
+    :attr:`~NUM_INLETS`
+    :attr:`~CLOG_FACTOR`
+    :attr:`~FLOW_LIMIT`
+    :attr:`~DEPRESSION_HEIGHT`
+    :attr:`~DEPRESSION_WIDTH`"""
     NUM_INLETS = 0
     CLOG_FACTOR = 1
     FLOW_LIMIT = 2
@@ -749,7 +756,23 @@ class InletProperty(Enum):
     
 
 class InletResult(Enum):
+    """Inlet Result enum class.
+
+    :attr:`~FLOW_FACTOR`
+    :attr:`~FLOW CAPTURE`
+    :attr:`~BACK_FLOW`
+    :attr:`~BLACK_FLOW_RATIO`
+    """
     FLOW_FACTOR = 0
     FLOW_CAPTURE = 1
     BACK_FLOW = 2
     BLACK_FLOW_RATIO = 3
+
+class HotstartFile(Enum):
+    """Hotstart File enum class.
+
+    :attr:`~USE`
+    :attr:`~SAVE`
+    """
+    USE = 0
+    SAVE = 1
