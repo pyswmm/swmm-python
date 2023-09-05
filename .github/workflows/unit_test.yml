@@ -30,6 +30,9 @@ jobs:
           - os: macos-12
             sys_pkgs: brew install swig ninja
             activate: source ./build-env/bin/activate
+          
+          - os: ubuntu-latest
+            activate: source ./build-env/bin/activate
 
     steps:
       - name: Checkout repo
