@@ -27,7 +27,7 @@ jobs:
           submodules: true
 
       - name: Install Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.7
 
@@ -35,7 +35,7 @@ jobs:
         run: |
             pip install wheel
             python setup.py bdist_wheel
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: nrtest-swmm/dist/*.whl
 
