@@ -66,7 +66,7 @@ jobs:
         with:
           package-dir: ./swmm-toolkit
         env:          
-          CIBEW_TEST_COMMAND: "pytest ./swmm-toolkit/tests"
+          CIBW_TEST_COMMAND: "pytest ./swmm-toolkit/tests"
           CIBW_BEFORE_TEST: pip install -r ./swmm-toolkit/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
@@ -76,7 +76,7 @@ jobs:
           CIBW_ARCHS_MACOS: x86_64 arm64  
           # only build current supported python: https://devguide.python.org/versions/
           # don't build pypy or musllinux to save build time. TODO: find a good way to support those archs
-          CIBW_SKIP: cp36-* cp37 cp312-* pp* *-musllinux*
+          CIBW_SKIP: cp36-* cp37-* cp312-* pp* *-musllinux*
           # Will avoid testing on emulated architectures
           # Skip trying to test arm64 builds on Intel Macs
           CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_arm64 *-macosx_universal2:arm64"
