@@ -66,8 +66,8 @@ jobs:
         with:
           package-dir: ./swmm-toolkit
         env:          
-          CIBW_TEST_COMMAND: "pytest ./swmm-toolkit/tests"
-          CIBW_BEFORE_TEST: pip install -r ./swmm-toolkit/test-requirements.txt
+          CIBW_TEST_COMMAND: "pytest {package}/tests"
+          CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
