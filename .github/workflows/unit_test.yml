@@ -12,7 +12,7 @@ on:
 
 jobs:
   build_and_test:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build and test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
