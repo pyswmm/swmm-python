@@ -4,10 +4,10 @@ name: Build Wheels
 on:
   pull_request:
     branches:    
-      - main  
+      - master  
   push:
     branches:    
-      - main
+      - master
     tags:        
       - v*
   workflow_dispatch:
