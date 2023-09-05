@@ -106,3 +106,4 @@
 
 %rename(swmm_version_info)                  swmm_getSemVersion;
 %rename(swmm_build_id)                      swmm_getBuildId;
+%rename(swmm_hotstart)                      swmm_hotstart;

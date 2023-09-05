@@ -377,6 +377,17 @@ patch: char **
 "
 ) swmm_getVersionInfo;
 
+%feature("autodoc", 
+"Load or save a hotstart file into or out of a running simulation.
+
+Parameters
+----------
+operation: SM_HotStart
+    The hotstart operation to use (i.e. save or load)
+hsfile: str
+    The path to the hotstart file to either save or load
+"
+) swmm_hotstart;
 
 %feature("autodoc",
 "Finds the index of an object given its ID.
