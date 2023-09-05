@@ -15,7 +15,7 @@ cmake_minimum_required (VERSION 3.17)
 
 project(swmm-toolkit
     VERSION
-        0.14.0
+        0.15.0
 )
 
 
@@ -36,17 +36,10 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
-
-# If wheel build on Apple fetch and build OpenMP Library
-if (APPLE)
-    include(./extern/openmp.cmake)
-else()
-    find_package(OpenMP
-        OPTIONAL_COMPONENTS
-            C
-    )
-endif()
-
+find_package(OpenMP
+    OPTIONAL_COMPONENTS
+        C
+)
 
 # Add project subdirectories
 add_subdirectory(swmm-solver)

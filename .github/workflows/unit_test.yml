@@ -1,0 +1,63 @@
+name: Unit Test
+
+on: 
+  push:
+    branches-ignore:    
+      - 'master'
+    tags-ignore:
+      - v*
+  pull_request:
+    branches-ignore:    
+      - 'master'
+
+jobs:
+  build_and_test:
+    name: Build and test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./swmm-toolkit
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, macos-12, ubuntu-latest]
+        include:
+          - os: windows-2022
+            sys_pkgs: choco install swig
+            activate: ./build-env/Scripts/activate
+
+          - os: macos-12
+            sys_pkgs: brew install swig ninja
+            activate: source ./build-env/bin/activate
+          
+          - os: ubuntu-latest
+            activate: source ./build-env/bin/activate
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install required system packages
+        run: ${{matrix.sys_pkgs}}
+
+      - name: Build wheel in virtual env
+        run: |
+          python -m venv --clear ./build-env
+          ${{matrix.activate}}
+          python -m pip install -r build-requirements.txt
+          python setup.py bdist_wheel
+          deactivate
+
+      - name: Test wheel
+        run: |
+          pip install -r test-requirements.txt
+          pip install --no-index --find-links=./dist swmm_toolkit
+          pytest

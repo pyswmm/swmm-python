@@ -160,7 +160,8 @@
     SM_LidUOptions,
     SM_LidResult,
     SM_InletProperty,
-    SM_InletResult
+    SM_InletResult,
+    SM_HotStart
 }
 
 
