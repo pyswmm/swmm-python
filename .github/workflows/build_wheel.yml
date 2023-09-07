@@ -102,7 +102,7 @@ jobs:
           package-dir: ./swmm-toolkit
         env:
           # mac needs ninja to build
-          CIBW_BEFORE_BUILD_MACOS: arch -arm64 brew install ninja llvm@11
+          CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: aarch64
           CIBW_ARCHS_MACOS: arm64  
