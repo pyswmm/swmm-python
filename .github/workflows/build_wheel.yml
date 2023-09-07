@@ -72,9 +72,7 @@ jobs:
           # Skip trying to test arm64 builds on Intel Macs
           CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_arm64 *-macosx_universal2:arm64"
           CIBW_BUILD_VERBOSITY: 1
-          REPAIR_LIBRARY_PATH: ""
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+
 
       - uses: actions/upload-artifact@v3
         with:
@@ -111,7 +109,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src" &&
             DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
-            
+
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: aarch64
           CIBW_ARCHS_MACOS: arm64  
