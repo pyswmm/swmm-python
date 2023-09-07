@@ -1,16 +1,7 @@
 name: Build Wheels
 
 # Cross compile wheels only on main branch and tags
-on:
-  pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
-    tags:
-      - v*
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build_nrtest_plugin:
