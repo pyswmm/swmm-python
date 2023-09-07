@@ -38,30 +38,14 @@ include(${SWIG_USE_FILE})
 
 
 # If wheel build on Apple fetch and build OpenMP Library
-
-if(APPLE)
-    # set(CMAKE_C_COMPILER cc)
-    # set(CMAKE_CXX_COMPILER c++)
-
-    if(CMAKE_C_COMPILER_ID MATCHES "Clang\$")
-        set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
-        set(OpenMP_C_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
-    endif()
-
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang\$")
-        set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
-        set(OpenMP_CXX_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
-    endif()
-
+if (APPLE)
+    include(./extern/openmp.cmake)
+else()
+    find_package(OpenMP
+        OPTIONAL_COMPONENTS
+            C
+    )
 endif()
-
-find_package(OpenMP
-    REQUIRED
-    OPTIONAL_COMPONENTS
-        C
-)
 
 # Add project subdirectories
 add_subdirectory(swmm-solver)
