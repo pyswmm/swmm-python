@@ -64,6 +64,10 @@ jobs:
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
+          # need to pass the library path to delocate
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src" &&
+            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: x86_64
           CIBW_ARCHS_WINDOWS: AMD64
@@ -108,6 +112,10 @@ jobs:
         env:
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
+          # need to pass the library path to delocate
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src" &&
+            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: aarch64
           CIBW_ARCHS_MACOS: arm64  
@@ -115,6 +123,7 @@ jobs:
           # don't build pypy or musllinux to save build time. TODO: find a good way to support those archs
           CIBW_BUILD: ${{matrix.pyver}}-*
           CIBW_SKIP: cp36-* cp37-* cp312-* pp* *-musllinux*
+          CIBW_BUILD_VERBOSITY: 1
 
       - uses: actions/upload-artifact@v3
         with:
