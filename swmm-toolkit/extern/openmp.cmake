@@ -23,7 +23,7 @@ include(FetchContent)
 
 FetchContent_Declare(OpenMP
     URL
-        https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.0/openmp-15.0.0.src.tar.xz
+        https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/openmp-12.0.1.src.tar.xz
 )
 
 set(OPENMP_STANDALONE_BUILD TRUE)
