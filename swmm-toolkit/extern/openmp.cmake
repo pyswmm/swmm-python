@@ -25,8 +25,8 @@ FetchContent_Declare(OpenMP
     URL
         https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.6/openmp-16.0.6.src.tar.xz
     URL_HASH
-        SHA256=d187483b75b39acb3ff8ea1b7d98524d95322e3cb148842957e9b0fbb866052e
-)
+        SHA256=a2536f06373774f2829d892b72eea5f97bab20e69b26b03042d947f992eb8e38
+        
 
 set(OPENMP_STANDALONE_BUILD TRUE)
 set(LIBOMP_INSTALL_ALIASES OFF)
