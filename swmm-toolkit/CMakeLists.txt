@@ -36,10 +36,15 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
-find_package(OpenMP
-    OPTIONAL_COMPONENTS
-        C
-)
+# If wheel build on Apple fetch and build OpenMP Library
+if (APPLE)
+    include(./extern/openmp.cmake)
+else()
+    find_package(OpenMP
+        OPTIONAL_COMPONENTS
+            C
+    )
+endif()
 
 # Add project subdirectories
 add_subdirectory(swmm-solver)
