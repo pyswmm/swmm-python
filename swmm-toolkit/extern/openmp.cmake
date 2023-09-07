@@ -23,9 +23,7 @@ include(FetchContent)
 
 FetchContent_Declare(OpenMP
     URL
-        https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.6/openmp-16.0.6.src.tar.xz
-    URL_HASH
-        SHA256=a2536f06373774f2829d892b72eea5f97bab20e69b26b03042d947f992eb8e38
+        https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.0/openmp-15.0.0.src.tar.xz
 )
 
 set(OPENMP_STANDALONE_BUILD TRUE)
