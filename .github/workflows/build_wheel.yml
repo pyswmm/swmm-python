@@ -3,12 +3,12 @@ name: Build Wheels
 # Cross compile wheels only on main branch and tags
 on:
   pull_request:
-    branches:    
-      - master  
-  push:
-    branches:    
+    branches:
       - master
-    tags:        
+  push:
+    branches:
+      - master
+    tags:
       - v*
   workflow_dispatch:
 
@@ -59,15 +59,15 @@ jobs:
         uses: pypa/cibuildwheel@v2.15.0
         with:
           package-dir: ./swmm-toolkit
-        env:          
+        env:
           CIBW_TEST_COMMAND: "pytest {package}/tests"
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: x86_64
-          CIBW_ARCHS_WINDOWS: AMD64 
-          CIBW_ARCHS_MACOS: x86_64  
+          CIBW_ARCHS_WINDOWS: AMD64
+          CIBW_ARCHS_MACOS: x86_64
           # only build current supported python: https://devguide.python.org/versions/
           # don't build pypy or musllinux to save build time. TODO: find a good way to support those archs
           CIBW_BUILD: ${{matrix.pyver}}-*
@@ -75,6 +75,7 @@ jobs:
           # Will avoid testing on emulated architectures
           # Skip trying to test arm64 builds on Intel Macs
           CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_arm64 *-macosx_universal2:arm64"
+          CIBW_BUILD_VERBOSITY: 1
 
       - uses: actions/upload-artifact@v3
         with:
