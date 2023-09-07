@@ -40,8 +40,8 @@ include(${SWIG_USE_FILE})
 # If wheel build on Apple fetch and build OpenMP Library
 
 if(APPLE)
-    set(CMAKE_C_COMPILER cc)
-    set(CMAKE_CXX_COMPILER c++)
+    # set(CMAKE_C_COMPILER cc)
+    # set(CMAKE_CXX_COMPILER c++)
 
     if(CMAKE_C_COMPILER_ID MATCHES "Clang\$")
         set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp")
