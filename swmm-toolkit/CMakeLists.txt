@@ -37,10 +37,10 @@ cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
 
-set(CMAKE_C_COMPILER "/usr/local/Cellar/llvm/5.0.1/bin/clang")
-set(CMAKE_CXX_COMPILER "/usr/local/Cellar/llvm/5.0.1/bin/clang++")
-set(OPENMP_LIBRARIES "/usr/local/Cellar/llvm/5.0.1/lib")
-set(OPENMP_INCLUDES "/usr/local/Cellar/llvm/5.0.1/include")
+set(CMAKE_C_COMPILER "/usr/local/Cellar/llvm/14.0.0/bin/clang")
+set(CMAKE_CXX_COMPILER "/usr/local/Cellar/llvm/14.0.0/bin/clang++")
+set(OPENMP_LIBRARIES "/usr/local/Cellar/llvm/14.0.0/lib")
+set(OPENMP_INCLUDES "/usr/local/Cellar/llvm/14.0.0/include")
 
 OPTION (USE_OpenMP "Use OpenMP to enamble <omp.h>" ON)
 # Find OpenMP
