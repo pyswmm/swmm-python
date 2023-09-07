@@ -44,3 +44,5 @@ install(TARGETS omp
     DESTINATION
         "${LIBRARY_DIST}"
 )
+
+file(WRITE _skbuild/bindir ${CMAKE_BINARY_DIR})

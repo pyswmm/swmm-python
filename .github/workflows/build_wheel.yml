@@ -53,6 +53,11 @@ jobs:
         env:
           CIBW_TEST_COMMAND: "pytest {package}/tests"
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
+          
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src" &&
+            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
@@ -103,6 +108,10 @@ jobs:
         env:
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src" &&
+            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+            
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: aarch64
           CIBW_ARCHS_MACOS: arm64  
