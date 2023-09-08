@@ -50,13 +50,13 @@ install(TARGETS omp
 if(CMAKE_C_COMPILER_ID MATCHES "Clang\$")
     set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src")
     set(OpenMP_C_LIB_NAMES "omp")
-    set(OpenMP_omp_LIBRARY "${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src/libomp.dylib")
+    set(OpenMP_omp_LIBRARY "${LIBRARY_DIST}/libomp.dylib")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang\$")
     set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src")
     set(OpenMP_CXX_LIB_NAMES "omp")
-    set(OpenMP_omp_LIBRARY "${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src/libomp.dylib")
+    set(OpenMP_omp_LIBRARY "${LIBRARY_DIST}/libomp.dylib")
 endif()
 
 # Save the bin directory for later use with
