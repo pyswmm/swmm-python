@@ -44,7 +44,7 @@ jobs:
   build_wheels:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-2022, macos-12]
         pyver: [cp38, cp39, cp310, cp311]
@@ -88,7 +88,7 @@ jobs:
   build_cross_wheels:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest,macos-12]
         pyver: [cp38, cp39, cp310, cp311]
