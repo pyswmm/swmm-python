@@ -65,10 +65,10 @@ jobs:
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # need to pass the library path to delocate
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src:$DYLD_LIBRARY_PATH" &&
-            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
-          # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
+          # CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          #   export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src:$DYLD_LIBRARY_PATH" &&
+          #   DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+          # # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: x86_64
           CIBW_ARCHS_WINDOWS: AMD64
           CIBW_ARCHS_MACOS: x86_64
@@ -113,10 +113,10 @@ jobs:
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
           # need to pass the library path to delocate
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src:$DYLD_LIBRARY_PATH" &&
-            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
-          # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
+          # CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          #   export REPAIR_LIBRARY_PATH="$(cat ./swmm-toolkit/_skbuild/bindir)/_deps/openmp-build/runtime/src:$DYLD_LIBRARY_PATH" &&
+          #   DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+          # # configure cibuildwheel to build native archs ('auto'), and some emulated ones      
           CIBW_ARCHS_LINUX: aarch64
           CIBW_ARCHS_MACOS: arm64  
           # only build current supported python: https://devguide.python.org/versions/
