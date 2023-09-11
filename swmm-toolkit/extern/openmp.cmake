@@ -41,11 +41,11 @@ target_link_directories(omp
         $<INSTALL_INTERFACE:${LIBRARY_DIST}>
 )
 
-# install(TARGETS omp
-#     LIBRARY
-#     DESTINATION
-#         "${LIBRARY_DIST}"
-# )
+install(TARGETS omp
+    LIBRARY
+    DESTINATION
+        "${LIBRARY_DIST}"
+)
 
 if(CMAKE_C_COMPILER_ID MATCHES "Clang\$")
     set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src")
@@ -58,7 +58,3 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang\$")
     set(OpenMP_CXX_LIB_NAMES "omp")
     set(OpenMP_omp_LIBRARY "${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src/libomp.dylib")
 endif()
-
-# Save the bin directory for later use with
-# ci/cd build scripts
-file(WRITE _skbuild/bindir ${CMAKE_BINARY_DIR})
