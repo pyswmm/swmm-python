@@ -13,6 +13,9 @@
 #  OpenMP library build fails for Xcode generator. Use Ninja or Unix Makefiles
 #  instead.
 #
+# All sources were obtained directly from the LLVM releases on github
+# See license-llvm-openmp.txt for the corresponding license and 
+# https://openmp.llvm.org/ for details on the OpenMP run-time. 
 
 ################################################################################
 #####################    CMAKELISTS FOR OPENMP LIBRARY    ######################

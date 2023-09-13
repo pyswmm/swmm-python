@@ -105,6 +105,11 @@ def exclude_files(cmake_manifest):
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
+if platform_system == "Darwin":
+    license_files = ['LICENSE.md', 'extern/license-llvm-openmp.txt']
+else:
+    license_files = ['LICENSE.md']
+
 setup(
     name = "swmm-toolkit",
     version = "0.15.0",
@@ -127,7 +132,7 @@ setup(
     author='See AUTHORS',
     maintainer_email='bemcdonnell@gmail.com',
     license='CC0',
-
+    license_files=license_files,
     keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
     classifiers=[
         "Topic :: Scientific/Engineering",
