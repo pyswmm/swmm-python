@@ -403,6 +403,7 @@ class SimSetting(Enum):
     HEAD_TOLERANCE = 11
     SYSTEM_FLOW_TOLERANCE = 12
     LATERAL_FLOW_TOLERANCE = 13
+    THREADS = 14
 
 
 class NodeProperty(Enum):
