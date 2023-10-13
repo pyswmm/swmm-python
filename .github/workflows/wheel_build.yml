@@ -59,6 +59,7 @@ jobs:
     - name: Build
       run: |
         pwd
+        ls -l
         make.sh -g "Visual Studio 16 2019"
 
 
