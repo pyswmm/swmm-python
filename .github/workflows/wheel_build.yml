@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Install Python
         uses: actions/setup-python@v4
@@ -37,3 +35,29 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           path: nrtest-swmm/dist/*.whl
+
+
+build_swmm:
+    name: Build SWMM
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: bash
+        working-directory: swmm-toolkit/swmm-solver/ci-tools/linux
+
+    steps:
+    - name: Checkout swmm repo
+      uses: actions/checkout@v3
+
+    - name: Checkout ci-tools repo
+      uses: actions/checkout@v3
+      with:
+        repository: michaeltryby/ci-tools
+        ref: master
+        path: swmm-toolkit/swmm-solver
+
+    - name: Build
+      run: make.sh -g "Visual Studio 16 2019"
+
+
+
