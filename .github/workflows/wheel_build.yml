@@ -59,10 +59,11 @@ jobs:
         path: swmm-toolkit/swmm-solver/ci-tools
 
     - name: Build
-      run: |
-        pwd
-        ls -l
-        ./make.sh -g "Visual Studio 16 2019"
+      run: ./make.sh -g "Visual Studio 16 2019"
 
-
-
+    - name: Upload artifacts
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-swmm-artifacts
+        path: upload/*.*
