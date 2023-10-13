@@ -38,7 +38,7 @@ jobs:
           path: nrtest-swmm/dist/*.whl
 
 
-  build_swmm_library:
+  build_swmm_lib:
     name: Build swmm library
     runs-on: windows-2019
     defaults:
@@ -99,4 +99,3 @@ jobs:
     - name: Build wheel in virtual env
       run: |
         ls extern
-        
