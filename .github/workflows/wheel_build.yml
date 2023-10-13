@@ -34,11 +34,12 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v3
         with:
+          name: nrtest-swmm-wheel
           path: nrtest-swmm/dist/*.whl
 
 
-  build_swmm:
-    name: Build SWMM
+  build_swmm_library:
+    name: Build swmm library
     runs-on: windows-2019
     defaults:
       run:
@@ -61,9 +62,41 @@ jobs:
     - name: Build
       run: ./make.sh -g "Visual Studio 16 2019"
 
-    - name: Upload artifacts
+    - name: Upload dependency
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
-        name: build-swmm-artifacts
+        name: swmm-lib
         path: swmm-toolkit/swmm-solver/upload/*.*
+
+
+  build_swmm_wheel:
+    name: Build swmm-toolkit wheel
+    needs: [ build_swmm_lib ]
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: bash
+        working-directory: swmm-toolkit/swmm-solver/ci-tools/linux
+    
+    steps:
+    - name: Checkout swmm-python repo
+      uses: actions/checkout@v3
+      with:
+        submodules: false
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Download dependency
+      uses: actions/download-artifact@v3
+      with:
+        name: swmm-lib
+        path: extern
+
+    - name: Build wheel in virtual env
+      run: |
+        ls extern
+        
