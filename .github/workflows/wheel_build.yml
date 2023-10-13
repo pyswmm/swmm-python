@@ -54,7 +54,7 @@ jobs:
       with:
         repository: michaeltryby/ci-tools
         ref: master
-        path: swmm-toolkit/swmm-solver
+        path: swmm-toolkit/swmm-solver/ci-tools
 
     - name: Build
       run: make.sh -g "Visual Studio 16 2019"
