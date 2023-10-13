@@ -46,8 +46,10 @@ jobs:
         working-directory: swmm-toolkit/swmm-solver/ci-tools/linux
 
     steps:
-    - name: Checkout swmm repo
+    - name: Checkout swmm-python repo
       uses: actions/checkout@v3
+      with:
+        submodules: true
 
     - name: Checkout ci-tools repo
       uses: actions/checkout@v3
