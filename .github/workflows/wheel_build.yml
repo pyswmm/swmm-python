@@ -60,7 +60,7 @@ jobs:
       run: |
         pwd
         ls -l
-        make.sh -g "Visual Studio 16 2019"
+        ./make.sh -g "Visual Studio 16 2019"
 
 
 
