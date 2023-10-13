@@ -85,16 +85,11 @@ jobs:
       with:
         submodules: false
 
-    - name: Install Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-
     - name: Download dependency
       uses: actions/download-artifact@v3
       with:
         name: swmm-lib
-        path: extern
+        path: ./swmm-toolkit/extern
 
     - name: Build wheel in virtual env
       run: |
