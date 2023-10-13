@@ -37,7 +37,7 @@ jobs:
           path: nrtest-swmm/dist/*.whl
 
 
-build_swmm:
+  build_swmm:
     name: Build SWMM
     runs-on: windows-2019
     defaults:
