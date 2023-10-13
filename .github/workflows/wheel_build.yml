@@ -77,8 +77,8 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: swmm-toolkit/swmm-solver/ci-tools/linux
-    
+        working-directory: ./swmm-toolkit
+
     steps:
     - name: Checkout swmm-python repo
       uses: actions/checkout@v3
