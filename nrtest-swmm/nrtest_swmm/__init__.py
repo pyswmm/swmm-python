@@ -108,9 +108,10 @@ def swmm_report_compare(path_test, path_ref, rtol, atol):
     HEADER = 4
     FOOTER = 4
 
-    with open(path_test ,'r') as ftest, open(path_ref, 'r') as fref:
+    with open(path_test ,'r', encoding="ISO-8859-1") as ftest, \
+         open(path_ref, 'r', encoding="ISO-8859-1") as fref:
 
-        for (test_line, ref_line) in zip(hdf.parse(ftest, HEADER, FOOTER)[1],
+        for (test_line, ref_line) in zip(hdf.parse(ftest, HEADER, FOOTER)[1], \
                                          hdf.parse(fref, HEADER, FOOTER)[1]):
 
             if test_line != ref_line:
