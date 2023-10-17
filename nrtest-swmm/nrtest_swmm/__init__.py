@@ -4,7 +4,7 @@
 #  __init__.py - nrtest_swmm module
 #
 #  Author:     Michael E. Tryby
-#              US EPA - ORD/NRMRL
+#              US EPA - ORD/CESER
 #
 
 '''
@@ -25,8 +25,8 @@ __copyright__ = "None"
 __credits__ = "Colleen Barr, Maurizio Cingi, Mark Gray, David Hall, Bryant McDonnell"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.7.0"
-__date__ = "Jul 28, 2021"
+__version__ = "0.8.0"
+__date__ = "Oct 17, 2023"
 
 __maintainer__ = "Michael E. Tryby"
 __email__ = "tryby.michael@epa.gov"

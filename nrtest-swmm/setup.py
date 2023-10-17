@@ -6,7 +6,7 @@
 #  Author:     Michael E. Tryby
 #              US EPA - ORD/NRMRL
 #
-#  Modified: Jul 28, 2021
+#  Modified: Oct 17, 2023
 #
 #  Usage:
 #    \>python setup.py bdist_wheel
@@ -27,7 +27,7 @@ entry_points = {
 
 setup(
     name='nrtest-swmm',
-    version='0.7.0',
+    version='0.8.0',
     description="SWMM extension for nrtest",
 
     author="Michael E. Tryby",
