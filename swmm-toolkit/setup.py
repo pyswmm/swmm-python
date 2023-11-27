@@ -112,7 +112,7 @@ else:
 
 setup(
     name = "swmm-toolkit",
-    version = "0.15.2",
+    version = "0.15.3",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
@@ -124,10 +124,10 @@ setup(
     cmake_args = cmake_args,
     cmake_process_manifest_hook = exclude_files,
 
-    description='OWA SWMM Python Toolkit',
+    description='PySWMM SWMM Python Toolkit',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/OpenWaterAnalytics/swmm-python',
+    url='https://github.com/pyswmm/swmm-python',
 
     author='See AUTHORS',
     maintainer_email='bemcdonnell@gmail.com',
@@ -145,6 +145,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: C",
         "Development Status :: 5 - Production/Stable",
     ]
