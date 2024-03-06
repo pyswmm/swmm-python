@@ -88,9 +88,10 @@ class OutputMetadata:
             # Create dictionary keys
             for i in range(1, n):
                 symbolic_name = 'POLLUT_CONC_' + str(i)
-                extend_enum(shared_enum.SubcatchAttribute, symbolic_name, 8 + i)
-                extend_enum(shared_enum.NodeAttribute, symbolic_name, 6 + i)
-                extend_enum(shared_enum.LinkAttribute, symbolic_name, 5 + i)
+                if symbolic_name not in shared_enum.SubcatchAttribute._member_names_:
+                    extend_enum(shared_enum.SubcatchAttribute, symbolic_name, 8 + i)
+                    extend_enum(shared_enum.NodeAttribute, symbolic_name, 6 + i)
+                    extend_enum(shared_enum.LinkAttribute, symbolic_name, 5 + i)
 
             # Update metadata dictionary with pollutant metadata
             for i, attr in enumerate(islice(shared_enum.SubcatchAttribute, 8, None)):
