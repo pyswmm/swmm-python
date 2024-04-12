@@ -112,7 +112,7 @@ else:
 
 setup(
     name = "swmm-toolkit",
-    version = "0.15.3",
+    version = "0.15.4",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
