@@ -64,6 +64,7 @@ jobs:
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
+          CIBW_BEFORE_BUILD_LINUX: sudo apt remove swig4.0 cmake
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones
           CIBW_ARCHS_LINUX: x86_64
           CIBW_ARCHS_WINDOWS: AMD64
@@ -102,7 +103,7 @@ jobs:
           platforms: all
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.2
+        uses: pypa/cibuildwheel@v2.17.0
         with:
           package-dir: ./swmm-toolkit
         env:
