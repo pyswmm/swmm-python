@@ -64,7 +64,8 @@ jobs:
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
           CIBW_BEFORE_BUILD_MACOS: brew install ninja
-          CIBW_BEFORE_BUILD_LINUX: apt remove -y swig4.0 cmake
+          # remove system swig (cmake bug doesn't respect python venv)
+          CIBW_BEFORE_BUILD_LINUX: rm -f $(which swig) && rm -f $(which swig4.0)
           # configure cibuildwheel to build native archs ('auto'), and some emulated ones
           CIBW_ARCHS_LINUX: x86_64
           CIBW_ARCHS_WINDOWS: AMD64
