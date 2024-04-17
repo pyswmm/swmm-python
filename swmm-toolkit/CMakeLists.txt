@@ -15,7 +15,7 @@ cmake_minimum_required (VERSION 3.17)
 
 project(swmm-toolkit
     VERSION
-        0.15.4
+        0.15.5
 )
 
 
