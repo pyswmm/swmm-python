@@ -12,7 +12,7 @@
 ################################################################################
 
 
-set(CMAKE_SWIG_FLAGS -py3)
+# set(CMAKE_SWIG_FLAGS -py3)
 
 # Determine filename suffix for python extension
 if(WIN32)
