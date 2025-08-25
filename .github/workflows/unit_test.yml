@@ -21,13 +21,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2022, macos-12, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         include:
-          - os: windows-2022
+          - os: windows-latest
             sys_pkgs: choco install swig
             activate: ./build-env/Scripts/activate
 
-          - os: macos-12
+          - os: macos-latest
             sys_pkgs: brew install swig ninja
             activate: source ./build-env/bin/activate
           
@@ -36,14 +36,14 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
       - name: Install Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install required system packages
         run: ${{matrix.sys_pkgs}}
