@@ -46,8 +46,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-2022, macos-12]
-        pyver: [cp38, cp39, cp310, cp311, cp312]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        pyver: [cp39, cp310, cp311, cp312]
 
     steps:
       - name: Checkout repo
