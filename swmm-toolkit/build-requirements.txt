@@ -1,9 +1,8 @@
 
 
 
-setuptools   == 65.5.1
-wheel        == 0.38.1
-scikit-build == 0.11.1
-cmake        == 3.21
+setuptools
+wheel
+scikit-build
+cmake
 swig         == 4.0.2
-ninja; sys_platform == "darwin"
