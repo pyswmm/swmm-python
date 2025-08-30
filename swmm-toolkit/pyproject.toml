@@ -4,7 +4,7 @@ requires = [
     "setuptools>=42",
     "scikit-build>=0.13",
     "cmake>=3.21",
-    "swig==4.0.2",
-    "ninja==1.11.1 ; sys_platform == 'darwin'"
+    "swig",
+    "ninja==1.11.1 ; sys_platform == 'darwin'",
 ]
 build-backend = "setuptools.build_meta"
