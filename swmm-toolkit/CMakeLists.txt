@@ -11,7 +11,7 @@
 ##################    CMAKELISTS FOR SWMM-TOOLKIT PROJECT    ###################
 ################################################################################
 
-cmake_minimum_required (VERSION 3.17)
+cmake_minimum_required (VERSION 4.0.2)
 
 project(swmm-toolkit
     VERSION
