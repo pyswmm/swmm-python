@@ -60,7 +60,7 @@ jobs:
         with:
           package-dir: ./swmm-toolkit
         env:
-          MACOSX_DEPLOYMENT_TARGET: 11.0
+          MACOSX_DEPLOYMENT_TARGET: "11.0"
           CIBW_TEST_COMMAND: "pytest {package}/tests"
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
           # mac needs ninja to build
