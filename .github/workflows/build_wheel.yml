@@ -41,7 +41,7 @@ jobs:
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ steps.get_wheel.outputs.artifact_name }}
+          path: ./${{ steps.get_wheel.outputs.artifact_name }}
   
 
   build_wheels:
