@@ -12,7 +12,6 @@
 %include "typemaps.i"
 %include "cstring.i"
 
-
 /* Docstrings for module */
 %include "output_docs.i"
 
@@ -28,6 +27,8 @@
 //%rename("%(regex:/^\w+_([a-zA-Z]+)/\L\\1/)s") "";
 %include "output_rename.i"
 
+/* SWIG Override headers*/
+%include "swig_headers.i"
 
 /* MARK FUNCTIONS FOR ALLOCATING AND DEALLOCATING HANDLES */
 %newobject SMO_init;
@@ -77,7 +78,7 @@ and return a (possibly) different pointer */
       for(int i=0; i<*$2; i++) {
         PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
       }
-      $result = SWIG_Python_AppendOutput($result, o);
+      $result = SWIG_AppendOutput($result, o);
       SMO_freeMemory(*$1);
     }
 }
@@ -94,7 +95,7 @@ and return a (possibly) different pointer */
         for(int i=0; i<*$2; i++) {
             PyList_SetItem(o, i, PyInt_FromLong((long)temp[i]));
         }
-        $result = SWIG_Python_AppendOutput($result, o);
+        $result = SWIG_AppendOutput($result, o);
         SMO_freeMemory(*$1);
     }
 }
