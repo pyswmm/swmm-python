@@ -37,7 +37,6 @@ jobs:
       - name: Get wheel filename
         id: get_wheel 
         run: |
-            echo "PWD=$PWD"
             echo "artifact_name=$( ls dist/*.whl | xargs -n1 basename )" >> $GITHUB_OUTPUT
     
       - name: Upload wheel artifact
