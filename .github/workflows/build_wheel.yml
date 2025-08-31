@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.get_wheel.outputs.artifact_name }}
-          path: dist/*.whl
+          path: nrtest-swmm/dist/*.whl
   
 
   build_wheels:
