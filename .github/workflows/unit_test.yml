@@ -45,7 +45,7 @@ jobs:
 
       - name: Build wheel in virtual env
         env:
-          MACOSX_DEPLOYMENT_TARGET: 11.0
+          MACOSX_DEPLOYMENT_TARGET: "11.0"
         run: |
           python -m venv --clear ./build-env
           ${{matrix.activate}}
