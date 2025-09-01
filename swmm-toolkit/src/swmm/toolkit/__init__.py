@@ -25,21 +25,3 @@ __date__ = "June 7, 2021"
 __maintainer__ = "Michael Tryby"
 __email__ = "tryby.michael@epa.gov"
 __status__  = "Beta"
-
-
-import os
-import platform
-import sys
-
-
-# Adds directory containing swmm libraries to path
-if platform.system() == "Windows":
-    libdir = os.path.join(os.path.dirname(__file__), "../../swmm_toolkit")
-
-    if hasattr(os, 'add_dll_directory'):
-        conda_exists = os.path.exists(os.path.join(sys.prefix, 'conda-meta'))
-        if conda_exists:
-            os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE'] = "1"
-        os.add_dll_directory(libdir)
-    else:
-        os.environ["PATH"] = libdir + ";" + os.environ["PATH"]
