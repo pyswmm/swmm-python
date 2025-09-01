@@ -1,8 +1,0 @@
-
-
-
-setuptools
-wheel
-scikit-build
-cmake
-swig
