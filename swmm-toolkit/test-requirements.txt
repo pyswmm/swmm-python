@@ -1,8 +1,5 @@
-
-
-
-pytest == 7.1.1
+pytest == 8.4.1
 numpy  == 1.21.6; python_version == "3.7"
 numpy  == 1.24.4; python_version < "3.12"
-numpy  == 1.26.2; python_version >= "3.12"
+numpy  == 2.3.2; python_version >= "3.12"
 aenum  == 3.1.11
