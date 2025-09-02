@@ -65,6 +65,18 @@ FetchContent_MakeAvailable(
     OpenMP
 )
 
+set(OpenMP_AVAILABLE TRUE)
+
+set(OPENMP_INCLUDE_DIR
+    ${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src
+)
+
+target_include_directories(
+    omp
+    INTERFACE
+        ${OPENMP_INCLUDE_DIR}
+)
+
 target_compile_options(
   omp
     INTERFACE
@@ -75,7 +87,7 @@ target_compile_options(
 target_link_directories(
   omp
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/_deps/openmp-build/runtime/src>
+        $<BUILD_INTERFACE:${OPENMP_INCLUDE_DIR}>
         $<INSTALL_INTERFACE:/include>
 )
 
