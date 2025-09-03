@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Updated:   May 19, 2021
+# Updated:   Sep 2, 2025
 #
 #  Author:   See AUTHORS
 #
@@ -133,7 +133,6 @@ target_link_libraries(solver
     PUBLIC
         $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
-        $<$<BOOL:${OpenMP_FOUND}>:OpenMP::OpenMP_C>
 )
 
 set_target_properties(solver
