@@ -96,11 +96,12 @@ def test_getsubcatchseries(handle):
                           0.040894926,
                           0.011605669,
                           0.00509294,
-                          0.0027438672])
+                          0.0027438672,
+                          0.0016718778])
 
     test_array = output.get_subcatch_series(handle, 1, shared_enum.SubcatchAttribute.RUNOFF_RATE, 0, 10)
 
-    assert len(test_array) == 10
+    assert len(test_array) == 11
     assert np.allclose(test_array, ref_array)
 
 

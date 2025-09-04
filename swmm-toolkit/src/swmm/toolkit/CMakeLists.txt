@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm.toolkit python package
 #
 # Created:   Feb 6, 2020
-# Updated:   May 19, 2021
+# Updated:   Sep 2, 2025
 #
 #  Author:   See AUTHORS
 #
@@ -12,7 +12,7 @@
 ################################################################################
 
 
-set(CMAKE_SWIG_FLAGS -py3)
+# set(CMAKE_SWIG_FLAGS -py3)
 
 # Determine filename suffix for python extension
 if(WIN32)
@@ -74,7 +74,7 @@ target_link_libraries(output
 set_target_properties(output
     PROPERTIES
         SUFFIX ${PYTHON_SUFFIX}
-        SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API
+        SWIG_COMPILE_DEFINITIONS EXPORT_OUT_API=
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
@@ -133,13 +133,12 @@ target_link_libraries(solver
     PUBLIC
         $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
-        $<$<BOOL:${OpenMP_FOUND}>:OpenMP::OpenMP_C>
 )
 
 set_target_properties(solver
     PROPERTIES
         SUFFIX ${PYTHON_SUFFIX}
-        SWIG_COMPILE_DEFINITIONS EXPORT_TOOLKIT
+        SWIG_COMPILE_DEFINITIONS EXPORT_TOOLKIT=
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE

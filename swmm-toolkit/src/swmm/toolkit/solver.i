@@ -31,6 +31,8 @@
 
 %include "stats_typemaps.i";
 
+/* SWIG Override headers*/
+%include "swig_headers.i"
 
 
 /* TYPEMAP FOR IGNORING INT ERROR CODE RETURN VALUE */
@@ -108,7 +110,7 @@
       for(int i=0; i<*$2; i++) {
         PyList_SetItem(o, i, PyFloat_FromDouble(temp$argnum[i]));
       }
-      $result = SWIG_Python_AppendOutput($result, o);
+      $result = SWIG_AppendOutput($result, o);
       swmm_freeMemory(*$1);
     }
 }

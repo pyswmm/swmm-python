@@ -2,7 +2,7 @@
 # CMakeLists.txt - CMake configuration file for swmm-toolkit python package
 #
 # Created:   Feb 6, 2020
-# Modified   Jun 7, 2021
+# Modified   Sep 2, 2025
 #
 #  Author:   See AUTHORS
 #
@@ -11,7 +11,7 @@
 ##################    CMAKELISTS FOR SWMM-TOOLKIT PROJECT    ###################
 ################################################################################
 
-cmake_minimum_required (VERSION 3.17)
+cmake_minimum_required (VERSION 4.0.2)
 
 project(swmm-toolkit
     VERSION
@@ -36,16 +36,6 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
-# If wheel build on Apple fetch and build OpenMP Library
-if (APPLE)
-    include(./extern/openmp.cmake)
-else()
-    find_package(OpenMP
-        REQUIRED
-        OPTIONAL_COMPONENTS
-            C
-    )
-endif()
 
 # Add project subdirectories
 add_subdirectory(swmm-solver)
