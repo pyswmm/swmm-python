@@ -2,7 +2,7 @@
 # setup.py - Setup script for swmm-toolkit python package
 #
 # Created:    Jul 2, 2018
-# Updated:    Jun 7, 2021
+# Updated:    Sep 4, 2025
 #
 #  Author:    See AUTHORS
 #
@@ -112,13 +112,13 @@ else:
 
 setup(
     name = "swmm-toolkit",
-    version = "0.15.5",
+    version = "0.16.0",
 
     packages = ["swmm_toolkit", "swmm.toolkit"],
     package_dir = package_dir,
 
     zip_safe = False,
-    install_requires = ["aenum==3.1.11"],
+    install_requires = ["aenum>=3.1.11"],
 
     cmdclass = {"clean": CleanCommand},
     cmake_args = cmake_args,
@@ -130,7 +130,7 @@ setup(
     url='https://github.com/pyswmm/swmm-python',
 
     author='See AUTHORS',
-    maintainer_email='bemcdonnell@gmail.com',
+    maintainer_email='michael.tryby@gmail.com',
     license='CC0',
     license_files=license_files,
     keywords="swmm5, swmm, stormwater, hydraulics, hydrology",
@@ -140,12 +140,11 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: C",
         "Development Status :: 5 - Production/Stable",
     ]
