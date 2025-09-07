@@ -19,12 +19,11 @@ if(WIN32)
     set(SOABI "")
     set(LIB_EXT "pyd")
 else()
-    message(STATUS "Python3_SOABI in block")
     set(SOABI ".abi3")
     set(LIB_EXT "so")
 endif()
 
-# turn if stable ABI if NO_STABLE_ABI is 1 or true
+# turn off stable ABI if NO_STABLE_ABI is 1 or true
 set(PY_LIMITED_API_DEF "Py_LIMITED_API=0x03090000")
 string(TOLOWER "$ENV{NO_STABLE_ABI}" _abi_val)
 if(_abi_val STREQUAL "1" OR _abi_val STREQUAL "true")

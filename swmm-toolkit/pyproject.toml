@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "swmm-toolkit"
-version = "0.15.5"
+version = "0.16.0"
 description = "PySWMM SWMM Python Toolkit"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = "CC0-1.0 AND (MIT OR Apache-2.0)"
@@ -26,7 +26,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
 ]
 requires-python = ">=3.9"
-dependencies = ["aenum==3.1.11"]
+dependencies = ["aenum>=3.1.11"]
 urls = { Homepage = "https://github.com/pyswmm/swmm-python" }
 
 [[tool.scikit-build.overrides]]

@@ -22,5 +22,5 @@ __version__ = "0.16.0"
 __date__ = "September 4, 2025"
 
 __maintainer__ = "Michael Tryby"
-__email__ = "tryby.michael@epa.gov"
+__email__ = "michael.tryby@gmail.com"
 __status__ = "Production/Stable"
