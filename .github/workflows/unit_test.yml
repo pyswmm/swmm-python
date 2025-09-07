@@ -41,17 +41,17 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
-      - name: Build wheel in virtual env
-        env:
-          MACOSX_DEPLOYMENT_TARGET: "11.0"
+      - name: Build wheel
         run: |
-          python -m venv --clear ./build-env
-          ${{matrix.activate}}
-          python -m pip install -r build-requirements.txt
-          python setup.py bdist_wheel
-          deactivate
+          pip install build
+          python -m build
+      - name: Upload Wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: swmm_toolkit_${{ matrix.os }}
+          path: ./swmm-toolkit/dist/*.whl
 
       - name: Test wheel
         run: |

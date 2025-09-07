@@ -1,10 +1,53 @@
 [build-system]
 requires = [
-    "wheel>=0.38.1",
-    "setuptools>=42",
-    "scikit-build>=0.13",
-    "cmake>=3.21",
     "swig",
-    "ninja==1.11.1 ; sys_platform == 'darwin'",
+    "scikit-build-core>=0.4.3",
 ]
-build-backend = "setuptools.build_meta"
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "swmm-toolkit"
+version = "0.15.5"
+description = "PySWMM SWMM Python Toolkit"
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { text = "CC0" }
+authors = [{ name = "See AUTHORS" }]
+maintainers = [{ email = "bemcdonnell@gmail.com" }]
+keywords = ["swmm5", "swmm", "stormwater", "hydraulics", "hydrology"]
+classifiers = [
+    "Topic :: Scientific/Engineering",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: C",
+    "Development Status :: 5 - Production/Stable",
+]
+requires-python = ">=3.9"
+dependencies = ["aenum==3.1.11"]
+urls = { Homepage = "https://github.com/pyswmm/swmm-python" }
+
+[[tool.scikit-build.overrides]]
+if.platform-system = "win32"
+cmake.args = ["-GVisual Studio 17 2022", "-Ax64"]
+
+[[tool.scikit-build.overrides]]
+if.platform-system = "darwin"
+cmake.args = ["-GXcode", "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=11.0"]
+
+[[tool.scikit-build.overrides]]
+if.platform-system = "linux"
+cmake.args = ["-GUnix Makefiles"]
+
+[tool.scikit-build.wheel]
+packages = ["src/swmm/toolkit"]
+py-api = "cp39"
+exclude = ["**/*runswmm*", "**/*.exe", "**/*.cmake", "**/*.h", "**/*.lib", "**/*.i", "**/CMakeLists.txt","toolkit/*", "lib/*", "bin/*", "build-env/*"]
+
+[tool.scikit-build.sdist]
+exclude = ["build-env/*"]

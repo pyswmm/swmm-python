@@ -15,13 +15,12 @@
 # set(CMAKE_SWIG_FLAGS -py3)
 
 # Determine filename suffix for python extension
+set(CMAKE_MESSAGE_LOG_LEVEL VERBOSE)
 if(WIN32)
-    set(LIB_EXT "pyd")
+    set(PYTHON_SUFFIX ".pyd")
 else()
-    set(LIB_EXT "so")
+    set(PYTHON_SUFFIX ".abi3.so")
 endif()
-set(PYTHON_SUFFIX ".${Python3_SOABI}.${LIB_EXT}")
-
 
 # Location of package at runtime on MacOS/Linux
 if(APPLE)
@@ -30,11 +29,21 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-# Set up rpath on MacOS and Linux
-set(PACKAGE_RPATH
-    "${LIB_ROOT}/../../swmm_toolkit/"
-)
+# For scikit-build-core, use SKBUILD_PLATLIB_DIR instead of hardcoded paths
+if(DEFINED SKBUILD_PLATLIB_DIR)
+    # scikit-build-core is being used
+    set(PYTHON_INSTALL_DIR "${SKBUILD_PLATLIB_DIR}/swmm/toolkit")
+else()
+    # Fallback for direct CMake builds or legacy scikit-build
+    set(PYTHON_INSTALL_DIR "src/swmm/toolkit")
+endif()
 
+
+if(WIN32)
+    # Explicitly add the Python libs directory to the linker search path for windows
+    # Not sure why I need to do this for windows only, but it got the stable ABI to build
+    link_directories(${Python3_LIBRARY_DIRS})
+endif()
 
 #############################################################
 ####################    OUTPUT TARGET    ####################
@@ -67,7 +76,6 @@ target_include_directories(output
 
 target_link_libraries(output
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm-output
 )
 
@@ -78,8 +86,10 @@ set_target_properties(output
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "${PACKAGE_RPATH}"
+        INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
+        # Enable stable ABI for Python 3.9+
+        COMPILE_DEFINITIONS "Py_LIMITED_API=0x03090000"
 )
 
 install(
@@ -89,14 +99,17 @@ install(
         "output_metadata.py"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 install(
     TARGETS
         output
+        swmm-output
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 #############################################################
@@ -131,7 +144,6 @@ target_include_directories(solver
 
 target_link_libraries(solver
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
 )
 
@@ -142,8 +154,10 @@ set_target_properties(solver
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "${PACKAGE_RPATH}"
+        INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
+        # Enable stable ABI for Python 3.9+
+        COMPILE_DEFINITIONS "Py_LIMITED_API=0x03090000"
 )
 
 
@@ -152,13 +166,16 @@ install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 # Stages extension library for package build
 install(
     TARGETS
         solver
+        swmm5
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
