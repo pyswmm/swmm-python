@@ -19,16 +19,15 @@ jobs:
     defaults:
       run:
         working-directory: ./nrtest-swmm
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
-
+        uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-
       - name: Build wheel
         run: |
             pip install wheel
@@ -39,7 +38,6 @@ jobs:
         with:
           name: nrtest-swmm-wheel
           path: nrtest-swmm/dist/*.whl
-  
 
   build_wheels:
     runs-on: ${{ matrix.os }}
@@ -47,13 +45,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
             submodules: true
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.1.4
         with:
@@ -62,10 +58,8 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: "11.0"
           CIBW_TEST_COMMAND: "pytest {package}/tests"
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
-
           CIBW_ENVIRONMENT_MACOS: |
             MACOSX_DEPLOYMENT_TARGET=11.0
-
           # remove system swig (cmake bug doesn't respect python venv)
           # https://github.com/swig/swig/issues/2481#issuecomment-1949573105
           CIBW_BEFORE_BUILD_LINUX: rm -f $(which swig) && rm -f $(which swig4.0)
@@ -76,11 +70,33 @@ jobs:
           # Skip trying to test arm64 builds on Intel Macs
           CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_universal2:arm64"
           CIBW_BUILD_VERBOSITY: 1
-
       - uses: actions/upload-artifact@v4
         with:
           name: wheelhouse_${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
+  merge_wheels:
+    name: Consolidate all wheel artifacts
+    runs-on: ubuntu-latest
+    needs:
+      - build_wheels
+    steps:
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: wheelhouse
+          pattern: wheelhouse*
+          merge-multiple: true
+      - name: List downloaded wheels
+        run: ls -l wheelhouse
+      - name: Create consolidated archive
+        run: |
+          cd wheelhouse
+          zip -r ../all_swmm_toolkit_wheels.zip .
+      - name: Upload consolidated archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: all_swmm_toolkit_wheels
+          path: all_swmm_toolkit_wheels.zip
 
   
