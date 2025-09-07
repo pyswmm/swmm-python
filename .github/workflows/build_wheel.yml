@@ -85,16 +85,10 @@ jobs:
           path: wheelhouse
           pattern: wheelhouse*
           merge-multiple: true
-      - name: List downloaded wheels
-        run: ls -l wheelhouse
-      - name: Create consolidated archive
-        run: |
-          cd wheelhouse
-          zip -r ../all_swmm_toolkit_wheels.zip .
       - name: Upload consolidated archive
         uses: actions/upload-artifact@v4
         with:
           name: all_swmm_toolkit_wheels
-          path: all_swmm_toolkit_wheels.zip
+          path: ./wheelhouse/*.whl
 
   
