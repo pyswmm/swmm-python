@@ -1,8 +1,5 @@
 [build-system]
-requires = [
-    "swig",
-    "scikit-build-core>=0.4.3",
-]
+requires = ["swig", "scikit-build-core>=0.4.3"]
 build-backend = "scikit_build_core.build"
 
 [project]
@@ -10,7 +7,8 @@ name = "swmm-toolkit"
 version = "0.15.5"
 description = "PySWMM SWMM Python Toolkit"
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { text = "CC0" }
+license = "CC0-1.0 AND (MIT OR Apache-2.0)"
+license-files = ["LICEN[CS]E*", "AUTHORS", "extern/openmp.LICENSE"]
 authors = [{ name = "See AUTHORS" }]
 maintainers = [{ email = "bemcdonnell@gmail.com" }]
 keywords = ["swmm5", "swmm", "stormwater", "hydraulics", "hydrology"]
@@ -19,7 +17,6 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX :: Linux",
     "Operating System :: MacOS",
-    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -47,7 +44,23 @@ cmake.args = ["-GUnix Makefiles"]
 [tool.scikit-build.wheel]
 packages = ["src/swmm/toolkit"]
 py-api = "cp39"
-exclude = ["**/*runswmm*", "**/*.exe", "**/*.cmake", "**/*.h", "**/*.lib", "**/*.i", "**/CMakeLists.txt","toolkit/*", "lib/*", "bin/*", "build-env/*"]
+exclude = [
+    "**/*runswmm*",
+    "**/*.exe",
+    "**/*.cmake",
+    "**/*.h",
+    "**/*.lib",
+    "**/*.i",
+    "**/CMakeLists.txt",
+    "toolkit/*",
+    "lib/*",
+    "bin/*",
+    "build-env/*",
+]
+
+[[tool.scikit-build.overrides]]
+if.env.NO_STABLE_ABI = true
+wheel.py-api = ""
 
 [tool.scikit-build.sdist]
 exclude = ["build-env/*"]

@@ -15,12 +15,24 @@
 # set(CMAKE_SWIG_FLAGS -py3)
 
 # Determine filename suffix for python extension
-set(CMAKE_MESSAGE_LOG_LEVEL VERBOSE)
 if(WIN32)
-    set(PYTHON_SUFFIX ".pyd")
+    set(SOABI "")
+    set(LIB_EXT "pyd")
 else()
-    set(PYTHON_SUFFIX ".abi3.so")
+    message(STATUS "Python3_SOABI in block")
+    set(SOABI ".abi3")
+    set(LIB_EXT "so")
 endif()
+
+# turn if stable ABI if NO_STABLE_ABI is 1 or true
+set(PY_LIMITED_API_DEF "Py_LIMITED_API=0x03090000")
+string(TOLOWER "$ENV{NO_STABLE_ABI}" _abi_val)
+if(_abi_val STREQUAL "1" OR _abi_val STREQUAL "true")
+    set(PY_LIMITED_API_DEF "")
+    set(SOABI ".${Python3_SOABI}")
+endif()
+
+set(PYTHON_SUFFIX "${SOABI}.${LIB_EXT}")
 
 # Location of package at runtime on MacOS/Linux
 if(APPLE)
@@ -88,8 +100,7 @@ set_target_properties(output
         BUILD_WITH_INSTALL_RPATH FALSE
         INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
-        # Enable stable ABI for Python 3.9+
-        COMPILE_DEFINITIONS "Py_LIMITED_API=0x03090000"
+        COMPILE_DEFINITIONS "${PY_LIMITED_API_DEF}"
 )
 
 install(
@@ -156,10 +167,8 @@ set_target_properties(solver
         BUILD_WITH_INSTALL_RPATH FALSE
         INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
-        # Enable stable ABI for Python 3.9+
-        COMPILE_DEFINITIONS "Py_LIMITED_API=0x03090000"
+        COMPILE_DEFINITIONS "${PY_LIMITED_API_DEF}"
 )
-
 
 # Stages python module for package build
 install(
@@ -179,3 +188,24 @@ install(
         "${PYTHON_INSTALL_DIR}"
     COMPONENT python
 )
+
+# Copy libomp.dylib on macOS if using scikit-build-core
+if(APPLE AND DEFINED SKBUILD_PLATLIB_DIR)
+    install(
+        FILES
+            "${SKBUILD_PLATLIB_DIR}/lib/libomp.dylib"
+        DESTINATION
+            "${PYTHON_INSTALL_DIR}"
+        COMPONENT python
+        OPTIONAL
+    )
+# Copy copy dlls from build dir to python install dir
+elseif(WIN32 AND DEFINED SKBUILD_PLATLIB_DIR)
+    install(
+        DIRECTORY "${SKBUILD_PLATLIB_DIR}/bin/"
+        DESTINATION "${PYTHON_INSTALL_DIR}"
+        COMPONENT python
+        FILES_MATCHING PATTERN "*.dll"
+    )
+endif()
+
