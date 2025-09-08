@@ -16,12 +16,22 @@
 
 # Determine filename suffix for python extension
 if(WIN32)
+    set(SOABI "")
     set(LIB_EXT "pyd")
 else()
+    set(SOABI ".abi3")
     set(LIB_EXT "so")
 endif()
-set(PYTHON_SUFFIX ".${Python3_SOABI}.${LIB_EXT}")
 
+# turn off stable ABI if NO_STABLE_ABI is 1 or true
+set(PY_LIMITED_API_DEF "Py_LIMITED_API=0x03090000")
+string(TOLOWER "$ENV{NO_STABLE_ABI}" _abi_val)
+if(_abi_val STREQUAL "1" OR _abi_val STREQUAL "true")
+    set(PY_LIMITED_API_DEF "")
+    set(SOABI ".${Python3_SOABI}")
+endif()
+
+set(PYTHON_SUFFIX "${SOABI}.${LIB_EXT}")
 
 # Location of package at runtime on MacOS/Linux
 if(APPLE)
@@ -30,11 +40,21 @@ else()
     set(LIB_ROOT "$ORIGIN")
 endif()
 
-# Set up rpath on MacOS and Linux
-set(PACKAGE_RPATH
-    "${LIB_ROOT}/../../swmm_toolkit/"
-)
+# For scikit-build-core, use SKBUILD_PLATLIB_DIR instead of hardcoded paths
+if(DEFINED SKBUILD_PLATLIB_DIR)
+    # scikit-build-core is being used
+    set(PYTHON_INSTALL_DIR "${SKBUILD_PLATLIB_DIR}/swmm/toolkit")
+else()
+    # Fallback for direct CMake builds or legacy scikit-build
+    set(PYTHON_INSTALL_DIR "src/swmm/toolkit")
+endif()
 
+
+if(WIN32)
+    # Explicitly add the Python libs directory to the linker search path for windows
+    # Not sure why I need to do this for windows only, but it got the stable ABI to build
+    link_directories(${Python3_LIBRARY_DIRS})
+endif()
 
 #############################################################
 ####################    OUTPUT TARGET    ####################
@@ -67,7 +87,6 @@ target_include_directories(output
 
 target_link_libraries(output
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm-output
 )
 
@@ -78,8 +97,9 @@ set_target_properties(output
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "${PACKAGE_RPATH}"
+        INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
+        COMPILE_DEFINITIONS "${PY_LIMITED_API_DEF}"
 )
 
 install(
@@ -89,14 +109,17 @@ install(
         "output_metadata.py"
         "${CMAKE_CURRENT_BINARY_DIR}/output.py"
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 install(
     TARGETS
         output
+        swmm-output
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 #############################################################
@@ -131,7 +154,6 @@ target_include_directories(solver
 
 target_link_libraries(solver
     PUBLIC
-        $<$<BOOL:$<C_COMPILER_ID:MSVC>>:Python3::Module>
         swmm5
 )
 
@@ -142,23 +164,47 @@ set_target_properties(solver
         MACOSX_RPATH TRUE
         SKIP_BUILD_RPATH FALSE
         BUILD_WITH_INSTALL_RPATH FALSE
-        INSTALL_RPATH "${PACKAGE_RPATH}"
+        INSTALL_RPATH ${LIB_ROOT}
         INSTALL_RPATH_USE_LINK_PATH TRUE
+        COMPILE_DEFINITIONS "${PY_LIMITED_API_DEF}"
 )
-
 
 # Stages python module for package build
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/solver.py"
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
 
 # Stages extension library for package build
 install(
     TARGETS
         solver
+        swmm5
     DESTINATION
-        "src/swmm/toolkit"
+        "${PYTHON_INSTALL_DIR}"
+    COMPONENT python
 )
+
+# Copy libomp.dylib on macOS if using scikit-build-core
+if(APPLE AND DEFINED SKBUILD_PLATLIB_DIR)
+    install(
+        FILES
+            "${SKBUILD_PLATLIB_DIR}/lib/libomp.dylib"
+        DESTINATION
+            "${PYTHON_INSTALL_DIR}"
+        COMPONENT python
+        OPTIONAL
+    )
+# Copy copy dlls from build dir to python install dir
+elseif(WIN32 AND DEFINED SKBUILD_PLATLIB_DIR)
+    install(
+        DIRECTORY "${SKBUILD_PLATLIB_DIR}/bin/"
+        DESTINATION "${PYTHON_INSTALL_DIR}"
+        COMPONENT python
+        FILES_MATCHING PATTERN "*.dll"
+    )
+endif()
+

@@ -23,9 +23,9 @@ project(swmm-toolkit
 set(Python_FIND_VIRTUALENV FIRST)
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 if(NOT MSVC)
-    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development.Module REQUIRED)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 else()
-    find_package (Python3 ${PYTHON_VERSION_STRING} COMPONENTS Interpreter Development REQUIRED)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 endif()
 #set(CMAKE_FIND_DEBUG_MODE FALSE)
 
