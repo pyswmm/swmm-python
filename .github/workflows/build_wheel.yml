@@ -37,6 +37,29 @@ jobs:
           name: nrtest-swmm-wheel
           path: nrtest-swmm/dist/*.whl
 
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./swmm-toolkit
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build sdist
+        run: |
+            pip install build
+            python -m build --sdist --outdir ./dist
+      - name: Upload sdist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swmm-toolkit-sdist
+          path: swmm-toolkit/dist/*.tar.gz
+
   build_wheels:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -64,13 +87,10 @@ jobs:
           # skip 3.8 and any free threaded variants
           CIBW_SKIP: cp38-* cp3??t-*
           CIBW_ARCHS: native
-          # Will avoid testing on emulated architectures
-          # Skip trying to test arm64 builds on Intel Macs
-          CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_universal2:arm64"
           CIBW_BUILD_VERBOSITY: 1
       - uses: actions/upload-artifact@v4
         with:
-          name: wheelhouse_${{ matrix.os }}
+          name: swmm-toolkit-bdist-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
   merge_wheels:
@@ -79,16 +99,17 @@ jobs:
     needs:
       - build_wheels
     steps:
-      - name: Download all wheel artifacts
+      - name: Download all distribution artifacts
         uses: actions/download-artifact@v5
         with:
-          path: wheelhouse
-          pattern: wheelhouse*
+          path: dist
+          pattern: swmm-toolkit-*dist*
           merge-multiple: true
+          
       - name: Upload consolidated archive
         uses: actions/upload-artifact@v4
         with:
-          name: all_swmm_toolkit_wheels
-          path: ./wheelhouse/*.whl
+          name: swmm_toolkit_dist
+          path: ./dist/*
 
   
