@@ -190,23 +190,23 @@
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception swmm_getSemVersion
 {
-    $function
+    $action
 }
 
 %exception swmm_getBuildId
 {
-    $function
+    $action
 }
 
 %exception swmm_getVersion
 {
-    $function
+    $action
 }
 
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception
 {
-    $function
+    $action
     if (result > 0) {
         char* errorMsg = NULL;
         int errorCode = 0;

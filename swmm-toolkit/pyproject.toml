@@ -1,5 +1,5 @@
 [build-system]
-requires = ["swig", "scikit-build-core>=0.4.3"]
+requires = ["swig>=4.4.0", "scikit-build-core>=0.4.3"]
 build-backend = "scikit_build_core.build"
 
 [project]

@@ -124,19 +124,19 @@ and return a (possibly) different pointer */
 /* INSERTS CUSTOM EXCEPTION HANDLING IN WRAPPER */
 %exception SMO_init
 {
-    $function
+    $action
 }
 
 %exception SMO_close
 {
-    $function
+    $action
 }
 
 %exception
 {
     char *err_msg;
     SMO_clearError(arg1);
-    $function
+    $action
     if (SMO_checkError(arg1, &err_msg))
     {
         PyErr_SetString(PyExc_Exception, err_msg);
