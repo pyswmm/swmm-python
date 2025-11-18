@@ -19,42 +19,65 @@ jobs:
     defaults:
       run:
         working-directory: ./nrtest-swmm
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
-
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-
+          python-version: "3.10"
       - name: Build wheel
         run: |
-            pip install wheel
-            python setup.py bdist_wheel
-    
+          pip install wheel
+          python setup.py bdist_wheel
+
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v4
         with:
           name: nrtest-swmm-wheel
           path: nrtest-swmm/dist/*.whl
-  
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./swmm-toolkit
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build sdist
+        run: |
+          pip install build
+          python -m build --sdist --outdir ./dist
+      - name: Upload sdist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swmm-toolkit-sdist
+          path: swmm-toolkit/dist/*.tar.gz
 
   build_wheels:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        pyver: [cp39, cp310, cp311, cp312, cp313]
-
+        os:
+          [
+            ubuntu-24.04,
+            ubuntu-24.04-arm,
+            windows-2025,
+            macos-15-intel,
+            macos-15,
+          ]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
-            submodules: true
-
+          submodules: true
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.1.4
         with:
@@ -63,65 +86,57 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: "11.0"
           CIBW_TEST_COMMAND: "pytest {package}/tests"
           CIBW_BEFORE_TEST: pip install -r {package}/test-requirements.txt
-          # mac needs ninja to build
-          CIBW_BEFORE_BUILD_MACOS: brew install ninja
+          CIBW_ENVIRONMENT_MACOS: |
+            MACOSX_DEPLOYMENT_TARGET=11.0
           # remove system swig (cmake bug doesn't respect python venv)
           # https://github.com/swig/swig/issues/2481#issuecomment-1949573105
           CIBW_BEFORE_BUILD_LINUX: rm -f $(which swig) && rm -f $(which swig4.0)
-          # configure cibuildwheel to build native archs ('auto'), and some emulated ones
-          CIBW_ARCHS_LINUX: x86_64
-          CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ARCHS_MACOS: x86_64 arm64
-          # only build current supported python: https://devguide.python.org/versions/
-          # don't build pypy or musllinux to save build time. TODO: find a good way to support those archs
-          CIBW_BUILD: ${{matrix.pyver}}-*
-          CIBW_SKIP: cp38-* pp* *-musllinux*
-          # Will avoid testing on emulated architectures
-          # Skip trying to test arm64 builds on Intel Macs
-          CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *-macosx_universal2:arm64"
+          # skip 3.8 and any free threaded variants
+          CIBW_SKIP: cp38-* cp3??t-*
+          CIBW_ARCHS: native
           CIBW_BUILD_VERBOSITY: 1
-
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.os }}-${{ matrix.pyver }}
+          name: swmm-toolkit-bdist-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
-  build_cross_wheels:
+  merge_wheels:
+    name: Consolidate all wheel artifacts
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        pyver: [cp39, cp310, cp311, cp312, cp313]
-
+    needs:
+      - build_wheels
+      - build_sdist
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
+      - name: Download all distribution artifacts
+        uses: actions/download-artifact@v5
         with:
-            submodules: true
+          path: dist
+          pattern: swmm-toolkit-*dist*
+          merge-multiple: true
 
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
+      - name: Upload consolidated archive
+        uses: actions/upload-artifact@v4
         with:
-          platforms: all
+          name: swmm_toolkit_dist
+          path: ./dist/*
 
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v3.1.4
+  publish_toolkit:
+    name: Publish Python 🐍 distribution 📦 to PyPI
+    needs:
+      - merge_wheels
+    # only publish to PyPI on tag pushes
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/swmm-toolkit
+    permissions:
+      id-token: write
+    steps:
+      - name: Download all the dists
+        uses: actions/download-artifact@v5
         with:
-          package-dir: ./swmm-toolkit
-        env:
-          # remove system swig (cmake bug doesn't respect python venv)
-          # https://github.com/swig/swig/issues/2481#issuecomment-1949573105
-          CIBW_BEFORE_BUILD_LINUX: rm -f $(which swig) && rm -f $(which swig4.0)
-          # configure cibuildwheel to build native archs ('auto'), and some emulated ones
-          CIBW_ARCHS_LINUX: aarch64
-          # only build current supported python: https://devguide.python.org/versions/
-          # don't build pypy or musllinux to save build time. TODO: find a good way to support those archs
-          CIBW_BUILD: ${{matrix.pyver}}-*
-          CIBW_SKIP: cp-*38 pp* *-musllinux*
-          CIBW_BUILD_VERBOSITY: 1
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name:  wheels-linux-aarch64-${{ matrix.pyver }}
-          path: ./wheelhouse/*.whl
+          name: swmm_toolkit_dist
+          path: dist/
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
