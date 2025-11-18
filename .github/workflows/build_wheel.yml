@@ -28,9 +28,9 @@ jobs:
           python-version: "3.10"
       - name: Build wheel
         run: |
-            pip install wheel
-            python setup.py bdist_wheel
-    
+          pip install wheel
+          python setup.py bdist_wheel
+
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v4
         with:
@@ -52,8 +52,8 @@ jobs:
           python-version: "3.12"
       - name: Build sdist
         run: |
-            pip install build
-            python -m build --sdist --outdir ./dist
+          pip install build
+          python -m build --sdist --outdir ./dist
       - name: Upload sdist artifact
         uses: actions/upload-artifact@v4
         with:
@@ -65,12 +65,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04-arm,
+            windows-latest,
+            macos-13,
+            macos-latest,
+          ]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
-            submodules: true
+          submodules: true
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.1.4
         with:
@@ -106,11 +113,30 @@ jobs:
           path: dist
           pattern: swmm-toolkit-*dist*
           merge-multiple: true
-          
+
       - name: Upload consolidated archive
         uses: actions/upload-artifact@v4
         with:
           name: swmm_toolkit_dist
           path: ./dist/*
 
-  
+  publish_toolkit:
+    name: Publish Python 🐍 distribution 📦 to PyPI
+    needs:
+      - merge_wheels
+    # only publish to PyPI on tag pushes
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/swmm-toolkit
+    permissions:
+      id-token: write
+    steps:
+      - name: Download all the dists
+        uses: actions/download-artifact@v5
+        with:
+          name: swmm_toolkit_dist
+          path: dist/
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
