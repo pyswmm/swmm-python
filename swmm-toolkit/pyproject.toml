@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "swmm-toolkit"
-version = "0.16.0"
+version = "0.16.1"
 description = "PySWMM SWMM Python Toolkit"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = "CC0-1.0 AND (MIT OR Apache-2.0)"
