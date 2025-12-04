@@ -18,8 +18,8 @@ __author__ = "See AUTHORS"
 __credits__ = "Colleen Barr"
 __license__ = "CC0 1.0 Universal"
 
-__version__ = "0.16.1"
-__date__ = "September 4, 2025"
+__version__ = "0.16.2"
+__date__ = "December 4, 2025"
 
 __maintainer__ = "Michael Tryby"
 __email__ = "michael.tryby@gmail.com"
