@@ -31,7 +31,7 @@ urls = { Homepage = "https://github.com/pyswmm/swmm-python" }
 
 [[tool.scikit-build.overrides]]
 if.platform-system = "win32"
-cmake.args = ["-GVisual Studio 17 2022", "-Ax64"]
+cmake.args = ["-GVisual Studio 17 2022"]
 
 [[tool.scikit-build.overrides]]
 if.platform-system = "darwin"
