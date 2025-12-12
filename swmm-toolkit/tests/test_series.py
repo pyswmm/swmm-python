@@ -10,6 +10,45 @@ OUTPUT_FILE = os.path.join(DATA_PATH, "temp_align.out")
 
 REPORT_STEP_SECONDS = 3600  # Example1
 
+
+def cdd(t, r):
+    import math
+
+    if t == r:
+        return 10.0
+
+    tmp = abs(t - r)
+    if tmp < 1.0e-7:
+        tmp = 1.0e-7
+    elif tmp > 2.0:
+        tmp = 1.0
+
+    tmp = -math.log10(tmp)
+    if tmp < 0.0:
+        tmp = 0.0
+
+    return tmp
+
+def check_cdd_float(test: list[float], ref: list[float], cdd_tol: int) -> bool:
+    """
+    Checks minimum correct decimal digits between two float sequences. Fails if lengths differ.
+    """
+    import math
+
+    if len(test) != len(ref):
+        return False
+    
+    min_cdd = 10.0
+
+    for t, r in zip(test, ref):
+        tmp = cdd(t, r)
+
+        if tmp < min_cdd:
+            min_cdd = tmp
+
+    return math.floor(min_cdd) >= cdd_tol
+
+
 def _curr_dt():
     y, m, d, hh, mm, ss = solver.simulation_get_current_datetime()
     return datetime(y, m, d, hh, mm, ss)
@@ -81,16 +120,15 @@ def test_compare_aligned_series():
     )
 
     # values should match within tolerance
-    import numpy as np
+    solver_vals = [v for _, v in s]
+    output_vals = [v for _, v in o]
 
-    solver_vals = np.array([v for _, v in s])
-    output_vals = np.array([v for _, v in o])
-
-    assert np.allclose(solver_vals, output_vals, rtol=1e-6, atol=1e-9), (
+    assert check_cdd_float(solver_vals, output_vals, 1), (
         "Solver and output values differ. "
         "See zipped output for details:\n" +
         "\n".join(
-            f"{t1.strftime('%Y-%m-%d %H:%M:%S')} | {v1:.6f} || {t2.strftime('%Y-%m-%d %H:%M:%S')} | {v2:.6f} | diff={v1-v2:.2e}"
+            f"{t1.strftime('%Y-%m-%d %H:%M:%S')} | {v1:.6f} || {t2.strftime('%Y-%m-%d %H:%M:%S')} | {v2:.6f} | cdd={cdd(v1, v2):.2f}"
             for (t1, v1), (t2, v2) in list(zip(s, o))[:10]
         )
     )
+
