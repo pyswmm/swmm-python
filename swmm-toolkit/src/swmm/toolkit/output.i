@@ -61,7 +61,14 @@ and return a (possibly) different pointer */
 
 %apply int *OUTPUT {
     int *version,
-    int *time
+    int *time,
+    int *year, 
+    int *month, 
+    int *day,
+    int *hour, 
+    int *minute, 
+    int *second, 
+    int *dayOfWeek
 }
 
 %cstring_output_allocate_size(char **elementName, int *size, SMO_freeMemory(*$1));
@@ -75,6 +82,23 @@ and return a (possibly) different pointer */
     if (*$1) {
       PyObject *o = PyList_New(*$2);
       float* temp = *$1;
+      for(int i=0; i<*$2; i++) {
+        PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
+      }
+      $result = SWIG_AppendOutput($result, o);
+      SMO_freeMemory(*$1);
+    }
+}
+
+
+/* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
+%typemap(in, numinputs=0)double **double_out (double *temp), int *int_dim (int temp){
+   $1 = &temp;
+}
+%typemap(argout) (double **double_out, int *int_dim) {
+    if (*$1) {
+      PyObject *o = PyList_New(*$2);
+      double* temp = *$1;
       for(int i=0; i<*$2; i++) {
         PyList_SetItem(o, i, PyFloat_FromDouble((double)temp[i]));
       }
@@ -150,6 +174,8 @@ and return a (possibly) different pointer */
 %ignore SMO_freeMemory;
 %ignore SMO_clearError;
 %ignore SMO_checkError;
+
+%noexception SMO_decodeDate;
 
 %include "swmm_output.h"
 

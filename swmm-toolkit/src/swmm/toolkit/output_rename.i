@@ -20,6 +20,10 @@
 %rename(get_times)              SMO_getTimes;
 %rename(get_elem_name)          SMO_getElementName;
 
+%rename(get_date_time)          SMO_getDateTime;
+%rename(get_date_series)        SMO_getDateSeries;
+%rename(decode_date)            SMO_decodeDate;
+
 %rename(get_subcatch_series)    SMO_getSubcatchSeries;
 %rename(get_node_series)        SMO_getNodeSeries;
 %rename(get_link_series)        SMO_getLinkSeries;
