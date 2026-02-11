@@ -74,7 +74,7 @@ and return a (possibly) different pointer */
 %cstring_output_allocate_size(char **elementName, int *size, SMO_freeMemory(*$1));
 
 
-/* TYPEMAPS FOR MEMORY MANAGEMNET OF FLOAT ARRAYS */
+/* TYPEMAPS FOR MEMORY MANAGEMENT OF FLOAT ARRAYS */
 %typemap(in, numinputs=0)float **float_out (float *temp), int *int_dim (int temp){
    $1 = &temp;
 }
@@ -91,7 +91,7 @@ and return a (possibly) different pointer */
 }
 
 
-/* TYPEMAPS FOR MEMORY MANAGEMNET OF DOUBLE ARRAYS */
+/* TYPEMAPS FOR MEMORY MANAGEMENT OF DOUBLE ARRAYS */
 %typemap(in, numinputs=0)double **double_out (double *temp), int *int_dim (int temp){
    $1 = &temp;
 }

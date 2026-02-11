@@ -11,7 +11,12 @@ OUTPUT_FILE = os.path.join(DATA_PATH, "temp_align.out")
 REPORT_STEP_SECONDS = 3600  # Example1
 
 
-def cdd(t, r):
+def _correct_decimal_digits(t, r):
+    """
+    Correct Decimal Digits (CDD) is computed as a bounded form of
+    ``-log10(abs(test_value - ref_value))``, which approximates how many 
+    decimal digits of ``test_value`` agree with ``ref_value``. 
+    """
     import math
 
     if t == r:
@@ -29,9 +34,30 @@ def cdd(t, r):
 
     return tmp
 
+
 def check_cdd_float(test: list[float], ref: list[float], cdd_tol: int) -> bool:
     """
-    Checks minimum correct decimal digits between two float sequences. Fails if lengths differ.
+    Check the minimum number of correct decimal digits (CDD) between two 
+    float sequences. This function finds the minimum CDD over all element 
+    pairs in ``test`` and ``ref``, then checks whether ``floor(min_cdd)`` 
+    is greater than or equal to ``cdd_tol``.
+
+    Parameters
+    ----------
+    test : list[float]
+        Sequence of test values to be compared.
+    ref : list[float]
+        Sequence of reference values used as the expected results.
+    cdd_tol : int
+        Required minimum number of correct decimal digits (integer threshold)
+        that the minimum CDD over all pairs must meet or exceed.
+    
+    Returns
+    -------
+    bool
+        ``True`` if ``test`` and ``ref`` have the same length and
+        ``floor(min_cdd) >= cdd_tol``; ``False`` otherwise (including if the
+        sequences differ in length).
     """
     import math
 
@@ -41,7 +67,7 @@ def check_cdd_float(test: list[float], ref: list[float], cdd_tol: int) -> bool:
     min_cdd = 10.0
 
     for t, r in zip(test, ref):
-        tmp = cdd(t, r)
+        tmp = _correct_decimal_digits(t, r)
 
         if tmp < min_cdd:
             min_cdd = tmp
@@ -49,7 +75,7 @@ def check_cdd_float(test: list[float], ref: list[float], cdd_tol: int) -> bool:
     return math.floor(min_cdd) >= cdd_tol
 
 
-def _curr_dt():
+def _get_current_datetime():
     y, m, d, hh, mm, ss = solver.simulation_get_current_datetime()
     return datetime(y, m, d, hh, mm, ss)
 
@@ -59,7 +85,7 @@ def build_link_flow_solver_tuples_aligned():
     try:
         solver.swmm_start(0)
         # After start callback
-        # period_end = _curr_dt()
+        # period_end = _get_current_datetime
         # value = solver.link_get_result(0, shared_enum.LinkResult.FLOW)
         # tuples.append((period_end, value))
 
@@ -72,12 +98,12 @@ def build_link_flow_solver_tuples_aligned():
             if time_left == 0:
                 break
             # Value for the interval that just ended; align to its period-end timestamp
-            period_end = _curr_dt() - timedelta(seconds=REPORT_STEP_SECONDS)
+            period_end = _get_current_datetime() - timedelta(seconds=REPORT_STEP_SECONDS)
             value = solver.link_get_result(0, shared_enum.LinkResult.FLOW)
             tuples.append((period_end, value))
 
         # Before end callback
-        period_end = _curr_dt() - timedelta(seconds=REPORT_STEP_SECONDS)
+        period_end = _get_current_datetime() - timedelta(seconds=REPORT_STEP_SECONDS)
         value = solver.link_get_result(0, shared_enum.LinkResult.FLOW)
         tuples.append((period_end, value))
 
