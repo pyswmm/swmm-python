@@ -85,6 +85,65 @@ def test_getelementname(handle):
     assert output.get_elem_name(handle, shared_enum.ElementType.NODE, 1) == "10"
 
 
+
+def test_getdatetime(handle):
+    date0 = output.get_date_time(handle, 0)
+    date1 = output.get_date_time(handle, 1)
+    assert isinstance(date0, (float, np.floating))
+
+    step_seconds = output.get_times(handle, shared_enum.Time.REPORT_STEP)
+    step_days = step_seconds / 86400.0
+
+    # consecutive timestamps differ by exactly one report step (in days)
+    assert np.isclose(date1 - date0, step_days)
+
+    # first timestamp should be strictly after the saved start date anchor
+    assert date0 > output.get_start_date(handle)
+
+
+def test_getdateseries(handle):
+    start, end = 0, 5
+    dates = output.get_date_series(handle, start, end)
+
+    assert len(dates) == end - start + 1
+
+    step_days = output.get_times(handle, shared_enum.Time.REPORT_STEP) / 86400.0
+    diffs = np.diff(dates)
+
+    # monotonic and evenly spaced by report step
+    assert np.allclose(diffs, step_days)
+    assert np.isclose(dates[-1], dates[0] + (end - start) * step_days)
+
+
+def test_decodedate(handle):
+    # decoded components are plausible
+    date0 = output.get_date_time(handle, 0)
+    y, m, d, hh, mm, ss, dow = output.decode_date(date0)
+
+    assert 1 <= m <= 12
+    assert 1 <= d <= 31
+    assert 0 <= hh <= 23
+    assert 0 <= mm <= 59
+    assert 0 <= ss <= 59
+    assert 1 <= dow <= 7
+
+    # consecutive decode respects the report step
+    date1 = output.get_date_time(handle, 1)
+    y1, m1, d1, hh1, mm1, ss1, dow1 = output.decode_date(date1)
+
+    step_seconds = output.get_times(handle, shared_enum.Time.REPORT_STEP)
+    step_hours = (step_seconds // 3600) % 24
+
+    # minutes/seconds remain constant for steps divisible by 60s
+    if step_seconds % 60 == 0:
+        assert mm1 == mm
+        assert ss1 == ss
+
+    # hour advances by step_hours modulo 24 (day rollover allowed)
+    assert ((hh1 - hh) % 24) == step_hours
+
+
+
 def test_getsubcatchseries(handle):
 
     ref_array = np.array([0.0,
