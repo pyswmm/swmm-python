@@ -28,6 +28,14 @@ set(PY_LIMITED_API_DEF "Py_LIMITED_API=0x03090000")
 string(TOLOWER "$ENV{NO_STABLE_ABI}" _abi_val)
 if(_abi_val STREQUAL "1" OR _abi_val STREQUAL "true")
     set(PY_LIMITED_API_DEF "")
+    if(NOT Python3_SOABI)
+        execute_process(
+            COMMAND ${Python3_EXECUTABLE} -c
+                "import sysconfig; print(sysconfig.get_config_var('SOABI') or '')"
+            OUTPUT_VARIABLE Python3_SOABI
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    endif()
     set(SOABI ".${Python3_SOABI}")
 endif()
 
@@ -187,6 +195,31 @@ install(
         "${PYTHON_INSTALL_DIR}"
     COMPONENT python
 )
+
+#############################################################
+####################    SUFFIX TESTS     ####################
+#############################################################
+
+# Verify that each extension module was linked with a valid Python ABI suffix.
+# Guards against the double-dot bug (_solver..so) that occurs when
+# CMake's FindPython3 fails to populate Python3_SOABI.
+# Run with: cmake --build <build_dir> && ctest --test-dir <build_dir>
+
+foreach(_ext_target output solver)
+    add_test(
+        NAME ExtensionSuffix_${_ext_target}
+        COMMAND ${Python3_EXECUTABLE} -c
+            "import importlib.machinery, os; \
+p = r'$<TARGET_FILE:${_ext_target}>'; \
+valid = importlib.machinery.EXTENSION_SUFFIXES; \
+assert os.path.exists(p), f'Extension not found: {p!r}'; \
+assert '..' not in os.path.basename(p), \
+    f'Double-dot ABI bug in {p!r} -- Python3_SOABI was empty at configure time'; \
+assert any(p.endswith(s) for s in valid), \
+    f'Invalid suffix in {p!r}, expected one of {valid}'; \
+print('PASS:', p)"
+    )
+endforeach()
 
 # Copy libomp.dylib on macOS if using scikit-build-core
 if(APPLE AND DEFINED SKBUILD_PLATLIB_DIR)

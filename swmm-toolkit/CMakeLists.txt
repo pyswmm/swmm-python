@@ -36,6 +36,8 @@ cmake_policy(SET CMP0078 NEW)
 cmake_policy(SET CMP0086 NEW)
 include(${SWIG_USE_FILE})
 
+enable_testing()
+
 # Add project subdirectories
 add_subdirectory(swmm-solver)
 

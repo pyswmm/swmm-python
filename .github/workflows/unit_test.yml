@@ -58,3 +58,17 @@ jobs:
           pip install -r test-requirements.txt
           pip install --no-index --find-links=./dist swmm_toolkit
           pytest
+
+      # Regression test for the Python3_SOABI fallback. Builds with
+      # NO_STABLE_ABI=1 and runs the ctest suffix guardrail to catch the
+      # double-dot filename bug (e.g. _solver..so) that occurs when
+      # CMake's FindPython3 fails to populate Python3_SOABI.
+      - name: Build + ctest (NO_STABLE_ABI path)
+        shell: bash
+        env:
+          NO_STABLE_ABI: "1"
+        run: |
+          pip install cmake swig
+          cmake -S . -B build_cmake
+          cmake --build build_cmake --config Release
+          ctest --test-dir build_cmake --output-on-failure -C Release
