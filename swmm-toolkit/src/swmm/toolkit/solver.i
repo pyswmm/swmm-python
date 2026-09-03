@@ -42,7 +42,7 @@
 }
 
 %typemap(out) int swmm_getVersion {
-  $result = PyInt_FromLong($1);
+  $result = PyLong_FromLong($1);
 }
 
 
