@@ -72,6 +72,7 @@ jobs:
             ubuntu-24.04,
             ubuntu-24.04-arm,
             windows-2025,
+            windows-11-vs2026-arm,
             macos-15-intel,
             macos-15,
           ]
