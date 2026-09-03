@@ -117,7 +117,7 @@ and return a (possibly) different pointer */
         int *temp = *$1;
         PyObject *o = PyList_New(*$2);
         for(int i=0; i<*$2; i++) {
-            PyList_SetItem(o, i, PyInt_FromLong((long)temp[i]));
+            PyList_SetItem(o, i, PyLong_FromLong((long)temp[i]));
         }
         $result = SWIG_AppendOutput($result, o);
         SMO_freeMemory(*$1);
