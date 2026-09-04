@@ -31,7 +31,7 @@ urls = { Homepage = "https://github.com/pyswmm/swmm-python" }
 
 [[tool.scikit-build.overrides]]
 if.platform-system = "win32"
-cmake.args = ["-GNinja"]
+cmake.args = ["-GVisual Studio 18 2026"]
 
 [[tool.scikit-build.overrides]]
 if.platform-system = "darwin"
